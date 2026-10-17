@@ -314,10 +314,40 @@ function redesenharPortal(html) {
     html = html.replace(agendOriginal, agendPadronizado);
   }
 
-  // Substituição das funções de renderização com ícones SVG vetoriais e sem barras/frases artificiais
-  const fnAcoesAntigo = /function acoes\(\)\{[\s\S]*?Array\.prototype\.forEach\.call\(document\.querySelectorAll\("#agend details"\),function\(d,i\)\{d\.open=abertos\[i\]\}\);\s*\}\);/;
+  // Substituição de geral(), acoes() e agend() no padrão Shadcn UI / Tremor / Linear
+  const fnAcoesAntigo = /function geral\(\)\{[\s\S]*?Array\.prototype\.forEach\.call\(document\.querySelectorAll\("#agend details"\),function\(d,i\)\{d\.open=abertos\[i\]\}\);\s*\}\);/;
   const fnAcoesNovo = 
-`function padronizarDesc(texto, limite) {
+`var icoCheckCard = '${svgCheck}';
+  var icoUsersCard = '${svgUsers}';
+  var icoCalCard = '${svgCalendar}';
+  var icoPinCard = '${svgPin}';
+  var icoInboxKpi = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>';
+  var icoClockKpi = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
+  var icoUserCheckKpi = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg>';
+  var icoAwardKpi = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>';
+
+  function geral(){
+    var n=function(s){return vols.filter(function(v){return v.status===s}).length};
+    function K(dot,num,titulo,sub,ico,go){
+      return '<a class="kpi" href="#" data-go="'+go+'">' +
+        '<div class="kpi-head"><span class="kpi-lbl">'+titulo+'</span><span class="kpi-ico">'+ico+'</span></div>' +
+        '<div class="kpi-val">'+num+'</div>' +
+        '<div class="kpi-foot"><span class="kpi-dot" style="background:'+dot+'"></span><span class="kpi-sub">'+sub+'</span></div>' +
+      '</a>';
+    }
+    $("kpis").innerHTML =
+      K("#085EC3", vols.length, "Cadastros totais", "Base geral registrada", icoUsersCard, "vol") +
+      K("#d97706", n("Recebida"), "Novas inscrições", "Aguardando abertura", icoInboxKpi, "vol|status=Recebida") +
+      K("#ea580c", n("Em triagem"), "Em triagem", "Análise de perfil ativa", icoClockKpi, "vol|status=Em triagem") +
+      K("#16a34a", n("Aprovada")+n("Em atividade"), "Voluntários ativos", "Aprovados ou em campo", icoUserCheckKpi, "vol|grupo=Aprovada,Em atividade") +
+      K("#475569", ACOES.length, "Ações realizadas", "Concluídas e registradas", icoAwardKpi, "acoes|visao=real") +
+      K("#085EC3", AGEND.length, "Ações agendadas", "Com vagas em aberto", icoCalCard, "acoes|visao=agend");
+    barras($("g-area"), AREAS.map(function(a){return [a, vols.filter(function(v){return v.areas.indexOf(a)>-1}).length]}), "#085EC3", "area");
+    var cores = {"Recebida":"#d97706","Em triagem":"#ea580c","Aprovada":"#085EC3","Em atividade":"#16a34a","Não selecionada":"#94a3b8"};
+    barras($("g-status"), STATUS.map(function(s){return [s,n(s),cores[s]]}), "#085EC3", "status");
+  }
+
+  function padronizarDesc(texto, limite) {
     limite = limite || 100;
     var t = String(texto || '').trim();
     if (t.length <= limite) {
@@ -331,24 +361,22 @@ function redesenharPortal(html) {
     return { visivel: corte + '...', completo: t };
   }
 
-  var icoCheckCard = '${svgCheck}';
-  var icoUsersCard = '${svgUsers}';
-  var icoCalCard = '${svgCalendar}';
-
   function acoes(){
     $("acoes").innerHTML = ACOES.map(function(a){
-      var descInfo = padronizarDesc(a.p, 100);
-      return '<article class="acao" style="--c:' + a.c + '">' +
+      var descInfo = padronizarDesc(a.p, 105);
+      return '<article class="acao">' +
         '<div class="acao-topo">' +
-          '<span class="tag" style="background:' + a.c + '18;color:' + a.c + ';border:1px solid ' + a.c + '40;">' + esc(a.a) + '</span>' +
-          '<span class="acao-data-pill">' + icoCheckCard + ' ' + esc(a.d) + '</span>' +
+          '<span class="acao-badge"><span class="acao-dot" style="background:' + a.c + '"></span>' + esc(a.a) + '</span>' +
+          '<span class="acao-data-pill">' + icoCalCard + ' ' + esc(a.d) + '</span>' +
         '</div>' +
-        '<h3 class="acao-titulo" title="' + esc(a.t) + '">' + esc(a.t) + '</h3>' +
-        '<p class="acao-desc" title="' + esc(descInfo.completo) + '">' + esc(descInfo.visivel) + '</p>' +
+        '<div class="acao-corpo">' +
+          '<h3 class="acao-titulo" title="' + esc(a.t) + '">' + esc(a.t) + '</h3>' +
+          '<p class="acao-desc" title="' + esc(descInfo.completo) + '">' + esc(descInfo.visivel) + '</p>' +
+        '</div>' +
         '<div class="acao-rodape">' +
           '<div class="acao-meta-real">' +
-            '<span class="meta-vol-cont">' + icoUsersCard + ' <b>' + a.n + '</b> voluntários participantes</span>' +
-            '<span class="meta-status-feita">Realizada</span>' +
+            '<span class="meta-vol-cont">' + icoUsersCard + ' <span><b>' + a.n + '</b> voluntários atuantes</span></span>' +
+            '<span class="meta-status-feita">' + icoCheckCard + ' Concluída</span>' +
           '</div>' +
         '</div>' +
       '</article>';
@@ -360,25 +388,29 @@ function redesenharPortal(html) {
     $("n-todas").textContent="("+(ACOES.length+AGEND.length)+")"; $("n-real").textContent="("+ACOES.length+")"; $("n-agend").textContent="("+AGEND.length+")";
     $("agend").innerHTML = AGEND.map(function(a,k){
       var oc=ocupadas(a), pend=a.insc.length-oc, rest=Math.max(0,a.vagas-oc);
-      var descInfo = padronizarDesc(a.p, 100);
+      var descInfo = padronizarDesc(a.p, 105);
+      var locTxt = a.loc || "Sede Usina da Vida · Arenoso";
       var li = a.insc.map(function(i,j){
         var v=vols[i[0]-1], ok=i[1]===1;
         return '<li><span>'+esc(v.nome)+(pode?' <small class="oculto">· '+esc(v.tel)+'</small>':'')+'</span><span>'+(ok?'<span class="ok">Confirmada</span>':'<span class="pend">Pendente</span> '+(pode?'<button type="button" data-k="'+k+'" data-j="'+j+'"'+(rest===0?' disabled title="Sem vagas"':'')+'>Confirmar</button>':''))+'</span></li>';
       }).join("");
-      return '<article class="acao" style="--c:' + a.c + '">' +
+      return '<article class="acao">' +
         '<div class="acao-topo">' +
-          '<span class="tag" style="background:' + a.c + '18;color:' + a.c + ';border:1px solid ' + a.c + '40;">' + esc(a.a) + '</span>' +
+          '<span class="acao-badge"><span class="acao-dot" style="background:' + a.c + '"></span>' + esc(a.a) + '</span>' +
           '<span class="acao-data-pill dt-agendada">' + icoCalCard + ' ' + esc(a.dt) + '</span>' +
         '</div>' +
-        '<h3 class="acao-titulo" title="' + esc(a.t) + '">' + esc(a.t) + '</h3>' +
-        '<p class="acao-desc" title="' + esc(descInfo.completo) + '">' + esc(descInfo.visivel) + '</p>' +
+        '<div class="acao-corpo">' +
+          '<h3 class="acao-titulo" title="' + esc(a.t) + '">' + esc(a.t) + '</h3>' +
+          '<p class="acao-desc" title="' + esc(descInfo.completo) + '">' + esc(descInfo.visivel) + '</p>' +
+          '<div class="acao-loc">' + icoPinCard + ' <span>' + esc(locTxt) + '</span></div>' +
+        '</div>' +
         '<div class="acao-rodape">' +
           '<div class="vg">' +
-            '<div class="l"><span>' + (rest ? rest + (rest===1 ? ' vaga restante' : ' vagas restantes') : 'Vagas preenchidas') + '</span><span>' + oc + ' de ' + a.vagas + '</span></div>' +
-            '<div class="b"><i style="width:' + Math.min(100, oc / a.vagas * 100) + '%;background:' + a.c + '"></i></div>' +
+            '<div class="l"><span>' + (rest ? rest + (rest===1 ? ' vaga disponível' : ' vagas disponíveis') : 'Lotação completa') + '</span><span>' + oc + '/' + a.vagas + ' confirmados</span></div>' +
+            '<div class="b"><i style="width:' + Math.min(100, oc / a.vagas * 100) + '%"></i></div>' +
           '</div>' +
           '<details class="acao-details">' +
-            '<summary>Inscritos (' + a.insc.length + (pend ? ' · ' + pend + ' pendente' + (pend>1 ? 's' : '') : '') + ')</summary>' +
+            '<summary><span>Inscritos (' + a.insc.length + ')</span>' + (pend ? '<span class="pend-pill">' + pend + ' pendente' + (pend>1 ? 's' : '') + '</span>' : '<span class="ok-pill">Em dia</span>') + '</summary>' +
             '<ul class="insc">' + (li || '<li style="color:#94a3b8;font-size:0.8rem;padding:4px 0;">Nenhum voluntário inscrito no momento.</li>') + '</ul>' +
           '</details>' +
         '</div>' +
@@ -842,50 +874,102 @@ body {
   box-shadow: none;
 }
 
-/* CARDS DE KPI (VISÃO GERAL) */
+/* CARDS DE KPI (PADRÃO SHADCN UI / TREMOR) */
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  grid-template-columns: repeat(6, 1fr);
   gap: 14px;
   margin: 16px 0 24px;
 }
-.kpi {
-  background: #fff;
-  border: 1px solid var(--borda);
-  border-left: 6px solid var(--c, var(--azul));
-  border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-  padding: 16px 18px;
-  display: block;
+@media (max-width: 1180px) {
+  .cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 680px) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+a.kpi, .kpi {
+  background: #ffffff;
+  border: 1px solid #e2e8f0 !important;
+  border-left: 1px solid #e2e8f0 !important;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+  padding: 15px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   text-decoration: none;
-  color: inherit;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  color: var(--tinta);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
 }
-.kpi:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+a.kpi:hover, .kpi:hover {
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.07);
+  transform: translateY(-1px);
 }
-.kpi .kpi-num {
-  display: block;
-  font-family: var(--serif);
-  font-size: 2.1rem;
-  font-weight: 700;
-  color: var(--c, var(--azul));
-  line-height: 1.1;
-  font-variant-numeric: tabular-nums;
+.kpi-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
 }
 .kpi .kpi-lbl {
-  display: block;
-  font-size: 0.88rem;
-  color: #475569;
-  margin-top: 4px;
-}
-.kpi .kpi-link {
-  display: inline-block;
   font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--c, var(--azul));
-  margin-top: 10px;
+  font-weight: 500;
+  color: #64748b;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  margin: 0;
+}
+.kpi-ico {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.kpi-ico .ico-svg {
+  width: 14px;
+  height: 14px;
+}
+.kpi .kpi-val {
+  font-family: var(--sans);
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: #0f172a !important;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  margin: 10px 0 12px;
+  font-variant-numeric: tabular-nums;
+}
+.kpi-foot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-top: 9px;
+  border-top: 1px solid #f1f5f9;
+}
+.kpi-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+.kpi-sub {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: #64748b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* CAIXAS DE GRÁFICOS */
@@ -1133,83 +1217,79 @@ body {
   background: transparent;
   border: none;
 }
-.pin-bairro {
-  display: inline-flex;
+.pin-geo-marker {
+  position: relative;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 4px;
-  padding: 2px 7px;
-  border-radius: 999px;
-  font: 700 0.66rem/1.1 var(--sans);
-  color: #fff;
-  background: #DB150A;
-  border: 1.5px solid #fff;
-  box-shadow: 0 2px 5px rgba(15,23,42,0.35);
-  white-space: nowrap;
-  transform: translate(-50%, -50%);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
   cursor: pointer;
+  transition: transform 0.15s ease;
 }
-.pin-bairro:hover {
-  transform: translate(-50%, -50%) scale(1.12);
+.pin-geo-marker:hover {
+  transform: translateY(-2px) scale(1.06);
   z-index: 1000 !important;
 }
-.pin-bairro.vazio {
-  background: #64748b;
-  opacity: 0.85;
+.pin-geo-svg {
+  display: block;
+  filter: drop-shadow(0 2px 4px rgba(15, 23, 42, 0.28));
 }
-.pin-bairro.focal {
+.pin-geo-lbl {
+  margin-top: 1px;
+  background: rgba(255, 255, 255, 0.94);
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+  border-radius: 3px;
+  padding: 1px 5px;
+  font: 600 0.62rem/1.15 var(--sans);
+  white-space: nowrap;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.12);
+}
+.pin-geo-marker.is-sede .pin-geo-lbl {
+  background: #0f172a;
+  color: #F1C50E;
+  border-color: #0f172a;
+  font-weight: 700;
+  font-size: 0.65rem;
+  padding: 1.5px 6px;
+}
+.pin-geo-marker.is-focal .pin-geo-lbl {
   background: #085EC3;
-  border-color: #F1C50E;
-  border-width: 2px;
-  font-size: 0.7rem;
-  box-shadow: 0 0 0 3px rgba(241,197,14,0.55), 0 3px 8px rgba(8,94,195,0.45);
+  color: #ffffff;
+  border-color: #085EC3;
 }
-.pin-bairro.sede-ong {
-  background: #F1C50E;
-  color: #1d2430;
-  border: 2px solid #1d2430;
-  font-size: 0.72rem;
-  font-weight: 800;
-  padding: 3px 9px;
-  box-shadow: 0 0 0 3px rgba(8,94,195,0.45), 2px 2px 0 #1d2430;
+.leaflet-tooltip.tip-geo-limpo {
+  background: #0f172a !important;
+  color: #f8fafc !important;
+  border: 1px solid #334155 !important;
+  border-radius: 6px !important;
+  padding: 5px 9px !important;
+  font: 500 0.74rem/1.35 var(--sans) !important;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.22) !important;
 }
-.pin-bairro.sede-ong .qtd {
-  background: #085EC3;
-  color: #fff;
-}
-.pin-bairro .qtd {
-  background: rgba(0,0,0,0.22);
-  padding: 1px 4px;
-  border-radius: 99px;
-  font-size: 0.63rem;
-  font-variant-numeric: tabular-nums;
-}
-.pin-bairro .pin-km {
-  font-weight: 600;
-  font-size: 0.6rem;
-  opacity: 0.92;
-  font-variant-numeric: tabular-nums;
+.leaflet-tooltip.tip-geo-limpo::before {
+  border-top-color: #0f172a !important;
 }
 .leaflet-popup-content-wrapper {
-  border-radius: 6px !important;
-  border: 1.5px solid #1d2430;
-  box-shadow: 4px 4px 0 #F1C50E !important;
+  border-radius: 8px !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.14) !important;
   font-family: var(--sans) !important;
 }
 .leaflet-popup-content {
-  margin: 10px 12px !important;
-  font-size: 0.82rem !important;
+  margin: 12px 14px !important;
+  font-size: 0.8rem !important;
   line-height: 1.45 !important;
+  color: #0f172a !important;
 }
 .btn-popup-mapa {
   display: inline-block;
   margin-top: 6px;
-  padding: 4px 9px;
+  padding: 5px 10px;
   font: 600 0.74rem var(--sans);
   background: var(--azul);
   color: #fff !important;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
   text-decoration: none;
 }
@@ -1449,153 +1529,245 @@ tr:hover td {
   letter-spacing: -0.01em;
 }
 
-/* PADRONIZAÇÃO ESTRUTURAL E VISUAL DOS CARDS DE AÇÕES */
+/* CARDS DE AÇÕES (PADRÃO LINEAR / TAILWIND UI) */
 .acoes-lista, .acoes-lista.agend {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
   gap: 16px;
   margin-top: 14px;
 }
-.acao {
-  background: #fff;
-  border-radius: 6px;
-  border: 1px solid var(--borda);
-  border-top: 5px solid var(--c, var(--azul));
-  padding: 16px 18px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+.acao, #acoes .acao, #agend .acao {
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0 !important;
+  border-top: 1px solid #e2e8f0 !important;
+  padding: 0;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
   display: flex;
   flex-direction: column;
-  min-height: 310px;
+  height: auto !important;
+  min-height: 0 !important;
   box-sizing: border-box;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-#acoes .acao {
-  min-height: 230px;
+  overflow: hidden;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
 }
 .acao:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+  border-color: #cbd5e1 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.07);
 }
 .acao-topo {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  height: 26px;
+  padding: 14px 18px 10px;
 }
-.acao-topo .tag {
+.acao-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-size: 0.74rem;
-  font-weight: 700;
-  padding: 3px 10px;
-  border-radius: 4px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  font-weight: 600;
+  color: #334155;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 3px 9px;
+  border-radius: 6px;
+  letter-spacing: -0.01em;
+}
+.acao-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  flex-shrink: 0;
 }
 .acao-data-pill {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  font-size: 0.78rem;
-  font-weight: 600;
+  font-size: 0.75rem;
+  font-weight: 500;
   color: #475569;
-  background: #f1f5f9;
-  padding: 3px 9px;
-  border-radius: 4px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 3px 8px;
+  border-radius: 6px;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
+.acao-data-pill .ico-svg {
+  width: 13px;
+  height: 13px;
+  color: #64748b;
+}
 .acao-data-pill.dt-agendada {
-  color: var(--azul);
-  background: #eff6ff;
+  color: #085EC3;
+  background: #f0f7ff;
   border: 1px solid #bfdbfe;
-  font-weight: 700;
+  font-weight: 600;
 }
-.acao-titulo {
-  font-size: 1.06rem;
-  font-weight: 700;
-  color: var(--tinta);
-  margin: 10px 0 6px;
+.acao-data-pill.dt-agendada .ico-svg {
+  color: #085EC3;
+}
+.acao-corpo {
+  padding: 0 18px 14px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.acao h3.acao-titulo, .acao-titulo {
+  font-family: var(--sans) !important;
+  font-size: 1.02rem !important;
+  font-weight: 600 !important;
+  color: #0f172a !important;
+  letter-spacing: -0.015em;
+  margin: 2px 0 6px !important;
   line-height: 1.35;
-  min-height: 2.7em;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
-.acao-desc {
-  font-size: 0.88rem;
+.acao p.acao-desc, .acao-desc {
+  font-size: 0.85rem !important;
   line-height: 1.5;
   color: #475569;
-  margin: 0 0 12px;
-  min-height: 4.5em;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  margin: 0 !important;
+}
+.acao-loc {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 10px;
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: #64748b;
+}
+.acao-loc .ico-svg {
+  width: 13px;
+  height: 13px;
+  color: #64748b;
 }
 .acao-rodape {
   margin-top: auto;
-  border-top: 1px solid #f1f5f9;
-  padding-top: 10px;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  padding: 12px 18px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
+}
+.acao-rodape .vg {
+  margin: 0;
+}
+.acao-rodape .vg .l {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 5px;
+  font-variant-numeric: tabular-nums;
+}
+.acao-rodape .vg .b {
+  height: 5px;
+  background: #e2e8f0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.acao-rodape .vg .b i {
+  display: block;
+  height: 100%;
+  background: #085EC3 !important;
+  border-radius: 999px;
 }
 .acao-meta-real {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
 }
 .meta-vol-cont {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  color: #1e293b;
-  font-weight: 600;
+  gap: 6px;
+  color: #334155;
+  font-weight: 500;
   font-variant-numeric: tabular-nums;
+}
+.meta-vol-cont .ico-svg {
+  width: 14px;
+  height: 14px;
+  color: #64748b;
 }
 .meta-status-feita {
   display: inline-flex;
   align-items: center;
   gap: 4px;
   font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  background: #dcfce7;
-  color: #15803d;
+  font-weight: 600;
+  background: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
   padding: 2px 8px;
-  border-radius: 4px;
+  border-radius: 6px;
+}
+.meta-status-feita .ico-svg {
+  width: 12px;
+  height: 12px;
 }
 .acao-details {
-  font-size: 0.85rem;
-  background: #f8fafc;
+  font-size: 0.82rem;
+  background: #ffffff;
   border: 1px solid #e2e8f0;
-  border-radius: 4px;
+  border-radius: 6px;
   padding: 6px 10px;
+  margin: 0 !important;
 }
 .acao-details summary {
   cursor: pointer;
   font-weight: 600;
-  color: #334155;
+  font-size: 0.79rem;
+  color: #334155 !important;
   user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+}
+.acao-details summary::-webkit-details-marker {
+  display: none;
+}
+.pend-pill {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #b45309;
+  background: #fef3c7;
+  border: 1px solid #fde68a;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+.ok-pill {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #475569;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  padding: 1px 6px;
+  border-radius: 4px;
 }
 .acao-details .insc {
   list-style: none;
   padding: 6px 0 0;
-  margin: 0;
-  max-height: 85px;
+  margin: 6px 0 0;
+  border-top: 1px solid #f1f5f9;
+  max-height: 95px;
   overflow-y: auto;
 }
 .acao-details .insc li {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 3px 0;
-  border-bottom: 1px dashed #e2e8f0;
-  font-size: 0.8rem;
+  padding: 4px 0;
+  border-bottom: 1px solid #f8fafc;
+  font-size: 0.78rem;
 }
 
 /* MODAL DE CADASTRAMENTO E FEEDBACK */
@@ -1883,40 +2055,48 @@ tr:hover td {
     return 2 * R * Math.asin(Math.sqrt(h));
   }
 
+  function criarPinoTeardropSvg(corPino, corBorda, textoCentro, eSede, rotuloAbaixo, clsExtra) {
+    var w = eSede ? 34 : 28;
+    var h = eSede ? 42 : 36;
+    var centroSvg = eSede
+      ? '<circle cx="12" cy="10" r="5.5" fill="#F1C50E"/><path d="M8.5 10.5 12 7.6l3.5 2.9v3.2h-2.1v-2h-2.8v2H8.5v-3.2z" fill="#0f172a"/>'
+      : '<circle cx="12" cy="10" r="5.4" fill="#ffffff"/><text x="12" y="10.4" text-anchor="middle" dominant-baseline="central" fill="#0f172a" font-family="Lexend, system-ui, sans-serif" font-size="7.4" font-weight="800">' + textoCentro + '</text>';
+
+    var svgPin =
+      '<svg class="pin-geo-svg" width="' + w + '" height="' + h + '" viewBox="0 0 24 30" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+        '<path d="M12 1.5C6.75 1.5 2.5 5.75 2.5 11C2.5 17.75 12 28.5 12 28.5C12 28.5 21.5 17.75 21.5 11C21.5 5.75 17.25 1.5 12 1.5Z" fill="' + corPino + '" stroke="' + corBorda + '" stroke-width="1.8"/>' +
+        centroSvg +
+      '</svg>';
+
+    return L.divIcon({
+      className: "pin-bairro-wrap",
+      html: '<div class="pin-geo-marker ' + (clsExtra || "") + '">' + svgPin + '<span class="pin-geo-lbl">' + rotuloAbaixo + '</span></div>',
+      iconSize: [w + 40, h + 18],
+      iconAnchor: [(w + 40) / 2, h],
+      popupAnchor: [0, -(h - 4)],
+      tooltipAnchor: [0, -(h - 2)]
+    });
+  }
+
   function renderizarCamadasLeaflet() {
     if (!lMap || !ultimoEstadoMapa || typeof window.L === "undefined") return;
     var st = ultimoEstadoMapa;
     if (lLayer) lLayer.clearLayers();
     else lLayer = L.layerGroup().addTo(lMap);
 
-    var sedeCoord = st.COORD["Arenoso"] || [-12.9522, -38.4414];
+    var sedeCoord = st.COORD["Arenoso"] || [-12.9465, -38.4385];
     var refCoord = st.COORD[st.ref] || sedeCoord;
 
     if (st.r && st.r > 0) {
       L.circle(refCoord, {
         radius: st.r * 1000,
         color: "#085EC3",
-        weight: 2,
-        dashArray: "6 4",
+        weight: 1.8,
+        dashArray: "5 5",
         fillColor: "#085EC3",
-        fillOpacity: 0.12
+        fillOpacity: 0.09
       }).addTo(lLayer);
     }
-
-    // Linhas tracejadas sutis ligando a Sede da ONG (Arenoso) aos bairros com voluntários ativos
-    st.BAIRROS.forEach(function(b) {
-      if (b === "Arenoso") return;
-      var c = st.COORD[b];
-      var qtd = st.cont[b] || 0;
-      if (c && qtd > 0) {
-        L.polyline([sedeCoord, c], {
-          color: "#085EC3",
-          weight: 1.4,
-          opacity: 0.42,
-          dashArray: "4 4"
-        }).addTo(lLayer);
-      }
-    });
 
     st.BAIRROS.forEach(function(b) {
       var c = st.COORD[b];
@@ -1927,27 +2107,25 @@ tr:hover td {
       var distSede = eSede ? 0 : calcKmCoords(sedeCoord, c);
       var distSedeTxt = distSede.toFixed(1).replace(".", ",") + " km";
 
-      var cls = "pin-bairro" + (eSede ? " sede-ong" : (eRef ? " focal" : (qtd === 0 ? " vazio" : "")));
-      var rotuloPin = eSede
-        ? '<span style="display:inline-flex;align-items:center;gap:4px">' + icoSedeInline + ' Sede ONG · Arenoso</span>'
-        : '<span style="display:inline-flex;align-items:center;gap:3px">' + (eRef ? icoPinInline : '') + b + ' <span class="pin-km">· ' + distSedeTxt + '</span></span>';
+      var corPino = eSede ? "#0f172a" : (eRef ? "#085EC3" : (qtd > 0 ? "#DB150A" : "#64748b"));
+      var corBorda = eSede ? "#F1C50E" : "#ffffff";
+      var clsExtra = eSede ? "is-sede" : (eRef ? "is-focal" : "");
+      var rotuloCurto = eSede ? "Sede · Arenoso" : b;
 
-      var icone = L.divIcon({
-        className: "pin-bairro-wrap",
-        html: '<div class="' + cls + '" title="' + (eSede ? 'Sede Usina da Vida (Arenoso): ' : b + ' (' + distSedeTxt + ' da Sede): ') + qtd + ' voluntário(s)">' +
-              rotuloPin +
-              '<span class="qtd">' + qtd + '</span></div>',
-        iconSize: [1, 1],
-        iconAnchor: [0, 0]
-      });
+      var icone = criarPinoTeardropSvg(corPino, corBorda, String(qtd), eSede, rotuloCurto, clsExtra);
 
       var m = L.marker(c, {
         icon: icone,
         zIndexOffset: eSede ? 1000 : (eRef ? 900 : (qtd > 0 ? 400 : 100))
       }).addTo(lLayer);
 
+      var txtTooltip = eSede
+        ? "<b>Sede Usina da Vida · Arenoso</b><br>" + qtd + " voluntário(s) no bairro"
+        : "<b>" + b + "</b> · " + distSedeTxt + " da Sede<br>" + qtd + " voluntário(s) filtrados";
+      m.bindTooltip(txtTooltip, { direction: "top", className: "tip-geo-limpo" });
+
       var infoDistPopup = eSede
-        ? '<span style="display:inline-block;margin-top:2px;color:#085EC3;font-weight:700">Sede Institucional da Usina da Vida (0 km)</span><br>'
+        ? '<span style="display:inline-block;margin-top:2px;color:#085EC3;font-weight:600">Sede Institucional da Usina da Vida (0 km)</span><br>'
         : '<span style="display:inline-block;margin-top:2px;color:#475569">Distância até a Sede (Arenoso): <b>' + distSedeTxt + '</b></span><br>';
 
       var popupHtml =
@@ -1956,7 +2134,7 @@ tr:hover td {
         '<span style="display:inline-flex;align-items:center;gap:4px;margin-top:3px">' + icoUsersInline + ' <b>' + qtd + '</b> voluntário(s) nos filtros atuais</span><br>' +
         '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px">' +
         '<button type="button" class="btn-popup-mapa" data-acao-mapa="filtrar" data-bairro="' + b + '">Filtrar bairro</button>' +
-        (!eRef ? '<button type="button" class="btn-popup-mapa" style="background:#1d2430" data-acao-mapa="focal" data-bairro="' + b + '">Definir ponto focal</button>' : '') +
+        (!eRef ? '<button type="button" class="btn-popup-mapa" style="background:#0f172a" data-acao-mapa="focal" data-bairro="' + b + '">Definir ponto focal</button>' : '') +
         '</div></div>';
       m.bindPopup(popupHtml);
     });
