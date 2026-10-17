@@ -314,41 +314,63 @@ function redesenharPortal(html) {
     html = html.replace(agendOriginal, agendPadronizado);
   }
 
-  // Substituição de geral(), acoes() e agend() no padrão Shadcn UI / Tremor / Linear
+  // Substituição de geral(), acoes() e agend() no Modelo 3 (Cabeçalho Sólido Bicolor da Identidade Visual)
   const fnAcoesAntigo = /function geral\(\)\{[\s\S]*?Array\.prototype\.forEach\.call\(document\.querySelectorAll\("#agend details"\),function\(d,i\)\{d\.open=abertos\[i\]\}\);\s*\}\);/;
   const fnAcoesNovo = 
 `var icoCheckCard = '${svgCheck}';
   var icoUsersCard = '${svgUsers}';
   var icoCalCard = '${svgCalendar}';
   var icoPinCard = '${svgPin}';
-  var icoInboxKpi = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>';
-  var icoClockKpi = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
-  var icoUserCheckKpi = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg>';
-  var icoAwardKpi = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>';
+  var icoInboxKpi = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m3 8 9 6 9-6"/></svg>';
+  var icoClockKpi = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+  var icoUserCheckKpi = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+  var icoAwardKpi = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+
+  function temaAreaCard(area, corOriginal) {
+    var a = String(area || "").toLowerCase();
+    if (a.indexOf("saúde") > -1 || a.indexOf("saude") > -1) {
+      return { solid: "#085EC3", bg: "#EBF3FE", bd: "#BFDBFE", dt: "#F1C50E" };
+    }
+    if (a.indexOf("empreendedorismo") > -1 || a.indexOf("finan") > -1) {
+      return { solid: "#E66E19", bg: "#FFF3EB", bd: "#FED7AA", dt: "#FFFFFF" };
+    }
+    if (a.indexOf("educa") > -1 || a.indexOf("pedagog") > -1) {
+      return { solid: "#16964B", bg: "#EAFBF1", bd: "#A7F3D0", dt: "#FFFFFF" };
+    }
+    if (a.indexOf("esporte") > -1) {
+      return { solid: "#0B3F82", bg: "#EEF2FF", bd: "#C7D2FE", dt: "#F1C50E" };
+    }
+    if (a.indexOf("socializa") > -1) {
+      return { solid: "#E12926", bg: "#FEF2F2", bd: "#FECACA", dt: "#FFFFFF" };
+    }
+    if (a.indexOf("cultura") > -1 || a.indexOf("arte") > -1) {
+      return { solid: "#085EC3", bg: "#EBF3FE", bd: "#BFDBFE", dt: "#F1C50E" };
+    }
+    return { solid: corOriginal || "#085EC3", bg: "#EBF3FE", bd: "#BFDBFE", dt: "#F1C50E" };
+  }
 
   function geral(){
     var n=function(s){return vols.filter(function(v){return v.status===s}).length};
-    function K(dot,num,titulo,sub,ico,go){
-      return '<a class="kpi" href="#" data-go="'+go+'">' +
-        '<div class="kpi-head"><span class="kpi-lbl">'+titulo+'</span><span class="kpi-ico">'+ico+'</span></div>' +
-        '<div class="kpi-val">'+num+'</div>' +
-        '<div class="kpi-foot"><span class="kpi-dot" style="background:'+dot+'"></span><span class="kpi-sub">'+sub+'</span></div>' +
+    function K(solid,fg,bg,bd,num,titulo,sub,ico,go){
+      return '<a class="kpi" href="#" data-go="'+go+'" style="--solid:'+solid+';--fg:'+fg+';--bg:'+bg+';--bd:'+bd+'">' +
+        '<div class="kpi-hdr"><span class="kpi-lbl">'+titulo+'</span><span class="kpi-ico">'+ico+'</span></div>' +
+        '<div class="kpi-body"><div class="kpi-val">'+num+'</div><div class="kpi-sub">'+sub+'</div></div>' +
       '</a>';
     }
     $("kpis").innerHTML =
-      K("#085EC3", vols.length, "Cadastros totais", "Base geral registrada", icoUsersCard, "vol") +
-      K("#d97706", n("Recebida"), "Novas inscrições", "Aguardando abertura", icoInboxKpi, "vol|status=Recebida") +
-      K("#ea580c", n("Em triagem"), "Em triagem", "Análise de perfil ativa", icoClockKpi, "vol|status=Em triagem") +
-      K("#16a34a", n("Aprovada")+n("Em atividade"), "Voluntários ativos", "Aprovados ou em campo", icoUserCheckKpi, "vol|grupo=Aprovada,Em atividade") +
-      K("#475569", ACOES.length, "Ações realizadas", "Concluídas e registradas", icoAwardKpi, "acoes|visao=real") +
-      K("#085EC3", AGEND.length, "Ações agendadas", "Com vagas em aberto", icoCalCard, "acoes|visao=agend");
+      K("#085EC3", "#ffffff", "#F0F6FF", "#BFDBFE", vols.length, "Cadastros totais", "Base geral registrada", icoUsersCard, "vol") +
+      K("#F1C50E", "#0f172a", "#FFFDF2", "#FDE68A", n("Recebida"), "Novas inscrições", "Aguardando abertura", icoInboxKpi, "vol|status=Recebida") +
+      K("#E66E19", "#ffffff", "#FFF7F2", "#FED7AA", n("Em triagem"), "Em triagem", "Análise de perfil ativa", icoClockKpi, "vol|status=Em triagem") +
+      K("#16964B", "#ffffff", "#F2FBF6", "#A7F3D0", n("Aprovada")+n("Em atividade"), "Voluntários ativos", "Aprovados em campo", icoUserCheckKpi, "vol|grupo=Aprovada,Em atividade") +
+      K("#0B3F82", "#ffffff", "#F2F5FA", "#C7D2FE", ACOES.length, "Ações realizadas", "Concluídas e registradas", icoAwardKpi, "acoes|visao=real") +
+      K("#E12926", "#ffffff", "#FEF5F5", "#FECACA", AGEND.length, "Ações agendadas", "Com vagas em aberto", icoCalCard, "acoes|visao=agend");
     barras($("g-area"), AREAS.map(function(a){return [a, vols.filter(function(v){return v.areas.indexOf(a)>-1}).length]}), "#085EC3", "area");
     var cores = {"Recebida":"#d97706","Em triagem":"#ea580c","Aprovada":"#085EC3","Em atividade":"#16a34a","Não selecionada":"#94a3b8"};
     barras($("g-status"), STATUS.map(function(s){return [s,n(s),cores[s]]}), "#085EC3", "status");
   }
 
   function padronizarDesc(texto, limite) {
-    limite = limite || 100;
+    limite = limite || 105;
     var t = String(texto || '').trim();
     if (t.length <= limite) {
       return { visivel: t, completo: t };
@@ -363,15 +385,19 @@ function redesenharPortal(html) {
 
   function acoes(){
     $("acoes").innerHTML = ACOES.map(function(a){
-      var descInfo = padronizarDesc(a.p, 105);
-      return '<article class="acao">' +
-        '<div class="acao-topo">' +
-          '<span class="acao-badge"><span class="acao-dot" style="background:' + a.c + '"></span>' + esc(a.a) + '</span>' +
-          '<span class="acao-data-pill">' + icoCalCard + ' ' + esc(a.d) + '</span>' +
+      var descInfo = padronizarDesc(a.p, 110);
+      var tm = temaAreaCard(a.a, a.c);
+      return '<article class="acao" style="--solid:' + tm.solid + ';--bg:' + tm.bg + ';--bd:' + tm.bd + ';--dt:' + tm.dt + '">' +
+        '<div class="acao-hdr">' +
+          '<div class="acao-hdr-top">' +
+            '<span class="acao-badge">' + esc(a.a) + '</span>' +
+            '<span class="acao-data-pill">' + esc(a.d) + '</span>' +
+          '</div>' +
+          '<h3 class="acao-titulo" title="' + esc(a.t) + '">' + esc(a.t) + '</h3>' +
         '</div>' +
         '<div class="acao-corpo">' +
-          '<h3 class="acao-titulo" title="' + esc(a.t) + '">' + esc(a.t) + '</h3>' +
           '<p class="acao-desc" title="' + esc(descInfo.completo) + '">' + esc(descInfo.visivel) + '</p>' +
+          '<div class="acao-loc">Sede Usina da Vida (Arenoso) · Concluída</div>' +
         '</div>' +
         '<div class="acao-rodape">' +
           '<div class="acao-meta-real">' +
@@ -388,21 +414,24 @@ function redesenharPortal(html) {
     $("n-todas").textContent="("+(ACOES.length+AGEND.length)+")"; $("n-real").textContent="("+ACOES.length+")"; $("n-agend").textContent="("+AGEND.length+")";
     $("agend").innerHTML = AGEND.map(function(a,k){
       var oc=ocupadas(a), pend=a.insc.length-oc, rest=Math.max(0,a.vagas-oc);
-      var descInfo = padronizarDesc(a.p, 105);
-      var locTxt = a.loc || "Sede Usina da Vida · Arenoso";
+      var descInfo = padronizarDesc(a.p, 110);
+      var locTxt = a.loc || "Sede Usina da Vida (Arenoso) · 09h";
+      var tm = temaAreaCard(a.a, a.c);
       var li = a.insc.map(function(i,j){
         var v=vols[i[0]-1], ok=i[1]===1;
         return '<li><span>'+esc(v.nome)+(pode?' <small class="oculto">· '+esc(v.tel)+'</small>':'')+'</span><span>'+(ok?'<span class="ok">Confirmada</span>':'<span class="pend">Pendente</span> '+(pode?'<button type="button" data-k="'+k+'" data-j="'+j+'"'+(rest===0?' disabled title="Sem vagas"':'')+'>Confirmar</button>':''))+'</span></li>';
       }).join("");
-      return '<article class="acao">' +
-        '<div class="acao-topo">' +
-          '<span class="acao-badge"><span class="acao-dot" style="background:' + a.c + '"></span>' + esc(a.a) + '</span>' +
-          '<span class="acao-data-pill dt-agendada">' + icoCalCard + ' ' + esc(a.dt) + '</span>' +
+      return '<article class="acao" style="--solid:' + tm.solid + ';--bg:' + tm.bg + ';--bd:' + tm.bd + ';--dt:' + tm.dt + '">' +
+        '<div class="acao-hdr">' +
+          '<div class="acao-hdr-top">' +
+            '<span class="acao-badge">' + esc(a.a) + '</span>' +
+            '<span class="acao-data-pill dt-agendada">' + esc(a.dt) + '</span>' +
+          '</div>' +
+          '<h3 class="acao-titulo" title="' + esc(a.t) + '">' + esc(a.t) + '</h3>' +
         '</div>' +
         '<div class="acao-corpo">' +
-          '<h3 class="acao-titulo" title="' + esc(a.t) + '">' + esc(a.t) + '</h3>' +
           '<p class="acao-desc" title="' + esc(descInfo.completo) + '">' + esc(descInfo.visivel) + '</p>' +
-          '<div class="acao-loc">' + icoPinCard + ' <span>' + esc(locTxt) + '</span></div>' +
+          '<div class="acao-loc">' + esc(locTxt) + '</div>' +
         '</div>' +
         '<div class="acao-rodape">' +
           '<div class="vg">' +
@@ -874,7 +903,7 @@ body {
   box-shadow: none;
 }
 
-/* CARDS DE KPI (PADRÃO SHADCN UI / TREMOR) */
+/* CARDS DE KPI — MODELO 3 (CABEÇALHO SÓLIDO BICOLOR) */
 .cards {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -893,24 +922,26 @@ body {
 }
 a.kpi, .kpi {
   background: #ffffff;
-  border: 1px solid #e2e8f0 !important;
-  border-left: 1px solid #e2e8f0 !important;
-  border-radius: 8px;
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
-  padding: 15px 16px;
+  border: 1px solid var(--bd, #cbd5e1) !important;
+  border-left: 1px solid var(--bd, #cbd5e1) !important;
+  border-radius: 12px;
+  overflow: hidden;
+  padding: 0 !important;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   text-decoration: none;
   color: var(--tinta);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 a.kpi:hover, .kpi:hover {
-  border-color: #cbd5e1 !important;
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.07);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px -4px rgba(15, 23, 42, 0.1);
 }
-.kpi-head {
+.kpi-hdr {
+  background: var(--solid, #085EC3);
+  color: var(--fg, #ffffff);
+  padding: 10px 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -918,55 +949,47 @@ a.kpi:hover, .kpi:hover {
 }
 .kpi .kpi-lbl {
   font-size: 0.78rem;
-  font-weight: 500;
-  color: #64748b;
+  font-weight: 800;
+  color: var(--fg, #ffffff) !important;
   letter-spacing: -0.01em;
-  line-height: 1.3;
+  line-height: 1.25;
   margin: 0;
 }
 .kpi-ico {
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  color: #475569;
+  color: var(--fg, #ffffff);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 .kpi-ico .ico-svg {
-  width: 14px;
-  height: 14px;
+  width: 17px;
+  height: 17px;
+  stroke-width: 2.1;
+}
+.kpi-body {
+  padding: 14px;
+  background: var(--bg, #F0F6FF);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .kpi .kpi-val {
   font-family: var(--sans);
-  font-size: 1.85rem;
-  font-weight: 700;
+  font-size: 1.9rem;
+  font-weight: 800;
   color: #0f172a !important;
-  line-height: 1.15;
+  line-height: 1.1;
   letter-spacing: -0.03em;
-  margin: 10px 0 12px;
+  margin: 0;
   font-variant-numeric: tabular-nums;
 }
-.kpi-foot {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding-top: 9px;
-  border-top: 1px solid #f1f5f9;
-}
-.kpi-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 999px;
-  flex-shrink: 0;
-}
 .kpi-sub {
-  font-size: 0.72rem;
-  font-weight: 500;
-  color: #64748b;
+  font-size: 0.73rem;
+  font-weight: 600;
+  color: #475569;
+  margin-top: 6px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1529,126 +1552,101 @@ tr:hover td {
   letter-spacing: -0.01em;
 }
 
-/* CARDS DE AÇÕES (PADRÃO LINEAR / TAILWIND UI) */
+/* CARDS DE AÇÕES — MODELO 3 (CABEÇALHO SÓLIDO BICOLOR) */
 .acoes-lista, .acoes-lista.agend {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
-  gap: 16px;
+  gap: 18px;
   margin-top: 14px;
 }
 .acao, #acoes .acao, #agend .acao {
   background: #ffffff;
-  border-radius: 8px;
-  border: 1px solid #e2e8f0 !important;
-  border-top: 1px solid #e2e8f0 !important;
-  padding: 0;
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+  border-radius: 14px;
+  border: 1px solid var(--bd, #cbd5e1) !important;
+  border-top: 1px solid var(--bd, #cbd5e1) !important;
+  padding: 0 !important;
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.05);
   display: flex;
   flex-direction: column;
   height: auto !important;
   min-height: 0 !important;
   box-sizing: border-box;
   overflow: hidden;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 .acao:hover {
-  border-color: #cbd5e1 !important;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.07);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px -6px rgba(15, 23, 42, 0.12);
 }
-.acao-topo {
+.acao-hdr {
+  background: var(--solid, #085EC3);
+  color: #ffffff;
+  padding: 15px 18px;
+}
+.acao-hdr-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  padding: 14px 18px 10px;
+  margin-bottom: 8px;
 }
 .acao-badge {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.74rem;
-  font-weight: 600;
-  color: #334155;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.2);
   padding: 3px 9px;
   border-radius: 6px;
-  letter-spacing: -0.01em;
-}
-.acao-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 999px;
-  flex-shrink: 0;
+  letter-spacing: 0.01em;
 }
 .acao-data-pill {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
   font-size: 0.75rem;
-  font-weight: 500;
-  color: #475569;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  padding: 3px 8px;
-  border-radius: 6px;
+  font-weight: 700;
+  color: var(--dt, #ffffff);
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
-.acao-data-pill .ico-svg {
-  width: 13px;
-  height: 13px;
-  color: #64748b;
-}
 .acao-data-pill.dt-agendada {
-  color: #085EC3;
-  background: #f0f7ff;
-  border: 1px solid #bfdbfe;
-  font-weight: 600;
+  color: var(--dt, #F1C50E);
+  font-weight: 800;
 }
-.acao-data-pill.dt-agendada .ico-svg {
-  color: #085EC3;
+.acao h3.acao-titulo, .acao-hdr .acao-titulo {
+  font-family: var(--sans) !important;
+  font-size: 1.06rem !important;
+  font-weight: 800 !important;
+  color: #ffffff !important;
+  letter-spacing: -0.015em;
+  margin: 0 !important;
+  line-height: 1.3;
 }
 .acao-corpo {
-  padding: 0 18px 14px;
+  padding: 16px 18px;
+  background: #ffffff;
   display: flex;
   flex-direction: column;
+  gap: 10px;
   flex: 1;
 }
-.acao h3.acao-titulo, .acao-titulo {
-  font-family: var(--sans) !important;
-  font-size: 1.02rem !important;
-  font-weight: 600 !important;
-  color: #0f172a !important;
-  letter-spacing: -0.015em;
-  margin: 2px 0 6px !important;
-  line-height: 1.35;
-}
 .acao p.acao-desc, .acao-desc {
-  font-size: 0.85rem !important;
-  line-height: 1.5;
+  font-size: 0.84rem !important;
+  line-height: 1.52;
   color: #475569;
   margin: 0 !important;
 }
 .acao-loc {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  margin-top: 10px;
-  font-size: 0.76rem;
-  font-weight: 500;
-  color: #64748b;
-}
-.acao-loc .ico-svg {
-  width: 13px;
-  height: 13px;
-  color: #64748b;
+  font-size: 0.77rem;
+  font-weight: 700;
+  color: var(--solid, #085EC3);
+  margin-top: auto;
+  padding-top: 2px;
 }
 .acao-rodape {
-  margin-top: auto;
-  background: #f8fafc;
-  border-top: 1px solid #e2e8f0;
+  background: var(--bg, #EBF3FE);
+  border-top: 1px solid var(--bd, #BFDBFE);
   padding: 12px 18px;
   display: flex;
   flex-direction: column;
@@ -1660,53 +1658,53 @@ tr:hover td {
 .acao-rodape .vg .l {
   display: flex;
   justify-content: space-between;
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: #334155;
-  margin-bottom: 5px;
+  font-size: 0.77rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 6px;
   font-variant-numeric: tabular-nums;
 }
 .acao-rodape .vg .b {
-  height: 5px;
-  background: #e2e8f0;
+  height: 7px;
+  background: var(--bd, #BFDBFE);
   border-radius: 999px;
   overflow: hidden;
 }
 .acao-rodape .vg .b i {
   display: block;
   height: 100%;
-  background: #085EC3 !important;
+  background: var(--solid, #085EC3) !important;
   border-radius: 999px;
 }
 .acao-meta-real {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 0.82rem;
+  font-size: 0.81rem;
 }
 .meta-vol-cont {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: #334155;
-  font-weight: 500;
+  color: #1e293b;
+  font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
 .meta-vol-cont .ico-svg {
-  width: 14px;
-  height: 14px;
-  color: #64748b;
+  width: 15px;
+  height: 15px;
+  color: var(--solid, #085EC3);
 }
 .meta-status-feita {
   display: inline-flex;
   align-items: center;
   gap: 4px;
   font-size: 0.72rem;
-  font-weight: 600;
-  background: #f0fdf4;
+  font-weight: 700;
+  background: #ffffff;
   color: #166534;
-  border: 1px solid #bbf7d0;
-  padding: 2px 8px;
+  border: 1px solid var(--bd, #bbf7d0);
+  padding: 3px 9px;
   border-radius: 6px;
 }
 .meta-status-feita .ico-svg {
@@ -1714,18 +1712,18 @@ tr:hover td {
   height: 12px;
 }
 .acao-details {
-  font-size: 0.82rem;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
+  font-size: 0.81rem;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--bd, #cbd5e1);
+  border-radius: 8px;
   padding: 6px 10px;
   margin: 0 !important;
 }
 .acao-details summary {
   cursor: pointer;
-  font-weight: 600;
-  font-size: 0.79rem;
-  color: #334155 !important;
+  font-weight: 700;
+  font-size: 0.78rem;
+  color: #1e293b !important;
   user-select: none;
   display: flex;
   align-items: center;
