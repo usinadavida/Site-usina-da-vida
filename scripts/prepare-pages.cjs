@@ -198,10 +198,6 @@ function redesenharPortal(html) {
     '      <label for="f-disp">Disponibilidade</label>' +
     '      <select id="f-disp"></select>' +
     '    </div>' +
-    '    <div class="mascara-filtros-gerais" id="mascara-filtros-gerais" aria-hidden="true">' +
-    '      ' + svgPin +
-    '      <span>Filtro territorial por mapa ativo — feche o mapa ao lado para usar os filtros gerais</span>' +
-    '    </div>' +
     '  </div>' +
     '  <div class="filtro-campo campo-btn-geo">' +
     '    <label>&nbsp;</label>' +
@@ -214,17 +210,17 @@ function redesenharPortal(html) {
     '<div class="gaveta-geo" id="gaveta-geo" style="display:none">' +
     '  <div class="gaveta-grid">' +
     '    <div class="geo-filtros-extra">' +
-    '      <div class="filtro-campo" id="wrap-f-bairro"><label for="f-bairro">Bairro / Localidade</label><select id="f-bairro"></select><span class="mascara-sub-geo" id="mask-bairro">Desabilitado durante filtro por raio (km)</span></div>' +
+    '      <div class="filtro-campo" id="wrap-f-bairro"><label for="f-bairro">Bairro / Localidade</label><select id="f-bairro"></select></div>' +
     '      <div class="filtro-campo" id="wrap-f-form"><label for="f-form">Formação acadêmica</label><select id="f-form"></select></div>' +
     '      <div class="filtro-campo" id="wrap-f-ativ"><label for="f-ativ">Alocação em atividade</label><select id="f-ativ"></select></div>' +
-    '      <div class="filtro-campo" id="wrap-f-ref"><label for="f-ref">Ponto focal de referência</label><select id="f-ref"></select><span class="mascara-sub-geo" id="mask-ref">Desabilitado durante filtro por bairro único</span></div>' +
-    '      <div class="filtro-campo" id="wrap-f-raio"><label for="f-raio">Raio de proximidade (km)</label><input id="f-raio" type="number" min="0" max="200" step="0.5" inputmode="decimal" list="raios" placeholder="Ex.: 4,5"><datalist id="raios"><option value="3"><option value="5"><option value="8"><option value="12"><option value="20"></datalist><span class="mascara-sub-geo" id="mask-raio">Desabilitado durante filtro por bairro único</span></div>' +
+    '      <div class="filtro-campo" id="wrap-f-ref"><label for="f-ref">Ponto focal de referência</label><select id="f-ref"></select></div>' +
+    '      <div class="filtro-campo" id="wrap-f-raio"><label for="f-raio">Raio de proximidade (km)</label><input id="f-raio" type="number" min="0" max="200" step="0.5" inputmode="decimal" list="raios" placeholder="Ex.: 4,5"><datalist id="raios"><option value="3"><option value="5"><option value="8"><option value="12"><option value="20"></datalist></div>' +
     '    </div>' +
     '    <div class="geo-mapa-wrap">' +
     '      <div class="mapa-cab"><b class="mapa-titulo-ic">' + svgMap + ' Mapa Territorial de Salvador</b><span id="mapa-leg"></span></div>' +
     '      <div id="mapa-leaflet" role="region" aria-label="Mapa interativo dos bairros de Salvador"></div>' +
     '      <svg id="mapa" viewBox="0 0 330 175" role="img" aria-label="Mapa esquemático dos bairros com o raio de distância" style="display:none"></svg>' +
-    '      <p class="mapa-info">Clique em um bairro no mapa para filtrar voluntários ou definir o ponto focal.</p>' +
+    '      <p class="mapa-info">Sede da ONG destacada no <b>Arenoso</b>. Clique em qualquer bairro para filtrar voluntários ou alterar o ponto focal.</p>' +
     '    </div>' +
     '  </div>' +
     '</div>\n' +
@@ -243,10 +239,30 @@ function redesenharPortal(html) {
     html = html.replace(volAntigo, volNovo);
   }
 
-  // Conectar função mapa(lista) ao mapa interativo Leaflet
+  // Conectar função mapa(lista) ao mapa interativo Leaflet e incluir Arenoso como sede da ONG
+  html = html.replace(
+    'var BAIRROS = ["Pituba","Brotas","Itapuã","Liberdade","Cabula","Federação","Barra","Ondina"];',
+    'var BAIRROS = ["Arenoso","Pituba","Brotas","Itapuã","Liberdade","Cabula","Federação","Barra","Ondina"];'
+  );
+  html = html.replace(
+    'var COORD = {"Pituba":[-12.9996,-38.4586],"Brotas":[-12.9858,-38.4979],"Itapuã":[-12.9533,-38.3563],"Liberdade":[-12.9486,-38.4887],"Cabula":[-12.9570,-38.4560],"Federação":[-12.9980,-38.5060],"Barra":[-13.0105,-38.5330],"Ondina":[-13.0050,-38.5120]};',
+    'var COORD = {"Arenoso":[-12.9465,-38.4385],"Pituba":[-12.9996,-38.4586],"Brotas":[-12.9858,-38.4979],"Itapuã":[-12.9533,-38.3563],"Liberdade":[-12.9486,-38.4887],"Cabula":[-12.9645,-38.4595],"Federação":[-12.9980,-38.5060],"Barra":[-13.0105,-38.5330],"Ondina":[-13.0050,-38.5120]};'
+  );
+  html = html.replace(
+    '$("f-ref").value="Brotas"; tabela();',
+    '$("f-ref").value="Arenoso"; tabela();'
+  );
+  html = html.replace(
+    'popula("f-ref","",BAIRROS); $("f-ref").remove(0); $("f-ref").value="Brotas";',
+    'popula("f-ref","",BAIRROS); $("f-ref").remove(0); Array.prototype.forEach.call($("f-ref").options,function(op){ if(op.value==="Arenoso"){ op.value="Arenoso"; op.textContent="Arenoso (Sede da ONG)"; } }); $("f-ref").value="Arenoso";'
+  );
   html = html.replace(
     '$("mapa-leg").textContent = r ? "Raio de "+String(r).replace(".",",")+" km a partir de "+ref : "Selecione um raio para ver o alcance";',
-    '$("mapa-leg").textContent = r ? "Raio de "+String(r).replace(".",",")+" km a partir de "+ref : "Ponto focal: "+ref+" (defina um raio em km)"; if (typeof window.atualizarMapaLeaflet === "function") window.atualizarMapaLeaflet(lista, ref, r, cont, COORD, BAIRROS);'
+    '$("mapa-leg").textContent = r ? "Raio de "+String(r).replace(".",",")+" km a partir de "+(ref==="Arenoso"?"Arenoso (Sede ONG)":ref) : "Referência: "+(ref==="Arenoso"?"Arenoso (Sede ONG)":ref); if (typeof window.atualizarMapaLeaflet === "function") window.atualizarMapaLeaflet(lista, ref, r, cont, COORD, BAIRROS, km);'
+  );
+  html = html.replace(
+    "(raioKm()?'<br><small class=\"oculto\">'+km(v.bairro,$(\"f-ref\").value).toFixed(1).replace(\".\",\",\")+' km</small>':'')",
+    "('<br><small class=\"dist-sede\">'+(v.bairro===$(\"f-ref\").value ? (v.bairro===\"Arenoso\"?\"Sede da ONG (0 km)\":\"Ponto focal (0 km)\") : km(v.bairro,$(\"f-ref\").value).toFixed(1).replace(\".\",\",\")+' km '+($(\"f-ref\").value===\"Arenoso\"?\"da Sede\":\"de \"+$(\"f-ref\").value))+'</small>')"
   );
 
   // 6. Transformar Ações: cabeçalho institucional, toolbar com botão justificado à direita e padronização visual
@@ -939,36 +955,19 @@ body {
   gap: 12px;
   align-items: flex-end;
 }
-.mascara-filtros-gerais {
-  display: none;
-  position: absolute;
-  inset: -4px;
-  background: rgba(248, 250, 252, 0.88);
-  border: 1.5px dashed var(--azul);
-  border-radius: 6px;
-  color: var(--tinta);
-  font-size: 0.84rem;
-  font-weight: 600;
-  z-index: 6;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 6px 14px;
-  text-align: center;
+.filtros-barra.modo-mapa-ativo .filtros-gerais-grupo > .filtro-campo label {
+  opacity: 0.48;
 }
-.mascara-filtros-gerais .ico-svg {
-  color: var(--azul);
-  width: 17px;
-  height: 17px;
+.filtros-barra.modo-mapa-ativo .filtros-gerais-grupo input,
+.filtros-barra.modo-mapa-ativo .filtros-gerais-grupo select {
+  opacity: 0.48;
+  background: #f1f5f9 !important;
+  color: #94a3b8 !important;
+  border-color: #cbd5e1 !important;
+  cursor: not-allowed !important;
 }
-.filtros-barra.modo-mapa-ativo .filtros-gerais-grupo > .filtro-campo {
-  opacity: 0.25;
-  pointer-events: none;
-  user-select: none;
-  filter: grayscale(0.8);
-}
-.filtros-barra.modo-mapa-ativo .mascara-filtros-gerais {
-  display: flex;
+.filtros-barra.modo-mapa-ativo .busca-ico {
+  opacity: 0.4;
 }
 @media (max-width: 1024px) {
   .filtros-barra {
@@ -987,22 +986,31 @@ body {
   font-weight: 600;
   color: #475569;
   margin-bottom: 4px;
+  transition: opacity 0.15s ease;
 }
-.mascara-sub-geo {
-  display: none;
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: #64748b;
-  margin-top: 3px;
+.filtro-campo.campo-mascarado label {
+  opacity: 0.48;
 }
 .filtro-campo.campo-mascarado select,
 .filtro-campo.campo-mascarado input {
-  opacity: 0.42;
-  background: #f1f5f9;
-  pointer-events: none;
+  opacity: 0.48;
+  background: #f1f5f9 !important;
+  color: #94a3b8 !important;
+  border-color: #cbd5e1 !important;
+  cursor: not-allowed !important;
 }
-.filtro-campo.campo-mascarado .mascara-sub-geo {
-  display: block;
+.dist-sede {
+  display: inline-block;
+  margin-top: 2px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #475569;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 1px 6px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 .busca-input-wrap {
   position: relative;
@@ -1029,6 +1037,7 @@ body {
   font-size: 0.88rem;
   color: var(--tinta);
   background: #fff;
+  transition: opacity 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
 }
 .filtros-barra input:focus, .filtros-barra select:focus, .gaveta-geo input:focus, .gaveta-geo select:focus {
   border-color: var(--azul);
@@ -1128,7 +1137,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 2px 6px;
+  padding: 2px 7px;
   border-radius: 999px;
   font: 700 0.66rem/1.1 var(--sans);
   color: #fff;
@@ -1152,14 +1161,34 @@ body {
   background: #085EC3;
   border-color: #F1C50E;
   border-width: 2px;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   box-shadow: 0 0 0 3px rgba(241,197,14,0.55), 0 3px 8px rgba(8,94,195,0.45);
+}
+.pin-bairro.sede-ong {
+  background: #F1C50E;
+  color: #1d2430;
+  border: 2px solid #1d2430;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 3px 9px;
+  box-shadow: 0 0 0 3px rgba(8,94,195,0.45), 2px 2px 0 #1d2430;
+}
+.pin-bairro.sede-ong .qtd {
+  background: #085EC3;
+  color: #fff;
 }
 .pin-bairro .qtd {
   background: rgba(0,0,0,0.22);
   padding: 1px 4px;
   border-radius: 99px;
-  font-size: 0.64rem;
+  font-size: 0.63rem;
+  font-variant-numeric: tabular-nums;
+}
+.pin-bairro .pin-km {
+  font-weight: 600;
+  font-size: 0.6rem;
+  opacity: 0.92;
+  font-variant-numeric: tabular-nums;
 }
 .leaflet-popup-content-wrapper {
   border-radius: 6px !important;
@@ -1844,6 +1873,15 @@ tr:hover td {
   var icoPinInline = '${svgPin}';
   var icoUsersInline = '${svgUsers}';
   var icoCheckInline = '${svgCheck}';
+  var icoSedeInline = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9.5 12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1V9.5z"/></svg>';
+
+  function calcKmCoords(a, b) {
+    if (!a || !b) return 0;
+    var R = 6371, r = Math.PI / 180;
+    var dl = (b[0] - a[0]) * r, dn = (b[1] - a[1]) * r;
+    var h = Math.sin(dl / 2) * Math.sin(dl / 2) + Math.cos(a[0] * r) * Math.cos(b[0] * r) * Math.sin(dn / 2) * Math.sin(dn / 2);
+    return 2 * R * Math.asin(Math.sqrt(h));
+  }
 
   function renderizarCamadasLeaflet() {
     if (!lMap || !ultimoEstadoMapa || typeof window.L === "undefined") return;
@@ -1851,7 +1889,8 @@ tr:hover td {
     if (lLayer) lLayer.clearLayers();
     else lLayer = L.layerGroup().addTo(lMap);
 
-    var refCoord = st.COORD[st.ref] || [-12.9858, -38.4979];
+    var sedeCoord = st.COORD["Arenoso"] || [-12.9522, -38.4414];
+    var refCoord = st.COORD[st.ref] || sedeCoord;
 
     if (st.r && st.r > 0) {
       L.circle(refCoord, {
@@ -1864,16 +1903,39 @@ tr:hover td {
       }).addTo(lLayer);
     }
 
+    // Linhas tracejadas sutis ligando a Sede da ONG (Arenoso) aos bairros com voluntários ativos
+    st.BAIRROS.forEach(function(b) {
+      if (b === "Arenoso") return;
+      var c = st.COORD[b];
+      var qtd = st.cont[b] || 0;
+      if (c && qtd > 0) {
+        L.polyline([sedeCoord, c], {
+          color: "#085EC3",
+          weight: 1.4,
+          opacity: 0.42,
+          dashArray: "4 4"
+        }).addTo(lLayer);
+      }
+    });
+
     st.BAIRROS.forEach(function(b) {
       var c = st.COORD[b];
       if (!c) return;
       var qtd = st.cont[b] || 0;
+      var eSede = (b === "Arenoso");
       var eRef = (b === st.ref);
-      var cls = "pin-bairro" + (eRef ? " focal" : (qtd === 0 ? " vazio" : ""));
+      var distSede = eSede ? 0 : calcKmCoords(sedeCoord, c);
+      var distSedeTxt = distSede.toFixed(1).replace(".", ",") + " km";
+
+      var cls = "pin-bairro" + (eSede ? " sede-ong" : (eRef ? " focal" : (qtd === 0 ? " vazio" : "")));
+      var rotuloPin = eSede
+        ? '<span style="display:inline-flex;align-items:center;gap:4px">' + icoSedeInline + ' Sede ONG · Arenoso</span>'
+        : '<span style="display:inline-flex;align-items:center;gap:3px">' + (eRef ? icoPinInline : '') + b + ' <span class="pin-km">· ' + distSedeTxt + '</span></span>';
+
       var icone = L.divIcon({
         className: "pin-bairro-wrap",
-        html: '<div class="' + cls + '" title="' + b + ': ' + qtd + ' voluntário(s)">' +
-              '<span style="display:inline-flex;align-items:center;gap:3px">' + (eRef ? icoPinInline : '') + b + '</span>' +
+        html: '<div class="' + cls + '" title="' + (eSede ? 'Sede Usina da Vida (Arenoso): ' : b + ' (' + distSedeTxt + ' da Sede): ') + qtd + ' voluntário(s)">' +
+              rotuloPin +
               '<span class="qtd">' + qtd + '</span></div>',
         iconSize: [1, 1],
         iconAnchor: [0, 0]
@@ -1881,10 +1943,16 @@ tr:hover td {
 
       var m = L.marker(c, {
         icon: icone,
-        zIndexOffset: eRef ? 900 : (qtd > 0 ? 400 : 100)
+        zIndexOffset: eSede ? 1000 : (eRef ? 900 : (qtd > 0 ? 400 : 100))
       }).addTo(lLayer);
+
+      var infoDistPopup = eSede
+        ? '<span style="display:inline-block;margin-top:2px;color:#085EC3;font-weight:700">Sede Institucional da Usina da Vida (0 km)</span><br>'
+        : '<span style="display:inline-block;margin-top:2px;color:#475569">Distância até a Sede (Arenoso): <b>' + distSedeTxt + '</b></span><br>';
+
       var popupHtml =
-        '<div><b>' + b + (eRef ? ' (Ponto Focal)' : '') + '</b><br>' +
+        '<div><b>' + (eSede ? 'Arenoso · Sede da ONG' : b) + (eRef && !eSede ? ' (Ponto Focal)' : '') + '</b><br>' +
+        infoDistPopup +
         '<span style="display:inline-flex;align-items:center;gap:4px;margin-top:3px">' + icoUsersInline + ' <b>' + qtd + '</b> voluntário(s) nos filtros atuais</span><br>' +
         '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px">' +
         '<button type="button" class="btn-popup-mapa" data-acao-mapa="filtrar" data-bairro="' + b + '">Filtrar bairro</button>' +
@@ -1955,8 +2023,8 @@ tr:hover td {
     return lMap;
   }
 
-  window.atualizarMapaLeaflet = function(lista, ref, r, cont, COORD, BAIRROS) {
-    ultimoEstadoMapa = { lista: lista, ref: ref, r: r, cont: cont, COORD: COORD, BAIRROS: BAIRROS };
+  window.atualizarMapaLeaflet = function(lista, ref, r, cont, COORD, BAIRROS, kmFn) {
+    ultimoEstadoMapa = { lista: lista, ref: ref, r: r, cont: cont, COORD: COORD, BAIRROS: BAIRROS, km: kmFn };
     if (lMap) {
       renderizarCamadasLeaflet();
     }
