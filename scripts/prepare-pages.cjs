@@ -171,9 +171,10 @@ function redesenharPortal(html) {
     '      <div class="filtro-campo"><label for="f-raio">Raio de proximidade (km)</label><input id="f-raio" type="number" min="0" max="200" step="0.5" inputmode="decimal" list="raios" placeholder="Ex.: 4,5"><datalist id="raios"><option value="3"><option value="5"><option value="8"><option value="12"><option value="20"></datalist></div>' +
     '    </div>' +
     '    <div class="geo-mapa-wrap">' +
-    '      <div class="mapa-cab"><b>Distribuição Territorial de Salvador</b><span id="mapa-leg"></span></div>' +
-    '      <svg id="mapa" viewBox="0 0 330 175" role="img" aria-label="Mapa esquemático dos bairros com o raio de distância"></svg>' +
-    '      <p class="mapa-info">Alcance territorial estimado a partir da sede comunitária da Usina da Vida.</p>' +
+    '      <div class="mapa-cab"><b>🗺️ Mapa Interativo de Salvador (OpenStreetMap)</b><span id="mapa-leg"></span></div>' +
+    '      <div id="mapa-leaflet" role="region" aria-label="Mapa interativo dos bairros de Salvador"></div>' +
+    '      <svg id="mapa" viewBox="0 0 330 175" role="img" aria-label="Mapa esquemático dos bairros com o raio de distância" style="display:none"></svg>' +
+    '      <p class="mapa-info">Clique em um bairro no mapa para filtrar voluntários · Dados cartográficos OpenStreetMap.</p>' +
     '    </div>' +
     '  </div>' +
     '</div>\n' +
@@ -191,6 +192,12 @@ function redesenharPortal(html) {
   if (volAntigo.test(html)) {
     html = html.replace(volAntigo, volNovo);
   }
+
+  // Conectar função mapa(lista) ao mapa interativo Leaflet
+  html = html.replace(
+    '$("mapa-leg").textContent = r ? "Raio de "+String(r).replace(".",",")+" km a partir de "+ref : "Selecione um raio para ver o alcance";',
+    '$("mapa-leg").textContent = r ? "Raio de "+String(r).replace(".",",")+" km a partir de "+ref : "Ponto focal: "+ref+" (selecione um raio em km)"; if (typeof window.atualizarMapaLeaflet === "function") window.atualizarMapaLeaflet(lista, ref, r, cont, COORD, BAIRROS);'
+  );
 
   // 6. Transformar Ações: cabeçalho corporativo, toolbar com botão justificado à direita e padronização visual
   html = html.replace(/<h2>Ações<\/h2>\s*<p style="margin:0">[\s\S]*?<\/p>/, 
@@ -964,13 +971,89 @@ body {
   font-size: 0.84rem;
   margin-bottom: 8px;
 }
+#mapa-leaflet {
+  width: 100%;
+  height: 275px;
+  background: #dce8f5;
+  border-radius: 6px;
+  border: 1.5px solid #cbd5e1;
+  z-index: 2;
+  overflow: hidden;
+}
 #mapa {
   width: 100%;
   height: auto;
   max-height: 190px;
   background: #eaf2fb;
   border-radius: 4px;
-  display: block;
+  display: none;
+}
+.pin-bairro-wrap {
+  background: transparent;
+  border: none;
+}
+.pin-bairro {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  font: 700 0.66rem/1.1 var(--sans);
+  color: #fff;
+  background: #DB150A;
+  border: 1.5px solid #fff;
+  box-shadow: 0 2px 5px rgba(15,23,42,0.35);
+  white-space: nowrap;
+  transform: translate(-50%, -50%);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  cursor: pointer;
+}
+.pin-bairro:hover {
+  transform: translate(-50%, -50%) scale(1.12);
+  z-index: 1000 !important;
+}
+.pin-bairro.vazio {
+  background: #64748b;
+  opacity: 0.85;
+}
+.pin-bairro.focal {
+  background: #085EC3;
+  border-color: #F1C50E;
+  border-width: 2px;
+  font-size: 0.72rem;
+  box-shadow: 0 0 0 3px rgba(241,197,14,0.55), 0 3px 8px rgba(8,94,195,0.45);
+}
+.pin-bairro .qtd {
+  background: rgba(0,0,0,0.22);
+  padding: 1px 4px;
+  border-radius: 99px;
+  font-size: 0.64rem;
+}
+.leaflet-popup-content-wrapper {
+  border-radius: 6px !important;
+  border: 1.5px solid #1d2430;
+  box-shadow: 4px 4px 0 #F1C50E !important;
+  font-family: var(--sans) !important;
+}
+.leaflet-popup-content {
+  margin: 10px 12px !important;
+  font-size: 0.82rem !important;
+  line-height: 1.45 !important;
+}
+.btn-popup-mapa {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 4px 9px;
+  font: 600 0.74rem var(--sans);
+  background: var(--azul);
+  color: #fff !important;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.btn-popup-mapa:hover {
+  background: var(--azul-esc);
 }
 .mapa-info {
   font-size: 0.76rem;
@@ -1640,9 +1723,133 @@ tr:hover td {
 </div>`;
 
   // 13. Script complementar para interações dinâmicas do portal
-  const scriptPortal = `<script id="script-portal-harmonia">
+  const scriptPortal = `<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script id="script-portal-harmonia">
 (function(){
-  // Alternar gaveta de filtros territoriais
+  var lMap = null;
+  var lLayer = null;
+  var ultimoEstadoMapa = null;
+
+  function renderizarCamadasLeaflet() {
+    if (!lMap || !ultimoEstadoMapa || typeof window.L === "undefined") return;
+    var st = ultimoEstadoMapa;
+    if (lLayer) lLayer.clearLayers();
+    else lLayer = L.layerGroup().addTo(lMap);
+
+    var refCoord = st.COORD[st.ref] || [-12.9858, -38.4979];
+
+    var circulo = null;
+    if (st.r && st.r > 0) {
+      circulo = L.circle(refCoord, {
+        radius: st.r * 1000,
+        color: "#085EC3",
+        weight: 2,
+        dashArray: "6 4",
+        fillColor: "#085EC3",
+        fillOpacity: 0.12
+      }).addTo(lLayer);
+    }
+
+    st.BAIRROS.forEach(function(b) {
+      var c = st.COORD[b];
+      if (!c) return;
+      var qtd = st.cont[b] || 0;
+      var eRef = (b === st.ref);
+      var cls = "pin-bairro" + (eRef ? " focal" : (qtd === 0 ? " vazio" : ""));
+      var icone = L.divIcon({
+        className: "pin-bairro-wrap",
+        html: '<div class="' + cls + '" title="' + b + ': ' + qtd + ' voluntário(s)">' +
+              '<span>' + (eRef ? '📍 ' : '') + b + '</span>' +
+              '<span class="qtd">' + qtd + '</span></div>',
+        iconSize: [1, 1],
+        iconAnchor: [0, 0]
+      });
+
+      var m = L.marker(c, {
+        icon: icone,
+        zIndexOffset: eRef ? 900 : (qtd > 0 ? 400 : 100)
+      }).addTo(lLayer);
+      var popupHtml =
+        '<div><b>' + b + (eRef ? ' (Ponto Focal)' : '') + '</b><br>' +
+        '<span>👥 <b>' + qtd + '</b> voluntário(s) nos filtros atuais</span><br>' +
+        '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px">' +
+        '<button type="button" class="btn-popup-mapa" data-acao-mapa="filtrar" data-bairro="' + b + '">Filtrar bairro</button>' +
+        (!eRef ? '<button type="button" class="btn-popup-mapa" style="background:#1d2430" data-acao-mapa="focal" data-bairro="' + b + '">Definir ponto focal</button>' : '') +
+        '</div></div>';
+      m.bindPopup(popupHtml);
+    });
+
+    if (st.r && st.r > 0) {
+      var z = st.r <= 4 ? 13 : (st.r <= 10 ? 12 : 11);
+      lMap.setView(refCoord, z);
+    } else {
+      lMap.setView([-12.9780, -38.4620], 12);
+    }
+  }
+
+  function inicializarLeaflet() {
+    var elMapa = document.getElementById("mapa-leaflet");
+    if (!elMapa || typeof window.L === "undefined") {
+      var svgFallback = document.getElementById("mapa");
+      if (svgFallback && typeof window.L === "undefined") svgFallback.style.display = "block";
+      return null;
+    }
+    if (lMap) return lMap;
+
+    var camadaRuas = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}", {
+      attribution: "Tiles &copy; Esri &mdash; OpenStreetMap",
+      maxZoom: 19
+    });
+    var camadaSatelite = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
+      attribution: "Tiles &copy; Esri",
+      maxZoom: 19
+    });
+
+    lMap = L.map(elMapa, {
+      center: [-12.9780, -38.4620],
+      zoom: 12,
+      layers: [camadaRuas],
+      zoomControl: true,
+      scrollWheelZoom: true
+    });
+
+    L.control.layers({ "🗺️ Mapa de Ruas": camadaRuas, "🛰️ Satélite": camadaSatelite }, null, { position: "topright" }).addTo(lMap);
+
+    lLayer = L.layerGroup().addTo(lMap);
+
+    elMapa.addEventListener("click", function(e) {
+      var btn = e.target.closest("button[data-acao-mapa]");
+      if (!btn) return;
+      var acao = btn.getAttribute("data-acao-mapa");
+      var bairro = btn.getAttribute("data-bairro");
+      if (acao === "filtrar") {
+        var selBairro = document.getElementById("f-bairro");
+        if (selBairro) {
+          selBairro.value = (selBairro.value === bairro) ? "" : bairro;
+          selBairro.dispatchEvent(new Event("input", { bubbles: true }));
+        }
+      } else if (acao === "focal") {
+        var selRef = document.getElementById("f-ref");
+        if (selRef) {
+          selRef.value = bairro;
+          selRef.dispatchEvent(new Event("input", { bubbles: true }));
+        }
+      }
+      if (lMap) lMap.closePopup();
+    });
+
+    return lMap;
+  }
+
+  window.atualizarMapaLeaflet = function(lista, ref, r, cont, COORD, BAIRROS) {
+    ultimoEstadoMapa = { lista: lista, ref: ref, r: r, cont: cont, COORD: COORD, BAIRROS: BAIRROS };
+    if (lMap) {
+      renderizarCamadasLeaflet();
+    }
+  };
+
+  // Alternar gaveta de filtros territoriais e inicializar mapa Leaflet
   var btnGeo = document.getElementById("btn-toggle-geo");
   var gavetaGeo = document.getElementById("gaveta-geo");
   if (btnGeo && gavetaGeo) {
@@ -1651,6 +1858,15 @@ tr:hover td {
       gavetaGeo.style.display = aberto ? "none" : "block";
       btnGeo.classList.toggle("ativo", !aberto);
       btnGeo.setAttribute("aria-expanded", !aberto);
+      if (!aberto) {
+        setTimeout(function() {
+          inicializarLeaflet();
+          if (lMap) {
+            lMap.invalidateSize();
+            renderizarCamadasLeaflet();
+          }
+        }, 60);
+      }
     });
   }
 
