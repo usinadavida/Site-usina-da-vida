@@ -140,25 +140,36 @@ function redesenharPortal(html) {
 
   // 3. Corrigir links para a raiz da landing page
   html = html.split('href="index.html"').join('href="/"');
-  html = html.replace('← Voltar ao site da Usina da Vida', '← Retornar ao site institucional');
+  html = html.replace('← Voltar ao site da Usina da Vida', '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg> Retornar ao site institucional');
 
-  // 4. Transformar Visão Geral com cabeçalho corporativo e status
+  // 4. Transformar Visão Geral com cabeçalho institucional limpo (sem badge 'Base de dados sincronizada')
   html = html.replace('<h2>Visão geral dos cadastros</h2>', 
     '<div class="painel-cab">' +
     '  <div>' +
     '    <h2>Visão Geral dos Cadastros</h2>' +
-    '    <p class="subtitulo-painel">Monitoramento em tempo real de voluntários, etapas de triagem e iniciativas sociais.</p>' +
+    '    <p class="subtitulo-painel">Acompanhamento de voluntários inscritos, etapas de triagem e ações comunitárias.</p>' +
     '  </div>' +
-    '  <div class="status-sinc"><span class="ponto-verde"></span> Base de dados sincronizada</div>' +
     '</div>');
 
-  // 5. Transformar Voluntários: cabeçalho com ações no topo, filtros compactos e gaveta territorial
+  // Ícones SVG reutilizáveis
+  const svgSearch = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>';
+  const svgPin = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>';
+  const svgMap = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>';
+  const svgCheck = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
+  const svgUsers = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>';
+  const svgCalendar = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
+  const svgLock = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
+  const svgWa = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>';
+  const svgPlus = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>';
+  const svgShield = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>';
+
+  // 5. Transformar Voluntários: cabeçalho com ações no topo, filtros com máscara de exclusividade e gaveta territorial
   const volAntigo = /<h2>Voluntários cadastrados<\/h2>\s*<div class="filtros"[\s\S]*?<\/table>\s*<div id="vazio"/;
   const volNovo = 
     '<div class="painel-cab">' +
     '  <div>' +
     '    <h2>Voluntários Cadastrados</h2>' +
-    '    <p class="subtitulo-painel">Banco de talentos, triagem de disponibilidade e mobilização territorial em Salvador.</p>' +
+    '    <p class="subtitulo-painel">Consulta de perfis, disponibilidade e localização por bairro em Salvador.</p>' +
     '  </div>' +
     '  <div class="acoes-topo-vol">' +
     '    <button class="btn btn-cont" id="limpar" type="button">Limpar filtros</button>' +
@@ -166,30 +177,36 @@ function redesenharPortal(html) {
     '  </div>' +
     '</div>\n' +
     '<!-- BARRA PRINCIPAL DE FILTROS -->' +
-    '<div class="filtros-barra" role="search" aria-label="Filtros de voluntários">' +
-    '  <div class="filtro-campo campo-busca">' +
-    '    <label for="f-busca">Buscar por nome</label>' +
-    '    <div class="busca-input-wrap">' +
-    '      <span class="busca-ico">🔍</span>' +
-    '      <input id="f-busca" type="text" placeholder="Digite o nome do voluntário...">' +
+    '<div class="filtros-barra" id="filtros-barra-principal" role="search" aria-label="Filtros de voluntários">' +
+    '  <div class="filtros-gerais-grupo" id="filtros-gerais-grupo">' +
+    '    <div class="filtro-campo campo-busca">' +
+    '      <label for="f-busca">Buscar por nome</label>' +
+    '      <div class="busca-input-wrap">' +
+    '        <span class="busca-ico">' + svgSearch + '</span>' +
+    '        <input id="f-busca" type="text" placeholder="Digite o nome do voluntário...">' +
+    '      </div>' +
     '    </div>' +
-    '  </div>' +
-    '  <div class="filtro-campo">' +
-    '    <label for="f-area">Área de atuação</label>' +
-    '    <select id="f-area"></select>' +
-    '  </div>' +
-    '  <div class="filtro-campo">' +
-    '    <label for="f-status">Status da inscrição</label>' +
-    '    <select id="f-status"></select>' +
-    '  </div>' +
-    '  <div class="filtro-campo">' +
-    '    <label for="f-disp">Disponibilidade</label>' +
-    '    <select id="f-disp"></select>' +
+    '    <div class="filtro-campo">' +
+    '      <label for="f-area">Área de atuação</label>' +
+    '      <select id="f-area"></select>' +
+    '    </div>' +
+    '    <div class="filtro-campo">' +
+    '      <label for="f-status">Status da inscrição</label>' +
+    '      <select id="f-status"></select>' +
+    '    </div>' +
+    '    <div class="filtro-campo">' +
+    '      <label for="f-disp">Disponibilidade</label>' +
+    '      <select id="f-disp"></select>' +
+    '    </div>' +
+    '    <div class="mascara-filtros-gerais" id="mascara-filtros-gerais" aria-hidden="true">' +
+    '      ' + svgPin +
+    '      <span>Filtro territorial por mapa ativo — feche o mapa ao lado para usar os filtros gerais</span>' +
+    '    </div>' +
     '  </div>' +
     '  <div class="filtro-campo campo-btn-geo">' +
     '    <label>&nbsp;</label>' +
     '    <button type="button" id="btn-toggle-geo" class="btn-geo-toggle" aria-expanded="false">' +
-    '      📍 Filtros Territoriais & Mapa' +
+    '      ' + svgPin + ' <span id="txt-btn-geo">Filtros Territoriais &amp; Mapa</span>' +
     '    </button>' +
     '  </div>' +
     '</div>\n' +
@@ -197,17 +214,17 @@ function redesenharPortal(html) {
     '<div class="gaveta-geo" id="gaveta-geo" style="display:none">' +
     '  <div class="gaveta-grid">' +
     '    <div class="geo-filtros-extra">' +
-    '      <div class="filtro-campo"><label for="f-bairro">Bairro / Localidade</label><select id="f-bairro"></select></div>' +
-    '      <div class="filtro-campo"><label for="f-form">Formação acadêmica</label><select id="f-form"></select></div>' +
-    '      <div class="filtro-campo"><label for="f-ativ">Alocação em atividade</label><select id="f-ativ"></select></div>' +
-    '      <div class="filtro-campo"><label for="f-ref">Ponto focal de referência</label><select id="f-ref"></select></div>' +
-    '      <div class="filtro-campo"><label for="f-raio">Raio de proximidade (km)</label><input id="f-raio" type="number" min="0" max="200" step="0.5" inputmode="decimal" list="raios" placeholder="Ex.: 4,5"><datalist id="raios"><option value="3"><option value="5"><option value="8"><option value="12"><option value="20"></datalist></div>' +
+    '      <div class="filtro-campo" id="wrap-f-bairro"><label for="f-bairro">Bairro / Localidade</label><select id="f-bairro"></select><span class="mascara-sub-geo" id="mask-bairro">Desabilitado durante filtro por raio (km)</span></div>' +
+    '      <div class="filtro-campo" id="wrap-f-form"><label for="f-form">Formação acadêmica</label><select id="f-form"></select></div>' +
+    '      <div class="filtro-campo" id="wrap-f-ativ"><label for="f-ativ">Alocação em atividade</label><select id="f-ativ"></select></div>' +
+    '      <div class="filtro-campo" id="wrap-f-ref"><label for="f-ref">Ponto focal de referência</label><select id="f-ref"></select><span class="mascara-sub-geo" id="mask-ref">Desabilitado durante filtro por bairro único</span></div>' +
+    '      <div class="filtro-campo" id="wrap-f-raio"><label for="f-raio">Raio de proximidade (km)</label><input id="f-raio" type="number" min="0" max="200" step="0.5" inputmode="decimal" list="raios" placeholder="Ex.: 4,5"><datalist id="raios"><option value="3"><option value="5"><option value="8"><option value="12"><option value="20"></datalist><span class="mascara-sub-geo" id="mask-raio">Desabilitado durante filtro por bairro único</span></div>' +
     '    </div>' +
     '    <div class="geo-mapa-wrap">' +
-    '      <div class="mapa-cab"><b>🗺️ Mapa Interativo de Salvador (OpenStreetMap)</b><span id="mapa-leg"></span></div>' +
+    '      <div class="mapa-cab"><b class="mapa-titulo-ic">' + svgMap + ' Mapa Territorial de Salvador</b><span id="mapa-leg"></span></div>' +
     '      <div id="mapa-leaflet" role="region" aria-label="Mapa interativo dos bairros de Salvador"></div>' +
     '      <svg id="mapa" viewBox="0 0 330 175" role="img" aria-label="Mapa esquemático dos bairros com o raio de distância" style="display:none"></svg>' +
-    '      <p class="mapa-info">Clique em um bairro no mapa para filtrar voluntários · Dados cartográficos OpenStreetMap.</p>' +
+    '      <p class="mapa-info">Clique em um bairro no mapa para filtrar voluntários ou definir o ponto focal.</p>' +
     '    </div>' +
     '  </div>' +
     '</div>\n' +
@@ -229,19 +246,19 @@ function redesenharPortal(html) {
   // Conectar função mapa(lista) ao mapa interativo Leaflet
   html = html.replace(
     '$("mapa-leg").textContent = r ? "Raio de "+String(r).replace(".",",")+" km a partir de "+ref : "Selecione um raio para ver o alcance";',
-    '$("mapa-leg").textContent = r ? "Raio de "+String(r).replace(".",",")+" km a partir de "+ref : "Ponto focal: "+ref+" (selecione um raio em km)"; if (typeof window.atualizarMapaLeaflet === "function") window.atualizarMapaLeaflet(lista, ref, r, cont, COORD, BAIRROS);'
+    '$("mapa-leg").textContent = r ? "Raio de "+String(r).replace(".",",")+" km a partir de "+ref : "Ponto focal: "+ref+" (defina um raio em km)"; if (typeof window.atualizarMapaLeaflet === "function") window.atualizarMapaLeaflet(lista, ref, r, cont, COORD, BAIRROS);'
   );
 
-  // 6. Transformar Ações: cabeçalho corporativo, toolbar com botão justificado à direita e padronização visual
+  // 6. Transformar Ações: cabeçalho institucional, toolbar com botão justificado à direita e padronização visual
   html = html.replace(/<h2>Ações<\/h2>\s*<p style="margin:0">[\s\S]*?<\/p>/, 
     '<div class="painel-cab">' +
     '  <div>' +
     '    <h2>Ações e Projetos Comunitários</h2>' +
-    '    <p class="subtitulo-painel">Acompanhamento e registro operacional das oficinas, projetos e iniciativas sociais da Usina da Vida.</p>' +
+    '    <p class="subtitulo-painel">Registro de oficinas realizadas e agendamento de novas atividades para voluntários.</p>' +
     '  </div>' +
     '</div>');
 
-  // Toolbar com filtros de ações à esquerda e botão de cadastrar (inovação) justificado à direita
+  // Toolbar com filtros de ações à esquerda e botão de cadastrar ação justificado à direita (sem selo artificial 'Inovação')
   const subAntigo = /<div class="sub" role="tablist" aria-label="Tipo de ação">[\s\S]*?<\/div>/;
   const subNovo = 
     '<div class="acoes-toolbar">\n' +
@@ -251,9 +268,9 @@ function redesenharPortal(html) {
     '    <button type="button" role="tab" id="s-agend" aria-selected="false">Agendadas <span id="n-agend"></span></button>\n' +
     '  </div>\n' +
     '  <div class="acoes-cad-wrap">\n' +
-    '    <button type="button" id="btn-nova-acao" class="btn-cad-acao" title="Cadastrar nova ação ou iniciativa comunitária">\n' +
-    '      <span class="badge-cad-inov">Inovação</span>\n' +
-    '      <span class="txt-cad-acao">＋ Cadastrar Nova Ação</span>\n' +
+    '    <button type="button" id="btn-nova-acao" class="btn-cad-acao" title="Cadastrar nova ação comunitária">\n' +
+    '      ' + svgPlus + '\n' +
+    '      <span class="txt-cad-acao">Cadastrar nova ação</span>\n' +
     '    </button>\n' +
     '  </div>\n' +
     '</div>';
@@ -281,7 +298,7 @@ function redesenharPortal(html) {
     html = html.replace(agendOriginal, agendPadronizado);
   }
 
-  // Substituição das funções de renderização com padronizador rigoroso de caracteres e layout uniforme
+  // Substituição das funções de renderização com ícones SVG vetoriais e sem barras/frases artificiais
   const fnAcoesAntigo = /function acoes\(\)\{[\s\S]*?Array\.prototype\.forEach\.call\(document\.querySelectorAll\("#agend details"\),function\(d,i\)\{d\.open=abertos\[i\]\}\);\s*\}\);/;
   const fnAcoesNovo = 
 `function padronizarDesc(texto, limite) {
@@ -298,23 +315,25 @@ function redesenharPortal(html) {
     return { visivel: corte + '...', completo: t };
   }
 
+  var icoCheckCard = '${svgCheck}';
+  var icoUsersCard = '${svgUsers}';
+  var icoCalCard = '${svgCalendar}';
+
   function acoes(){
     $("acoes").innerHTML = ACOES.map(function(a){
       var descInfo = padronizarDesc(a.p, 100);
       return '<article class="acao" style="--c:' + a.c + '">' +
         '<div class="acao-topo">' +
           '<span class="tag" style="background:' + a.c + '18;color:' + a.c + ';border:1px solid ' + a.c + '40;">' + esc(a.a) + '</span>' +
-          '<span class="acao-data-pill">✓ ' + esc(a.d) + '</span>' +
+          '<span class="acao-data-pill">' + icoCheckCard + ' ' + esc(a.d) + '</span>' +
         '</div>' +
         '<h3 class="acao-titulo" title="' + esc(a.t) + '">' + esc(a.t) + '</h3>' +
         '<p class="acao-desc" title="' + esc(descInfo.completo) + '">' + esc(descInfo.visivel) + '</p>' +
         '<div class="acao-rodape">' +
           '<div class="acao-meta-real">' +
-            '<span class="meta-vol-cont">👥 <b>' + a.n + '</b> voluntários</span>' +
-            '<span class="meta-status-feita">Concluída</span>' +
+            '<span class="meta-vol-cont">' + icoUsersCard + ' <b>' + a.n + '</b> voluntários participantes</span>' +
+            '<span class="meta-status-feita">Realizada</span>' +
           '</div>' +
-          '<div class="acao-impacto-barra"><div class="acao-impacto-prog" style="width:100%;background:' + a.c + '"></div></div>' +
-          '<div class="acao-meta-sub">Iniciativa realizada · Arquivada na governança</div>' +
         '</div>' +
       '</article>';
     }).join("");
@@ -333,7 +352,7 @@ function redesenharPortal(html) {
       return '<article class="acao" style="--c:' + a.c + '">' +
         '<div class="acao-topo">' +
           '<span class="tag" style="background:' + a.c + '18;color:' + a.c + ';border:1px solid ' + a.c + '40;">' + esc(a.a) + '</span>' +
-          '<span class="acao-data-pill dt-agendada">📅 ' + esc(a.dt) + '</span>' +
+          '<span class="acao-data-pill dt-agendada">' + icoCalCard + ' ' + esc(a.dt) + '</span>' +
         '</div>' +
         '<h3 class="acao-titulo" title="' + esc(a.t) + '">' + esc(a.t) + '</h3>' +
         '<p class="acao-desc" title="' + esc(descInfo.completo) + '">' + esc(descInfo.visivel) + '</p>' +
@@ -369,7 +388,7 @@ function redesenharPortal(html) {
     html = html.replace(fnAcoesAntigo, fnAcoesNovo);
   }
 
-  // 7. Transformar Níveis de Acesso: matriz completa de governança e LGPD
+  // 7. Transformar Níveis de Acesso: matriz completa de governança e LGPD com ícones SVG
   const acessoAntigo = /<!-- ACESSO -->\s*<section class="painel" id="p-acesso"[\s\S]*?<\/section>/;
   const acessoNovo = 
     '<!-- ACESSO -->\n' +
@@ -377,11 +396,11 @@ function redesenharPortal(html) {
     '  <div class="painel-cab">\n' +
     '    <div>\n' +
     '      <h2>Governança e Níveis de Acesso</h2>\n' +
-    '      <p class="subtitulo-painel">Matriz de permissões institucionais e conformidade com privacidade e proteção de dados (LGPD).</p>\n' +
+    '      <p class="subtitulo-painel">Permissões por perfil de acesso e proteção de dados pessoais (LGPD).</p>\n' +
     '    </div>\n' +
     '    <div class="sessao-badge">\n' +
-    '      <span class="ponto-verde"></span>\n' +
-    '      <span>Sessão autenticada: <strong id="perfil-ativo-nome">Presidência</strong></span>\n' +
+    '      ' + svgShield + '\n' +
+    '      <span>Perfil ativo: <strong id="perfil-ativo-nome">Presidência</strong></span>\n' +
     '    </div>\n' +
     '  </div>\n\n' +
     '  <!-- CARDS DOS TRÊS NÍVEIS -->\n' +
@@ -391,13 +410,13 @@ function redesenharPortal(html) {
     '        <span class="nivel-tag tag-presidencia">Administração Geral</span>\n' +
     '        <h3>Presidência</h3>\n' +
     '      </div>\n' +
-    '      <p class="nivel-desc">Gestão executiva e estratégica integral do voluntariado, prestação de contas institucional e governança geral.</p>\n' +
+    '      <p class="nivel-desc">Gestão executiva do voluntariado, acompanhamento de indicadores e governança institucional.</p>\n' +
     '      <ul class="nivel-itens">\n' +
-    '        <li><span class="chk">✓</span> Visão completa de métricas e indicadores</li>\n' +
-    '        <li><span class="chk">✓</span> Consulta e triagem com dados sensíveis</li>\n' +
-    '        <li><span class="chk">✓</span> Alteração e validação de status</li>\n' +
-    '        <li><span class="chk">✓</span> Gestão de vagas e eventos comunitários</li>\n' +
-    '        <li><span class="chk">✓</span> Exportação irrestrita de relatórios (CSV)</li>\n' +
+    '        <li><span class="chk">' + svgCheck + '</span> Visão completa de métricas e indicadores</li>\n' +
+    '        <li><span class="chk">' + svgCheck + '</span> Consulta e triagem com dados sensíveis</li>\n' +
+    '        <li><span class="chk">' + svgCheck + '</span> Alteração e validação de status</li>\n' +
+    '        <li><span class="chk">' + svgCheck + '</span> Gestão de vagas e eventos comunitários</li>\n' +
+    '        <li><span class="chk">' + svgCheck + '</span> Exportação irrestrita de relatórios (CSV)</li>\n' +
     '      </ul>\n' +
     '    </div>\n\n' +
     '    <div class="card-nivel" style="--cor-borda: var(--laranja)">\n' +
@@ -405,12 +424,12 @@ function redesenharPortal(html) {
     '        <span class="nivel-tag tag-coordenacao">Gestão Operacional</span>\n' +
     '        <h3>Coordenação</h3>\n' +
     '      </div>\n' +
-    '      <p class="nivel-desc">Alinhamento das atividades de campo, triagem direta de inscritos, contato e organização de oficinas comunitárias.</p>\n' +
+    '      <p class="nivel-desc">Alinhamento das atividades de campo, triagem de inscritos, contato e organização das oficinas.</p>\n' +
     '      <ul class="nivel-itens">\n' +
-    '        <li><span class="chk">✓</span> Visão completa de métricas e indicadores</li>\n' +
-    '        <li><span class="chk">✓</span> Acesso aos canais diretos de contato</li>\n' +
-    '        <li><span class="chk">✓</span> Alteração de status e triagem ativa</li>\n' +
-    '        <li><span class="chk">✓</span> Confirmação de participantes em ações</li>\n' +
+    '        <li><span class="chk">' + svgCheck + '</span> Visão completa de métricas e indicadores</li>\n' +
+    '        <li><span class="chk">' + svgCheck + '</span> Acesso aos canais diretos de contato</li>\n' +
+    '        <li><span class="chk">' + svgCheck + '</span> Alteração de status e triagem ativa</li>\n' +
+    '        <li><span class="chk">' + svgCheck + '</span> Confirmação de participantes em ações</li>\n' +
     '        <li class="bloq"><span class="chk-bloq">—</span> Sem permissão de exportação de base</li>\n' +
     '      </ul>\n' +
     '    </div>\n\n' +
@@ -419,11 +438,11 @@ function redesenharPortal(html) {
     '        <span class="nivel-tag tag-colaborador">Consulta Protegida</span>\n' +
     '        <h3>Colaborador Autorizado</h3>\n' +
     '      </div>\n' +
-    '      <p class="nivel-desc">Apoio operacional e consulta de disponibilidades. Respeita a privacidade (LGPD), mantendo contatos pessoais resguardados.</p>\n' +
+    '      <p class="nivel-desc">Apoio operacional e consulta de disponibilidades, mantendo contatos pessoais resguardados (LGPD).</p>\n' +
     '      <ul class="nivel-itens">\n' +
-    '        <li><span class="chk">✓</span> Consulta de competências e áreas</li>\n' +
-    '        <li><span class="chk">✓</span> Filtro de disponibilidade e bairros</li>\n' +
-    '        <li class="bloq"><span class="chk-bloq">🔒</span> Contatos sensíveis protegidos</li>\n' +
+    '        <li><span class="chk">' + svgCheck + '</span> Consulta de competências e áreas</li>\n' +
+    '        <li><span class="chk">' + svgCheck + '</span> Filtro de disponibilidade e bairros</li>\n' +
+    '        <li class="bloq"><span class="chk-bloq">' + svgLock + '</span> Contatos sensíveis protegidos</li>\n' +
     '        <li class="bloq"><span class="chk-bloq">—</span> Alterações de status restritas</li>\n' +
     '        <li class="bloq"><span class="chk-bloq">—</span> Sem permissão de exportação de dados</li>\n' +
     '      </ul>\n' +
@@ -495,10 +514,10 @@ function redesenharPortal(html) {
   html = html.replace('+"@exemplo.com"', '+(i%3===0?"@usinadavida.org.br":i%3===1?"@gmail.com":"@outlook.com")');
   html = html.replace('a.download="voluntarios-exemplo.csv";', 'a.download="voluntarios-usina-da-vida.csv";');
 
-  // 9. Melhorar a formatação da linha de contato na tabela
+  // 9. Melhorar a formatação da linha de contato na tabela com ícones SVG
   html = html.replace(
     'var contato = pode ? \'<a href="https://wa.me/55\'+v.tel.replace(/\\D/g,"")+\'" rel="noopener">\'+esc(v.tel)+\'</a><br>\'+esc(v.email) : \'<span class="oculto">restrito</span>\';',
-    'var contato = pode ? \'<a class="link-wa" href="https://wa.me/55\'+v.tel.replace(/\\D/g,"")+\'" target="_blank" rel="noopener" title="Abrir conversa no WhatsApp"><span class="wa-ico">💬</span> \'+esc(v.tel)+\'</a><div class="txt-email">\'+esc(v.email)+\'</div>\' : \'<span class="tag-restrito">🔒 Protegido (LGPD)</span>\';'
+    'var contato = pode ? \'<a class="link-wa" href="https://wa.me/55\'+v.tel.replace(/\\D/g,"")+\'" target="_blank" rel="noopener" title="Abrir conversa no WhatsApp"><span class="wa-ico">' + svgWa + '</span> \'+esc(v.tel)+\'</a><div class="txt-email">\'+esc(v.email)+\'</div>\' : \'<span class="tag-restrito">' + svgLock + ' Protegido (LGPD)</span>\';'
   );
 
   // 10. Atualizar função K dos KPIs para não ter setas genéricas
@@ -750,26 +769,29 @@ body {
   font-size: 0.92rem;
   color: #64748b;
 }
-.status-sinc, .sessao-badge {
-  display: flex;
+.ico-svg {
+  width: 15px;
+  height: 15px;
+  vertical-align: -2px;
+  flex-shrink: 0;
+  display: inline-block;
+}
+.sessao-badge {
+  display: inline-flex;
   align-items: center;
   gap: 7px;
   font-size: 0.85rem;
-  color: #334155;
+  color: var(--tinta);
   background: #fff;
-  border: 1px solid var(--borda);
-  padding: 5px 12px;
-  border-radius: 999px;
+  border: 1.5px solid var(--borda);
+  padding: 6px 12px;
+  border-radius: 4px;
 }
-.ponto-verde {
-  width: 8px;
-  height: 8px;
-  background: var(--verde);
-  border-radius: 50%;
-  box-shadow: 0 0 0 3px rgba(15, 157, 88, 0.2);
+.sessao-badge .ico-svg {
+  color: var(--azul);
 }
 
-/* BOTÕES COM NEO-BRUTALISMO HARMONIOSO */
+/* BOTÕES COM IDENTIDADE USINA DA VIDA */
 .btn-azul {
   background: var(--tinta);
   color: #fff;
@@ -779,7 +801,7 @@ body {
   font-weight: 600;
   padding: 8px 18px;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
 }
 .btn-azul:hover:not(:disabled) {
   transform: translate(-1px, -1px);
@@ -793,7 +815,7 @@ body {
   font-weight: 600;
   padding: 8px 18px;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 .btn-cont:hover {
   background: #f1f5f9;
@@ -834,6 +856,7 @@ body {
   font-weight: 700;
   color: var(--c, var(--azul));
   line-height: 1.1;
+  font-variant-numeric: tabular-nums;
 }
 .kpi .kpi-lbl {
   display: block;
@@ -878,7 +901,8 @@ body {
   text-decoration: none;
   color: inherit;
   font-size: 0.88rem;
-  transition: background 0.12s;
+  font-variant-numeric: tabular-nums;
+  transition: background-color 0.12s ease;
 }
 .barra-h:hover {
   background: #f1f5f9;
@@ -895,23 +919,67 @@ body {
   transition: width 0.3s ease;
 }
 
-/* TOOLBAR PRINCIPAL DE FILTROS DOS VOLUNTÁRIOS */
+/* TOOLBAR PRINCIPAL DE FILTROS DOS VOLUNTÁRIOS + MÁSCARA DE EXCLUSIVIDADE */
 .filtros-barra {
   background: #fff;
   border: 1px solid var(--borda);
   border-radius: 6px;
   padding: 14px 18px;
   display: grid;
-  grid-template-columns: 2fr 1.3fr 1.2fr 1.2fr auto;
-  gap: 12px;
+  grid-template-columns: 1fr auto;
+  gap: 14px;
   align-items: flex-end;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   margin-bottom: 12px;
 }
+.filtros-gerais-grupo {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2fr 1.3fr 1.2fr 1.2fr;
+  gap: 12px;
+  align-items: flex-end;
+}
+.mascara-filtros-gerais {
+  display: none;
+  position: absolute;
+  inset: -4px;
+  background: rgba(248, 250, 252, 0.88);
+  border: 1.5px dashed var(--azul);
+  border-radius: 6px;
+  color: var(--tinta);
+  font-size: 0.84rem;
+  font-weight: 600;
+  z-index: 6;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 6px 14px;
+  text-align: center;
+}
+.mascara-filtros-gerais .ico-svg {
+  color: var(--azul);
+  width: 17px;
+  height: 17px;
+}
+.filtros-barra.modo-mapa-ativo .filtros-gerais-grupo > .filtro-campo {
+  opacity: 0.25;
+  pointer-events: none;
+  user-select: none;
+  filter: grayscale(0.8);
+}
+.filtros-barra.modo-mapa-ativo .mascara-filtros-gerais {
+  display: flex;
+}
 @media (max-width: 1024px) {
   .filtros-barra {
+    grid-template-columns: 1fr;
+  }
+  .filtros-gerais-grupo {
     grid-template-columns: 1fr 1fr;
   }
+}
+.filtro-campo {
+  position: relative;
 }
 .filtro-campo label {
   display: block;
@@ -920,6 +988,22 @@ body {
   color: #475569;
   margin-bottom: 4px;
 }
+.mascara-sub-geo {
+  display: none;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #64748b;
+  margin-top: 3px;
+}
+.filtro-campo.campo-mascarado select,
+.filtro-campo.campo-mascarado input {
+  opacity: 0.42;
+  background: #f1f5f9;
+  pointer-events: none;
+}
+.filtro-campo.campo-mascarado .mascara-sub-geo {
+  display: block;
+}
 .busca-input-wrap {
   position: relative;
   display: flex;
@@ -927,14 +1011,15 @@ body {
 }
 .busca-ico {
   position: absolute;
-  left: 12px;
-  font-size: 0.85rem;
+  left: 11px;
+  display: inline-flex;
+  align-items: center;
+  color: #64748b;
   pointer-events: none;
-  opacity: 0.6;
   z-index: 2;
 }
 .filtros-barra .busca-input-wrap input {
-  padding-left: 36px !important;
+  padding-left: 34px !important;
 }
 .filtros-barra input, .filtros-barra select, .gaveta-geo input, .gaveta-geo select {
   width: 100%;
@@ -951,6 +1036,9 @@ body {
   box-shadow: 0 0 0 3px rgba(8,94,195,0.18);
 }
 .btn-geo-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   background: #f1f5f9;
   border: 1.5px solid #cbd5e1;
   color: var(--azul);
@@ -960,7 +1048,7 @@ body {
   border-radius: 4px;
   cursor: pointer;
   white-space: nowrap;
-  transition: all 0.15s;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
 .btn-geo-toggle:hover, .btn-geo-toggle.ativo {
   background: var(--azul);
@@ -971,11 +1059,11 @@ body {
 /* GAVETA DE FILTROS GEOGRÁFICOS E MAPA */
 .gaveta-geo {
   background: #fff;
-  border: 1px solid var(--borda);
+  border: 1.5px solid var(--azul);
   border-radius: 6px;
   padding: 18px;
   margin-bottom: 14px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(8, 94, 195, 0.08);
 }
 .gaveta-grid {
   display: grid;
@@ -991,6 +1079,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
+  align-content: start;
 }
 .geo-mapa-wrap {
   background: #f8fafc;
@@ -1001,8 +1090,18 @@ body {
 .mapa-cab {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-size: 0.84rem;
   margin-bottom: 8px;
+}
+.mapa-titulo-ic {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--tinta);
+}
+.mapa-titulo-ic .ico-svg {
+  color: var(--azul);
 }
 #mapa-leaflet {
   width: 100%;
@@ -1277,7 +1376,7 @@ tr:hover td {
   display: inline-block;
 }
 
-/* TOOLBAR DE AÇÕES E BOTÃO DE INOVAÇÃO JUSTIFICADO À DIREITA */
+/* TOOLBAR DE AÇÕES E BOTÃO DE CADASTRO JUSTIFICADO À DIREITA */
 .acoes-toolbar {
   display: flex;
   align-items: center;
@@ -1295,38 +1394,27 @@ tr:hover td {
 .btn-cad-acao {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   background: var(--amarelo);
   color: var(--tinta);
   font-family: var(--sans);
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   font-weight: 700;
-  padding: 8px 18px;
-  border-radius: 999px;
-  border: 2px solid #000;
-  box-shadow: 2px 2px 0px #000;
+  padding: 9px 18px;
+  border-radius: 4px;
+  border: 2px solid var(--tinta);
+  box-shadow: 3px 3px 0px var(--tinta);
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
 }
 .btn-cad-acao:hover {
   background: #fcd34d;
   transform: translateY(-1px);
-  box-shadow: 3px 3px 0px #000;
+  box-shadow: 4px 4px 0px var(--tinta);
 }
 .btn-cad-acao:active {
   transform: translateY(1px);
-  box-shadow: 1px 1px 0px #000;
-}
-.badge-cad-inov {
-  background: var(--azul);
-  color: #fff;
-  font-size: 0.72rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 3px 9px;
-  border-radius: 999px;
-  display: inline-block;
+  box-shadow: 1px 1px 0px var(--tinta);
 }
 .txt-cad-acao {
   letter-spacing: -0.01em;
@@ -1341,16 +1429,19 @@ tr:hover td {
 }
 .acao {
   background: #fff;
-  border-radius: 10px;
+  border-radius: 6px;
   border: 1px solid var(--borda);
   border-top: 5px solid var(--c, var(--azul));
   padding: 16px 18px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.04);
   display: flex;
   flex-direction: column;
-  height: 365px;
+  min-height: 310px;
   box-sizing: border-box;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+#acoes .acao {
+  min-height: 230px;
 }
 .acao:hover {
   transform: translateY(-2px);
@@ -1364,21 +1455,25 @@ tr:hover td {
   height: 26px;
 }
 .acao-topo .tag {
-  font-size: 0.75rem;
+  font-size: 0.74rem;
   font-weight: 700;
   padding: 3px 10px;
-  border-radius: 999px;
+  border-radius: 4px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 .acao-data-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   font-size: 0.78rem;
   font-weight: 600;
   color: #475569;
   background: #f1f5f9;
   padding: 3px 9px;
-  border-radius: 6px;
+  border-radius: 4px;
   white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 .acao-data-pill.dt-agendada {
   color: var(--azul);
@@ -1387,12 +1482,12 @@ tr:hover td {
   font-weight: 700;
 }
 .acao-titulo {
-  font-size: 1.08rem;
+  font-size: 1.06rem;
   font-weight: 700;
   color: var(--tinta);
   margin: 10px 0 6px;
   line-height: 1.35;
-  height: 2.7em;
+  min-height: 2.7em;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -1404,7 +1499,7 @@ tr:hover td {
   line-height: 1.5;
   color: #475569;
   margin: 0 0 12px;
-  height: 4.5em;
+  min-height: 4.5em;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -1426,38 +1521,30 @@ tr:hover td {
   font-size: 0.85rem;
 }
 .meta-vol-cont {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   color: #1e293b;
   font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
 .meta-status-feita {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   font-size: 0.72rem;
   font-weight: 700;
   text-transform: uppercase;
   background: #dcfce7;
   color: #15803d;
   padding: 2px 8px;
-  border-radius: 999px;
-}
-.acao-impacto-barra {
-  width: 100%;
-  height: 6px;
-  background: #f1f5f9;
-  border-radius: 999px;
-  overflow: hidden;
-}
-.acao-impacto-prog {
-  height: 100%;
-  border-radius: 999px;
-}
-.acao-meta-sub {
-  font-size: 0.76rem;
-  color: #94a3b8;
+  border-radius: 4px;
 }
 .acao-details {
   font-size: 0.85rem;
   background: #f8fafc;
   border: 1px solid #e2e8f0;
-  border-radius: 6px;
+  border-radius: 4px;
   padding: 6px 10px;
 }
 .acao-details summary {
@@ -1504,69 +1591,58 @@ tr:hover td {
 }
 .modal-card {
   background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
-  border: 2px solid #000;
+  border-radius: 6px;
+  box-shadow: 8px 8px 0 var(--amarelo);
+  border: 2px solid var(--tinta);
   width: 100%;
   max-width: 520px;
   max-height: 94vh;
   overflow-y: auto;
   box-sizing: border-box;
-  animation: modalSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: modalSlideUp 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 @keyframes modalSlideUp {
-  from { transform: translateY(20px) scale(0.97); }
+  from { transform: translateY(16px) scale(0.98); }
   to { transform: translateY(0) scale(1); }
 }
 .modal-cab {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 10px 18px 6px;
+  padding: 14px 20px 10px;
   border-bottom: 1px solid var(--borda);
   background: #f8fafc;
 }
-.badge-inovacao {
-  display: inline-block;
-  background: var(--azul);
-  color: #fff;
-  font-size: 0.68rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 2px 7px;
-  border-radius: 999px;
-  margin-bottom: 2px;
-}
 .modal-cab h3 {
   font-family: var(--serif);
-  font-size: 1.15rem;
+  font-size: 1.18rem;
   font-weight: 700;
   color: var(--tinta);
   margin: 0;
 }
 .modal-subtitulo {
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   color: #64748b;
-  margin: 1px 0 0;
+  margin: 3px 0 0;
 }
 .modal-fechar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: transparent;
-  border: none;
-  font-size: 1.25rem;
-  line-height: 1;
+  border: 1px solid transparent;
   color: #64748b;
   cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 6px;
-  transition: all 0.15s;
+  padding: 6px;
+  border-radius: 4px;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 .modal-fechar:hover {
   background: #fee2e2;
   color: var(--vermelho);
 }
 .form-modal-acao {
-  padding: 14px 22px 18px;
+  padding: 14px 20px 18px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -1579,7 +1655,7 @@ tr:hover td {
 .form-linha-dupla {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
+  gap: 10px;
 }
 .form-label {
   font-size: 0.78rem;
@@ -1595,6 +1671,7 @@ tr:hover td {
   font-size: 0.7rem;
   font-weight: 600;
   color: #64748b;
+  font-variant-numeric: tabular-nums;
 }
 .req {
   color: var(--vermelho);
@@ -1602,30 +1679,30 @@ tr:hover td {
 .form-input, .form-select {
   width: 100%;
   box-sizing: border-box;
-  padding: 4px 8px;
+  padding: 7px 10px;
   border: 1.5px solid var(--borda);
-  border-radius: 7px;
+  border-radius: 4px;
   font-family: var(--sans);
-  font-size: 0.84rem;
+  font-size: 0.86rem;
   color: var(--tinta);
   outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 .form-textarea {
   width: 100%;
   box-sizing: border-box;
-  padding: 4px 8px;
+  padding: 7px 10px;
   border: 1.5px solid var(--borda);
-  border-radius: 7px;
+  border-radius: 4px;
   font-family: var(--sans);
-  font-size: 0.84rem;
+  font-size: 0.86rem;
   color: var(--tinta);
   outline: none;
-  height: 42px;
-  min-height: 38px;
-  max-height: 60px;
+  height: 48px;
+  min-height: 42px;
+  max-height: 70px;
   resize: vertical;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 .form-input:focus, .form-select:focus, .form-textarea:focus {
   border-color: var(--azul);
@@ -1640,28 +1717,28 @@ tr:hover td {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
-  padding-top: 6px;
+  padding-top: 8px;
   border-top: 1px solid var(--borda);
 }
 .btn-salvar-acao {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   background: var(--amarelo);
   color: var(--tinta);
   font-weight: 700;
   font-size: 0.85rem;
-  border: 2px solid #000;
-  box-shadow: 2px 2px 0px #000;
-  padding: 6px 14px;
-  border-radius: 8px;
+  border: 2px solid var(--tinta);
+  box-shadow: 2px 2px 0px var(--tinta);
+  padding: 7px 15px;
+  border-radius: 4px;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
 }
 .btn-salvar-acao:hover {
   background: #fcd34d;
   transform: translateY(-1px);
-  box-shadow: 3px 3px 0px #000;
+  box-shadow: 3px 3px 0px var(--tinta);
 }
 .toast-sucesso-acao {
   position: fixed;
@@ -1670,14 +1747,14 @@ tr:hover td {
   background: #15803d;
   color: #fff;
   padding: 12px 20px;
-  border-radius: 8px;
+  border-radius: 6px;
   font-weight: 600;
   font-size: 0.92rem;
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
   z-index: 999999;
   opacity: 0;
   transform: translateY(10px);
-  transition: opacity 0.25s, transform 0.25s;
+  transition: opacity 0.25s ease, transform 0.25s ease;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -1688,17 +1765,18 @@ tr:hover td {
 }
 </style>`;
 
-  // 12. Modal HTML de Cadastramento de Nova Ação (Inovação)
-  const modalAcaoHtml = `<!-- MODAL DE CADASTRAMENTO DE NOVA AÇÃO (INOVAÇÃO) -->
+  const svgClose = `<svg class="ico-svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
+
+  // 12. Modal HTML de Cadastramento de Nova Ação
+  const modalAcaoHtml = `<!-- MODAL DE CADASTRAMENTO DE NOVA AÇÃO -->
 <div class="modal-backdrop" id="modal-nova-acao" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="modal-acao-titulo">
   <div class="modal-card">
     <div class="modal-cab">
       <div class="modal-cab-info">
-        <span class="badge-inovacao">Inovação Comunitária</span>
         <h3 id="modal-acao-titulo">Cadastrar Nova Ação Social</h3>
         <p class="modal-subtitulo">Preencha os dados abaixo para cadastrar e agendar uma nova ação social com abertura de vagas para voluntários.</p>
       </div>
-      <button type="button" class="modal-fechar" id="btn-fechar-modal-acao" aria-label="Fechar formulário">✕</button>
+      <button type="button" class="modal-fechar" id="btn-fechar-modal-acao" aria-label="Fechar formulário">${svgClose}</button>
     </div>
 
     <form id="form-cad-acao" class="form-modal-acao">
@@ -1748,7 +1826,7 @@ tr:hover td {
       <div class="modal-rodape">
         <button type="button" class="btn btn-cont" id="btn-cancelar-cad-acao">Cancelar</button>
         <button type="submit" class="btn btn-amarelo btn-salvar-acao">
-          <span>＋ Cadastrar e Publicar Ação</span>
+          ${svgPlus} <span>Cadastrar e Publicar Ação</span>
         </button>
       </div>
     </form>
@@ -1763,6 +1841,9 @@ tr:hover td {
   var lMap = null;
   var lLayer = null;
   var ultimoEstadoMapa = null;
+  var icoPinInline = '${svgPin}';
+  var icoUsersInline = '${svgUsers}';
+  var icoCheckInline = '${svgCheck}';
 
   function renderizarCamadasLeaflet() {
     if (!lMap || !ultimoEstadoMapa || typeof window.L === "undefined") return;
@@ -1772,9 +1853,8 @@ tr:hover td {
 
     var refCoord = st.COORD[st.ref] || [-12.9858, -38.4979];
 
-    var circulo = null;
     if (st.r && st.r > 0) {
-      circulo = L.circle(refCoord, {
+      L.circle(refCoord, {
         radius: st.r * 1000,
         color: "#085EC3",
         weight: 2,
@@ -1793,7 +1873,7 @@ tr:hover td {
       var icone = L.divIcon({
         className: "pin-bairro-wrap",
         html: '<div class="' + cls + '" title="' + b + ': ' + qtd + ' voluntário(s)">' +
-              '<span>' + (eRef ? '📍 ' : '') + b + '</span>' +
+              '<span style="display:inline-flex;align-items:center;gap:3px">' + (eRef ? icoPinInline : '') + b + '</span>' +
               '<span class="qtd">' + qtd + '</span></div>',
         iconSize: [1, 1],
         iconAnchor: [0, 0]
@@ -1805,8 +1885,8 @@ tr:hover td {
       }).addTo(lLayer);
       var popupHtml =
         '<div><b>' + b + (eRef ? ' (Ponto Focal)' : '') + '</b><br>' +
-        '<span>👥 <b>' + qtd + '</b> voluntário(s) nos filtros atuais</span><br>' +
-        '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px">' +
+        '<span style="display:inline-flex;align-items:center;gap:4px;margin-top:3px">' + icoUsersInline + ' <b>' + qtd + '</b> voluntário(s) nos filtros atuais</span><br>' +
+        '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px">' +
         '<button type="button" class="btn-popup-mapa" data-acao-mapa="filtrar" data-bairro="' + b + '">Filtrar bairro</button>' +
         (!eRef ? '<button type="button" class="btn-popup-mapa" style="background:#1d2430" data-acao-mapa="focal" data-bairro="' + b + '">Definir ponto focal</button>' : '') +
         '</div></div>';
@@ -1847,7 +1927,7 @@ tr:hover td {
       scrollWheelZoom: true
     });
 
-    L.control.layers({ "🗺️ Mapa de Ruas": camadaRuas, "🛰️ Satélite": camadaSatelite }, null, { position: "topright" }).addTo(lMap);
+    L.control.layers({ "Mapa de Ruas": camadaRuas, "Visão de Satélite": camadaSatelite }, null, { position: "topright" }).addTo(lMap);
 
     lLayer = L.layerGroup().addTo(lMap);
 
@@ -1882,24 +1962,124 @@ tr:hover td {
     }
   };
 
-  // Alternar gaveta de filtros territoriais e inicializar mapa Leaflet
+  // Lógica de Máscara de Exclusão Mútua entre Filtros Gerais e Filtro por Mapa
   var btnGeo = document.getElementById("btn-toggle-geo");
   var gavetaGeo = document.getElementById("gaveta-geo");
+  var barraPrincipal = document.getElementById("filtros-barra-principal");
+  var idsGerais = ["f-busca", "f-area", "f-status", "f-disp"];
+  var idsGeo = ["f-bairro", "f-form", "f-ativ", "f-raio"];
+  var selBairroGeo = document.getElementById("f-bairro");
+  var selRaioGeo = document.getElementById("f-raio");
+  var selRefGeo = document.getElementById("f-ref");
+  var wrapBairroGeo = document.getElementById("wrap-f-bairro");
+  var wrapRefGeo = document.getElementById("wrap-f-ref");
+  var wrapRaioGeo = document.getElementById("wrap-f-raio");
+
+  function sincronizarMascaraSubGeo(origem) {
+    if (!selBairroGeo || !selRaioGeo) return;
+    var valBairro = selBairroGeo.value;
+    var valRaio = Number(selRaioGeo.value || 0);
+
+    if (origem === "raio" && valRaio > 0) {
+      selBairroGeo.value = "";
+      valBairro = "";
+    } else if (origem === "bairro" && valBairro !== "") {
+      selRaioGeo.value = "";
+      valRaio = 0;
+    }
+
+    var mascararBairro = valRaio > 0;
+    var mascararRaio = valBairro !== "";
+
+    if (wrapBairroGeo) wrapBairroGeo.classList.toggle("campo-mascarado", mascararBairro);
+    if (selBairroGeo) selBairroGeo.disabled = mascararBairro;
+
+    if (wrapRefGeo) wrapRefGeo.classList.toggle("campo-mascarado", mascararRaio);
+    if (wrapRaioGeo) wrapRaioGeo.classList.toggle("campo-mascarado", mascararRaio);
+    if (selRefGeo) selRefGeo.disabled = mascararRaio;
+    if (selRaioGeo) selRaioGeo.disabled = mascararRaio;
+  }
+
+  function definirModoMapa(ativo) {
+    if (!barraPrincipal || !gavetaGeo || !btnGeo) return;
+    gavetaGeo.style.display = ativo ? "block" : "none";
+    btnGeo.classList.toggle("ativo", ativo);
+    btnGeo.setAttribute("aria-expanded", String(ativo));
+    barraPrincipal.classList.toggle("modo-mapa-ativo", ativo);
+
+    if (ativo) {
+      // Ao ativar o filtro por mapa, limpa e bloqueia os filtros gerais com máscara
+      idsGerais.forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) {
+          el.value = "";
+          el.disabled = true;
+        }
+      });
+      sincronizarMascaraSubGeo();
+      if (typeof window.tabela === "function") window.tabela();
+      setTimeout(function() {
+        inicializarLeaflet();
+        if (lMap) {
+          lMap.invalidateSize();
+          renderizarCamadasLeaflet();
+        }
+      }, 60);
+    } else {
+      // Ao desativar o filtro por mapa, limpa os filtros territoriais e reativa os filtros gerais
+      idsGerais.forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.disabled = false;
+      });
+      idsGeo.forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) {
+          el.value = "";
+          el.disabled = false;
+        }
+      });
+      if (selRefGeo) selRefGeo.disabled = false;
+      if (wrapBairroGeo) wrapBairroGeo.classList.remove("campo-mascarado");
+      if (wrapRefGeo) wrapRefGeo.classList.remove("campo-mascarado");
+      if (wrapRaioGeo) wrapRaioGeo.classList.remove("campo-mascarado");
+      if (typeof window.tabela === "function") window.tabela();
+    }
+  }
+
   if (btnGeo && gavetaGeo) {
     btnGeo.addEventListener("click", function() {
       var aberto = gavetaGeo.style.display !== "none";
-      gavetaGeo.style.display = aberto ? "none" : "block";
-      btnGeo.classList.toggle("ativo", !aberto);
-      btnGeo.setAttribute("aria-expanded", !aberto);
-      if (!aberto) {
-        setTimeout(function() {
-          inicializarLeaflet();
-          if (lMap) {
-            lMap.invalidateSize();
-            renderizarCamadasLeaflet();
-          }
-        }, 60);
-      }
+      definirModoMapa(!aberto);
+    });
+  }
+
+  if (selBairroGeo) {
+    selBairroGeo.addEventListener("input", function() {
+      sincronizarMascaraSubGeo("bairro");
+      if (typeof window.tabela === "function") window.tabela();
+    });
+  }
+
+  if (selRaioGeo) {
+    selRaioGeo.addEventListener("input", function() {
+      sincronizarMascaraSubGeo("raio");
+      if (typeof window.tabela === "function") window.tabela();
+    });
+  }
+
+  var btnLimpar = document.getElementById("limpar");
+  if (btnLimpar) {
+    btnLimpar.addEventListener("click", function() {
+      setTimeout(function() {
+        var mapaAberto = gavetaGeo && gavetaGeo.style.display !== "none";
+        if (mapaAberto) {
+          idsGerais.forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) el.disabled = true;
+          });
+          sincronizarMascaraSubGeo();
+        }
+      }, 10);
     });
   }
 
@@ -1949,7 +2129,7 @@ tr:hover td {
     });
   }
 
-  // Lógica do Modal e Cadastro de Ações (Inovação)
+  // Lógica do Modal e Cadastro de Ações
   var btnNovaAcao = document.getElementById("btn-nova-acao");
   var modalNovaAcao = document.getElementById("modal-nova-acao");
   var btnFecharModal = document.getElementById("btn-fechar-modal-acao");
@@ -1957,8 +2137,6 @@ tr:hover td {
   var formCadAcao = document.getElementById("form-cad-acao");
   var cadDesc = document.getElementById("cad-desc");
   var cadContador = document.getElementById("cad-desc-contador");
-  var cadVagasLbl = document.getElementById("lbl-cad-vagas");
-  var cadVagasInput = document.getElementById("cad-vagas");
 
   function abrirModalAcao() {
     if (!modalNovaAcao) return;
@@ -2010,7 +2188,7 @@ tr:hover td {
   function mostrarToastAcao(msg) {
     var toast = document.createElement("div");
     toast.className = "toast-sucesso-acao";
-    toast.innerHTML = '<span style="font-size:1.1rem">✓</span> ' + msg;
+    toast.innerHTML = icoCheckInline + ' <span>' + msg + '</span>';
     document.body.appendChild(toast);
     setTimeout(function() { toast.classList.add("vis"); }, 20);
     setTimeout(function() {
