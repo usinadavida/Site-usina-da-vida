@@ -1493,7 +1493,7 @@ tr:hover td {
     <section class="painel" id="p-vol" role="tabpanel" aria-labelledby="t-vol">
       <div class="painel-cab">  <div>    <h2>Voluntários Cadastrados</h2>    <p class="subtitulo-painel">Consulta de perfis, disponibilidade e localização por bairro em Salvador.</p>  </div>  <div class="acoes-topo-vol">    <button class="btn btn-cont" id="limpar" type="button">Limpar filtros</button>    <button class="btn btn-azul" id="csv" type="button">Exportar lista (CSV)</button>  </div></div>
 <!-- BARRA PRINCIPAL DE FILTROS --><div class="filtros-barra" id="filtros-barra-principal" role="search" aria-label="Filtros de voluntários">  <div class="filtros-gerais-grupo" id="filtros-gerais-grupo">    <div class="filtro-campo campo-busca">      <label for="f-busca">Buscar por nome</label>      <div class="busca-input-wrap">        <span class="busca-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>        <input id="f-busca" type="text" placeholder="Digite o nome do voluntário...">      </div>    </div>    <div class="filtro-campo">      <label for="f-area">Área de atuação</label>      <select id="f-area"></select>    </div>    <div class="filtro-campo">      <label for="f-status">Status da inscrição</label>      <select id="f-status"></select>    </div>    <div class="filtro-campo">      <label for="f-disp">Disponibilidade</label>      <select id="f-disp"></select>    </div>  </div>  <div class="filtro-campo campo-btn-geo">    <label>&nbsp;</label>    <button type="button" id="btn-toggle-geo" class="btn-geo-toggle" aria-expanded="false">      <svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> <span id="txt-btn-geo">Filtros Territoriais &amp; Mapa</span>    </button>  </div></div>
-<!-- GAVETA EXPANSÍVEL DE FILTROS AVANÇADOS E MAPA TERRITORIAL --><div class="gaveta-geo" id="gaveta-geo" style="display:none">  <div class="gaveta-grid">    <div class="geo-filtros-extra">      <div class="filtro-campo" id="wrap-f-bairro"><label for="f-bairro">Bairro / Localidade</label><select id="f-bairro"></select></div>      <div class="filtro-campo" id="wrap-f-form"><label for="f-form">Formação acadêmica</label><select id="f-form"></select></div>      <div class="filtro-campo" id="wrap-f-ativ"><label for="f-ativ">Alocação em atividade</label><select id="f-ativ"></select></div>      <div class="filtro-campo" id="wrap-f-ref"><label for="f-ref">Ponto focal de referência</label><select id="f-ref"></select></div>      <div class="filtro-campo" id="wrap-f-raio"><label for="f-raio">Raio de proximidade (km)</label><input id="f-raio" type="number" min="0" max="200" step="0.5" inputmode="decimal" list="raios" placeholder="Ex.: 4,5"><datalist id="raios"><option value="3"><option value="5"><option value="8"><option value="12"><option value="20"></datalist></div>    </div>    <div class="geo-mapa-wrap">      <div class="mapa-cab"><b class="mapa-titulo-ic"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg> Mapa Territorial de Salvador</b><span id="mapa-leg"></span></div>      <div id="mapa-leaflet" role="region" aria-label="Mapa interativo dos bairros de Salvador"></div>      <svg id="mapa" viewBox="0 0 330 175" role="img" aria-label="Mapa esquemático dos bairros com o raio de distância" style="display:none"></svg>      <p class="mapa-info">Sede da ONG destacada no <b>Arenoso</b>. Clique em qualquer bairro para filtrar voluntários ou alterar o ponto focal.</p>    </div>  </div></div>
+<!-- GAVETA EXPANSÍVEL DE FILTROS AVANÇADOS E MAPA TERRITORIAL --><div class="gaveta-geo" id="gaveta-geo" style="display:none">  <div class="gaveta-grid">    <div class="geo-filtros-extra">      <div class="filtro-campo" id="wrap-f-bairro"><label for="f-bairro">Bairro / Localidade</label><select id="f-bairro"></select></div>      <div class="filtro-campo" id="wrap-f-form"><label for="f-form">Formação acadêmica</label><select id="f-form"></select></div>      <div class="filtro-campo" id="wrap-f-ativ"><label for="f-ativ">Alocação em atividade</label><select id="f-ativ"></select></div>      <div class="filtro-campo" id="wrap-f-ref"><label for="f-ref">Ponto focal de referência</label><select id="f-ref"></select></div>      <div class="filtro-campo" id="wrap-f-raio"><label for="f-raio">Raio de proximidade (km)</label><input id="f-raio" type="number" min="0" max="200" step="0.5" inputmode="decimal" list="raios" placeholder="Ex.: 4,5"><datalist id="raios"><option value="3"><option value="5"><option value="8"><option value="12"><option value="20"></datalist></div>    </div>    <div class="geo-mapa-wrap">      <div class="mapa-cab"><b class="mapa-titulo-ic"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg> Mapa Territorial de Salvador</b><span id="mapa-leg"></span></div>      <div id="mapa-leaflet" role="region" aria-label="Mapa interativo dos bairros de Salvador"></div>      <svg id="mapa" viewBox="0 0 330 175" role="img" aria-label="Mapa esquemático dos bairros com o raio de distância" style="display:none"></svg>      <p class="mapa-info">Sede da ONG: <b>R. Estrela D'álva, 13e - Arenoso, Salvador - BA, 41211-300</b>. Clique em qualquer bairro para filtrar ou alterar o ponto focal.</p>    </div>  </div></div>
 <div class="tabela-meta-barra">  <span id="contagem" aria-live="polite"></span></div>
 <div class="tabela-wrap">  <table>    <caption class="oculto" style="position:absolute;left:-999px">Lista de voluntários</caption>    <thead><tr><th>Nome</th><th>Área(s)</th><th>Formação</th><th>Disponibilidade</th><th>Localização</th><th>Atividade</th><th>Contato Direto</th><th>Status</th></tr></thead>    <tbody id="corpo"></tbody>  </table>
   <div id="vazio" class="vazio" style="display:none">Nenhum voluntário encontrado com esses filtros.</div>
@@ -1723,10 +1723,10 @@ tr:hover td {
   ["f-busca","f-area","f-form","f-disp","f-bairro","f-status","f-ativ","f-ref","f-raio"].forEach(function(id){ $(id).addEventListener("input", function(){ grupo=null; tabela(); }); });
   $("limpar").addEventListener("click", function(){ grupo=null; ["f-busca","f-area","f-form","f-disp","f-bairro","f-status","f-ativ","f-raio"].forEach(function(id){ $(id).value=""; }); $("f-ref").value="Arenoso"; tabela(); });
 
-  var COORD = {"Arenoso":[-12.9465,-38.4385],"Pituba":[-12.9996,-38.4586],"Brotas":[-12.9858,-38.4979],"Itapuã":[-12.9533,-38.3563],"Liberdade":[-12.9486,-38.4887],"Cabula":[-12.9645,-38.4595],"Federação":[-12.9980,-38.5060],"Barra":[-13.0105,-38.5330],"Ondina":[-13.0050,-38.5120]};
+  var COORD = {"Arenoso":[-12.9482,-38.4418],"Pituba":[-12.9996,-38.4586],"Brotas":[-12.9858,-38.4979],"Itapuã":[-12.9533,-38.3563],"Liberdade":[-12.9486,-38.4887],"Cabula":[-12.9645,-38.4595],"Federação":[-12.9980,-38.5060],"Barra":[-13.0105,-38.5330],"Ondina":[-13.0050,-38.5120]};
   function km(a,b){ var R=6371,r=Math.PI/180,A=COORD[a],B=COORD[b],dl=(B[0]-A[0])*r,dn=(B[1]-A[1])*r;
     var h=Math.sin(dl/2)*Math.sin(dl/2)+Math.cos(A[0]*r)*Math.cos(B[0]*r)*Math.sin(dn/2)*Math.sin(dn/2); return 2*R*Math.asin(Math.sqrt(h)); }
-  popula("f-ref","",BAIRROS); $("f-ref").remove(0); Array.prototype.forEach.call($("f-ref").options,function(op){ if(op.value==="Arenoso"){ op.value="Arenoso"; op.textContent="Arenoso (Sede da ONG)"; } }); $("f-ref").value="Arenoso";
+  popula("f-ref","",BAIRROS); $("f-ref").remove(0); Array.prototype.forEach.call($("f-ref").options,function(op){ if(op.value==="Arenoso"){ op.value="Arenoso"; op.textContent="Arenoso (R. Estrela D'álva, 13e · Sede)"; } }); $("f-ref").value="Arenoso";
   function raioKm(){ var r=parseFloat(String($("f-raio").value).replace(",",".")); return r>0 ? r : 0; }
   function noRaio(v){ var r=raioKm(); return !r || km(v.bairro,$("f-ref").value)<=r; }
   function mapa(lista){
@@ -1741,7 +1741,7 @@ tr:hover td {
       h+='<text x="'+(+x+9)+'" y="'+(+y+2.5)+'">'+esc(b)+(n?" ("+n+")":"")+'</text>';
     });
     $("mapa").innerHTML=h;
-    $("mapa-leg").textContent = r ? "Raio de "+String(r).replace(".",",")+" km a partir de "+(ref==="Arenoso"?"Arenoso (Sede ONG)":ref) : "Referência: "+(ref==="Arenoso"?"Arenoso (Sede ONG)":ref); if (typeof window.atualizarMapaLeaflet === "function") window.atualizarMapaLeaflet(lista, ref, r, cont, COORD, BAIRROS, km);
+    $("mapa-leg").textContent = r ? "Raio de "+String(r).replace(".",",")+" km a partir de "+(ref==="Arenoso"?"R. Estrela D'álva, 13e - Arenoso":ref) : "Sede: R. Estrela D'álva, 13e - Arenoso (41211-300)"; if (typeof window.atualizarMapaLeaflet === "function") window.atualizarMapaLeaflet(lista, ref, r, cont, COORD, BAIRROS, km);
   }
   var grupo = null;
   function filtrados(){
@@ -2065,13 +2065,16 @@ tr:hover td {
     });
   }
 
+  var SEDE_COORD_PADRAO = [-12.9482, -38.4418];
+  var SEDE_ENDERECO_COMPLETO = "R. Estrela D'álva, 13e - Arenoso, Salvador - BA, 41211-300";
+
   function renderizarCamadasLeaflet() {
     if (!lMap || !ultimoEstadoMapa || typeof window.L === "undefined") return;
     var st = ultimoEstadoMapa;
     if (lLayer) lLayer.clearLayers();
     else lLayer = L.layerGroup().addTo(lMap);
 
-    var sedeCoord = st.COORD["Arenoso"] || [-12.9465, -38.4385];
+    var sedeCoord = st.COORD["Arenoso"] || SEDE_COORD_PADRAO;
     var refCoord = st.COORD[st.ref] || sedeCoord;
 
     if (st.r && st.r > 0) {
@@ -2097,7 +2100,7 @@ tr:hover td {
       var corPino = eSede ? "#0f172a" : (eRef ? "#085EC3" : (qtd > 0 ? "#DB150A" : "#64748b"));
       var corBorda = eSede ? "#F1C50E" : "#ffffff";
       var clsExtra = eSede ? "is-sede" : (eRef ? "is-focal" : "");
-      var rotuloCurto = eSede ? "Sede · Arenoso" : b;
+      var rotuloCurto = eSede ? "Sede · R. Estrela D'álva, 13e" : b;
 
       var icone = criarPinoTeardropSvg(corPino, corBorda, String(qtd), eSede, rotuloCurto, clsExtra);
 
@@ -2107,16 +2110,16 @@ tr:hover td {
       }).addTo(lLayer);
 
       var txtTooltip = eSede
-        ? "<b>Sede Usina da Vida · Arenoso</b><br>" + qtd + " voluntário(s) no bairro"
+        ? "<b>Sede Usina da Vida</b><br>" + SEDE_ENDERECO_COMPLETO + "<br>" + qtd + " voluntário(s) no bairro"
         : "<b>" + b + "</b> · " + distSedeTxt + " da Sede<br>" + qtd + " voluntário(s) filtrados";
       m.bindTooltip(txtTooltip, { direction: "top", className: "tip-geo-limpo" });
 
       var infoDistPopup = eSede
-        ? '<span style="display:inline-block;margin-top:2px;color:#085EC3;font-weight:600">Sede Institucional da Usina da Vida (0 km)</span><br>'
+        ? '<span style="display:inline-block;margin-top:2px;color:#085EC3;font-weight:600">' + SEDE_ENDERECO_COMPLETO + ' (0 km)</span><br>'
         : '<span style="display:inline-block;margin-top:2px;color:#475569">Distância até a Sede (Arenoso): <b>' + distSedeTxt + '</b></span><br>';
 
       var popupHtml =
-        '<div><b>' + (eSede ? 'Arenoso · Sede da ONG' : b) + (eRef && !eSede ? ' (Ponto Focal)' : '') + '</b><br>' +
+        '<div><b>' + (eSede ? 'Sede da ONG · Usina da Vida' : b) + (eRef && !eSede ? ' (Ponto Focal)' : '') + '</b><br>' +
         infoDistPopup +
         '<span style="display:inline-flex;align-items:center;gap:4px;margin-top:3px">' + icoUsersInline + ' <b>' + qtd + '</b> voluntário(s) nos filtros atuais</span><br>' +
         '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px">' +
@@ -2130,7 +2133,7 @@ tr:hover td {
       var z = st.r <= 4 ? 13 : (st.r <= 10 ? 12 : 11);
       lMap.setView(refCoord, z);
     } else {
-      lMap.setView([-12.9780, -38.4620], 12);
+      lMap.setView(refCoord, 13);
     }
   }
 
@@ -2153,8 +2156,8 @@ tr:hover td {
     });
 
     lMap = L.map(elMapa, {
-      center: [-12.9780, -38.4620],
-      zoom: 12,
+      center: SEDE_COORD_PADRAO,
+      zoom: 13,
       layers: [camadaRuas],
       zoomControl: true,
       scrollWheelZoom: true
@@ -2241,7 +2244,7 @@ tr:hover td {
     barraPrincipal.classList.toggle("modo-mapa-ativo", ativo);
 
     if (ativo) {
-      // Ao ativar o filtro por mapa, limpa e bloqueia os filtros gerais com máscara
+      // Ao ativar o filtro por mapa, limpa e bloqueia os filtros gerais com máscara e garante a Sede no centro
       idsGerais.forEach(function(id) {
         var el = document.getElementById(id);
         if (el) {
@@ -2249,6 +2252,7 @@ tr:hover td {
           el.disabled = true;
         }
       });
+      if (selRefGeo) selRefGeo.value = "Arenoso";
       sincronizarMascaraSubGeo();
       if (typeof window.tabela === "function") window.tabela();
       setTimeout(function() {
@@ -2256,6 +2260,10 @@ tr:hover td {
         if (lMap) {
           lMap.invalidateSize();
           renderizarCamadasLeaflet();
+          var coordSede = (ultimoEstadoMapa && ultimoEstadoMapa.COORD && ultimoEstadoMapa.COORD["Arenoso"]) || SEDE_COORD_PADRAO;
+          var rAtual = (ultimoEstadoMapa && ultimoEstadoMapa.r) ? ultimoEstadoMapa.r : 0;
+          var zInicial = rAtual > 0 ? (rAtual <= 4 ? 13 : (rAtual <= 10 ? 12 : 11)) : 13;
+          lMap.setView(coordSede, zInicial);
         }
       }, 60);
     } else {
