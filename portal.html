@@ -1055,10 +1055,10 @@ tr:hover td {
   letter-spacing: -0.01em;
 }
 
-/* CARDS DE AÇÕES — MODELO 3 (CABEÇALHO SÓLIDO BICOLOR) */
+/* CARDS DE AÇÕES — COLUNA LATERAL DE CALENDÁRIO SÓLIDA NA COR DA MARCA + CONTEÚDO À DIREITA */
 .acoes-lista, .acoes-lista.agend {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   gap: 18px;
   margin-top: 14px;
 }
@@ -1069,8 +1069,8 @@ tr:hover td {
   border-top: 1px solid var(--bd, #cbd5e1) !important;
   padding: 0 !important;
   box-shadow: 0 3px 10px rgba(15, 23, 42, 0.05);
-  display: flex;
-  flex-direction: column;
+  display: grid !important;
+  grid-template-columns: 78px 1fr;
   height: auto !important;
   min-height: 0 !important;
   box-sizing: border-box;
@@ -1081,151 +1081,119 @@ tr:hover td {
   transform: translateY(-2px);
   box-shadow: 0 10px 22px -6px rgba(15, 23, 42, 0.12);
 }
-.acao-hdr {
+.acao-side {
   background: var(--solid, #085EC3);
   color: #ffffff;
-  padding: 15px 18px;
-}
-.acao-hdr-top {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  margin-bottom: 8px;
+  justify-content: center;
+  padding: 14px 6px;
+  text-align: center;
 }
-.acao-badge {
-  display: inline-flex;
-  align-items: center;
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.2);
-  padding: 3px 9px;
-  border-radius: 6px;
-  letter-spacing: 0.01em;
-}
-.acao-data-pill {
-  display: inline-flex;
-  align-items: center;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--dt, #ffffff);
-  white-space: nowrap;
+.acao-side .dia {
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
 }
-.acao-data-pill.dt-agendada {
-  color: var(--dt, #F1C50E);
-  font-weight: 800;
+.acao-side .dia.dia-mes {
+  font-size: 18px;
+  letter-spacing: 0.02em;
 }
-.acao h3.acao-titulo, .acao-hdr .acao-titulo {
+.acao-side .mes {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 4px;
+  opacity: 0.92;
+}
+.acao-side .sem {
+  font-size: 10px;
+  font-weight: 700;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-top: 8px;
+  letter-spacing: 0.03em;
+}
+.acao-main {
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: linear-gradient(180deg, var(--bg, #EBF3FE) 0%, #ffffff 65%);
+}
+.acao-tag-pill {
+  background: var(--solid, #085EC3);
+  color: #ffffff;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 4px 11px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+}
+.acao h3.acao-titulo, .acao-main .acao-titulo {
   font-family: var(--sans) !important;
-  font-size: 1.06rem !important;
+  font-size: 16.5px !important;
   font-weight: 800 !important;
-  color: #ffffff !important;
+  color: #0f172a !important;
   letter-spacing: -0.015em;
   margin: 0 !important;
   line-height: 1.3;
 }
-.acao-corpo {
-  padding: 16px 18px;
-  background: #ffffff;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  flex: 1;
-}
 .acao p.acao-desc, .acao-desc {
-  font-size: 0.84rem !important;
-  line-height: 1.52;
+  font-size: 12.8px !important;
+  line-height: 1.48;
   color: #475569;
   margin: 0 !important;
 }
-.acao-loc {
-  font-size: 0.77rem;
-  font-weight: 700;
-  color: var(--solid, #085EC3);
+.acao-foot-inline {
   margin-top: auto;
-  padding-top: 2px;
-}
-.acao-rodape {
-  background: var(--bg, #EBF3FE);
-  border-top: 1px solid var(--bd, #BFDBFE);
-  padding: 12px 18px;
+  padding-top: 4px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
-.acao-rodape .vg {
+.acao-foot-inline .vg {
   margin: 0;
 }
-.acao-rodape .vg .l {
+.acao-foot-inline .vg .l {
   display: flex;
   justify-content: space-between;
-  font-size: 0.77rem;
+  font-size: 11.5px;
   font-weight: 700;
   color: #0f172a;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
   font-variant-numeric: tabular-nums;
 }
-.acao-rodape .vg .b {
+.acao-foot-inline .vg .b {
   height: 7px;
   background: var(--bd, #BFDBFE);
   border-radius: 999px;
   overflow: hidden;
 }
-.acao-rodape .vg .b i {
+.acao-foot-inline .vg .b i {
   display: block;
   height: 100%;
   background: var(--solid, #085EC3) !important;
   border-radius: 999px;
 }
-.acao-meta-real {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 0.81rem;
-}
-.meta-vol-cont {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: #1e293b;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-}
-.meta-vol-cont .ico-svg {
-  width: 15px;
-  height: 15px;
-  color: var(--solid, #085EC3);
-}
-.meta-status-feita {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  background: #ffffff;
-  color: #166534;
-  border: 1px solid var(--bd, #bbf7d0);
-  padding: 3px 9px;
-  border-radius: 6px;
-}
-.meta-status-feita .ico-svg {
-  width: 12px;
-  height: 12px;
-}
 .acao-details {
-  font-size: 0.81rem;
-  background: rgba(255, 255, 255, 0.92);
+  font-size: 0.8rem;
+  background: #f8fafc;
   border: 1px solid var(--bd, #cbd5e1);
   border-radius: 8px;
-  padding: 6px 10px;
+  padding: 5px 10px;
   margin: 0 !important;
 }
 .acao-details summary {
   cursor: pointer;
   font-weight: 700;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   color: #1e293b !important;
   user-select: none;
   display: flex;
@@ -1866,26 +1834,62 @@ tr:hover td {
     return { visivel: corte + '...', completo: t };
   }
 
+  var MESES_ABREV = ["JAN","FEV","MAR","ABR","MAI","JUN","JUL","AGO","SET","OUT","NOV","DEZ"];
+  var DIAS_SEM_ABREV = ["DOM","SEG","TER","QUA","QUI","SEX","SÁB"];
+
+  function extrairDataColuna(strData, isRealizada) {
+    var s = String(strData || "").trim();
+    // Ex: "Sáb, 14/11/2026" ou "14/11/2026"
+    var partesVirg = s.split(",");
+    var candidatoData = (partesVirg.length > 1 ? partesVirg[1] : partesVirg[0]).trim();
+    var partesBarra = candidatoData.split("/");
+    if (partesBarra.length === 3) {
+      var diaNum = parseInt(partesBarra[0], 10);
+      var mesNum = parseInt(partesBarra[1], 10);
+      var anoNum = parseInt(partesBarra[2], 10);
+      if (!isNaN(diaNum) && !isNaN(mesNum)) {
+        var dTxt = diaNum < 10 ? "0" + diaNum : String(diaNum);
+        var mTxt = MESES_ABREV[mesNum - 1] || "MÊS";
+        var semTxt = partesVirg.length > 1 ? partesVirg[0].trim().slice(0, 3).toUpperCase() : "";
+        if (!semTxt && !isNaN(anoNum)) {
+          var dtObj = new Date(anoNum, mesNum - 1, diaNum);
+          if (!isNaN(dtObj.getTime())) semTxt = DIAS_SEM_ABREV[dtObj.getDay()];
+        }
+        return { dia: dTxt, mes: mTxt, sem: semTxt || "AGEND" };
+      }
+    }
+    // Ex: "Out/2026", "Set/2026"
+    if (partesBarra.length === 2) {
+      return {
+        dia: partesBarra[0].trim().slice(0, 3).toUpperCase(),
+        mes: partesBarra[1].trim(),
+        sem: isRealizada ? "FEITA" : "DATA",
+        compacto: true
+      };
+    }
+    return { dia: s.slice(0, 3).toUpperCase() || "ONG", mes: "2026", sem: isRealizada ? "FEITA" : "ATIVA", compacto: true };
+  }
+
   function acoes(){
     $("acoes").innerHTML = ACOES.map(function(a){
-      var descInfo = padronizarDesc(a.p, 110);
+      var descInfo = padronizarDesc(a.p, 105);
       var tm = temaAreaCard(a.a, a.c);
-      return '<article class="acao" style="--solid:' + tm.solid + ';--bg:' + tm.bg + ';--bd:' + tm.bd + ';--dt:' + tm.dt + '">' +
-        '<div class="acao-hdr">' +
-          '<div class="acao-hdr-top">' +
-            '<span class="acao-badge">' + esc(a.a) + '</span>' +
-            '<span class="acao-data-pill">' + esc(a.d) + '</span>' +
-          '</div>' +
+      var cal = extrairDataColuna(a.d, true);
+      return '<article class="acao" style="--solid:' + tm.solid + ';--bg:' + tm.bg + ';--bd:' + tm.bd + '">' +
+        '<div class="acao-side">' +
+          '<span class="dia' + (cal.compacto ? ' dia-mes' : '') + '">' + esc(cal.dia) + '</span>' +
+          '<span class="mes">' + esc(cal.mes) + '</span>' +
+          '<span class="sem">' + esc(cal.sem) + '</span>' +
+        '</div>' +
+        '<div class="acao-main">' +
+          '<div><span class="acao-tag-pill">' + esc(a.a) + '</span></div>' +
           '<h3 class="acao-titulo" title="' + esc(a.t) + '">' + esc(a.t) + '</h3>' +
-        '</div>' +
-        '<div class="acao-corpo">' +
           '<p class="acao-desc" title="' + esc(descInfo.completo) + '">' + esc(descInfo.visivel) + '</p>' +
-          '<div class="acao-loc">Sede Usina da Vida (Arenoso) · Concluída</div>' +
-        '</div>' +
-        '<div class="acao-rodape">' +
-          '<div class="acao-meta-real">' +
-            '<span class="meta-vol-cont">' + icoUsersCard + ' <span><b>' + a.n + '</b> voluntários atuantes</span></span>' +
-            '<span class="meta-status-feita">' + icoCheckCard + ' Concluída</span>' +
+          '<div class="acao-foot-inline">' +
+            '<div class="vg">' +
+              '<div class="l"><span>' + a.n + ' voluntários atuantes</span><span>Concluída</span></div>' +
+              '<div class="b"><i style="width:100%"></i></div>' +
+            '</div>' +
           '</div>' +
         '</div>' +
       '</article>';
@@ -1897,34 +1901,33 @@ tr:hover td {
     $("n-todas").textContent="("+(ACOES.length+AGEND.length)+")"; $("n-real").textContent="("+ACOES.length+")"; $("n-agend").textContent="("+AGEND.length+")";
     $("agend").innerHTML = AGEND.map(function(a,k){
       var oc=ocupadas(a), pend=a.insc.length-oc, rest=Math.max(0,a.vagas-oc);
-      var descInfo = padronizarDesc(a.p, 110);
-      var locTxt = a.loc || "Sede Usina da Vida (Arenoso) · 09h";
+      var descInfo = padronizarDesc(a.p, 105);
       var tm = temaAreaCard(a.a, a.c);
+      var cal = extrairDataColuna(a.dt, false);
       var li = a.insc.map(function(i,j){
         var v=vols[i[0]-1], ok=i[1]===1;
         return '<li><span>'+esc(v.nome)+(pode?' <small class="oculto">· '+esc(v.tel)+'</small>':'')+'</span><span>'+(ok?'<span class="ok">Confirmada</span>':'<span class="pend">Pendente</span> '+(pode?'<button type="button" data-k="'+k+'" data-j="'+j+'"'+(rest===0?' disabled title="Sem vagas"':'')+'>Confirmar</button>':''))+'</span></li>';
       }).join("");
-      return '<article class="acao" style="--solid:' + tm.solid + ';--bg:' + tm.bg + ';--bd:' + tm.bd + ';--dt:' + tm.dt + '">' +
-        '<div class="acao-hdr">' +
-          '<div class="acao-hdr-top">' +
-            '<span class="acao-badge">' + esc(a.a) + '</span>' +
-            '<span class="acao-data-pill dt-agendada">' + esc(a.dt) + '</span>' +
-          '</div>' +
+      return '<article class="acao" style="--solid:' + tm.solid + ';--bg:' + tm.bg + ';--bd:' + tm.bd + '">' +
+        '<div class="acao-side">' +
+          '<span class="dia">' + esc(cal.dia) + '</span>' +
+          '<span class="mes">' + esc(cal.mes) + '</span>' +
+          '<span class="sem">' + esc(cal.sem) + '</span>' +
+        '</div>' +
+        '<div class="acao-main">' +
+          '<div><span class="acao-tag-pill">' + esc(a.a) + '</span></div>' +
           '<h3 class="acao-titulo" title="' + esc(a.t) + '">' + esc(a.t) + '</h3>' +
-        '</div>' +
-        '<div class="acao-corpo">' +
           '<p class="acao-desc" title="' + esc(descInfo.completo) + '">' + esc(descInfo.visivel) + '</p>' +
-          '<div class="acao-loc">' + esc(locTxt) + '</div>' +
-        '</div>' +
-        '<div class="acao-rodape">' +
-          '<div class="vg">' +
-            '<div class="l"><span>' + (rest ? rest + (rest===1 ? ' vaga disponível' : ' vagas disponíveis') : 'Lotação completa') + '</span><span>' + oc + '/' + a.vagas + ' confirmados</span></div>' +
-            '<div class="b"><i style="width:' + Math.min(100, oc / a.vagas * 100) + '%"></i></div>' +
+          '<div class="acao-foot-inline">' +
+            '<div class="vg">' +
+              '<div class="l"><span>' + (rest ? rest + (rest===1 ? ' vaga livre' : ' vagas livres') : 'Lotação completa') + '</span><span>' + oc + '/' + a.vagas + ' confirmados</span></div>' +
+              '<div class="b"><i style="width:' + Math.min(100, oc / a.vagas * 100) + '%"></i></div>' +
+            '</div>' +
+            '<details class="acao-details">' +
+              '<summary><span>Inscritos (' + a.insc.length + ')</span>' + (pend ? '<span class="pend-pill">' + pend + ' pendente' + (pend>1 ? 's' : '') + '</span>' : '<span class="ok-pill">Em dia</span>') + '</summary>' +
+              '<ul class="insc">' + (li || '<li style="color:#94a3b8;font-size:0.8rem;padding:4px 0;">Nenhum voluntário inscrito no momento.</li>') + '</ul>' +
+            '</details>' +
           '</div>' +
-          '<details class="acao-details">' +
-            '<summary><span>Inscritos (' + a.insc.length + ')</span>' + (pend ? '<span class="pend-pill">' + pend + ' pendente' + (pend>1 ? 's' : '') + '</span>' : '<span class="ok-pill">Em dia</span>') + '</summary>' +
-            '<ul class="insc">' + (li || '<li style="color:#94a3b8;font-size:0.8rem;padding:4px 0;">Nenhum voluntário inscrito no momento.</li>') + '</ul>' +
-          '</details>' +
         '</div>' +
       '</article>';
     }).join("");
