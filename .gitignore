@@ -1,0 +1,13 @@
+node_modules
+.next
+.env*
+!.env.example
+*.log
+scratch
+start-server.bat
+scripts/test-acoes-visual.cjs
+scripts/sync-ucsal.cjs
+screen-*.png
+
+device_code.json
+login-github.bat

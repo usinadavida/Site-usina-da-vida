@@ -1,0 +1,1891 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portal de gestão – Usina da Vida</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Lexend:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--azul:#085EC3;--azul-esc:#06479a;--vermelho:#DB150A;--amarelo:#F1C50E;--laranja:#F08D0C;--cinza:#4F4F4F;--texto:#222;--suave:#f4f7fb;--verde:#0f9d58;
+    --serif:"Lora",Georgia,serif;--sans:"Lexend","Segoe UI",system-ui,sans-serif}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:var(--sans);font-weight:300;color:var(--texto);background:var(--suave);line-height:1.6;font-size:15.5px}
+  h1,h2,h3{font-family:var(--serif);margin:0 0 .4em;line-height:1.2}
+  a{color:var(--azul)}
+  :focus-visible{outline:3px solid var(--laranja);outline-offset:2px}
+  .btn{display:inline-block;border:2px solid transparent;border-radius:3px;padding:10px 20px;font:600 .9rem var(--sans);cursor:pointer;text-decoration:none}
+  .btn-azul{background:#1d2430;color:#fff;box-shadow:3px 3px 0 var(--amarelo)}.btn-azul[disabled]{box-shadow:none}.btn-verm{background:var(--vermelho);color:#fff}
+  .btn-cont{background:#fff;color:var(--azul);border-color:var(--azul)}
+  .btn[disabled]{opacity:.45;cursor:not-allowed}
+  .protot{background:#111;color:#ddd;text-align:center;font-size:.85rem;padding:8px 12px}
+  .marca{display:flex;align-items:center;gap:10px;text-decoration:none;font:600 .9rem var(--sans);color:var(--azul)}
+  .marca img{height:42px;width:auto;display:block}
+  .marca .gest{border-left:2px solid #c9d2e0;padding-left:10px;margin-left:2px;color:#4F4F4F;font-weight:400;letter-spacing:.06em;text-transform:uppercase;font-size:.75rem}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+  /* login */
+  #login{min-height:calc(100vh - 34px);display:grid;place-items:center;background:var(--azul);padding:24px}
+  .cartao{background:#fff;border-radius:4px;padding:34px;width:100%;max-width:440px;box-shadow:8px 8px 0 var(--amarelo)}
+  .cartao h1{color:var(--vermelho);font-size:1.7rem;margin-top:14px}
+  label{display:block;font-weight:700;font-size:.9rem;margin:14px 0 4px}
+  :root{color-scheme:light}
+  input,select,textarea{width:100%;font:inherit;color:var(--texto);padding:11px;border:2px solid #b9c4d4;border-radius:6px;background:#fff}
+  select option{color:#222;background:#fff}
+  input:focus,select:focus{border-color:var(--azul);outline:none;box-shadow:0 0 0 3px rgba(8,94,195,.25)}
+  .aviso{background:#fff8dc;border-left:6px solid var(--amarelo);padding:10px 12px;font-size:.88rem;margin:14px 0}
+  .erro{color:#b00020;font-size:.88rem;min-height:1.2em}
+  .voltar{display:block;text-align:center;margin-top:16px;font-size:.92rem}
+
+  /* app */
+  #app{display:none}
+  .barra{background:#fff;border-bottom:1px solid #e4e8ee;position:sticky;top:0;z-index:20}
+  .barra .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:64px;flex-wrap:wrap}
+  .usuario{display:flex;align-items:center;gap:12px;font-size:.92rem}
+  .perfil{background:var(--amarelo);font-weight:600;padding:3px 12px;border-radius:3px;font-size:.8rem}
+  .abas{background:var(--azul)}
+  .abas .wrap{display:flex;gap:4px;overflow-x:auto}
+  .abas button{background:transparent;border:0;color:#cfe0fa;font:400 .95rem var(--sans);padding:14px 18px;cursor:pointer;border-bottom:4px solid transparent;white-space:nowrap}
+  .abas button[aria-selected=true]{color:#fff;border-bottom-color:var(--amarelo)}
+  main{padding:26px 0 60px}
+  .painel{display:none}.painel.vis{display:block}
+  h2{color:var(--azul);font-size:1.5rem}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin:16px 0 24px}
+  .kpi{background:#fff;border-radius:8px;padding:16px;border-left:6px solid var(--c,var(--azul));box-shadow:0 1px 6px rgba(0,0,0,.08)}
+  .kpi b{display:block;font:700 2rem var(--serif);color:var(--c,var(--azul))}
+  .kpi small{color:#555}
+  .duas{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:860px){.duas{grid-template-columns:1fr}}
+  .box{background:#fff;border-radius:8px;padding:20px;box-shadow:0 1px 6px rgba(0,0,0,.08)}
+  .box h3{font-size:1.1rem;color:var(--vermelho)}
+  a.kpi{display:block;text-decoration:none;color:inherit;transition:transform .12s,box-shadow .12s}
+  a.kpi em{display:block;font-style:normal;font-size:.78rem;color:var(--c,var(--azul));font-weight:600;margin-top:6px}
+  a.kpi:hover,a.kpi:focus-visible{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.16)}
+  a.barra-h{text-decoration:none;color:inherit;border-radius:6px;padding:2px 4px;margin-left:-4px;margin-right:-4px}
+  a.barra-h:hover,a.barra-h:focus-visible{background:#eef3fb}
+  a.barra-h:hover span{color:var(--azul);text-decoration:underline}
+  .barra-h{display:grid;grid-template-columns:130px 1fr 34px;gap:8px;align-items:center;margin:7px 0;font-size:.9rem}
+  .barra-h .trilho{background:#e8eef7;border-radius:999px;height:14px;overflow:hidden}
+  .barra-h .enche{height:100%;background:var(--c,var(--azul));border-radius:999px}
+
+  .filtros{background:#fff;border-radius:8px;padding:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:14px 0;box-shadow:0 1px 6px rgba(0,0,0,.08)}
+  .filtros label{margin:0 0 3px;font-size:.8rem}
+  .tabela-wrap{background:#fff;border-radius:8px;overflow-x:auto;box-shadow:0 1px 6px rgba(0,0,0,.08)}
+  table{border-collapse:collapse;width:100%;min-width:860px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid #edf0f5;font-size:.92rem;vertical-align:top}
+  th{background:#eef3fb;color:var(--azul);position:sticky;top:0}
+  .tag{display:inline-block;background:#e6eefb;color:var(--azul);border-radius:999px;padding:1px 9px;font-size:.78rem;margin:1px 2px 1px 0;font-weight:700}
+  .st{font-weight:700;border-radius:999px;padding:4px 8px;border:2px solid #b9c4d4;font-size:.85rem;width:auto}
+  .oculto{color:#888;font-style:italic}
+  .acoes-lista{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-top:14px}
+  .acao{background:#fff;border-radius:8px;padding:18px;border-top:6px solid var(--c);box-shadow:0 1px 6px rgba(0,0,0,.08)}
+  .acao h3{font-size:1.05rem;color:var(--c)}
+  .acao p{margin:.3em 0;font-size:.92rem}
+  .sub{display:flex;gap:8px;margin:16px 0 4px;flex-wrap:wrap}
+  .sub button{background:#fff;border:2px solid var(--azul);color:var(--azul);font:600 .92rem var(--sans);padding:8px 16px;border-radius:999px;cursor:pointer}
+  .sub button[aria-selected=true]{background:var(--azul);color:#fff}
+  .sub span{opacity:.8;font-weight:400}
+  .sub-t{font-size:1.15rem;color:var(--tinta);margin:22px 0 0}
+  .acoes-lista.agend{grid-template-columns:repeat(auto-fill,minmax(360px,1fr))}
+  .agend .acao .dt{display:inline-block;background:var(--azul);color:#fff;font-weight:700;font-size:.82rem;padding:3px 10px;border-radius:3px;margin-bottom:6px}
+  .vg{margin:10px 0}.vg .l{display:flex;justify-content:space-between;font-size:.85rem;font-weight:700;margin-bottom:4px}
+  .vg .b{height:9px;background:#e6e9ee;border-radius:6px;overflow:hidden}.vg .b i{display:block;height:100%;background:var(--c)}
+  .agend details{margin-top:10px;border-top:1px solid #edf0f5;padding-top:8px}
+  .agend summary{cursor:pointer;font-weight:700;color:var(--azul);font-size:.9rem}
+  .insc{list-style:none;margin:8px 0 0;padding:0}
+  .insc li{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #f1f3f7;font-size:.9rem;flex-wrap:wrap}
+  .insc .ok{color:#0f7a43;font-weight:700}.insc .pend{color:#a86a00;font-weight:700}
+  .insc button{font:600 .8rem var(--sans);border:2px solid var(--azul);background:#fff;color:var(--azul);border-radius:3px;padding:3px 10px;cursor:pointer}
+  .insc button:disabled{opacity:.45;cursor:not-allowed}
+  .mapa-box{margin-bottom:12px;padding:14px}
+  .mapa-cab{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:.9rem;margin-bottom:6px}
+  #mapa{width:100%;height:auto;max-height:360px;background:#eaf2fb;border-radius:6px;display:block}
+  #mapa text{font:600 7px var(--sans);fill:#1d2430;paint-order:stroke;stroke:#fff;stroke-width:2px}
+  .vazio{padding:24px;text-align:center;color:#666}
+  .perm li{margin:4px 0}
+  .nota{font-size:.85rem;color:#555;margin-top:10px}
+</style>
+<style id="estilos-portal-harmonia">
+:root {
+  --azul: #085EC3;
+  --azul-esc: #06479a;
+  --vermelho: #DB150A;
+  --amarelo: #F1C50E;
+  --laranja: #F08D0C;
+  --verde: #0f9d58;
+  --cinza: #4F4F4F;
+  --tinta: #1d2430;
+  --borda: #e2e8f0;
+  --suave: #f8fafc;
+  --serif: "Lora", Georgia, serif;
+  --sans: "Lexend", "Segoe UI", system-ui, sans-serif;
+}
+html {
+  background: var(--suave);
+  min-height: 100%;
+}
+body {
+  margin: 0;
+  font-family: var(--sans);
+  background: var(--suave);
+  color: var(--tinta);
+  line-height: 1.6;
+}
+
+/* Escala desktop 82% focada no aplicativo interno (elimina quebras em tela cheia do login) */
+@media (min-width: 1001px) {
+  #app {
+    zoom: 0.82;
+    width: 100%;
+  }
+}
+
+/* TELA DE LOGIN FIXA E 100% PREENCHIDA */
+#login {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--azul);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 1000;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+#login::after {
+  content: '';
+  position: absolute;
+  right: -60px;
+  bottom: -60px;
+  width: 520px;
+  height: 520px;
+  background: url('/assets/img-03.png') no-repeat center / contain;
+  opacity: 0.08;
+  pointer-events: none;
+}
+.cartao {
+  position: relative;
+  z-index: 2;
+  background: #fff;
+  border: 2px solid var(--tinta);
+  border-radius: 6px;
+  box-shadow: 8px 8px 0 var(--amarelo);
+  padding: 38px 34px;
+  width: 100%;
+  max-width: 440px;
+}
+.cartao .marca img {
+  height: 46px;
+  width: auto;
+  margin: 0 auto 12px;
+  display: block;
+}
+.cartao h1 {
+  color: var(--azul);
+  font-size: 1.75rem;
+  margin: 8px 0 4px;
+  text-align: center;
+}
+.login-sub {
+  text-align: center;
+  font-size: 0.86rem;
+  color: #64748b;
+  margin: 0 0 20px;
+}
+.cartao label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--tinta);
+  margin-top: 14px;
+  display: block;
+}
+.cartao input, .cartao select {
+  margin-top: 4px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 4px;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+}
+.cartao input:focus, .cartao select:focus {
+  border-color: var(--azul);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(8,94,195,0.18);
+}
+.cartao .voltar {
+  display: block;
+  text-align: center;
+  margin-top: 18px;
+  font-size: 0.88rem;
+  color: var(--azul);
+  text-decoration: none;
+  font-weight: 500;
+}
+.cartao .voltar:hover {
+  text-decoration: underline;
+}
+
+/* BARRA SUPERIOR */
+.barra {
+  background: #fff;
+  border-bottom: 3px solid var(--tinta);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.barra .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 68px;
+}
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--azul);
+}
+.marca img {
+  height: 42px;
+  width: auto;
+}
+.marca .gest {
+  background: var(--azul);
+  color: #fff;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-left: none;
+  margin-left: 6px;
+}
+.usuario {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.92rem;
+}
+.perfil {
+  background: var(--amarelo);
+  color: var(--tinta);
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  border: 1.5px solid var(--tinta);
+}
+#sair {
+  border: 1.5px solid var(--tinta);
+  background: #fff;
+  color: var(--tinta);
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+#sair:hover {
+  background: #f1f5f9;
+}
+
+/* NAVEGAÇÃO POR ABAS */
+.abas {
+  background: var(--azul);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+.abas .wrap {
+  display: flex;
+  gap: 6px;
+}
+.abas button {
+  background: transparent;
+  border: 0;
+  color: #dbeafe;
+  font: 500 0.95rem var(--sans);
+  padding: 13px 22px;
+  cursor: pointer;
+  border-bottom: 4px solid transparent;
+  transition: all 0.2s ease;
+  border-radius: 4px 4px 0 0;
+}
+.abas button:hover {
+  color: #fff;
+  background: rgba(255,255,255,0.08);
+}
+.abas button[aria-selected="true"] {
+  color: #fff;
+  font-weight: 700;
+  border-bottom-color: var(--amarelo);
+  background: rgba(255,255,255,0.12);
+}
+
+/* CABEÇALHOS DE PAINEL */
+.painel-cab {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--borda);
+  padding-bottom: 14px;
+}
+.painel-cab h2 {
+  color: var(--azul);
+  font-size: 1.55rem;
+  margin: 0;
+}
+.subtitulo-painel {
+  margin: 4px 0 0;
+  font-size: 0.92rem;
+  color: #64748b;
+}
+.status-sinc, .sessao-badge {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.85rem;
+  color: #334155;
+  background: #fff;
+  border: 1px solid var(--borda);
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+.ponto-verde {
+  width: 8px;
+  height: 8px;
+  background: var(--verde);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(15, 157, 88, 0.2);
+}
+
+/* BOTÕES COM NEO-BRUTALISMO HARMONIOSO */
+.btn-azul {
+  background: var(--tinta);
+  color: #fff;
+  border: 2px solid var(--tinta);
+  box-shadow: 3px 3px 0 var(--amarelo);
+  border-radius: 4px;
+  font-weight: 600;
+  padding: 8px 18px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-azul:hover:not(:disabled) {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--amarelo);
+}
+.btn-cont {
+  border: 2px solid var(--tinta);
+  color: var(--tinta);
+  background: #fff;
+  border-radius: 4px;
+  font-weight: 600;
+  padding: 8px 18px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-cont:hover {
+  background: #f1f5f9;
+}
+.btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* CARDS DE KPI (VISÃO GERAL) */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 14px;
+  margin: 16px 0 24px;
+}
+.kpi {
+  background: #fff;
+  border: 1px solid var(--borda);
+  border-left: 6px solid var(--c, var(--azul));
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  padding: 16px 18px;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.kpi:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+}
+.kpi .kpi-num {
+  display: block;
+  font-family: var(--serif);
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: var(--c, var(--azul));
+  line-height: 1.1;
+}
+.kpi .kpi-lbl {
+  display: block;
+  font-size: 0.88rem;
+  color: #475569;
+  margin-top: 4px;
+}
+.kpi .kpi-link {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--c, var(--azul));
+  margin-top: 10px;
+}
+
+/* CAIXAS DE GRÁFICOS */
+.duas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+.box {
+  background: #fff;
+  border: 1px solid var(--borda);
+  border-radius: 6px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.box h3 {
+  color: var(--azul);
+  font-size: 1.12rem;
+  margin-bottom: 14px;
+}
+.barra-h {
+  display: grid;
+  grid-template-columns: 140px 1fr 36px;
+  gap: 10px;
+  align-items: center;
+  padding: 5px 8px;
+  margin: 4px 0;
+  border-radius: 4px;
+  text-decoration: none;
+  color: inherit;
+  font-size: 0.88rem;
+  transition: background 0.12s;
+}
+.barra-h:hover {
+  background: #f1f5f9;
+}
+.barra-h .trilho {
+  background: #e2e8f0;
+  border-radius: 999px;
+  height: 11px;
+  overflow: hidden;
+}
+.barra-h .enche {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+/* TOOLBAR PRINCIPAL DE FILTROS DOS VOLUNTÁRIOS */
+.filtros-barra {
+  background: #fff;
+  border: 1px solid var(--borda);
+  border-radius: 6px;
+  padding: 14px 18px;
+  display: grid;
+  grid-template-columns: 2fr 1.3fr 1.2fr 1.2fr auto;
+  gap: 12px;
+  align-items: flex-end;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  margin-bottom: 12px;
+}
+@media (max-width: 1024px) {
+  .filtros-barra {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.filtro-campo label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 4px;
+}
+.busca-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.busca-ico {
+  position: absolute;
+  left: 12px;
+  font-size: 0.85rem;
+  pointer-events: none;
+  opacity: 0.6;
+  z-index: 2;
+}
+.filtros-barra .busca-input-wrap input {
+  padding-left: 36px !important;
+}
+.filtros-barra input, .filtros-barra select, .gaveta-geo input, .gaveta-geo select {
+  width: 100%;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 4px;
+  padding: 8px 10px;
+  font-size: 0.88rem;
+  color: var(--tinta);
+  background: #fff;
+}
+.filtros-barra input:focus, .filtros-barra select:focus, .gaveta-geo input:focus, .gaveta-geo select:focus {
+  border-color: var(--azul);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(8,94,195,0.18);
+}
+.btn-geo-toggle {
+  background: #f1f5f9;
+  border: 1.5px solid #cbd5e1;
+  color: var(--azul);
+  font-weight: 600;
+  font-size: 0.86rem;
+  padding: 9px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+.btn-geo-toggle:hover, .btn-geo-toggle.ativo {
+  background: var(--azul);
+  border-color: var(--azul);
+  color: #fff;
+}
+
+/* GAVETA DE FILTROS GEOGRÁFICOS E MAPA */
+.gaveta-geo {
+  background: #fff;
+  border: 1px solid var(--borda);
+  border-radius: 6px;
+  padding: 18px;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+.gaveta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 20px;
+}
+@media (max-width: 860px) {
+  .gaveta-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.geo-filtros-extra {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.geo-mapa-wrap {
+  background: #f8fafc;
+  border: 1px solid var(--borda);
+  border-radius: 6px;
+  padding: 12px;
+}
+.mapa-cab {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.84rem;
+  margin-bottom: 8px;
+}
+#mapa {
+  width: 100%;
+  height: auto;
+  max-height: 190px;
+  background: #eaf2fb;
+  border-radius: 4px;
+  display: block;
+}
+.mapa-info {
+  font-size: 0.76rem;
+  color: #64748b;
+  margin: 6px 0 0;
+  text-align: right;
+}
+
+/* BARRA DE META DA TABELA */
+.tabela-meta-barra {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #334155;
+  margin: 10px 0 8px;
+}
+
+/* TABELA DE VOLUNTÁRIOS */
+.tabela-wrap {
+  background: #fff;
+  border: 1px solid var(--borda);
+  border-radius: 6px;
+  overflow-x: auto;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 860px;
+}
+th {
+  background: #f1f5f9;
+  color: var(--azul-esc);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  padding: 12px 14px;
+  border-bottom: 2px solid var(--borda);
+  position: sticky;
+  top: 0;
+}
+td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+tr:hover td {
+  background: #f8fafc;
+}
+.tag {
+  display: inline-block;
+  background: #eff6ff;
+  color: var(--azul);
+  border: 1px solid #bfdbfe;
+  border-radius: 4px;
+  padding: 2px 7px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  margin: 1px;
+}
+.link-wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #0f7a43;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.88rem;
+}
+.link-wa:hover {
+  text-decoration: underline;
+}
+.wa-ico {
+  font-size: 0.9rem;
+}
+.txt-email {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-top: 2px;
+}
+.tag-restrito {
+  display: inline-block;
+  background: #f1f5f9;
+  color: #64748b;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.st {
+  border: 1.5px solid #cbd5e1;
+  border-radius: 4px;
+  padding: 5px 8px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  background: #fff;
+}
+
+/* NÍVEIS DE ACESSO */
+.cards-acesso {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+@media (max-width: 900px) {
+  .cards-acesso {
+    grid-template-columns: 1fr;
+  }
+}
+.card-nivel {
+  background: #fff;
+  border: 1px solid var(--borda);
+  border-top: 5px solid var(--cor-borda);
+  border-radius: 6px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.nivel-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.nivel-topo h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: var(--tinta);
+}
+.nivel-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+.tag-presidencia { background: #dbeafe; color: var(--azul); }
+.tag-coordenacao { background: #ffedd5; color: #c2410c; }
+.tag-colaborador { background: #f1f5f9; color: #475569; }
+.nivel-desc {
+  font-size: 0.88rem;
+  color: #475569;
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+.nivel-itens {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.85rem;
+}
+.nivel-itens li {
+  padding: 5px 0;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nivel-itens li.bloq {
+  color: #94a3b8;
+}
+.chk { color: var(--verde); font-weight: 700; }
+.chk-bloq { color: #94a3b8; font-weight: 700; }
+
+.tabela-matriz td, .tabela-matriz th {
+  padding: 10px 14px;
+}
+.tag-sim {
+  background: #dcfce7;
+  color: #166534;
+  font-weight: 700;
+  font-size: 0.78rem;
+  padding: 3px 10px;
+  border-radius: 999px;
+  display: inline-block;
+}
+.tag-nao {
+  background: #f1f5f9;
+  color: #94a3b8;
+  font-weight: 600;
+  font-size: 0.78rem;
+  padding: 3px 10px;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+/* TOOLBAR DE AÇÕES E BOTÃO DE INOVAÇÃO JUSTIFICADO À DIREITA */
+.acoes-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 18px 0 14px;
+  flex-wrap: wrap;
+}
+.acoes-toolbar .sub {
+  margin: 0;
+}
+.acoes-cad-wrap {
+  margin-left: auto;
+}
+.btn-cad-acao {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--amarelo);
+  color: var(--tinta);
+  font-family: var(--sans);
+  font-size: 0.92rem;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 2px solid #000;
+  box-shadow: 2px 2px 0px #000;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+.btn-cad-acao:hover {
+  background: #fcd34d;
+  transform: translateY(-1px);
+  box-shadow: 3px 3px 0px #000;
+}
+.btn-cad-acao:active {
+  transform: translateY(1px);
+  box-shadow: 1px 1px 0px #000;
+}
+.badge-cad-inov {
+  background: var(--azul);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px 9px;
+  border-radius: 999px;
+  display: inline-block;
+}
+.txt-cad-acao {
+  letter-spacing: -0.01em;
+}
+
+/* PADRONIZAÇÃO ESTRUTURAL E VISUAL DOS CARDS DE AÇÕES */
+.acoes-lista, .acoes-lista.agend {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+  margin-top: 14px;
+}
+.acao {
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid var(--borda);
+  border-top: 5px solid var(--c, var(--azul));
+  padding: 16px 18px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column;
+  height: 365px;
+  box-sizing: border-box;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.acao:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+.acao-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: 26px;
+}
+.acao-topo .tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.acao-data-pill {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #475569;
+  background: #f1f5f9;
+  padding: 3px 9px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+.acao-data-pill.dt-agendada {
+  color: var(--azul);
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  font-weight: 700;
+}
+.acao-titulo {
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: var(--tinta);
+  margin: 10px 0 6px;
+  line-height: 1.35;
+  height: 2.7em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.acao-desc {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: #475569;
+  margin: 0 0 12px;
+  height: 4.5em;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.acao-rodape {
+  margin-top: auto;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.acao-meta-real {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.85rem;
+}
+.meta-vol-cont {
+  color: #1e293b;
+  font-weight: 600;
+}
+.meta-status-feita {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: #dcfce7;
+  color: #15803d;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+.acao-impacto-barra {
+  width: 100%;
+  height: 6px;
+  background: #f1f5f9;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.acao-impacto-prog {
+  height: 100%;
+  border-radius: 999px;
+}
+.acao-meta-sub {
+  font-size: 0.76rem;
+  color: #94a3b8;
+}
+.acao-details {
+  font-size: 0.85rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 6px 10px;
+}
+.acao-details summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #334155;
+  user-select: none;
+}
+.acao-details .insc {
+  list-style: none;
+  padding: 6px 0 0;
+  margin: 0;
+  max-height: 85px;
+  overflow-y: auto;
+}
+.acao-details .insc li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3px 0;
+  border-bottom: 1px dashed #e2e8f0;
+  font-size: 0.8rem;
+}
+
+/* MODAL DE CADASTRAMENTO E FEEDBACK */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  box-sizing: border-box;
+  animation: modalFadeIn 0.2s ease;
+}
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.modal-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  border: 2px solid #000;
+  width: 100%;
+  max-width: 520px;
+  max-height: 94vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+  animation: modalSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes modalSlideUp {
+  from { transform: translateY(20px) scale(0.97); }
+  to { transform: translateY(0) scale(1); }
+}
+.modal-cab {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 10px 18px 6px;
+  border-bottom: 1px solid var(--borda);
+  background: #f8fafc;
+}
+.badge-inovacao {
+  display: inline-block;
+  background: var(--azul);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 7px;
+  border-radius: 999px;
+  margin-bottom: 2px;
+}
+.modal-cab h3 {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--tinta);
+  margin: 0;
+}
+.modal-subtitulo {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin: 1px 0 0;
+}
+.modal-fechar {
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: #64748b;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.15s;
+}
+.modal-fechar:hover {
+  background: #fee2e2;
+  color: var(--vermelho);
+}
+.form-modal-acao {
+  padding: 14px 22px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.form-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.form-linha-dupla {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.form-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #334155;
+}
+.form-label-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.char-counter {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #64748b;
+}
+.req {
+  color: var(--vermelho);
+}
+.form-input, .form-select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 4px 8px;
+  border: 1.5px solid var(--borda);
+  border-radius: 7px;
+  font-family: var(--sans);
+  font-size: 0.84rem;
+  color: var(--tinta);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.form-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 4px 8px;
+  border: 1.5px solid var(--borda);
+  border-radius: 7px;
+  font-family: var(--sans);
+  font-size: 0.84rem;
+  color: var(--tinta);
+  outline: none;
+  height: 42px;
+  min-height: 38px;
+  max-height: 60px;
+  resize: vertical;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--azul);
+  box-shadow: 0 0 0 3px rgba(8, 94, 195, 0.15);
+}
+.form-ajuda {
+  font-size: 0.7rem;
+  color: #64748b;
+  margin-top: 1px;
+}
+.modal-rodape {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 6px;
+  border-top: 1px solid var(--borda);
+}
+.btn-salvar-acao {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--amarelo);
+  color: var(--tinta);
+  font-weight: 700;
+  font-size: 0.85rem;
+  border: 2px solid #000;
+  box-shadow: 2px 2px 0px #000;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.btn-salvar-acao:hover {
+  background: #fcd34d;
+  transform: translateY(-1px);
+  box-shadow: 3px 3px 0px #000;
+}
+.toast-sucesso-acao {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #15803d;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.92rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  z-index: 999999;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.25s, transform 0.25s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.toast-sucesso-acao.vis {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+
+<!-- LOGIN -->
+<section id="login" aria-labelledby="login-t">
+  <div class="cartao">
+    <a class="marca" href="index.html"><img src="assets/img-01.png" alt=""><img src="assets/img-02.png" alt="Usina da Vida"></a>
+    <h1 id="login-t">Portal de gestão</h1>
+    <p style="margin:0;color:#444">Painel Administrativo do Voluntariado · Autenticação Restrita</p>
+    <form id="f-login" novalidate>
+      <label for="perfil">Perfil de acesso</label>
+      <select id="perfil">
+        <option value="presidencia">Presidência</option>
+        <option value="coordenacao">Coordenação</option>
+        <option value="colaborador">Colaborador autorizado</option>
+      </select>
+      <label for="usuario">Usuário (e-mail)</label>
+      <input id="usuario" type="email" autocomplete="username" placeholder="admin@usinadavida.org.br">
+      <label for="senha">Senha</label>
+      <input id="senha" type="password" autocomplete="current-password">
+      <div class="erro" id="erro-login" role="alert"></div>
+      
+      <button class="btn btn-azul" type="submit" style="width:100%;font-size:1rem;padding:12px">Entrar no Portal de Gestão</button>
+    </form>
+    <a class="voltar" href="index.html">← Retornar ao site institucional</a>
+  </div>
+</section>
+
+<!-- APP -->
+<div id="app">
+  <div class="barra"><div class="wrap">
+    <a class="marca" href="index.html"><img src="assets/img-01.png" alt=""><img src="assets/img-02.png" alt="Usina da Vida"><span class="gest">Gestão</span></a>
+    <div class="usuario"><span id="quem"></span><span class="perfil" id="perfil-tag"></span><button class="btn btn-cont" id="sair" type="button">Sair</button></div>
+  </div></div>
+  <div class="abas"><div class="wrap" role="tablist" aria-label="Seções do portal">
+    <button role="tab" id="t-geral" aria-selected="true" aria-controls="p-geral">Visão geral</button>
+    <button role="tab" id="t-vol" aria-selected="false" aria-controls="p-vol">Voluntários</button>
+    <button role="tab" id="t-acoes" aria-selected="false" aria-controls="p-acoes">Ações</button>
+    <button role="tab" id="t-acesso" aria-selected="false" aria-controls="p-acesso">Níveis de acesso</button>
+  </div></div>
+
+  <main class="wrap">
+    <!-- VISÃO GERAL -->
+    <section class="painel vis" id="p-geral" role="tabpanel" aria-labelledby="t-geral">
+      <div class="painel-cab">  <div>    <h2>Visão Geral dos Cadastros</h2>    <p class="subtitulo-painel">Monitoramento em tempo real de voluntários, etapas de triagem e iniciativas sociais.</p>  </div>  <div class="status-sinc"><span class="ponto-verde"></span> Base de dados sincronizada</div></div>
+      <div class="cards" id="kpis"></div>
+      <div class="duas">
+        <div class="box"><h3>Voluntários por área de atuação</h3><div id="g-area"></div></div>
+        <div class="box"><h3>Inscrições por status</h3><div id="g-status"></div></div>
+      </div>
+      
+    </section>
+
+    <!-- VOLUNTÁRIOS -->
+    <section class="painel" id="p-vol" role="tabpanel" aria-labelledby="t-vol">
+      <div class="painel-cab">  <div>    <h2>Voluntários Cadastrados</h2>    <p class="subtitulo-painel">Banco de talentos, triagem de disponibilidade e mobilização territorial em Salvador.</p>  </div>  <div class="acoes-topo-vol">    <button class="btn btn-cont" id="limpar" type="button">Limpar filtros</button>    <button class="btn btn-azul" id="csv" type="button">Exportar lista (CSV)</button>  </div></div>
+<!-- BARRA PRINCIPAL DE FILTROS --><div class="filtros-barra" role="search" aria-label="Filtros de voluntários">  <div class="filtro-campo campo-busca">    <label for="f-busca">Buscar por nome</label>    <div class="busca-input-wrap">      <span class="busca-ico">🔍</span>      <input id="f-busca" type="text" placeholder="Digite o nome do voluntário...">    </div>  </div>  <div class="filtro-campo">    <label for="f-area">Área de atuação</label>    <select id="f-area"></select>  </div>  <div class="filtro-campo">    <label for="f-status">Status da inscrição</label>    <select id="f-status"></select>  </div>  <div class="filtro-campo">    <label for="f-disp">Disponibilidade</label>    <select id="f-disp"></select>  </div>  <div class="filtro-campo campo-btn-geo">    <label>&nbsp;</label>    <button type="button" id="btn-toggle-geo" class="btn-geo-toggle" aria-expanded="false">      📍 Filtros Territoriais & Mapa    </button>  </div></div>
+<!-- GAVETA EXPANSÍVEL DE FILTROS AVANÇADOS E MAPA TERRITORIAL --><div class="gaveta-geo" id="gaveta-geo" style="display:none">  <div class="gaveta-grid">    <div class="geo-filtros-extra">      <div class="filtro-campo"><label for="f-bairro">Bairro / Localidade</label><select id="f-bairro"></select></div>      <div class="filtro-campo"><label for="f-form">Formação acadêmica</label><select id="f-form"></select></div>      <div class="filtro-campo"><label for="f-ativ">Alocação em atividade</label><select id="f-ativ"></select></div>      <div class="filtro-campo"><label for="f-ref">Ponto focal de referência</label><select id="f-ref"></select></div>      <div class="filtro-campo"><label for="f-raio">Raio de proximidade (km)</label><input id="f-raio" type="number" min="0" max="200" step="0.5" inputmode="decimal" list="raios" placeholder="Ex.: 4,5"><datalist id="raios"><option value="3"><option value="5"><option value="8"><option value="12"><option value="20"></datalist></div>    </div>    <div class="geo-mapa-wrap">      <div class="mapa-cab"><b>Distribuição Territorial de Salvador</b><span id="mapa-leg"></span></div>      <svg id="mapa" viewBox="0 0 330 175" role="img" aria-label="Mapa esquemático dos bairros com o raio de distância"></svg>      <p class="mapa-info">Alcance territorial estimado a partir da sede comunitária da Usina da Vida.</p>    </div>  </div></div>
+<div class="tabela-meta-barra">  <span id="contagem" aria-live="polite"></span></div>
+<div class="tabela-wrap">  <table>    <caption class="oculto" style="position:absolute;left:-999px">Lista de voluntários</caption>    <thead><tr><th>Nome</th><th>Área(s)</th><th>Formação</th><th>Disponibilidade</th><th>Localização</th><th>Atividade</th><th>Contato Direto</th><th>Status</th></tr></thead>    <tbody id="corpo"></tbody>  </table>
+  <div id="vazio" class="vazio" style="display:none">Nenhum voluntário encontrado com esses filtros.</div>
+      </div>
+    </section>
+
+    <!-- AÇÕES -->
+    <section class="painel" id="p-acoes" role="tabpanel" aria-labelledby="t-acoes">
+      <div class="painel-cab">  <div>    <h2>Ações e Projetos Comunitários</h2>    <p class="subtitulo-painel">Acompanhamento e registro operacional das oficinas, projetos e iniciativas sociais da Usina da Vida.</p>  </div></div>
+      <div class="acoes-toolbar">
+  <div class="sub" role="tablist" aria-label="Tipo de ação">
+    <button type="button" role="tab" id="s-todas" aria-selected="true">Todas <span id="n-todas"></span></button>
+    <button type="button" role="tab" id="s-real" aria-selected="false">Realizadas <span id="n-real"></span></button>
+    <button type="button" role="tab" id="s-agend" aria-selected="false">Agendadas <span id="n-agend"></span></button>
+  </div>
+  <div class="acoes-cad-wrap">
+    <button type="button" id="btn-nova-acao" class="btn-cad-acao" title="Cadastrar nova ação ou iniciativa comunitária">
+      <span class="badge-cad-inov">Inovação</span>
+      <span class="txt-cad-acao">＋ Cadastrar Nova Ação</span>
+    </button>
+  </div>
+</div>
+      <div id="sp-agend"><h3 class="sub-t" id="h-agend">Ações agendadas</h3><div class="acoes-lista agend" id="agend"></div></div>
+      <div id="sp-real"><h3 class="sub-t" id="h-real">Ações realizadas</h3><div class="acoes-lista" id="acoes"></div></div>
+    </section>
+
+    <!-- ACESSO -->
+<section class="painel" id="p-acesso" role="tabpanel" aria-labelledby="t-acesso">
+  <div class="painel-cab">
+    <div>
+      <h2>Governança e Níveis de Acesso</h2>
+      <p class="subtitulo-painel">Matriz de permissões institucionais e conformidade com privacidade e proteção de dados (LGPD).</p>
+    </div>
+    <div class="sessao-badge">
+      <span class="ponto-verde"></span>
+      <span>Sessão autenticada: <strong id="perfil-ativo-nome">Presidência</strong></span>
+    </div>
+  </div>
+
+  <!-- CARDS DOS TRÊS NÍVEIS -->
+  <div class="cards-acesso">
+    <div class="card-nivel" style="--cor-borda: var(--azul)">
+      <div class="nivel-topo">
+        <span class="nivel-tag tag-presidencia">Administração Geral</span>
+        <h3>Presidência</h3>
+      </div>
+      <p class="nivel-desc">Gestão executiva e estratégica integral do voluntariado, prestação de contas institucional e governança geral.</p>
+      <ul class="nivel-itens">
+        <li><span class="chk">✓</span> Visão completa de métricas e indicadores</li>
+        <li><span class="chk">✓</span> Consulta e triagem com dados sensíveis</li>
+        <li><span class="chk">✓</span> Alteração e validação de status</li>
+        <li><span class="chk">✓</span> Gestão de vagas e eventos comunitários</li>
+        <li><span class="chk">✓</span> Exportação irrestrita de relatórios (CSV)</li>
+      </ul>
+    </div>
+
+    <div class="card-nivel" style="--cor-borda: var(--laranja)">
+      <div class="nivel-topo">
+        <span class="nivel-tag tag-coordenacao">Gestão Operacional</span>
+        <h3>Coordenação</h3>
+      </div>
+      <p class="nivel-desc">Alinhamento das atividades de campo, triagem direta de inscritos, contato e organização de oficinas comunitárias.</p>
+      <ul class="nivel-itens">
+        <li><span class="chk">✓</span> Visão completa de métricas e indicadores</li>
+        <li><span class="chk">✓</span> Acesso aos canais diretos de contato</li>
+        <li><span class="chk">✓</span> Alteração de status e triagem ativa</li>
+        <li><span class="chk">✓</span> Confirmação de participantes em ações</li>
+        <li class="bloq"><span class="chk-bloq">—</span> Sem permissão de exportação de base</li>
+      </ul>
+    </div>
+
+    <div class="card-nivel" style="--cor-borda: #64748b">
+      <div class="nivel-topo">
+        <span class="nivel-tag tag-colaborador">Consulta Protegida</span>
+        <h3>Colaborador Autorizado</h3>
+      </div>
+      <p class="nivel-desc">Apoio operacional e consulta de disponibilidades. Respeita a privacidade (LGPD), mantendo contatos pessoais resguardados.</p>
+      <ul class="nivel-itens">
+        <li><span class="chk">✓</span> Consulta de competências e áreas</li>
+        <li><span class="chk">✓</span> Filtro de disponibilidade e bairros</li>
+        <li class="bloq"><span class="chk-bloq">🔒</span> Contatos sensíveis protegidos</li>
+        <li class="bloq"><span class="chk-bloq">—</span> Alterações de status restritas</li>
+        <li class="bloq"><span class="chk-bloq">—</span> Sem permissão de exportação de dados</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- TABELA MATRIZ DE PERMISSÕES -->
+  <div class="box" style="margin-top: 24px; padding: 0; overflow: hidden;">
+    <div style="padding: 16px 20px; border-bottom: 1px solid var(--borda); background: #f8fafc;">
+      <h3 style="margin: 0; font-size: 1.05rem; color: var(--azul);">Matriz Comparativa de Permissões</h3>
+    </div>
+    <div class="tabela-wrap" style="box-shadow: none; border-radius: 0; border: none;">
+      <table class="tabela-matriz">
+        <thead>
+          <tr>
+            <th style="width: 46%;">Funcionalidade / Operação</th>
+            <th style="text-align: center;">Presidência</th>
+            <th style="text-align: center;">Coordenação</th>
+            <th style="text-align: center;">Colaborador</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Painel Geral:</b> Acompanhar indicadores e gráficos</td>
+            <td style="text-align: center;"><span class="tag-sim">Permitido</span></td>
+            <td style="text-align: center;"><span class="tag-sim">Permitido</span></td>
+            <td style="text-align: center;"><span class="tag-sim">Permitido</span></td>
+          </tr>
+          <tr>
+            <td><b>Banco de Voluntários:</b> Filtrar competências e disponibilidade</td>
+            <td style="text-align: center;"><span class="tag-sim">Permitido</span></td>
+            <td style="text-align: center;"><span class="tag-sim">Permitido</span></td>
+            <td style="text-align: center;"><span class="tag-sim">Permitido</span></td>
+          </tr>
+          <tr>
+            <td><b>Privacidade (LGPD):</b> Visualizar WhatsApp e e-mail</td>
+            <td style="text-align: center;"><span class="tag-sim">Permitido</span></td>
+            <td style="text-align: center;"><span class="tag-sim">Permitido</span></td>
+            <td style="text-align: center;"><span class="tag-restrito">Protegido</span></td>
+          </tr>
+          <tr>
+            <td><b>Triagem de Inscrição:</b> Atualizar status do voluntário</td>
+            <td style="text-align: center;"><span class="tag-sim">Permitido</span></td>
+            <td style="text-align: center;"><span class="tag-sim">Permitido</span></td>
+            <td style="text-align: center;"><span class="tag-nao">Bloqueado</span></td>
+          </tr>
+          <tr>
+            <td><b>Ações Sociais:</b> Confirmar voluntários em oficinas</td>
+            <td style="text-align: center;"><span class="tag-sim">Permitido</span></td>
+            <td style="text-align: center;"><span class="tag-sim">Permitido</span></td>
+            <td style="text-align: center;"><span class="tag-nao">Bloqueado</span></td>
+          </tr>
+          <tr>
+            <td><b>Exportação Corporativa:</b> Download da lista em formato CSV</td>
+            <td style="text-align: center;"><span class="tag-sim">Exclusivo</span></td>
+            <td style="text-align: center;"><span class="tag-nao">Bloqueado</span></td>
+            <td style="text-align: center;"><span class="tag-nao">Bloqueado</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+  </main>
+</div>
+
+<script>
+(function(){
+  var AREAS = ["Professor(a)","Instrutor(a)","Pedagogia","Arte","Saúde","Empreendedorismo","Finanças","Apoio operacional"];
+  var FORM = ["Ensino médio","Técnico","Graduando(a)","Graduado(a)","Pós-graduado(a)"];
+  var DISP = ["Manhã","Tarde","Noite","Fins de semana"];
+  var BAIRROS = ["Pituba","Brotas","Itapuã","Liberdade","Cabula","Federação","Barra","Ondina"];
+  var STATUS = ["Recebida","Em triagem","Aprovada","Em atividade","Não selecionada"];
+  var ATIVS = ["Ainda sem atividade","Educação","Empreendedorismo","Cultura","Esportes","Socialização","Saúde & bem-estar"];
+  var NOMES = ["Ana Souza","Bruno Lima","Carla Mendes","Diego Costa","Elisa Rocha","Fábio Alves","Gabriela Nunes","Hugo Ramos","Isabela Teles","João Pereira","Karina Dias","Lucas Barros","Marina Freitas","Nelson Prado","Olívia Campos","Paulo Viana","Quitéria Gomes","Rafael Moura","Sofia Araújo","Tiago Neves","Valéria Cunha","Wagner Lopes","Yara Siqueira","Zeca Almeida"];
+  var COMB = [[0,3],[1],[2,0],[3],[4],[5,6],[6],[7],[0,2],[1,3],[4,7],[5],[2],[3,5],[6,0],[7,4],[0],[1,2],[4],[5,3],[6],[7,0],[2,1],[3,4]];
+  var vols = NOMES.map(function(n,i){
+    return {id:i+1, nome:n, areas:COMB[i].map(function(k){return AREAS[k]}),
+      form:FORM[(i*3)%FORM.length], disp:[DISP[i%4]].concat(i%3===0?[DISP[(i+2)%4]]:[]),
+      bairro:BAIRROS[(i*5)%BAIRROS.length], status:STATUS[(i*7)%STATUS.length],
+      tel:"(71) 90000-"+("0000"+(1000+i*37)).slice(-4), email:n.split(" ")[0].toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"")+(i%3===0?"@usinadavida.org.br":i%3===1?"@gmail.com":"@outlook.com"),
+      ativ:""};
+  });
+  vols.forEach(function(v,i){ v.ativ = (v.status==="Em atividade"||v.status==="Aprovada") ? ATIVS[1+(i%6)] : ATIVS[0]; });
+
+  var AGEND = [
+    {t:"Palestra Novembro Azul",a:"Saúde & bem-estar",c:"#085EC3",dt:"Sáb, 14/11/2026",loc:"Sede Usina da Vida · 09h",vagas:10,p:"Palestra de conscientização sobre saúde integral do homem com acolhimento, recepção e apoio comunitário.",insc:[[1,1],[3,1],[4,1],[6,1],[9,1],[12,1],[15,0],[18,0]]},
+    {t:"Oficina de culinária",a:"Empreendedorismo",c:"#c99a00",dt:"Sáb, 28/11/2026",loc:"Cozinha Comunitária · 14h",vagas:8,p:"Preparo de receitas simples e práticas com as crianças, estimulando autonomia e empreendedorismo local.",insc:[[2,1],[5,1],[8,1],[11,0]]},
+    {t:"Reforço escolar de dezembro",a:"Educação",c:"#F08D0C",dt:"Sáb, 05/12/2026",loc:"Sala de Estudos · 08h30",vagas:6,p:"Apoio pedagógico intensivo em português e matemática na reta final do calendário escolar comunitário.",insc:[[7,1],[10,1]]}
+  ];
+  var ACOES = [
+    {t:"Oficina de culinária",a:"Empreendedorismo",c:"#c99a00",d:"Out/2026",n:6,p:"Preparo de receitas simples com crianças e noções de empreendedorismo comunitário e sustentável."},
+    {t:"Reforço escolar",a:"Educação",c:"#F08D0C",d:"Out/2026",n:5,p:"Apoio pedagógico em matemática e português para fortalecimento do aprendizado de crianças e jovens."},
+    {t:"Aula de karatê",a:"Esportes",c:"#8e1fc2",d:"Set/2026",n:2,p:"Treino coletivo com instrutores voluntários, desenvolvendo disciplina, respeito e preparo físico."},
+    {t:"Roda de socialização",a:"Socialização",c:"#DB150A",d:"Set/2026",n:4,p:"Atividades integrativas de convivência, escuta afetiva e oficinas lúdicas com jovens e famílias."},
+    {t:"Música e dança",a:"Cultura",c:"#085EC3",d:"Ago/2026",n:3,p:"Oficina de musicalização e expressão corporal para estímulo cultural e artístico na comunidade."},
+    {t:"Ação de saúde e bem-estar",a:"Saúde & bem-estar",c:"#0f9d58",d:"Ago/2026",n:4,p:"Orientações práticas sobre nutrição preventiva, bem-estar familiar e hábitos de vida saudável."}
+  ];
+
+  var perfil = "presidencia";
+  var $ = function(id){return document.getElementById(id)};
+  function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+
+  /* login */
+  $("f-login").addEventListener("submit", function(e){
+    e.preventDefault();
+    if(!$("usuario").value.trim() || !$("senha").value){ $("erro-login").textContent="Informe usuário e senha."; return; }
+    perfil = $("perfil").value;
+    var nomes = {presidencia:"Presidência",coordenacao:"Coordenação",colaborador:"Colaborador autorizado"};
+    $("quem").textContent = $("usuario").value;
+    $("perfil-tag").textContent = nomes[perfil];
+    $("login").style.display="none"; $("app").style.display="block";
+    $("erro-login").textContent=""; $("senha").value="";
+    $("csv").disabled = perfil!=="presidencia";
+    desenhar(); window.scrollTo(0,0);
+  });
+  $("sair").addEventListener("click", function(){ $("app").style.display="none"; $("login").style.display="grid"; });
+
+  /* abas */
+  var abas = ["geral","vol","acoes","acesso"];
+  abas.forEach(function(a){
+    $("t-"+a).addEventListener("click", function(){
+      abas.forEach(function(b){ $("t-"+b).setAttribute("aria-selected", b===a); $("p-"+b).classList.toggle("vis", b===a); });
+    });
+  });
+
+
+  /* visão geral: cada número é um atalho */
+  $("p-geral").addEventListener("click", function(e){
+    var a=e.target.closest("[data-go]"); if(!a) return; e.preventDefault();
+    var p=a.dataset.go.split("|"), alvo=p[0], par=p[1]?p[1].split("="):null;
+    if(alvo==="vol"){
+      $("limpar").click();
+      if(par){ if(par[0]==="grupo"){ grupo=par[1].split(","); } else { $("f-"+par[0]).value=par[1]; } }
+      tabela();
+    }
+    $("t-"+alvo).click();
+    if(alvo==="acoes" && par) visao(par[1]);
+    window.scrollTo(0,0);
+  });
+
+  /* filtros */
+  function popula(id, rotulo, lista){ $(id).innerHTML = '<option value="">'+rotulo+'</option>' + lista.map(function(x){return '<option>'+esc(x)+'</option>'}).join(""); }
+  popula("f-area","Todas",AREAS); popula("f-form","Todas",FORM); popula("f-disp","Todas",DISP);
+  popula("f-bairro","Todas",BAIRROS); popula("f-status","Todos",STATUS); popula("f-ativ","Todas",ATIVS);
+  ["f-busca","f-area","f-form","f-disp","f-bairro","f-status","f-ativ","f-ref","f-raio"].forEach(function(id){ $(id).addEventListener("input", function(){ grupo=null; tabela(); }); });
+  $("limpar").addEventListener("click", function(){ grupo=null; ["f-busca","f-area","f-form","f-disp","f-bairro","f-status","f-ativ","f-raio"].forEach(function(id){ $(id).value=""; }); $("f-ref").value="Brotas"; tabela(); });
+
+  var COORD = {"Pituba":[-12.9996,-38.4586],"Brotas":[-12.9858,-38.4979],"Itapuã":[-12.9533,-38.3563],"Liberdade":[-12.9486,-38.4887],"Cabula":[-12.9570,-38.4560],"Federação":[-12.9980,-38.5060],"Barra":[-13.0105,-38.5330],"Ondina":[-13.0050,-38.5120]};
+  function km(a,b){ var R=6371,r=Math.PI/180,A=COORD[a],B=COORD[b],dl=(B[0]-A[0])*r,dn=(B[1]-A[1])*r;
+    var h=Math.sin(dl/2)*Math.sin(dl/2)+Math.cos(A[0]*r)*Math.cos(B[0]*r)*Math.sin(dn/2)*Math.sin(dn/2); return 2*R*Math.asin(Math.sqrt(h)); }
+  popula("f-ref","",BAIRROS); $("f-ref").remove(0); $("f-ref").value="Brotas";
+  function raioKm(){ var r=parseFloat(String($("f-raio").value).replace(",",".")); return r>0 ? r : 0; }
+  function noRaio(v){ var r=raioKm(); return !r || km(v.bairro,$("f-ref").value)<=r; }
+  function mapa(lista){
+    var ref=$("f-ref").value, r=raioKm(), E=1300, X=function(c){return ((c[1]+38.58)*E).toFixed(1)}, Y=function(c){return ((-12.92-c[0])*E).toFixed(1)};
+    var cont={}; lista.forEach(function(v){ cont[v.bairro]=(cont[v.bairro]||0)+1; });
+    var h='<rect width="330" height="175" fill="#eaf2fb"/>';
+    if(r) h+='<circle cx="'+X(COORD[ref])+'" cy="'+Y(COORD[ref])+'" r="'+(r/111*E).toFixed(1)+'" fill="#085EC3" fill-opacity=".12" stroke="#085EC3" stroke-width="1.5" stroke-dasharray="4 3"/>';
+    BAIRROS.forEach(function(b){
+      var c=COORD[b], n=cont[b]||0, x=X(c), y=Y(c), eref=b===ref;
+      h+='<circle cx="'+x+'" cy="'+y+'" r="'+(4+Math.min(n,6)*1.4)+'" fill="'+(n?"#DB150A":"#b9c0cb")+'" stroke="#fff" stroke-width="1.5"/>';
+      if(eref) h+='<circle cx="'+x+'" cy="'+y+'" r="2" fill="#fff"/>';
+      h+='<text x="'+(+x+9)+'" y="'+(+y+2.5)+'">'+esc(b)+(n?" ("+n+")":"")+'</text>';
+    });
+    $("mapa").innerHTML=h;
+    $("mapa-leg").textContent = r ? "Raio de "+String(r).replace(".",",")+" km a partir de "+ref : "Selecione um raio para ver o alcance";
+  }
+  var grupo = null;
+  function filtrados(){
+    var q=$("f-busca").value.trim().toLowerCase(), a=$("f-area").value, f=$("f-form").value, d=$("f-disp").value, b=$("f-bairro").value, s=$("f-status").value, t=$("f-ativ").value;
+    return vols.filter(function(v){
+      return (!q||v.nome.toLowerCase().indexOf(q)>-1)&&(!a||v.areas.indexOf(a)>-1)&&(!f||v.form===f)&&(!d||v.disp.indexOf(d)>-1)&&(!b||v.bairro===b)&&(!s||v.status===s)&&(!grupo||grupo.indexOf(v.status)>-1)&&(!t||v.ativ===t)&&noRaio(v);
+    });
+  }
+  function tabela(){
+    var lista = filtrados(), pode = perfil!=="colaborador";
+    $("contagem").textContent = lista.length+" de "+vols.length+" voluntários"+(grupo?" · status: "+grupo.join(" ou "):""); mapa(lista);
+    $("vazio").style.display = lista.length? "none":"block";
+    $("corpo").innerHTML = lista.map(function(v){
+      var contato = pode ? '<a class="link-wa" href="https://wa.me/55'+v.tel.replace(/\D/g,"")+'" target="_blank" rel="noopener" title="Abrir conversa no WhatsApp"><span class="wa-ico">💬</span> '+esc(v.tel)+'</a><div class="txt-email">'+esc(v.email)+'</div>' : '<span class="tag-restrito">🔒 Protegido (LGPD)</span>';
+      var st = pode ? '<select class="st" data-id="'+v.id+'" aria-label="Status de '+esc(v.nome)+'">'+STATUS.map(function(x){return '<option'+(x===v.status?' selected':'')+'>'+x+'</option>'}).join("")+'</select>' : esc(v.status);
+      return '<tr><td><b>'+esc(v.nome)+'</b></td><td>'+v.areas.map(function(a){return '<span class="tag">'+esc(a)+'</span>'}).join("")+'</td><td>'+esc(v.form)+'</td><td>'+esc(v.disp.join(", "))+'</td><td>'+esc(v.bairro)+(raioKm()?'<br><small class="oculto">'+km(v.bairro,$("f-ref").value).toFixed(1).replace(".",",")+' km</small>':'')+'</td><td>'+esc(v.ativ)+'</td><td>'+contato+'</td><td>'+st+'</td></tr>';
+    }).join("");
+    Array.prototype.forEach.call(document.querySelectorAll("select.st"), function(sel){
+      sel.addEventListener("change", function(){ vols.filter(function(v){return v.id==sel.dataset.id})[0].status = sel.value; geral(); });
+    });
+  }
+
+  /* visão geral */
+  function barras(el, itens, cor, campo){
+    var max = Math.max.apply(null, itens.map(function(i){return i[1]}).concat([1]));
+    el.innerHTML = itens.map(function(i){ return '<a class="barra-h" href="#" data-go="vol|'+campo+'='+esc(i[0])+'" aria-label="'+esc(i[0])+': '+i[1]+'. Ver voluntários"><span>'+esc(i[0])+'</span><div class="trilho"><div class="enche" style="width:'+(i[1]/max*100)+'%;--c:'+(i[2]||cor)+'"></div></div><b>'+i[1]+'</b></a>'; }).join("");
+  }
+  function geral(){
+    var n=function(s){return vols.filter(function(v){return v.status===s}).length};
+    function K(c,num,txt,go){ return '<a class="kpi" href="#" data-go="'+go+'" style="--c:'+c+'"><b>'+num+'</b><small>'+txt+'</small></a>'; }
+    $("kpis").innerHTML =
+      K("var(--azul)",vols.length,"cadastros no total","vol")+
+      K("#c99a00",n("Recebida"),"novas inscrições","vol|status=Recebida")+
+      K("var(--laranja)",n("Em triagem"),"em triagem","vol|status=Em triagem")+
+      K("var(--verde)",n("Aprovada")+n("Em atividade"),"aprovados ou em atividade","vol|grupo=Aprovada,Em atividade")+
+      K("var(--vermelho)",ACOES.length,"ações realizadas","acoes|visao=real")+
+      K("var(--azul)",AGEND.length,"ações agendadas","acoes|visao=agend");
+    barras($("g-area"), AREAS.map(function(a){return [a, vols.filter(function(v){return v.areas.indexOf(a)>-1}).length]}), "var(--azul)", "area");
+    var cores = {"Recebida":"#c99a00","Em triagem":"#F08D0C","Aprovada":"#085EC3","Em atividade":"#0f9d58","Não selecionada":"#999"};
+    barras($("g-status"), STATUS.map(function(s){return [s,n(s),cores[s]]}), "var(--azul)", "status");
+  }
+  function padronizarDesc(texto, limite) {
+    limite = limite || 100;
+    var t = String(texto || '').trim();
+    if (t.length <= limite) {
+      return { visivel: t, completo: t };
+    }
+    var corte = t.slice(0, limite);
+    var ultimoEspaco = corte.lastIndexOf(' ');
+    if (ultimoEspaco > 60) {
+      corte = corte.slice(0, ultimoEspaco);
+    }
+    return { visivel: corte + '...', completo: t };
+  }
+
+  function acoes(){
+    $("acoes").innerHTML = ACOES.map(function(a){
+      var descInfo = padronizarDesc(a.p, 100);
+      return '<article class="acao" style="--c:' + a.c + '">' +
+        '<div class="acao-topo">' +
+          '<span class="tag" style="background:' + a.c + '18;color:' + a.c + ';border:1px solid ' + a.c + '40;">' + esc(a.a) + '</span>' +
+          '<span class="acao-data-pill">✓ ' + esc(a.d) + '</span>' +
+        '</div>' +
+        '<h3 class="acao-titulo" title="' + esc(a.t) + '">' + esc(a.t) + '</h3>' +
+        '<p class="acao-desc" title="' + esc(descInfo.completo) + '">' + esc(descInfo.visivel) + '</p>' +
+        '<div class="acao-rodape">' +
+          '<div class="acao-meta-real">' +
+            '<span class="meta-vol-cont">👥 <b>' + a.n + '</b> voluntários</span>' +
+            '<span class="meta-status-feita">Concluída</span>' +
+          '</div>' +
+          '<div class="acao-impacto-barra"><div class="acao-impacto-prog" style="width:100%;background:' + a.c + '"></div></div>' +
+          '<div class="acao-meta-sub">Iniciativa realizada · Arquivada na governança</div>' +
+        '</div>' +
+      '</article>';
+    }).join("");
+  }
+  function ocupadas(a){ return a.insc.filter(function(i){return i[1]===1}).length; }
+  function agend(){
+    var pode = perfil!=="colaborador";
+    $("n-todas").textContent="("+(ACOES.length+AGEND.length)+")"; $("n-real").textContent="("+ACOES.length+")"; $("n-agend").textContent="("+AGEND.length+")";
+    $("agend").innerHTML = AGEND.map(function(a,k){
+      var oc=ocupadas(a), pend=a.insc.length-oc, rest=Math.max(0,a.vagas-oc);
+      var descInfo = padronizarDesc(a.p, 100);
+      var li = a.insc.map(function(i,j){
+        var v=vols[i[0]-1], ok=i[1]===1;
+        return '<li><span>'+esc(v.nome)+(pode?' <small class="oculto">· '+esc(v.tel)+'</small>':'')+'</span><span>'+(ok?'<span class="ok">Confirmada</span>':'<span class="pend">Pendente</span> '+(pode?'<button type="button" data-k="'+k+'" data-j="'+j+'"'+(rest===0?' disabled title="Sem vagas"':'')+'>Confirmar</button>':''))+'</span></li>';
+      }).join("");
+      return '<article class="acao" style="--c:' + a.c + '">' +
+        '<div class="acao-topo">' +
+          '<span class="tag" style="background:' + a.c + '18;color:' + a.c + ';border:1px solid ' + a.c + '40;">' + esc(a.a) + '</span>' +
+          '<span class="acao-data-pill dt-agendada">📅 ' + esc(a.dt) + '</span>' +
+        '</div>' +
+        '<h3 class="acao-titulo" title="' + esc(a.t) + '">' + esc(a.t) + '</h3>' +
+        '<p class="acao-desc" title="' + esc(descInfo.completo) + '">' + esc(descInfo.visivel) + '</p>' +
+        '<div class="acao-rodape">' +
+          '<div class="vg">' +
+            '<div class="l"><span>' + (rest ? rest + (rest===1 ? ' vaga restante' : ' vagas restantes') : 'Vagas preenchidas') + '</span><span>' + oc + ' de ' + a.vagas + '</span></div>' +
+            '<div class="b"><i style="width:' + Math.min(100, oc / a.vagas * 100) + '%;background:' + a.c + '"></i></div>' +
+          '</div>' +
+          '<details class="acao-details">' +
+            '<summary>Inscritos (' + a.insc.length + (pend ? ' · ' + pend + ' pendente' + (pend>1 ? 's' : '') : '') + ')</summary>' +
+            '<ul class="insc">' + (li || '<li style="color:#94a3b8;font-size:0.8rem;padding:4px 0;">Nenhum voluntário inscrito no momento.</li>') + '</ul>' +
+          '</details>' +
+        '</div>' +
+      '</article>';
+    }).join("");
+  }
+  $("agend").addEventListener("click", function(e){
+    var b=e.target.closest("button[data-k]"); if(!b||b.disabled) return;
+    var a=AGEND[+b.dataset.k]; if(ocupadas(a)>=a.vagas) return;
+    var abertos=[]; Array.prototype.forEach.call(document.querySelectorAll("#agend details"),function(d,i){abertos[i]=d.open});
+    a.insc[+b.dataset.j][1]=1; agend();
+    Array.prototype.forEach.call(document.querySelectorAll("#agend details"),function(d,i){d.open=abertos[i]});
+  });
+  window.vols = vols;
+  window.tabela = tabela;
+  window.AGEND = AGEND;
+  window.ACOES = ACOES;
+  window.agend = agend;
+  window.acoes = acoes;
+  window.visao = visao;
+  window.geral = geral;
+  var visoes = {todas:[1,1], real:[0,1], agend:[1,0]};
+  function visao(v){
+    Object.keys(visoes).forEach(function(k){ $("s-"+k).setAttribute("aria-selected", k===v); });
+    $("sp-agend").style.display = visoes[v][0] ? "block":"none";
+    $("sp-real").style.display = visoes[v][1] ? "block":"none";
+    $("h-agend").style.display = $("h-real").style.display = v==="todas" ? "block":"none";
+  }
+  Object.keys(visoes).forEach(function(k){ $("s-"+k).addEventListener("click", function(){ visao(k); }); });
+  visao("todas");
+  function desenhar(){ geral(); tabela(); acoes(); agend(); }
+
+  /* CSV (somente presidência) */
+  $("csv").addEventListener("click", function(){
+    if(perfil!=="presidencia") return;
+    var linhas = [["Nome","Áreas","Formação","Disponibilidade","Localização","Atividade","Status"]].concat(filtrados().map(function(v){ return [v.nome,v.areas.join("; "),v.form,v.disp.join("; "),v.bairro,v.ativ,v.status]; }));
+    var csv = "﻿"+linhas.map(function(l){return l.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"'}).join(";")}).join("\r\n");
+    var a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"})); a.download="voluntarios-usina-da-vida.csv"; a.click();
+  });
+})();
+</script>
+<!-- MODAL DE CADASTRAMENTO DE NOVA AÇÃO (INOVAÇÃO) -->
+<div class="modal-backdrop" id="modal-nova-acao" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="modal-acao-titulo">
+  <div class="modal-card">
+    <div class="modal-cab">
+      <div class="modal-cab-info">
+        <span class="badge-inovacao">Inovação Comunitária</span>
+        <h3 id="modal-acao-titulo">Cadastrar Nova Ação Social</h3>
+        <p class="modal-subtitulo">Preencha os dados abaixo para cadastrar e agendar uma nova ação social com abertura de vagas para voluntários.</p>
+      </div>
+      <button type="button" class="modal-fechar" id="btn-fechar-modal-acao" aria-label="Fechar formulário">✕</button>
+    </div>
+
+    <form id="form-cad-acao" class="form-modal-acao">
+      <div class="form-campo">
+        <label for="cad-titulo" class="form-label">Título da Ação ou Oficina <span class="req">*</span></label>
+        <input type="text" id="cad-titulo" class="form-input" required placeholder="Ex.: Oficina de Robótica e Criatividade" maxlength="60">
+      </div>
+
+      <div class="form-linha-dupla">
+        <div class="form-campo">
+          <label for="cad-area" class="form-label">Área de Atuação <span class="req">*</span></label>
+          <select id="cad-area" class="form-select" required>
+            <option value="Educação" data-cor="#F08D0C">Educação</option>
+            <option value="Saúde & bem-estar" data-cor="#085EC3">Saúde & bem-estar</option>
+            <option value="Empreendedorismo" data-cor="#c99a00">Empreendedorismo</option>
+            <option value="Esportes" data-cor="#8e1fc2">Esportes</option>
+            <option value="Cultura" data-cor="#085EC3">Cultura</option>
+            <option value="Socialização" data-cor="#DB150A">Socialização</option>
+            <option value="Inovação & Tecnologia" data-cor="#0f9d58">Inovação & Tecnologia</option>
+          </select>
+        </div>
+        <div class="form-campo">
+          <label for="cad-data" class="form-label">Data ou Período <span class="req">*</span></label>
+          <input type="text" id="cad-data" class="form-input" required placeholder="Ex.: Sáb, 21/11/2026 ou Nov/2026">
+        </div>
+      </div>
+
+      <div class="form-linha-dupla">
+        <div class="form-campo" id="wrap-cad-vagas">
+          <label for="cad-vagas" class="form-label" id="lbl-cad-vagas">Número de Vagas Disponíveis <span class="req">*</span></label>
+          <input type="number" id="cad-vagas" class="form-input" min="1" max="100" value="10" required>
+        </div>
+        <div class="form-campo">
+          <label for="cad-local" class="form-label">Local / Horário</label>
+          <input type="text" id="cad-local" class="form-input" placeholder="Ex.: 09h às 12h · Sede Comunitária">
+        </div>
+      </div>
+
+      <div class="form-campo">
+        <div class="form-label-wrap">
+          <label for="cad-desc" class="form-label">Descrição Resumida da Ação <span class="req">*</span></label>
+          <span class="char-counter" id="cad-desc-contador">0 / 100 caracteres (padrão)</span>
+        </div>
+        <textarea id="cad-desc" class="form-textarea" rows="2" required placeholder="Descreva os objetivos da ação de forma clara e padronizada..." maxlength="140"></textarea>
+      </div>
+
+      <div class="modal-rodape">
+        <button type="button" class="btn btn-cont" id="btn-cancelar-cad-acao">Cancelar</button>
+        <button type="submit" class="btn btn-amarelo btn-salvar-acao">
+          <span>＋ Cadastrar e Publicar Ação</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<script id="script-portal-harmonia">
+(function(){
+  // Alternar gaveta de filtros territoriais
+  var btnGeo = document.getElementById("btn-toggle-geo");
+  var gavetaGeo = document.getElementById("gaveta-geo");
+  if (btnGeo && gavetaGeo) {
+    btnGeo.addEventListener("click", function() {
+      var aberto = gavetaGeo.style.display !== "none";
+      gavetaGeo.style.display = aberto ? "none" : "block";
+      btnGeo.classList.toggle("ativo", !aberto);
+      btnGeo.setAttribute("aria-expanded", !aberto);
+    });
+  }
+
+  // Atualizar nome do perfil ativo na tela de governança e sincronizar com banco Neon ao logar
+  function sincronizarNeon() {
+    if (location.protocol === "file:") return;
+    fetch("/api/inscricoes")
+      .then(function(r) { return r.ok ? r.json() : []; })
+      .then(function(rows) {
+        if (!Array.isArray(rows) || !rows.length || !window.vols) return;
+        rows.forEach(function(dbVol) {
+          var jaExiste = window.vols.some(function(v) {
+            return v.email && dbVol.email && v.email.toLowerCase() === dbVol.email.toLowerCase();
+          });
+          if (!jaExiste) {
+            window.vols.unshift({
+              id: 1000 + Number(dbVol.id || Date.now()),
+              nome: dbVol.nome || "Voluntário",
+              areas: Array.isArray(dbVol.areas) && dbVol.areas.length ? dbVol.areas : ["Apoio operacional"],
+              form: dbVol.formacao || "Graduado(a)",
+              disp: Array.isArray(dbVol.disponibilidade) && dbVol.disponibilidade.length ? dbVol.disponibilidade : ["Fins de semana"],
+              bairro: dbVol.bairro || "Brotas",
+              status: dbVol.status || "Recebida",
+              tel: dbVol.telefone || "(71) 90000-0000",
+              email: dbVol.email || "",
+              ativ: dbVol.acao_interesse || "Ainda sem atividade"
+            });
+          }
+        });
+        if (typeof window.geral === "function") window.geral();
+        if (typeof window.tabela === "function") window.tabela();
+      })
+      .catch(function() {});
+  }
+
+  var formLogin = document.getElementById("f-login");
+  if (formLogin) {
+    formLogin.addEventListener("submit", function() {
+      setTimeout(function() {
+        var elTag = document.getElementById("perfil-tag");
+        var elNomeAcesso = document.getElementById("perfil-ativo-nome");
+        if (elTag && elNomeAcesso) {
+          elNomeAcesso.textContent = elTag.textContent;
+        }
+        sincronizarNeon();
+      }, 50);
+    });
+  }
+
+  // Lógica do Modal e Cadastro de Ações (Inovação)
+  var btnNovaAcao = document.getElementById("btn-nova-acao");
+  var modalNovaAcao = document.getElementById("modal-nova-acao");
+  var btnFecharModal = document.getElementById("btn-fechar-modal-acao");
+  var btnCancelaModal = document.getElementById("btn-cancelar-cad-acao");
+  var formCadAcao = document.getElementById("form-cad-acao");
+  var cadDesc = document.getElementById("cad-desc");
+  var cadContador = document.getElementById("cad-desc-contador");
+  var cadVagasLbl = document.getElementById("lbl-cad-vagas");
+  var cadVagasInput = document.getElementById("cad-vagas");
+
+  function abrirModalAcao() {
+    if (!modalNovaAcao) return;
+    modalNovaAcao.style.display = "flex";
+    document.body.style.overflow = "hidden";
+    var inTitulo = document.getElementById("cad-titulo");
+    if (inTitulo) inTitulo.focus();
+  }
+
+  function fecharModalAcao() {
+    if (!modalNovaAcao) return;
+    modalNovaAcao.style.display = "none";
+    document.body.style.overflow = "";
+    if (formCadAcao) formCadAcao.reset();
+    atualizarContadorDesc();
+  }
+
+  if (btnNovaAcao) btnNovaAcao.addEventListener("click", abrirModalAcao);
+  if (btnFecharModal) btnFecharModal.addEventListener("click", fecharModalAcao);
+  if (btnCancelaModal) btnCancelaModal.addEventListener("click", fecharModalAcao);
+
+  if (modalNovaAcao) {
+    modalNovaAcao.addEventListener("click", function(e) {
+      if (e.target === modalNovaAcao) fecharModalAcao();
+    });
+  }
+
+  document.addEventListener("keydown", function(e) {
+    if (e.key === "Escape" && modalNovaAcao && modalNovaAcao.style.display === "flex") {
+      fecharModalAcao();
+    }
+  });
+
+  function atualizarContadorDesc() {
+    if (!cadDesc || !cadContador) return;
+    var len = cadDesc.value.length;
+    cadContador.textContent = len + " / 100 caracteres (padrão)";
+    if (len > 100) {
+      cadContador.style.color = "var(--laranja)";
+    } else {
+      cadContador.style.color = "#64748b";
+    }
+  }
+
+  if (cadDesc) {
+    cadDesc.addEventListener("input", atualizarContadorDesc);
+  }
+
+  function mostrarToastAcao(msg) {
+    var toast = document.createElement("div");
+    toast.className = "toast-sucesso-acao";
+    toast.innerHTML = '<span style="font-size:1.1rem">✓</span> ' + msg;
+    document.body.appendChild(toast);
+    setTimeout(function() { toast.classList.add("vis"); }, 20);
+    setTimeout(function() {
+      toast.classList.remove("vis");
+      setTimeout(function() { toast.remove(); }, 300);
+    }, 3200);
+  }
+
+  if (formCadAcao) {
+    formCadAcao.addEventListener("submit", function(e) {
+      e.preventDefault();
+      var titulo = document.getElementById("cad-titulo").value.trim();
+      var selArea = document.getElementById("cad-area");
+      var area = selArea ? selArea.value : "Educação";
+      var cor = (selArea && selArea.selectedIndex >= 0) ? (selArea.options[selArea.selectedIndex].getAttribute("data-cor") || "#085EC3") : "#085EC3";
+      var dataTxt = document.getElementById("cad-data").value.trim();
+      var localTxt = (document.getElementById("cad-local") && document.getElementById("cad-local").value.trim()) || "Sede Usina da Vida";
+      var num = parseInt(document.getElementById("cad-vagas").value, 10) || 10;
+      var desc = document.getElementById("cad-desc").value.trim();
+
+      if (window.AGEND) {
+        window.AGEND.unshift({
+          t: titulo,
+          a: area,
+          c: cor,
+          dt: dataTxt,
+          loc: localTxt,
+          vagas: num,
+          p: desc,
+          insc: []
+        });
+      }
+      if (typeof window.agend === "function") window.agend();
+      if (typeof window.visao === "function") window.visao("agend");
+      if (typeof window.geral === "function") window.geral();
+      fecharModalAcao();
+      mostrarToastAcao("Nova ação cadastrada e agendada com sucesso!");
+    });
+  }
+})();
+</script>
+</body>
+</html>

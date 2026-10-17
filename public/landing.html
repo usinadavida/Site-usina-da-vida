@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Usina da Vida – Transformando sonhos em realidade</title>
+<meta name="description" content="Usina da Vida, organização filantrópica de Salvador (BA): educação, cultura, esporte, empreendedorismo e saúde. Seja voluntário(a).">
+<link rel="icon" href="/assets/img-01.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&family=Lora:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --azul:#085EC3; --azul-esc:#064a9c; --vermelho:#DB150A; --amarelo:#F1C50E; --laranja:#F08D0C;
+    --cinza:#4F4F4F; --tinta:#1d2430; --creme:#FBF6EA; --papel:#fff;
+    --serif:"Lora",Georgia,serif; --sans:"Lexend","Segoe UI",system-ui,sans-serif;
+  }
+  :root{color-scheme:light}
+  select option{color:#1d2430;background:#fff}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:84px}
+  body{margin:0;font-family:var(--sans);font-weight:300;color:var(--tinta);background:var(--papel);line-height:1.75;font-size:17px}
+  h1,h2,h3{font-family:var(--serif);line-height:1.15;margin:0}
+  p{margin:0 0 1em}
+  a{color:var(--azul)}
+  img{max-width:100%}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+  .skip{position:absolute;left:-999px;top:0;background:#fff;padding:8px 12px;z-index:100}
+  .skip:focus{left:8px;top:8px}
+  :focus-visible{outline:3px solid var(--laranja);outline-offset:3px}
+
+  /* botões */
+  .btn{display:inline-block;border:2px solid transparent;border-radius:3px;padding:13px 24px;font:600 .95rem var(--sans);letter-spacing:.02em;text-decoration:none;cursor:pointer;transition:transform .15s,box-shadow .15s}
+  .btn:hover{transform:translate(-2px,-2px)}
+  /* um botão, uma cor, em todo o site: vermelho = voluntário · escuro = portal */
+  .btn-verm{background:var(--vermelho);color:#fff;box-shadow:4px 4px 0 var(--amarelo)}
+  .btn-verm:hover{box-shadow:6px 6px 0 var(--amarelo)}
+  .btn-portal{background:var(--tinta);color:#fff;box-shadow:4px 4px 0 var(--amarelo)}
+  .btn-portal:hover{box-shadow:6px 6px 0 var(--amarelo)}
+  .btn-lin{background:transparent;color:#fff;border-color:#fff}
+  .btn-lin:hover{background:#fff;color:var(--azul)}
+
+  /* topo */
+  header.top{position:sticky;top:0;z-index:50;background:#fff;border-bottom:3px solid var(--tinta)}
+  .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:76px}
+  .marca{display:flex;align-items:center;gap:10px;text-decoration:none}
+  .marca img:first-child{height:46px;width:auto}
+  .marca img+img{height:40px;width:auto}
+  nav ul{list-style:none;display:flex;gap:26px;margin:0;padding:0}
+  nav a{text-decoration:none;color:var(--tinta);font-weight:400;font-size:.92rem;border-bottom:2px solid transparent;padding-bottom:2px}
+  nav a:hover{border-bottom-color:var(--vermelho)}
+  .topo-botoes{display:flex;gap:14px;align-items:center}
+  .topo-botoes .btn{padding:10px 18px;font-size:.88rem}
+  @media(max-width:980px){nav{display:none}}
+  @media(max-width:560px){.marca img+img{display:none}.topo-botoes .btn{padding:9px 12px;font-size:.78rem;box-shadow:3px 3px 0 var(--amarelo)}.top .wrap{padding:0 14px;gap:8px}}
+
+  /* hero */
+  .hero{background:var(--azul);color:#fff;position:relative;overflow:hidden}
+  .hero .wrap{display:grid;grid-template-columns:1fr 1.05fr;gap:48px;align-items:center;padding-top:64px;padding-bottom:72px}
+  .sobre{font:400 .8rem var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--amarelo);margin-bottom:18px}
+  .hero h1{font-size:clamp(2.4rem,5.4vw,4.1rem);margin-bottom:22px}
+  .hero h1 em{font-style:italic;color:var(--amarelo)}
+  .hero p.lead{font-size:1.1rem;max-width:30em;color:#e6f0ff}
+  .hero .acoes-btn{display:flex;gap:16px;flex-wrap:wrap;margin-top:30px}
+  .colagem{position:relative;aspect-ratio:1/.92}
+  .colagem img{position:absolute;display:block;object-fit:cover}
+  .colagem .c1{left:0;top:4%;width:80%;aspect-ratio:4/3;clip-path:polygon(0 7%,100% 0,95% 100%,3% 93%)}
+  .colagem .c2{right:0;bottom:0;width:44%;aspect-ratio:1/1.05;clip-path:polygon(8% 0,100% 5%,93% 100%,0 94%)}
+  .colagem .peca{position:absolute;display:block}
+  .colagem .p1{right:5%;top:2%;width:20%;aspect-ratio:1;background:var(--amarelo);clip-path:polygon(0 0,100% 0,0 100%)}
+  .colagem .p2{left:-3%;bottom:6%;width:15%;aspect-ratio:1;background:var(--vermelho);transform:rotate(14deg)}
+  .colagem .p3{right:36%;bottom:-4%;width:13%;aspect-ratio:1.4/1;background:var(--laranja);clip-path:polygon(0 0,100% 40%,35% 100%)}
+  .hero .grande{position:absolute;right:-90px;bottom:-110px;width:420px;opacity:.1;pointer-events:none}
+  @media(max-width:900px){.hero .wrap{grid-template-columns:1fr;padding-top:44px;padding-bottom:56px;gap:34px}.hero .grande{display:none}}
+
+  section{padding:88px 0}
+  .rotulo{font:400 .78rem var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--vermelho);display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  .rotulo::before{content:"";width:22px;height:14px;background:var(--amarelo);clip-path:polygon(0 0,100% 0,70% 100%,0 100%);display:inline-block}
+  h2.t{font-size:clamp(1.9rem,3.8vw,2.7rem);color:var(--azul);margin-bottom:22px}
+
+
+  /* próximas ações */
+  .sec-prox{padding:80px 0 70px}
+  .sec-prox .cab{max-width:640px;margin-bottom:30px}
+  .prox-lista{display:grid;gap:26px;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}
+  @media(max-width:820px){.prox-lista{grid-template-columns:1fr}}
+  .prox{display:grid;grid-template-columns:92px 1fr;background:#fff;border:2px solid var(--tinta);box-shadow:6px 6px 0 var(--azul)}
+  .prox .data{background:var(--azul);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:16px 8px;font-family:'Lora',serif}
+  .prox .data b{font-size:2.6rem;line-height:1}
+  .prox .data span{font-size:1rem;text-transform:uppercase;letter-spacing:.08em;margin-top:4px}
+  .prox .data small{font-size:.8rem;opacity:.85;margin-top:6px;font-family:'Lexend',sans-serif}
+  .prox .corpo{padding:20px 22px 22px}
+  .prox .tag{display:inline-block;font-size:.78rem;font-weight:600;background:var(--amarelo);color:var(--tinta);padding:3px 10px;margin-bottom:8px}
+  .prox h3{font-size:1.35rem;margin:0 0 6px;color:var(--tinta)}
+  .prox .corpo>p{margin:0 0 12px;font-size:.98rem;color:#4a4f58}
+  .prox .info{font-size:.9rem;color:#4a4f58;margin:0 0 14px}
+  .vagas{margin:0 0 16px}
+  .vagas .linha{display:flex;flex-wrap:wrap;gap:0 14px;justify-content:space-between;font-size:.9rem;font-weight:600;margin-bottom:6px}
+  .vagas .barra-v{height:10px;background:#e6e9ee;border-radius:6px;overflow:hidden}
+  .vagas .barra-v i{display:block;height:100%;background:var(--verm,#DB150A);width:0}
+  .prox .btn[disabled]{background:#9aa0a8;box-shadow:none;cursor:not-allowed}
+  .prox-nota{margin-top:20px;font-size:.92rem;color:#4a4f58}
+  .escolhida{display:none;background:#fff6d6;border-left:5px solid var(--amarelo);padding:12px 14px;margin-bottom:18px;font-size:.95rem}
+  .escolhida.vis{display:block}
+  .escolhida button{background:none;border:0;color:var(--azul);text-decoration:underline;cursor:pointer;font:inherit;padding:0;margin-left:6px}
+  @media(max-width:560px){.prox{grid-template-columns:1fr}.prox .data{flex-direction:row;gap:10px;padding:10px}.prox .data b{font-size:1.8rem}}
+
+
+  /* modal de inscrição na ação */
+  dialog.modal{border:2px solid var(--tinta);box-shadow:8px 8px 0 var(--amarelo);padding:0;width:min(520px,calc(100% - 32px));max-height:calc(100vh - 32px);overflow:auto;color:var(--tinta);background:#fff}
+  dialog.modal::backdrop{background:rgba(29,36,48,.6)}
+  .modal .m-in{padding:26px 26px 24px;position:relative}
+  .modal h3{font-size:1.5rem;margin:0 36px 6px 0}
+  .modal .m-acao{display:inline-block;background:var(--amarelo);font-size:.85rem;font-weight:600;padding:3px 10px;margin-bottom:14px}
+  .modal .fechar{position:absolute;top:10px;right:10px;width:40px;height:40px;border:0;background:none;font-size:1.7rem;line-height:1;cursor:pointer;color:var(--tinta)}
+  .modal .m-op{display:grid;gap:12px;margin-top:8px}
+  .modal .m-op .btn{width:100%;text-align:center;justify-content:center}
+  .modal .btn-sec2{background:#fff;color:var(--tinta);border:2px solid var(--tinta);box-shadow:4px 4px 0 var(--azul)}
+  .modal label{display:block;font-weight:600;font-size:.92rem;margin:12px 0 4px}
+  .modal input{width:100%;font:inherit;color:var(--tinta);padding:11px 12px;border:2px solid #b9c0cb;background:#fff}
+  .modal input:focus{outline:3px solid var(--amarelo);border-color:var(--tinta)}
+  .modal .erro{display:block;color:var(--vermelho);font-size:.85rem;min-height:1em}
+  .modal .m-bot{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+  .modal .m-passo{display:none}.modal .m-passo.vis{display:block}
+  .modal .m-ok{padding:6px 0}
+
+  /* ações em movimento */
+  .sec-acoes{background:var(--creme);padding:80px 0 90px;overflow:hidden}
+  .sec-acoes .cab{max-width:640px;margin-bottom:34px}
+  .carrossel{position:relative}
+  .faixa{overflow:hidden;width:100%;padding:8px 0 20px;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
+  .faixa.arrasta{cursor:grabbing}
+  .faixa img{-webkit-user-drag:none;pointer-events:none}
+  .trilho{display:flex;gap:30px;width:max-content;will-change:transform}
+  .seta{position:absolute;top:148px;z-index:5;width:46px;height:46px;border-radius:50%;border:1px solid rgba(29,36,48,.25);background:rgba(255,255,255,.5);color:rgba(29,36,48,.75);display:grid;place-items:center;cursor:pointer;opacity:.7;backdrop-filter:blur(2px);transition:opacity .15s,background .15s}
+  .seta svg{width:20px;height:20px}
+  .seta:hover,.seta:focus-visible{opacity:1;background:rgba(255,255,255,.92)}
+  .seta:active{transform:scale(.94)}
+  .seta.esq{left:max(10px,calc((100vw - 1180px)/2 - 26px))}
+  .seta.dir{right:max(10px,calc((100vw - 1180px)/2 - 26px))}
+  @media(max-width:700px){.seta{top:105px;width:40px;height:40px}.seta.esq{left:6px}.seta.dir{right:6px}}
+  .cartao{width:310px;flex:none;margin:0}
+  .cartao:nth-child(even){margin-top:30px}
+  .cartao .foto{position:relative;aspect-ratio:4/3.1;overflow:hidden;background:#ddd;clip-path:polygon(0 0,100% 3%,100% 100%,0 97%)}
+  .cartao img{width:100%;height:100%;object-fit:cover;display:block}
+  .cartao figcaption{padding:14px 4px 0}
+  .cartao h3{font-size:1.15rem;color:var(--tinta);margin-bottom:4px}
+  .cartao p{font-size:.9rem;line-height:1.55;color:#4a4f58;margin:0}
+  .dica-mov{font-size:.82rem;color:#6b6f77;margin-top:6px}
+
+  /* quem somos */
+  .quem{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:start}
+  .quem .txt p:first-of-type{font-size:1.25rem;line-height:1.6;font-weight:400}
+  .quem figure{margin:0;position:relative}
+  .quem figure img{width:100%;aspect-ratio:1/1.1;object-fit:cover;display:block;clip-path:polygon(0 4%,100% 0,100% 96%,4% 100%)}
+  .quem figure::after{content:"";position:absolute;left:-18px;bottom:-18px;width:90px;height:90px;background:var(--amarelo);z-index:-1;clip-path:polygon(0 0,100% 100%,0 100%)}
+  @media(max-width:900px){.quem{grid-template-columns:1fr;gap:36px}}
+
+  /* missão, visão, valores */
+  .mvv{background:var(--cinza);color:#fff}
+  .mvv .grade{display:grid;grid-template-columns:1fr 1fr 1fr;gap:48px}
+  .mvv h2{font-size:2.1rem;color:var(--amarelo);margin-bottom:14px}
+  .mvv p{color:#f1f1f1}
+  .valores-lista{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+  .valores-lista li{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.18);font-size:1.02rem;white-space:nowrap}
+  .valores-lista li.longo{grid-column:1/-1}
+  .valores-lista li::before{content:"";width:14px;height:14px;flex:none;background:var(--c);clip-path:polygon(0 0,100% 12%,88% 100%,10% 88%)}
+  .valores-lista li:nth-child(1){--c:var(--amarelo)} .valores-lista li:nth-child(2){--c:var(--vermelho)}
+  .valores-lista li:nth-child(3){--c:#4b9bff} .valores-lista li:nth-child(4){--c:var(--vermelho)} .valores-lista li:nth-child(5){--c:#4b9bff}
+  .valores-lista li:nth-child(3){--c:var(--amarelo)} .valores-lista li:nth-child(4){--c:var(--vermelho)} .valores-lista li:nth-child(5){--c:#4b9bff}
+  @media(max-width:900px){.mvv .grade{grid-template-columns:1fr;gap:34px}}
+
+  /* programas */
+  .progs{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:3px solid var(--tinta)}
+  .prog{padding:30px 28px 34px 0;border-bottom:1px solid #d7dbe2}
+  .prog:not(:nth-child(3n+1)){padding-left:28px;border-left:1px solid #d7dbe2}
+  .prog .ic{height:70px;display:flex;align-items:flex-end;margin-bottom:16px}
+  .prog .ic img{max-height:70px;max-width:130px;width:auto;height:auto;display:block}
+  .prog h3{font-size:1.2rem;text-transform:uppercase;letter-spacing:.03em;color:var(--c);margin-bottom:8px}
+  .prog p{margin:0;font-size:.95rem;line-height:1.6}
+  @media(max-width:900px){.progs{grid-template-columns:1fr 1fr}.prog:not(:nth-child(3n+1)){padding-left:0;border-left:0}.prog:nth-child(even){padding-left:24px;border-left:1px solid #d7dbe2}.prog:nth-child(odd){padding-left:0;border-left:0}}
+  @media(max-width:560px){.progs{grid-template-columns:1fr}.prog:nth-child(even){padding-left:0;border-left:0}}
+
+  /* voluntários + formulário */
+  .vol{background:var(--azul);color:#fff;position:relative;overflow:hidden}
+  .vol .wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:start}
+  .vol h2{font-size:clamp(1.9rem,3.8vw,2.7rem);color:#fff;margin-bottom:18px}
+  .vol .rotulo{color:var(--amarelo)}
+  .vol p{color:#e6f0ff}
+  .perfis{list-style:none;margin:22px 0;padding:0;display:flex;flex-wrap:wrap;gap:8px 18px}
+  .perfis li{font-weight:600;color:#fff;border-bottom:2px solid var(--amarelo);padding-bottom:1px}
+  .passos{list-style:none;margin:30px 0 0;padding:0;counter-reset:p}
+  .passos li{counter-increment:p;display:grid;grid-template-columns:44px 1fr;gap:12px;margin-bottom:16px}
+  .passos li::before{content:counter(p);font:700 1.9rem var(--serif);color:var(--amarelo);line-height:1}
+  .passos b{display:block;font-weight:600;color:#fff}
+  .passos span{font-size:.95rem;color:#d4e4ff}
+  @media(max-width:900px){.vol .wrap{grid-template-columns:1fr;gap:40px}}
+
+  form{background:#fff;color:var(--tinta);padding:34px;border-radius:4px;box-shadow:8px 8px 0 var(--amarelo)}
+  .etapas{display:flex;align-items:center;gap:10px;margin-bottom:22px;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:#6b6f77}
+  .etapas .bola{width:28px;height:28px;display:grid;place-items:center;background:#e3e7ee;color:#555;font:700 .9rem var(--serif);clip-path:polygon(0 0,100% 10%,90% 100%,8% 90%)}
+  .etapas .ativa{color:var(--azul)}
+  .etapas .ativa .bola{background:var(--azul);color:#fff}
+  .etapas .feita .bola{background:var(--vermelho);color:#fff}
+  .etapas .barra{flex:1;height:3px;background:#d7dbe2}
+  form h3{font-size:1.6rem;color:var(--vermelho);margin-bottom:6px}
+  .sub{font-size:.93rem;color:#5b616b;margin-bottom:20px}
+  .etapa{display:none}.etapa.vis{display:block}
+  label{display:block;font-weight:600;font-size:.88rem;margin:16px 0 5px}
+  .dica{display:block;font-weight:300;color:#666;font-size:.82rem}
+  input[type=text],input[type=email],input[type=tel],select,textarea{width:100%;font:inherit;font-weight:300;padding:12px;border:2px solid #b9c4d4;border-radius:3px;background:#fff;color:var(--tinta)}
+  textarea{min-height:90px;resize:vertical}
+  input:focus,select:focus,textarea:focus{border-color:var(--azul);outline:none;box-shadow:0 0 0 3px rgba(8,94,195,.22)}
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:0 16px;align-items:end}
+  .vol form p{color:#5b616b}
+  .vol form #ok p{color:#14501f}
+  @media(max-width:560px){.duo{grid-template-columns:1fr}form{padding:24px 20px}}
+  input[type=date]{width:100%;font:inherit;font-weight:300;padding:12px;border:2px solid #b9c4d4;border-radius:3px;background:#fff;color:var(--tinta)}
+  .e1-cab{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+  .e1-cab h3{margin:0}
+  .e1-cab .sub{margin:0;font-size:.82rem}
+  .f-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px 14px}
+  .f-grid .c6{grid-column:span 6}.f-grid .c3{grid-column:span 3}
+  .f-grid label,.f-grid .rot{display:block;font-weight:600;font-size:.82rem;margin:0 0 4px}
+  .f-grid input[type=text],.f-grid input[type=email],.f-grid input[type=tel],.f-grid input[type=date]{padding:9px 11px}
+  .f-grid .erro{min-height:0;margin-top:2px;font-size:.78rem}
+  .f-grid .erro:empty{display:none}
+  .dica-i{font-weight:300;color:#666;font-size:.78rem}
+  .seg{display:flex;gap:6px}
+  .seg label{flex:1;margin:0;font-weight:400}
+  .seg input{position:absolute;opacity:0;width:1px;height:1px}
+  .seg span{display:block;text-align:center;border:2px solid #b9c4d4;border-radius:3px;padding:7px 4px;font-size:.78rem;line-height:1.2;cursor:pointer;background:#fff;min-height:41px;display:flex;align-items:center;justify-content:center}
+  .seg input:checked+span{border-color:var(--azul);background:#e8f0fc;font-weight:600;color:var(--azul)}
+  .seg input:focus-visible+span{outline:3px solid var(--laranja);outline-offset:1px}
+  .f-fim{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:4px}
+  .f-fim .sub{margin:0;font-size:.8rem;flex:1;min-width:160px}
+  @media(max-width:560px){.f-grid .c3{grid-column:span 6}.f-fim .btn{width:100%}}
+  .nota-menor{display:none;font-size:.85rem;background:#fff6d6;border-left:4px solid var(--amarelo);padding:8px 10px;margin:6px 0 0}
+  .nota-menor.vis{display:block}
+  .grade-disp{width:100%;border-collapse:collapse;font-size:.88rem;background:#fff}
+  .grade-disp th,.grade-disp td{border:1px solid #d5deea;padding:6px 4px;text-align:center}
+  .grade-disp th{background:#eef3fb;font-weight:600}
+  .grade-disp th:first-child{text-align:left;padding-left:10px;width:34%}
+  .grade-disp td label{display:block;margin:0;padding:4px;cursor:pointer}
+  .grade-disp input{width:18px;height:18px;accent-color:var(--azul);margin:0;cursor:pointer}
+  .grade-disp td:has(input:checked){background:#e8f0fc}
+  .idiomas{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  @media(max-width:560px){.idiomas{grid-template-columns:1fr}}
+  .idioma{display:flex;align-items:center;gap:10px;flex-wrap:wrap;border:2px solid #d5deea;border-radius:3px;padding:6px 12px;background:#fff}
+  .idioma label{display:flex;align-items:center;gap:8px;margin:0;font-weight:300;font-size:.92rem;flex:1;min-width:90px;cursor:pointer}
+  .idioma input[type=checkbox]{width:17px;height:17px;margin:0;accent-color:var(--azul)}
+  .idioma select{width:auto;max-width:130px;padding:6px 6px;font-size:.85rem;display:none}
+  .idioma:has(input:checked){border-color:var(--azul);background:#e8f0fc}
+  .idioma:has(input:checked) select{display:block}
+  details.mais{margin-top:14px;border:2px solid #d5deea;border-radius:3px;padding:8px 12px;background:#fff}
+  details.mais summary{cursor:pointer;font-weight:600;font-size:.9rem;color:var(--azul)}
+  details.mais .opcoes{margin-top:10px}
+  .trio{display:grid;grid-template-columns:1fr 2fr 1fr;gap:0 16px;align-items:end}
+  .trio3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 16px;align-items:end}
+  @media(max-width:560px){.trio,.trio3{grid-template-columns:1fr}}
+  fieldset{border:0;padding:0;margin:0 0 6px}
+  legend{font-weight:600;font-size:.88rem;padding:0;margin:20px 0 8px}
+  .opcoes{display:flex;flex-wrap:wrap;gap:8px}
+  .opcoes label{display:flex;align-items:center;gap:8px;font-weight:300;font-size:.92rem;border:2px solid #d5deea;border-radius:3px;padding:7px 12px;margin:0;cursor:pointer;background:#fff}
+  .opcoes input{accent-color:var(--azul);width:17px;height:17px;margin:0}
+  .opcoes label:has(input:checked){border-color:var(--azul);background:#e8f0fc;font-weight:600}
+  .erro{color:#b00020;font-size:.84rem;min-height:1.1em;display:block;margin-top:3px}
+  .resumo{background:var(--creme);border-left:5px solid var(--amarelo);padding:12px 14px;font-size:.9rem;margin:0 0 6px;display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+  .resumo b{font-weight:600}
+  .resumo button{background:none;border:0;color:var(--azul);font:600 .85rem var(--sans);text-decoration:underline;cursor:pointer;padding:0;flex:none}
+  .lgpd{display:flex;gap:10px;align-items:flex-start;font-weight:300;font-size:.88rem;margin-top:18px}
+  .lgpd input{margin-top:5px;width:19px;height:19px;accent-color:var(--azul);flex:none}
+  .botoes{display:flex;gap:14px;margin-top:24px;flex-wrap:wrap}
+  .btn-sec{background:#fff;color:var(--tinta);border-color:var(--tinta)}
+  #ok{display:none;background:#eaf6ee;border-left:5px solid #2e8540;padding:20px;margin-top:6px}
+  #ok.vis{display:block}
+  #ok h3{color:#14501f;font-size:1.3rem}
+
+  /* parceiros */
+  .parc-lista{display:grid;grid-template-columns:repeat(5,1fr);gap:18px 26px;align-items:center;margin-top:30px}
+  .parc-lista figure{margin:0;aspect-ratio:3/2;display:grid;place-items:center}
+  .parc-lista img{max-height:100%;max-width:100%;object-fit:contain;transition:transform .2s}
+  .parc-lista figure:hover img{transform:scale(1.05)}
+  @media(max-width:900px){.parc-lista{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:520px){.parc-lista{grid-template-columns:repeat(2,1fr)}}
+  .paises{margin-top:40px;padding-top:24px;border-top:1px solid #d7dbe2}
+  .paises h3{font-size:1.2rem;color:var(--tinta);margin-bottom:6px}
+  .paises-grid{list-style:none;margin:18px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:22px 14px}
+  .paises-grid li{text-align:center}
+  .paises-grid img{width:76px;height:54px;object-fit:contain;display:block;margin:0 auto 10px}
+  .paises-grid span{display:block;font-weight:600;font-size:.95rem;color:var(--tinta);padding-bottom:8px;border-bottom:2px solid var(--c)}
+
+  /* contato */
+  .contato{background:var(--tinta);color:#fff;padding:72px 0}
+  .contato .wrap{display:grid;grid-template-columns:auto 1fr;gap:48px;align-items:center}
+  .contato .bf{width:150px}
+  .contato h2{font-size:2rem;color:var(--amarelo);margin-bottom:14px}
+  .contato ul{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:8px 36px}
+  .contato a{color:#fff}
+  .contato small{display:block;color:#aab3c2;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase}
+  @media(max-width:760px){.contato .wrap{grid-template-columns:1fr}.contato ul{grid-template-columns:1fr}.contato .bf{width:90px}}
+  footer{background:#0f141b;color:#9aa3b2;font-size:.82rem;padding:20px 0}
+  footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+</style>
+<style id="altura-padrao">
+/* Escala visual de 82% calibrada para desktop (reproduz nativamente a visualização em 100% de zoom) */
+html {
+  scroll-behavior: smooth;
+}
+@media (min-width:1001px){
+  body {
+    zoom: 0.82;
+  }
+  #acoes,#proximas,#quem-somos,#programas,#inscricao,#parceiros{
+    min-height: calc(100vh - 65px);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    scroll-margin-top: 65px;
+  }
+  #acoes>.wrap,#proximas>.wrap,#quem-somos>.wrap,#programas>.wrap,#inscricao>.wrap,#parceiros>.wrap{width:100%}
+  #programas,#parceiros{padding-top:34px;padding-bottom:34px}
+  #parceiros .parc-lista{margin-top:16px}
+  #parceiros .paises{margin-top:18px;padding-top:14px}
+  #parceiros .paises-grid{margin-top:12px;gap:16px 14px}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#conteudo">Ir para o conteúdo</a>
+
+<header class="top">
+  <div class="wrap">
+    <a class="marca" href="#topo" aria-label="Usina da Vida, início"><img src="/assets/img-01.png" alt=""><img src="/assets/img-02.png" alt="Usina da Vida"></a>
+    <nav aria-label="Principal">
+      <ul>
+        <li><a href="#acoes">Nossas ações</a></li>
+        <li><a href="#quem-somos">Quem somos</a></li>
+        <li><a href="#programas">Programas</a></li>
+        <li><a href="#parceiros">Parceiros</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </nav>
+    <div class="topo-botoes">
+      <a class="btn btn-verm" href="#inscricao">Voluntários</a>
+      <a class="btn btn-portal" href="/portal">Acessar o portal</a>
+    </div>
+  </div>
+</header>
+
+<main id="conteudo">
+<div id="topo" class="hero">
+  <img class="grande" src="/assets/img-03.png" alt="">
+  <div class="wrap">
+    <div>
+      <p class="sobre">Organização filantrópica · Salvador, Bahia</p>
+      <h1>Transformando <em>sonhos</em> em realidade</h1>
+      <p class="lead">Oportunidades para as crianças, mulheres e jovens da comunidade crescerem por meio de projetos educacionais, esportivos, culturais e de empreendedorismo, saúde e bem-estar.</p>
+      <div class="acoes-btn">
+        <a class="btn btn-verm" href="#inscricao">Quero ser voluntário(a)</a>
+      </div>
+    </div>
+    <div class="colagem" aria-hidden="false">
+      <span class="peca p1"></span><span class="peca p2"></span><span class="peca p3"></span>
+      <img class="c1" src="/assets/img-04.jpg" alt="Voluntários e crianças reunidos em atividade da Usina da Vida, com um cartaz de boas-vindas ao fundo">
+      <img class="c2" src="/assets/img-05.jpg" alt="Voluntária fazendo pintura no rosto de uma criança">
+    </div>
+  </div>
+</div>
+
+<section id="acoes" class="sec-acoes" aria-labelledby="acoes-t">
+  <div class="wrap"><div class="cab">
+    <p class="rotulo">O que já fizemos</p>
+    <h2 class="t" id="acoes-t" style="margin-bottom:12px">Ações que já realizamos</h2>
+    <p class="dica-mov" style="font-size:1rem;color:#4a4f58">Momentos das nossas atividades com crianças, jovens e mulheres da comunidade. Use as setas, arraste ou deslize para ver as fotos no seu ritmo.</p>
+  </div></div>
+  <div class="carrossel">
+  <button type="button" class="seta esq" id="seta-esq" aria-label="Ver fotos anteriores"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4 7 12l8 8"/></svg></button>
+  <button type="button" class="seta dir" id="seta-dir" aria-label="Ver próximas fotos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m9 4 8 8-8 8"/></svg></button>
+  <div class="faixa" id="faixa" role="region" aria-label="Fotos de ações já realizadas pela Usina da Vida. Use as setas do teclado para navegar." tabindex="0">
+    <div class="trilho" id="trilho">
+      <figure class="cartao"><div class="foto"><img src="/assets/img-06.jpg" alt="Crianças de avental e touca mostrando o que prepararam em oficina de culinária"></div><figcaption><h3>Oficina de culinária</h3><p>Crianças aprendendo na prática, entre receitas, criatividade e empreendedorismo.</p></figcaption></figure>
+      <figure class="cartao"><div class="foto"><img src="/assets/img-07.jpg" alt="Crianças e voluntários sentados no chão em atividade de educação"></div><figcaption><h3>Educação</h3><p>Reforço escolar em matemática e português e aulas de inglês e espanhol.</p></figcaption></figure>
+      <figure class="cartao"><div class="foto"><img src="/assets/img-08.jpg" alt="Voluntários e crianças em grupo diante de um cartaz de boas-vindas"></div><figcaption><h3>Cultura</h3><p>Música, instrumentos musicais, balé, teatro e dança.</p></figcaption></figure>
+      <figure class="cartao"><div class="foto"><img src="/assets/img-09.jpg" alt="Crianças e instrutores de karatê uniformizados, em fila" style="object-position:center 22%"></div><figcaption><h3>Esportes</h3><p>Capoeira, karatê e futebol, com disciplina e muita convivência.</p></figcaption></figure>
+      <figure class="cartao"><div class="foto"><img src="/assets/img-10.jpg" alt="Crianças e voluntários em roda de conversa sobre tapete colorido"></div><figcaption><h3>Socialização</h3><p>Rodas de convivência que aproximam crianças, jovens e voluntários.</p></figcaption></figure>
+      <figure class="cartao"><div class="foto"><img src="/assets/img-11.jpg" alt="Voluntária e criança sorrindo durante atividade"></div><figcaption><h3>Saúde &amp; bem-estar</h3><p>Ações de saúde, alimentação saudável e bem-estar para toda a comunidade.</p></figcaption></figure>
+      <figure class="cartao"><div class="foto"><img src="/assets/img-05.jpg" alt="Voluntária fazendo pintura no rosto de uma criança"></div><figcaption><h3>Maquiagem e pintura</h3><p>Atividades de maquiagem que viram festa para as crianças.</p></figcaption></figure>
+      <figure class="cartao"><div class="foto"><img src="/assets/img-12.jpg" alt="Crianças brincando em atividade em grupo"></div><figcaption><h3>Brincadeiras e dança</h3><p>Brincadeiras em grupo que fazem da Usina da Vida um lugar de alegria.</p></figcaption></figure>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section id="proximas" class="sec-prox" aria-labelledby="prox-t">
+  <div class="wrap">
+    <div class="cab">
+      <p class="rotulo">Venha participar</p>
+      <h2 class="t" id="prox-t" style="margin-bottom:12px">Próximas ações</h2>
+      <p style="font-size:1rem;color:#4a4f58">Veja o que vem por aí e escolha onde quer ajudar. Enquanto houver vagas, você pode se inscrever.</p>
+    </div>
+    <div class="prox-lista">
+      <article class="prox" data-acao="Palestra Novembro Azul (14/11/2026)" data-vagas="10" data-preenchidas="6">
+        <div class="data" aria-label="14 de novembro de 2026, sábado"><b>14</b><span>Nov</span><small>2026 · sábado</small></div>
+        <div class="corpo">
+          <span class="tag">Saúde &amp; bem-estar</span>
+          <h3>Palestra Novembro Azul</h3>
+          <p>Palestra de conscientização sobre a saúde do homem, aberta à comunidade. Precisamos de voluntários para recepção, organização do espaço e apoio durante o evento.</p>
+          <p class="info">Horário e local: a confirmar com a equipe.</p>
+          <div class="vagas"><div class="linha"><span class="v-txt"></span><span class="v-pct"></span></div><div class="barra-v" role="progressbar" aria-label="Vagas preenchidas"><i></i></div></div>
+          <button type="button" class="btn btn-verm quero">Quero ajudar nesta ação</button>
+        </div>
+      </article>
+    </div>
+    <p class="prox-nota">Novas ações serão publicadas aqui. Prefere ajudar de forma geral? <a href="#inscricao" style="color:var(--azul);font-weight:600">Faça o cadastro de voluntário</a>.</p>
+  </div>
+</section>
+
+<section id="quem-somos">
+  <div class="wrap quem">
+    <div class="txt">
+      <p class="rotulo">Quem somos</p>
+      <h2 class="t">Uma organização filantrópica nascida na comunidade</h2>
+      <p>A Usina da Vida é uma organização filantrópica formada pelo pastor comunitário junto à Comunidade Cristã Proclamação do Reino, com o apoio de membros, jovens universitários e profissionais de áreas estratégicas de desenvolvimento socioeconômico e educacional.</p>
+      <p>Foi criada em 2018 pela necessidade e intenção de contribuir com o apoio educacional e o desenvolvimento profissional e pessoal dos moradores, para ajudá-los a reduzir vulnerabilidades sociais.</p>
+      <p>Nosso objetivo é proporcionar oportunidades às crianças, mulheres e jovens da comunidade para o seu crescimento, por meio de projetos educacionais, esportivos, culturais e de empreendedorismo, saúde e bem-estar.</p>
+    </div>
+    <figure><img src="/assets/img-13.jpg" alt="Voluntária sorrindo durante oficina, sentada a uma mesa de tijolos aparentes"></figure>
+  </div>
+</section>
+
+<section class="mvv" aria-label="Missão, visão e valores">
+  <div class="wrap grade">
+    <div><h2>Missão</h2><p>Incentivar a liderança, a informação e o conhecimento tendo a confiança na juventude como a chave para destravar um futuro melhor que se desenvolve em cada pessoa.</p></div>
+    <div><h2>Visão</h2><p>Ser a comunidade mais fraterna para alcançar o pleno desenvolvimento e potencial humano.</p></div>
+    <div><h2>Valores</h2>
+      <ul class="valores-lista">
+        <li class="longo">Amor ao próximo</li><li>Criatividade</li><li>Ética cristã</li><li>Valorização</li><li>Respeito</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="programas">
+  <div class="wrap">
+    <p class="rotulo">O que fazemos</p>
+    <h2 class="t">Nossos programas</h2>
+    <p style="max-width:42em;margin-bottom:34px">Atividades educativas, culturais, esportivas e profissionalizantes que favorecem o desenvolvimento pessoal, a convivência, o acesso à informação e a participação da comunidade.</p>
+    <div class="progs">
+      <article class="prog" style="--c:var(--laranja)"><div class="ic"><img src="/assets/img-14.png" alt=""></div><h3>Educação</h3><p>Aulas de espanhol e inglês e reforço escolar em matemática e português.</p></article>
+      <article class="prog" style="--c:#c99a00"><div class="ic"><img src="/assets/img-15.png" alt=""></div><h3>Empreendedorismo</h3><p>Oficinas de culinária e maquiagem, finanças e cursos profissionalizantes.</p></article>
+      <article class="prog" style="--c:var(--azul)"><div class="ic"><img src="/assets/img-16.png" alt=""></div><h3>Cultura</h3><p>Música e instrumentos musicais, balé, teatro e dança.</p></article>
+      <article class="prog" style="--c:#8e1fc2"><div class="ic"><img src="/assets/img-17.png" alt=""></div><h3>Esportes</h3><p>Capoeira, karatê e futebol.</p></article>
+      <article class="prog" style="--c:var(--vermelho)"><div class="ic"><img src="/assets/img-18.png" alt=""></div><h3>Socialização</h3><p>Convivência, acesso à informação e participação da comunidade.</p></article>
+      <article class="prog" style="--c:#0a9a56"><div class="ic"><img src="/assets/img-19.png" alt=""></div><h3>Saúde &amp; bem-estar</h3><p>Ações de saúde, alimentação saudável e bem-estar.</p></article>
+    </div>
+  </div>
+</section>
+
+<section id="inscricao" class="vol">
+  <div class="wrap">
+    <div>
+      <p class="rotulo">Seja voluntário(a)</p>
+      <h2>Venha fazer parte da Usina da Vida</h2>
+      <p>Procuramos pessoas que queiram dividir tempo e conhecimento com a comunidade. Estes são os perfis de que mais precisamos:</p>
+      <ul class="perfis"><li>Professores</li><li>Instrutores</li><li>Pedagogia</li><li>Arte</li><li>Saúde</li><li>Empreendedorismo</li><li>Finanças</li><li>Apoio operacional</li></ul>
+      <ol class="passos">
+        <li><div><b>Você se inscreve</b><span>Em duas etapas rápidas, pedindo só o necessário.</span></div></li>
+        <li><div><b>A equipe analisa</b><span>A presidência e a coordenação olham o seu perfil.</span></div></li>
+        <li><div><b>Falamos com você</b><span>O contato é feito principalmente pelo WhatsApp.</span></div></li>
+      </ol>
+    </div>
+
+    <form id="form" novalidate aria-labelledby="form-t">
+      <input type="hidden" id="acao" name="acao" value="">
+      <div class="escolhida" id="escolhida" role="status"></div>
+      <div class="etapas" aria-hidden="true">
+        <span class="ativa" id="e1"><span class="bola">1</span></span><span>Seus dados</span><span class="barra"></span>
+        <span id="e2"><span class="bola">2</span></span><span>Como ajudar</span>
+      </div>
+
+      <!-- ETAPA 1 -->
+      <div class="etapa vis" id="etapa1">
+        <div class="e1-cab"><h3 id="form-t">Vamos nos conhecer</h3><span class="sub">Etapa 1 de 2 · menos de um minuto</span></div>
+        <div class="f-grid">
+          <div class="c6"><label for="nome">Nome completo *</label><input id="nome" name="nome" type="text" autocomplete="name"><span class="erro" data-erro="nome"></span></div>
+          <div class="c3"><label for="email">E-mail *</label><input id="email" name="email" type="email" autocomplete="email" placeholder="voce@email.com"><span class="erro" data-erro="email"></span></div>
+          <div class="c3"><label for="tel">WhatsApp * <span class="dica-i">com DDD</span></label><input id="tel" name="tel" type="tel" autocomplete="tel" placeholder="(71) 90000-0000"><span class="erro" data-erro="tel"></span></div>
+          <div class="c3"><label for="nasc">Nascimento *</label><input id="nasc" name="nasc" type="date" autocomplete="bday"><span class="erro" data-erro="nasc"></span></div>
+          <div class="c3"><span class="rot" id="sexo-r">Sexo *</span>
+            <div class="seg" role="radiogroup" aria-labelledby="sexo-r">
+              <label><input type="radio" name="sexo" value="Feminino"><span>Feminino</span></label>
+              <label><input type="radio" name="sexo" value="Masculino"><span>Masculino</span></label>
+            </div><span class="erro" data-erro="sexo"></span></div>
+          <div class="c6"><div class="nota-menor" id="nota-menor">Para menores de 18 anos, a participação depende de autorização de um responsável. A equipe entrará em contato.</div></div>
+          <div class="c6 f-fim"><span class="sub">Na próxima etapa: formação, disponibilidade e interesses.</span><button class="btn btn-verm" type="button" id="avancar">Avançar</button></div>
+        </div>
+      </div>
+
+      <!-- ETAPA 2 -->
+      <div class="etapa" id="etapa2">
+        <h3 id="titulo2">Como você pode ajudar?</h3>
+        <p class="sub">Etapa 2 de 2 · conte um pouco sobre você e sua disponibilidade.</p>
+        <div class="resumo" id="resumo"><div id="resumo-txt"></div><button type="button" id="editar">Editar</button></div>
+
+        <div class="duo">
+          <div><label for="formacao">Formação *</label>
+            <select id="formacao" name="formacao"><option value="">Selecione</option><option>Ensino Fundamental</option><option>Ensino Médio</option><option>Curso Técnico</option><option>Ensino Superior</option><option>Especialização</option><option>Mestrado</option><option>Doutorado</option><option>Pós-Doutorado</option></select>
+            <span class="erro" data-erro="formacao"></span></div>
+          <div><label for="curso">Curso ou área de formação <span class="dica">Opcional</span></label><input id="curso" name="curso" type="text"></div>
+        </div>
+
+        <div class="duo">
+          <div><label for="ocup">Ocupação atual <span class="dica">Opcional</span></label><input id="ocup" name="ocup" type="text" list="ocupacoes" autocomplete="off" placeholder="Ex.: Estudante">
+            <datalist id="ocupacoes"><option value="Estudante"><option value="Professor(a)"><option value="Pedagogo(a)"><option value="Psicólogo(a)"><option value="Enfermeiro(a)"><option value="Médico(a)"><option value="Advogado(a)"><option value="Assistente social"><option value="Administrador(a)"><option value="Contador(a)"><option value="Designer"><option value="Desenvolvedor(a)"><option value="Autônomo(a)"><option value="Aposentado(a)"><option value="Não informado"></datalist></div>
+          <div><label class="lgpd" style="margin:0 0 10px"><input id="expvol" name="expvol" type="checkbox"><span>Já tenho experiência com trabalho voluntário</span></label></div>
+        </div>
+
+        <fieldset><legend>Idiomas <span class="dica" style="display:inline">(opcional · marque e escolha o nível)</span></legend>
+          <div class="idiomas">
+            <div class="idioma"><label><input type="checkbox" name="idioma" value="Alemão"> Alemão</label><select name="nivel_Alemão" aria-label="Nível de Alemão"><option>Básico</option><option>Intermediário</option><option>Avançado</option></select></div>
+            <div class="idioma"><label><input type="checkbox" name="idioma" value="Árabe"> Árabe</label><select name="nivel_Árabe" aria-label="Nível de Árabe"><option>Básico</option><option>Intermediário</option><option>Avançado</option></select></div>
+            <div class="idioma"><label><input type="checkbox" name="idioma" value="Chinês"> Chinês</label><select name="nivel_Chinês" aria-label="Nível de Chinês"><option>Básico</option><option>Intermediário</option><option>Avançado</option></select></div>
+            <div class="idioma"><label><input type="checkbox" name="idioma" value="Espanhol"> Espanhol</label><select name="nivel_Espanhol" aria-label="Nível de Espanhol"><option>Básico</option><option>Intermediário</option><option>Avançado</option></select></div>
+            <div class="idioma"><label><input type="checkbox" name="idioma" value="Francês"> Francês</label><select name="nivel_Francês" aria-label="Nível de Francês"><option>Básico</option><option>Intermediário</option><option>Avançado</option></select></div>
+            <div class="idioma"><label><input type="checkbox" name="idioma" value="Inglês"> Inglês</label><select name="nivel_Inglês" aria-label="Nível de Inglês"><option>Básico</option><option>Intermediário</option><option>Avançado</option></select></div>
+            <div class="idioma"><label><input type="checkbox" name="idioma" value="Italiano"> Italiano</label><select name="nivel_Italiano" aria-label="Nível de Italiano"><option>Básico</option><option>Intermediário</option><option>Avançado</option></select></div>
+            <div class="idioma"><label><input type="checkbox" name="idioma" value="Russo"> Russo</label><select name="nivel_Russo" aria-label="Nível de Russo"><option>Básico</option><option>Intermediário</option><option>Avançado</option></select></div>
+          </div>
+        </fieldset>
+
+        <fieldset><legend>Área de atuação * <span class="dica" style="display:inline"> (marque uma ou mais)</span></legend>
+          <div class="opcoes">
+            <label><input type="checkbox" name="area" value="Professor(a)"> Professor(a)</label>
+            <label><input type="checkbox" name="area" value="Instrutor(a)"> Instrutor(a)</label>
+            <label><input type="checkbox" name="area" value="Pedagogia"> Pedagogia</label>
+            <label><input type="checkbox" name="area" value="Arte"> Arte</label>
+            <label><input type="checkbox" name="area" value="Saúde"> Saúde</label>
+            <label><input type="checkbox" name="area" value="Empreendedorismo"> Empreendedorismo</label>
+            <label><input type="checkbox" name="area" value="Finanças"> Finanças</label>
+            <label><input type="checkbox" name="area" value="Apoio operacional"> Apoio operacional</label>
+          </div>
+          <span class="erro" data-erro="area"></span>
+        </fieldset>
+
+        <label for="exp">Experiência profissional ou voluntária <span class="dica">Opcional, em poucas linhas.</span></label>
+        <textarea id="exp" name="exp"></textarea>
+
+        <fieldset><legend>Quando você pode ajudar? * <span class="dica" style="display:inline">(marque os dias e períodos)</span></legend>
+          <table class="grade-disp">
+            <thead><tr><th scope="col">Dia</th><th scope="col">Manhã<br><small>7h–12h</small></th><th scope="col">Tarde<br><small>12h–18h</small></th><th scope="col">Noite<br><small>18h–22h</small></th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Dom</th><td><label><input type="checkbox" name="disp" value="Dom-Manhã" aria-label="Domingo, manhã"></label></td><td><label><input type="checkbox" name="disp" value="Dom-Tarde" aria-label="Domingo, tarde"></label></td><td><label><input type="checkbox" name="disp" value="Dom-Noite" aria-label="Domingo, noite"></label></td></tr>
+              <tr><th scope="row">Seg</th><td><label><input type="checkbox" name="disp" value="Seg-Manhã" aria-label="Segunda, manhã"></label></td><td><label><input type="checkbox" name="disp" value="Seg-Tarde" aria-label="Segunda, tarde"></label></td><td><label><input type="checkbox" name="disp" value="Seg-Noite" aria-label="Segunda, noite"></label></td></tr>
+              <tr><th scope="row">Ter</th><td><label><input type="checkbox" name="disp" value="Ter-Manhã" aria-label="Terça, manhã"></label></td><td><label><input type="checkbox" name="disp" value="Ter-Tarde" aria-label="Terça, tarde"></label></td><td><label><input type="checkbox" name="disp" value="Ter-Noite" aria-label="Terça, noite"></label></td></tr>
+              <tr><th scope="row">Qua</th><td><label><input type="checkbox" name="disp" value="Qua-Manhã" aria-label="Quarta, manhã"></label></td><td><label><input type="checkbox" name="disp" value="Qua-Tarde" aria-label="Quarta, tarde"></label></td><td><label><input type="checkbox" name="disp" value="Qua-Noite" aria-label="Quarta, noite"></label></td></tr>
+              <tr><th scope="row">Qui</th><td><label><input type="checkbox" name="disp" value="Qui-Manhã" aria-label="Quinta, manhã"></label></td><td><label><input type="checkbox" name="disp" value="Qui-Tarde" aria-label="Quinta, tarde"></label></td><td><label><input type="checkbox" name="disp" value="Qui-Noite" aria-label="Quinta, noite"></label></td></tr>
+              <tr><th scope="row">Sex</th><td><label><input type="checkbox" name="disp" value="Sex-Manhã" aria-label="Sexta, manhã"></label></td><td><label><input type="checkbox" name="disp" value="Sex-Tarde" aria-label="Sexta, tarde"></label></td><td><label><input type="checkbox" name="disp" value="Sex-Noite" aria-label="Sexta, noite"></label></td></tr>
+              <tr><th scope="row">Sáb</th><td><label><input type="checkbox" name="disp" value="Sáb-Manhã" aria-label="Sábado, manhã"></label></td><td><label><input type="checkbox" name="disp" value="Sáb-Tarde" aria-label="Sábado, tarde"></label></td><td><label><input type="checkbox" name="disp" value="Sáb-Noite" aria-label="Sábado, noite"></label></td></tr>
+            </tbody>
+          </table>
+          <span class="erro" data-erro="disp"></span>
+        </fieldset>
+
+        <div class="trio3">
+          <div><label for="cep">CEP <span class="dica">Opcional</span></label><input id="cep" name="cep" type="text" inputmode="numeric" maxlength="9" placeholder="00000-000" autocomplete="postal-code"></div>
+          <div><label for="bairro">Bairro ou região *</label><input id="bairro" name="bairro" type="text"><span class="erro" data-erro="bairro"></span></div>
+          <div><label for="cidade">Cidade</label><input id="cidade" name="cidade" type="text" value="Salvador" autocomplete="address-level2"></div>
+        </div>
+        <p class="sub" style="margin:2px 0 0;font-size:.82rem">Não pedimos o endereço completo.</p>
+
+        <details class="mais" id="det-eixos"><summary>Eixos de atuação de interesse (opcional · <span id="n-eixos">nenhum selecionado</span>)</summary>
+          <div class="opcoes">
+            <label><input type="checkbox" name="eixo" value="Acessibilidade"> Acessibilidade</label>
+            <label><input type="checkbox" name="eixo" value="Artes"> Artes</label>
+            <label><input type="checkbox" name="eixo" value="Artesanato"> Artesanato</label>
+            <label><input type="checkbox" name="eixo" value="Assistência Social"> Assistência Social</label>
+            <label><input type="checkbox" name="eixo" value="Cidadania"> Cidadania</label>
+            <label><input type="checkbox" name="eixo" value="Ciência e Tecnologia"> Ciência e Tecnologia</label>
+            <label><input type="checkbox" name="eixo" value="Combate à Fome"> Combate à Fome</label>
+            <label><input type="checkbox" name="eixo" value="Comunidade Social"> Comunidade Social</label>
+            <label><input type="checkbox" name="eixo" value="Cultura"> Cultura</label>
+            <label><input type="checkbox" name="eixo" value="Dança"> Dança</label>
+            <label><input type="checkbox" name="eixo" value="Defesa Social e Jurídica"> Defesa Social e Jurídica</label>
+            <label><input type="checkbox" name="eixo" value="Desenvolvimento Rural"> Desenvolvimento Rural</label>
+            <label><input type="checkbox" name="eixo" value="Desenvolvimento Social"> Desenvolvimento Social</label>
+            <label><input type="checkbox" name="eixo" value="Desenvolvimento Sustentável"> Desenvolvimento Sustentável</label>
+            <label><input type="checkbox" name="eixo" value="Direitos Humanos"> Direitos Humanos</label>
+            <label><input type="checkbox" name="eixo" value="Economia Solidária"> Economia Solidária</label>
+            <label><input type="checkbox" name="eixo" value="Educação"> Educação</label>
+            <label><input type="checkbox" name="eixo" value="Elaboração de Projetos"> Elaboração de Projetos</label>
+            <label><input type="checkbox" name="eixo" value="Empreendedorismo"> Empreendedorismo</label>
+            <label><input type="checkbox" name="eixo" value="Escolas"> Escolas</label>
+            <label><input type="checkbox" name="eixo" value="Esportes"> Esportes</label>
+            <label><input type="checkbox" name="eixo" value="Fanfarra"> Fanfarra</label>
+            <label><input type="checkbox" name="eixo" value="Fortalecimento das Aprendizagens"> Fortalecimento das Aprendizagens</label>
+            <label><input type="checkbox" name="eixo" value="Gestão da Informação"> Gestão da Informação</label>
+            <label><input type="checkbox" name="eixo" value="Igualdade de Gênero"> Igualdade de Gênero</label>
+            <label><input type="checkbox" name="eixo" value="Igualdade Racial"> Igualdade Racial</label>
+            <label><input type="checkbox" name="eixo" value="Inclusão Digital"> Inclusão Digital</label>
+            <label><input type="checkbox" name="eixo" value="Justiça e Cidadania"> Justiça e Cidadania</label>
+            <label><input type="checkbox" name="eixo" value="Meio Ambiente"> Meio Ambiente</label>
+            <label><input type="checkbox" name="eixo" value="Memória e Patrimônio"> Memória e Patrimônio</label>
+            <label><input type="checkbox" name="eixo" value="Mobilidade"> Mobilidade</label>
+            <label><input type="checkbox" name="eixo" value="Música"> Música</label>
+            <label><input type="checkbox" name="eixo" value="Planejamento e Gestão"> Planejamento e Gestão</label>
+            <label><input type="checkbox" name="eixo" value="Recreação e Lazer"> Recreação e Lazer</label>
+            <label><input type="checkbox" name="eixo" value="Saúde"> Saúde</label>
+            <label><input type="checkbox" name="eixo" value="Segurança Alimentar e Nutricional"> Segurança Alimentar e Nutricional</label>
+            <label><input type="checkbox" name="eixo" value="Socioeducativo"> Socioeducativo</label>
+            <label><input type="checkbox" name="eixo" value="Tecnologias"> Tecnologias</label>
+            <label><input type="checkbox" name="eixo" value="Turismo"> Turismo</label>
+            <label><input type="checkbox" name="eixo" value="Urbanismo e Arquitetura"> Urbanismo e Arquitetura</label>
+          </div>
+        </details>
+
+        <details class="mais"><summary>Públicos com quem você gostaria de atuar (opcional)</summary>
+          <div class="opcoes">
+            <label><input type="checkbox" name="publico" value="Agricultores Familiares"> Agricultores Familiares</label>
+            <label><input type="checkbox" name="publico" value="Associações e Cooperativas"> Associações e Cooperativas</label>
+            <label><input type="checkbox" name="publico" value="Catadores de Materiais Recicláveis"> Catadores de Materiais Recicláveis</label>
+            <label><input type="checkbox" name="publico" value="Comunidade"> Comunidade</label>
+            <label><input type="checkbox" name="publico" value="Crianças e Adolescentes"> Crianças e Adolescentes</label>
+            <label><input type="checkbox" name="publico" value="Estudantes"> Estudantes</label>
+            <label><input type="checkbox" name="publico" value="Homens"> Homens</label>
+            <label><input type="checkbox" name="publico" value="Juventude"> Juventude</label>
+            <label><input type="checkbox" name="publico" value="Moradores de Rua"> Moradores de Rua</label>
+            <label><input type="checkbox" name="publico" value="Mulheres"> Mulheres</label>
+            <label><input type="checkbox" name="publico" value="Mulheres Negras"> Mulheres Negras</label>
+            <label><input type="checkbox" name="publico" value="Mulheres Solo"> Mulheres Solo</label>
+            <label><input type="checkbox" name="publico" value="Pessoa Idosa"> Pessoa Idosa</label>
+            <label><input type="checkbox" name="publico" value="Pessoas com Câncer"> Pessoas com Câncer</label>
+            <label><input type="checkbox" name="publico" value="Pessoas com Deficiência"> Pessoas com Deficiência</label>
+            <label><input type="checkbox" name="publico" value="Pessoas com Doenças Raras"> Pessoas com Doenças Raras</label>
+            <label><input type="checkbox" name="publico" value="Pessoas em Situação de Insegurança Alimentar"> Pessoas em Situação de Insegurança Alimentar</label>
+            <label><input type="checkbox" name="publico" value="Povos e Comunidades Tradicionais"> Povos e Comunidades Tradicionais</label>
+            <label><input type="checkbox" name="publico" value="Proteção Animal"> Proteção Animal</label>
+            <label><input type="checkbox" name="publico" value="Unidades Escolares"> Unidades Escolares</label>
+            <label><input type="checkbox" name="publico" value="Usuários(as) de Substâncias Psicoativas"> Usuários(as) de Substâncias Psicoativas</label>
+            <label><input type="checkbox" name="publico" value="Comunidade LGBTQIAPN+"> Comunidade LGBTQIAPN+</label>
+            <label><input type="checkbox" name="publico" value="Outros"> Outros</label>
+          </div>
+        </details>
+
+        <label class="lgpd" for="lgpd"><input id="lgpd" name="lgpd" type="checkbox"><span>Concordo que a Usina da Vida use estes dados somente para contato e organização do voluntariado. Posso pedir a correção ou a exclusão a qualquer momento. *</span></label>
+        <span class="erro" data-erro="lgpd"></span>
+        <label class="lgpd" for="news" style="margin-top:8px"><input id="news" name="news" type="checkbox"><span>Desejo receber e-mails sobre as ações e novidades da Usina da Vida.</span></label>
+
+        <div class="botoes">
+          <button class="btn btn-sec" type="button" id="voltar">Voltar</button>
+          <button class="btn btn-verm" type="submit">Enviar inscrição</button>
+        </div>
+      </div>
+
+      <div id="ok" role="status" aria-live="polite" tabindex="-1"><h3>Inscrição recebida!</h3><p style="margin:0">Obrigado por querer fazer parte da Usina da Vida. A equipe vai analisar o seu perfil e entrar em contato, principalmente pelo WhatsApp.</p></div>
+    </form>
+  </div>
+</section>
+
+<section id="parceiros">
+  <div class="wrap">
+    <p class="rotulo">Quem caminha com a gente</p>
+    <h2 class="t">Nossos parceiros</h2>
+    <div class="parc-lista">
+      <figure><img src="/assets/img-20.jpg" alt="Proclamação do Reino, Comunidade Cristã"></figure>
+      <figure><img src="/assets/img-21.png" alt="AIESEC"></figure>
+      <figure><img src="/assets/img-22.jpg" alt="Nota Engenharia, pisos industriais"></figure>
+      <figure><img src="/assets/img-23.png" alt="Estácio"></figure>
+      <figure><img src="/assets/img-24.jpg" alt="Personale"></figure>
+      <figure><img src="/assets/img-25.jpg" alt="AFLE, ensino de idiomas"></figure>
+      <figure><img src="/assets/img-26.jpg" alt="CultuArt, desenvolvimento e capacitação ministerial"></figure>
+      <figure><img src="/assets/img-27.jpg" alt="Associação Cultural e Esportiva"></figure>
+      <figure><img src="/assets/img-28.png" alt="Trampolim"></figure>
+    </div>
+    <div class="paises">
+      <h3>Países parceiros</h3>
+      <ul class="paises-grid"><li style="--c:#085EC3"><img src="/assets/img-29.png" alt="Bandeira de Brasil"><span>Brasil</span></li><li style="--c:#DB150A"><img src="/assets/img-30.png" alt="Bandeira de Paraguai"><span>Paraguai</span></li><li style="--c:#F1C50E"><img src="/assets/img-31.png" alt="Bandeira de Bolívia"><span>Bolívia</span></li><li style="--c:#F08D0C"><img src="/assets/img-32.png" alt="Bandeira de Peru"><span>Peru</span></li><li style="--c:#085EC3"><img src="/assets/img-33.png" alt="Bandeira de Colômbia"><span>Colômbia</span></li><li style="--c:#DB150A"><img src="/assets/img-34.png" alt="Bandeira de México"><span>México</span></li><li style="--c:#F1C50E"><img src="/assets/img-35.png" alt="Bandeira de Argentina"><span>Argentina</span></li><li style="--c:#F08D0C"><img src="/assets/img-36.png" alt="Bandeira de Equador"><span>Equador</span></li><li style="--c:#085EC3"><img src="/assets/img-37.png" alt="Bandeira de Costa Rica"><span>Costa Rica</span></li></ul>
+    </div>
+  </div>
+</section>
+
+<section id="contato" class="contato">
+  <div class="wrap">
+    <img class="bf" src="/assets/img-03.png" alt="">
+    <div>
+      <h2>Fale com a gente</h2>
+      <ul>
+        <li><small>Onde estamos</small>Usina da Vida, Salvador, Bahia – Brasil</li>
+        <li><small>WhatsApp</small><a href="https://wa.me/5571983953524">71 9 8395-3524</a></li>
+        <li><small>E-mail</small><a href="mailto:assusinadavida@gmail.com">assusinadavida@gmail.com</a></li>
+        <li><small>Instagram e Facebook</small>@ong.usinadavida</li>
+      </ul>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Usina da Vida · Transformando sonhos em realidade</span>
+    <span>Projeto de extensão – Universidade Católica do Salvador</span>
+  </div>
+</footer>
+
+<dialog class="modal" id="modal" aria-labelledby="m-t">
+  <div class="m-in">
+    <button type="button" class="fechar" id="m-fechar" aria-label="Fechar">&times;</button>
+    <div class="m-passo vis" id="m-p1">
+      <h3 id="m-t">Você já é voluntário(a) da Usina da Vida?</h3>
+      <span class="m-acao" id="m-acao"></span>
+      <p style="margin:0">Se já tem cadastro, basta confirmar seu contato. Se não, é rápido criar o seu.</p>
+      <div class="m-op">
+        <button type="button" class="btn btn-verm" id="m-sim">Já sou cadastrado(a)</button>
+        <button type="button" class="btn btn-sec2" id="m-nao">Ainda não, quero me cadastrar</button>
+      </div>
+    </div>
+    <form class="m-passo" id="m-p2" novalidate>
+      <h3>Confirme seu contato</h3>
+      <span class="m-acao" id="m-acao2"></span>
+      <p style="margin:0">Usamos estes dados para localizar o seu cadastro e retornar sobre a vaga.</p>
+      <label for="m-nome">Nome completo *</label><input id="m-nome" type="text" autocomplete="name"><span class="erro" id="m-e-nome"></span>
+      <label for="m-email">E-mail *</label><input id="m-email" type="email" autocomplete="email"><span class="erro" id="m-e-email"></span>
+      <label for="m-tel">WhatsApp *</label><input id="m-tel" type="tel" autocomplete="tel" placeholder="(71) 90000-0000"><span class="erro" id="m-e-tel"></span>
+      <div class="m-bot"><button type="button" class="btn btn-sec2" id="m-volta">Voltar</button><button type="submit" class="btn btn-verm">Enviar solicitação</button></div>
+    </form>
+    <div class="m-passo m-ok" id="m-p3" role="status" tabindex="-1">
+      <h3>Solicitação enviada!</h3>
+      <p style="margin:8px 0 18px">Recebemos o seu pedido para <b id="m-acao3"></b>. A equipe confirma a sua vaga pelo WhatsApp.</p>
+      <button type="button" class="btn btn-verm" id="m-fim">Fechar</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+(function(){
+  /* carrossel de ações: movimento automático + controle do visitante */
+  (function(){
+    var faixa=document.getElementById('faixa'), tr=document.getElementById('trilho');
+    if(!faixa||!tr) return;
+    var n=tr.children.length;
+    Array.prototype.slice.call(tr.children).forEach(function(c){
+      var k=c.cloneNode(true); k.setAttribute('aria-hidden','true');
+      Array.prototype.forEach.call(k.querySelectorAll('img'),function(i){ i.setAttribute('alt',''); i.setAttribute('loading','eager'); });
+      tr.appendChild(k);
+    });
+    var half=1, pos=0, alvo=0, ultimo=0, suspensoAte=0, sobre=false, foco=false, arrastando=false;
+    var reduz=window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var auto=!reduz, VEL=0.045; /* px por ms */
+    function medir(){ half=tr.children[n].offsetLeft-tr.children[0].offsetLeft||1; }
+    function passo(){ return tr.children[0].getBoundingClientRect().width+30; }
+    function aplicar(){
+      while(pos>=half){pos-=half;alvo-=half;} while(pos<0){pos+=half;alvo+=half;}
+      tr.style.transform='translate3d('+(-pos).toFixed(2)+'px,0,0)';
+    }
+    function mover(d){ alvo+=d; suspensoAte=performance.now()+5000; }
+    function quadro(t){
+      var dt=Math.min(64,t-(ultimo||t)); ultimo=t;
+      if(!arrastando){
+        if(Math.abs(alvo-pos)>0.4){ pos+=(alvo-pos)*Math.min(1,dt/110); }
+        else if(auto && !sobre && !foco && t>suspensoAte){ pos+=VEL*dt; alvo=pos; }
+        else alvo=pos;
+      }
+      aplicar(); requestAnimationFrame(quadro);
+    }
+    medir(); window.addEventListener('resize',medir); window.addEventListener('load',medir);
+    document.getElementById('seta-esq').addEventListener('click',function(){ mover(-passo()); });
+    document.getElementById('seta-dir').addEventListener('click',function(){ mover(passo()); });
+    faixa.addEventListener('mouseenter',function(){ sobre=true; }); faixa.addEventListener('mouseleave',function(){ sobre=false; });
+    faixa.addEventListener('focusin',function(){ foco=true; }); faixa.addEventListener('focusout',function(){ foco=false; });
+    faixa.addEventListener('keydown',function(e){ if(e.key==='ArrowRight'){ e.preventDefault(); mover(passo()); } else if(e.key==='ArrowLeft'){ e.preventDefault(); mover(-passo()); } });
+    faixa.addEventListener('wheel',function(e){ if(Math.abs(e.deltaX)>Math.abs(e.deltaY)){ e.preventDefault(); pos+=e.deltaX; alvo=pos; suspensoAte=performance.now()+5000; } },{passive:false});
+    var x0=0,p0=0;
+    faixa.addEventListener('pointerdown',function(e){ if(e.button>0) return; arrastando=true; x0=e.clientX; p0=pos; faixa.classList.add('arrasta'); try{faixa.setPointerCapture(e.pointerId);}catch(_){} });
+    faixa.addEventListener('pointermove',function(e){ if(!arrastando) return; pos=p0-(e.clientX-x0); alvo=pos; });
+    function solta(){ if(!arrastando) return; arrastando=false; alvo=pos; faixa.classList.remove('arrasta'); suspensoAte=performance.now()+5000; }
+    faixa.addEventListener('pointerup',solta); faixa.addEventListener('pointercancel',solta);
+    requestAnimationFrame(quadro);
+  })();
+
+  /* formulário em duas etapas */
+  var f = document.getElementById('form');
+  var e1 = document.getElementById('etapa1'), e2 = document.getElementById('etapa2');
+  var b1 = document.getElementById('e1'), b2 = document.getElementById('e2');
+  function erro(n,m){ var e=f.querySelector('[data-erro="'+n+'"]'); if(e) e.textContent=m||''; }
+  function marcados(n){ return f.querySelectorAll('input[name="'+n+'"]:checked').length; }
+  function esc(t){ return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]}); }
+  function ir(n){
+    e1.classList.toggle('vis', n===1); e2.classList.toggle('vis', n===2);
+    b1.className = n===1 ? 'ativa' : 'feita'; b2.className = n===2 ? 'ativa' : '';
+    var alvo = n===1 ? f.nome : document.getElementById('formacao');
+    f.scrollIntoView({behavior:'smooth', block:'start'});
+    setTimeout(function(){ alvo.focus({preventScroll:true}); }, 350);
+  }
+
+  /* próximas ações: vagas e inscrição direta */
+  var acaoEl = document.getElementById('acao'), escEl = document.getElementById('escolhida');
+  function marcarAcao(nome){
+    acaoEl.value = nome || '';
+    if(nome){ escEl.innerHTML = 'Inscrição para: <b>'+esc(nome)+'</b><button type="button" id="limparacao">Remover</button>'; escEl.classList.add('vis'); document.getElementById('limparacao').addEventListener('click',function(){ marcarAcao(''); }); }
+    else { escEl.innerHTML=''; escEl.classList.remove('vis'); }
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('.prox'), function(c){
+    var tot=+c.dataset.vagas, ocu=+c.dataset.preenchidas, rest=Math.max(0,tot-ocu), btn=c.querySelector('.quero');
+    c.querySelector('.v-txt').textContent = rest>0 ? (rest===1?'Resta 1 vaga':'Restam '+rest+' vagas')+' de '+tot : 'Vagas preenchidas';
+    c.querySelector('.v-pct').textContent = ocu+' de '+tot+' preenchidas';
+    var barra=c.querySelector('.barra-v'); barra.setAttribute('aria-valuemin',0); barra.setAttribute('aria-valuemax',tot); barra.setAttribute('aria-valuenow',ocu);
+    barra.firstElementChild.style.width = Math.min(100,ocu/tot*100)+'%';
+    if(rest===0){ btn.disabled=true; btn.textContent='Vagas encerradas'; return; }
+  });
+  /* modal: já cadastrado ou novo */
+  var dlg=document.getElementById('modal'), acaoAtual='';
+  function passo(n){ [1,2,3].forEach(function(i){ document.getElementById('m-p'+i).classList.toggle('vis',i===n); }); }
+  function abrirModal(a){
+    acaoAtual=a; ['m-acao','m-acao2','m-acao3'].forEach(function(id){ document.getElementById(id).textContent=a; });
+    ['m-e-nome','m-e-email','m-e-tel'].forEach(function(id){ document.getElementById(id).textContent=''; });
+    passo(1);
+    if(dlg.showModal) dlg.showModal(); else dlg.setAttribute('open','');
+  }
+  function fecharModal(){ if(dlg.close) dlg.close(); else dlg.removeAttribute('open'); }
+  document.getElementById('m-fechar').addEventListener('click', fecharModal);
+  document.getElementById('m-fim').addEventListener('click', fecharModal);
+  dlg.addEventListener('click', function(e){ if(e.target===dlg) fecharModal(); });
+  document.getElementById('m-sim').addEventListener('click', function(){ passo(2); document.getElementById('m-nome').focus(); });
+  document.getElementById('m-volta').addEventListener('click', function(){ passo(1); });
+  document.getElementById('m-nao').addEventListener('click', function(){
+    fecharModal(); marcarAcao(acaoAtual); ir(1);
+    document.getElementById('inscricao').scrollIntoView({behavior:'smooth'});
+  });
+  document.getElementById('m-p2').addEventListener('submit', function(ev){
+    ev.preventDefault();
+    var n=document.getElementById('m-nome'), e=document.getElementById('m-email'), t=document.getElementById('m-tel'), ok=true, pr=null;
+    function f_(id,m,el){ document.getElementById(id).textContent=m; ok=false; pr=pr||el; }
+    ['m-e-nome','m-e-email','m-e-tel'].forEach(function(id){ document.getElementById(id).textContent=''; });
+    if(!n.value.trim()) f_('m-e-nome','Informe seu nome.',n);
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.value)) f_('m-e-email','Informe um e-mail válido.',e);
+    if(t.value.replace(/\D/g,'').length<10) f_('m-e-tel','Informe o WhatsApp com DDD.',t);
+    if(!ok){ pr.focus(); return; }
+    /* aqui, na versão com banco de dados, a solicitação será gravada */
+    fetch('/api/interesses',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nome:n.value.trim(),email:e.value.trim(),tel:t.value.trim(),acao:acaoAtual})})
+      .then(function(r){ if(!r.ok) throw new Error(r.status); passo(3); document.getElementById('m-p3').focus(); })
+      .catch(function(){ alert('Nao foi possivel registrar agora. Tente novamente em instantes.'); });
+  });
+  document.getElementById('avancar').addEventListener('click', function(){
+    var ok = true, primeiro = null;
+    ['nome','email','tel','nasc','sexo'].forEach(function(n){ erro(n,''); });
+    if(!f.nome.value.trim()){ erro('nome','Informe seu nome.'); ok=false; primeiro=primeiro||f.nome; }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.value)){ erro('email','Informe um e-mail válido.'); ok=false; primeiro=primeiro||f.email; }
+    if(f.tel.value.replace(/\D/g,'').length < 10){ erro('tel','Informe o WhatsApp com DDD.'); ok=false; primeiro=primeiro||f.tel; }
+    if(!f.querySelector('input[name=sexo]:checked')){ erro('sexo','Selecione uma opção.'); ok=false; primeiro=primeiro||f.querySelector('input[name=sexo]'); }
+    var nd = f.nasc.value ? new Date(f.nasc.value+'T00:00:00') : null, hoje = new Date();
+    if(!nd || isNaN(nd) || nd > hoje || nd.getFullYear() < 1900){ erro('nasc','Informe uma data de nascimento válida.'); ok=false; primeiro=primeiro||f.nasc; }
+    if(!ok){ primeiro.focus(); return; }
+    var primeiroNome = f.nome.value.trim().split(/\s+/)[0];
+    document.getElementById('titulo2').textContent = 'Muito bem, ' + primeiroNome + '! Como você pode ajudar?';
+    document.getElementById('resumo-txt').innerHTML = '<b>' + esc(f.nome.value.trim()) + '</b><br>' + esc(f.email.value.trim()) + ' · ' + esc(f.tel.value.trim()) + (acaoEl.value ? '<br>Ação: <b>'+esc(acaoEl.value)+'</b>' : '');
+    ir(2);
+  });
+  f.nasc.addEventListener('change', function(){
+    var d = new Date(f.nasc.value+'T00:00:00'), h = new Date();
+    var idade = h.getFullYear()-d.getFullYear() - ((h.getMonth()<d.getMonth() || (h.getMonth()===d.getMonth() && h.getDate()<d.getDate()))?1:0);
+    document.getElementById('nota-menor').classList.toggle('vis', !isNaN(idade) && idade < 18 && idade >= 0);
+  });
+  f.cep.addEventListener('input', function(){ var v=f.cep.value.replace(/\D/g,'').slice(0,8); f.cep.value = v.length>5 ? v.slice(0,5)+'-'+v.slice(5) : v; });
+  f.addEventListener('change', function(e){ if(e.target.name==='eixo'){ var n=marcados('eixo'); document.getElementById('n-eixos').textContent = n? n+(n>1?' selecionados':' selecionado') : 'nenhum selecionado'; } });
+  document.getElementById('voltar').addEventListener('click', function(){ ir(1); });
+  document.getElementById('editar').addEventListener('click', function(){ ir(1); });
+
+  f.addEventListener('submit', function(ev){
+    ev.preventDefault();
+    var ok = true, primeiro = null;
+    function falha(c,m,el){ erro(c,m); ok=false; primeiro=primeiro||el; }
+    ['formacao','area','disp','bairro','lgpd'].forEach(function(n){ erro(n,''); });
+    if(!f.formacao.value) falha('formacao','Selecione sua formação.', f.formacao);
+    if(!marcados('area')) falha('area','Marque ao menos uma área.', f.querySelector('input[name=area]'));
+    if(!marcados('disp')) falha('disp','Marque ao menos uma opção.', f.querySelector('input[name=disp]'));
+    if(!f.bairro.value.trim()) falha('bairro','Informe o bairro ou a região.', f.bairro);
+    if(!f.lgpd.checked) falha('lgpd','É necessário concordar para enviar.', f.lgpd);
+    if(!ok){ primeiro.focus(); return; }
+    var corpo={}; new FormData(f).forEach(function(v,k){ corpo[k]=(corpo[k]===undefined)?v:[].concat(corpo[k],v); });
+    var enviar=f.querySelector('button[type=submit]'); if(enviar) enviar.disabled=true;
+    fetch('/api/inscricoes',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(corpo)})
+      .then(function(r){ if(!r.ok) throw new Error(r.status);
+        e2.classList.remove('vis'); b2.className='feita';
+        var ok_ = document.getElementById('ok'); ok_.classList.add('vis'); ok_.focus();
+        f.scrollIntoView({behavior:'smooth', block:'start'}); })
+      .catch(function(){ alert('Nao foi possivel enviar agora. Tente novamente em instantes.'); })
+      .then(function(){ if(enviar) enviar.disabled=false; });
+  });
+})();
+</script>
+<script id="scroll-preciso">
+(function(){
+  function scrollExato(href){
+    if (href === '#' || href === '#topo') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    var target = document.querySelector(href);
+    if (!target) return;
+    var header = document.querySelector('header.top');
+    var hH = header ? header.getBoundingClientRect().height : 0;
+    var targetY = window.pageYOffset + target.getBoundingClientRect().top - hH;
+    window.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });
+  }
+
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var href = a.getAttribute('href');
+    if (href && href !== '#' && document.querySelector(href)) {
+      e.preventDefault();
+      scrollExato(href);
+      if (history.pushState) history.pushState(null, null, href);
+    }
+  });
+})();
+</script>
+</body>
+</html>
