@@ -53,6 +53,38 @@ html {
   #parceiros .paises{margin-top:18px;padding-top:14px}
   #parceiros .paises-grid{margin-top:12px;gap:16px 14px}
 }
+/* Marca d'água da logomarca no bloco azul (sombreamento uniforme e posicionamento responsivo) */
+.hero .wrap {
+  position: relative;
+  z-index: 1;
+}
+.hero .grande {
+  z-index: 0;
+  filter: brightness(0.18);
+  opacity: 0.14;
+}
+@media (max-width: 900px) {
+  .hero .wrap {
+    padding-bottom: 84px;
+  }
+  .hero .grande {
+    display: block !important;
+    width: min(72vw, 310px);
+    right: -14px;
+    bottom: 6px;
+    opacity: 0.14;
+    filter: brightness(0.18);
+  }
+  .hero .colagem {
+    aspect-ratio: 1 / 0.98;
+    margin-right: 10px;
+  }
+  .hero .colagem .c2 {
+    right: 8%;
+    bottom: 10%;
+    width: 42%;
+  }
+}
 </style>`;
 
   const scriptScrollPreciso = `<script id="scroll-preciso">
