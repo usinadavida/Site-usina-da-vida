@@ -1083,7 +1083,7 @@ tr:hover td {
 }
 .acao-side {
   background: var(--solid, #085EC3);
-  color: #ffffff;
+  color: var(--fg, #ffffff);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1113,7 +1113,8 @@ tr:hover td {
 .acao-side .sem {
   font-size: 10px;
   font-weight: 700;
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--sem-bg, rgba(0, 0, 0, 0.2));
+  color: var(--fg, #ffffff);
   padding: 2px 6px;
   border-radius: 4px;
   margin-top: 8px;
@@ -1127,8 +1128,8 @@ tr:hover td {
   background: linear-gradient(180deg, var(--bg, #EBF3FE) 0%, #ffffff 65%);
 }
 .acao-tag-pill {
-  background: var(--solid, #085EC3);
-  color: #ffffff;
+  background: var(--pill-bg, var(--solid, #085EC3));
+  color: var(--pill-fg, #ffffff);
   font-size: 11.5px;
   font-weight: 700;
   padding: 4px 11px;
@@ -1179,7 +1180,7 @@ tr:hover td {
 .acao-foot-inline .vg .b i {
   display: block;
   height: 100%;
-  background: var(--solid, #085EC3) !important;
+  background: var(--bar, var(--solid, #085EC3)) !important;
   border-radius: 999px;
 }
 .acao-details {
@@ -1777,27 +1778,15 @@ tr:hover td {
   var icoUserCheckKpi = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
   var icoAwardKpi = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
 
-  function temaAreaCard(area, corOriginal) {
-    var a = String(area || "").toLowerCase();
-    if (a.indexOf("saúde") > -1 || a.indexOf("saude") > -1) {
-      return { solid: "#085EC3", bg: "#EBF3FE", bd: "#BFDBFE", dt: "#F1C50E" };
-    }
-    if (a.indexOf("empreendedorismo") > -1 || a.indexOf("finan") > -1) {
-      return { solid: "#E66E19", bg: "#FFF3EB", bd: "#FED7AA", dt: "#FFFFFF" };
-    }
-    if (a.indexOf("educa") > -1 || a.indexOf("pedagog") > -1) {
-      return { solid: "#16964B", bg: "#EAFBF1", bd: "#A7F3D0", dt: "#FFFFFF" };
-    }
-    if (a.indexOf("esporte") > -1) {
-      return { solid: "#0B3F82", bg: "#EEF2FF", bd: "#C7D2FE", dt: "#F1C50E" };
-    }
-    if (a.indexOf("socializa") > -1) {
-      return { solid: "#E12926", bg: "#FEF2F2", bd: "#FECACA", dt: "#FFFFFF" };
-    }
-    if (a.indexOf("cultura") > -1 || a.indexOf("arte") > -1) {
-      return { solid: "#085EC3", bg: "#EBF3FE", bd: "#BFDBFE", dt: "#F1C50E" };
-    }
-    return { solid: corOriginal || "#085EC3", bg: "#EBF3FE", bd: "#BFDBFE", dt: "#F1C50E" };
+  var PALETA_LOGO_ACOES = [
+    { solid: "#085EC3", fg: "#ffffff", semBg: "rgba(0,0,0,0.20)", pillBg: "#085EC3", pillFg: "#ffffff", bar: "#085EC3", bg: "#EBF3FE", bd: "#BFDBFE" },
+    { solid: "#F1C50E", fg: "#0f172a", semBg: "rgba(15,23,42,0.12)", pillBg: "#F1C50E", pillFg: "#0f172a", bar: "#EAB308", bg: "#FEFCE8", bd: "#FDE68A" },
+    { solid: "#DB150A", fg: "#ffffff", semBg: "rgba(0,0,0,0.20)", pillBg: "#DB150A", pillFg: "#ffffff", bar: "#DB150A", bg: "#FEF2F2", bd: "#FECACA" },
+    { solid: "#F08D0C", fg: "#ffffff", semBg: "rgba(0,0,0,0.18)", pillBg: "#F08D0C", pillFg: "#ffffff", bar: "#F08D0C", bg: "#FFF7ED", bd: "#FED7AA" }
+  ];
+
+  function temaLogoAlternado(idx) {
+    return PALETA_LOGO_ACOES[idx % PALETA_LOGO_ACOES.length];
   }
 
   function geral(){
@@ -1871,11 +1860,12 @@ tr:hover td {
   }
 
   function acoes(){
-    $("acoes").innerHTML = ACOES.map(function(a){
+    $("acoes").innerHTML = ACOES.map(function(a, idx){
       var descInfo = padronizarDesc(a.p, 105);
-      var tm = temaAreaCard(a.a, a.c);
+      var tm = temaLogoAlternado(AGEND.length + idx);
       var cal = extrairDataColuna(a.d, true);
-      return '<article class="acao" style="--solid:' + tm.solid + ';--bg:' + tm.bg + ';--bd:' + tm.bd + '">' +
+      var vars = '--solid:' + tm.solid + ';--fg:' + tm.fg + ';--sem-bg:' + tm.semBg + ';--pill-bg:' + tm.pillBg + ';--pill-fg:' + tm.pillFg + ';--bar:' + tm.bar + ';--bg:' + tm.bg + ';--bd:' + tm.bd;
+      return '<article class="acao" style="' + vars + '">' +
         '<div class="acao-side">' +
           '<span class="dia' + (cal.compacto ? ' dia-mes' : '') + '">' + esc(cal.dia) + '</span>' +
           '<span class="mes">' + esc(cal.mes) + '</span>' +
@@ -1902,13 +1892,14 @@ tr:hover td {
     $("agend").innerHTML = AGEND.map(function(a,k){
       var oc=ocupadas(a), pend=a.insc.length-oc, rest=Math.max(0,a.vagas-oc);
       var descInfo = padronizarDesc(a.p, 105);
-      var tm = temaAreaCard(a.a, a.c);
+      var tm = temaLogoAlternado(k);
       var cal = extrairDataColuna(a.dt, false);
+      var vars = '--solid:' + tm.solid + ';--fg:' + tm.fg + ';--sem-bg:' + tm.semBg + ';--pill-bg:' + tm.pillBg + ';--pill-fg:' + tm.pillFg + ';--bar:' + tm.bar + ';--bg:' + tm.bg + ';--bd:' + tm.bd;
       var li = a.insc.map(function(i,j){
         var v=vols[i[0]-1], ok=i[1]===1;
         return '<li><span>'+esc(v.nome)+(pode?' <small class="oculto">· '+esc(v.tel)+'</small>':'')+'</span><span>'+(ok?'<span class="ok">Confirmada</span>':'<span class="pend">Pendente</span> '+(pode?'<button type="button" data-k="'+k+'" data-j="'+j+'"'+(rest===0?' disabled title="Sem vagas"':'')+'>Confirmar</button>':''))+'</span></li>';
       }).join("");
-      return '<article class="acao" style="--solid:' + tm.solid + ';--bg:' + tm.bg + ';--bd:' + tm.bd + '">' +
+      return '<article class="acao" style="' + vars + '">' +
         '<div class="acao-side">' +
           '<span class="dia">' + esc(cal.dia) + '</span>' +
           '<span class="mes">' + esc(cal.mes) + '</span>' +
