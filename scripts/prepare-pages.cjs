@@ -83,6 +83,7 @@ html {
 })();
 </script>`;
 
+  html = html.replace('<h1>Transformando <em>sonhos</em> em realidade</h1>', '<h1>Transformando <em>sonhos</em> em <em>realidade</em></h1>');
   html = html.replace('</head>', () => estilosAjustados + '\n</head>');
   html = html.replace('</body>', () => scriptScrollPreciso + '\n</body>');
   html = html.split('href="portal.html"').join('href="/portal"');
