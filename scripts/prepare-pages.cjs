@@ -1564,36 +1564,44 @@ html {
   }
 }
 
-/* TELA DE LOGIN FIXA SPLIT-SCREEN (IDENTIDADE VISUAL DA LANDING PAGE) */
+/* TELA DE LOGIN FIXA SPLIT-SCREEN (DIVISÃO EXATA 50% / 50% DE CIMA A BAIXO) */
 #login.login-split-layout {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: auto;
-  height: auto;
+  position: fixed !important;
+  inset: 0 !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  padding: 0 !important;
+  margin: 0 !important;
   z-index: 1000;
-  overflow-y: auto;
-  display: grid;
-  grid-template-columns: minmax(460px, 48%) 1fr;
+  overflow: hidden !important;
+  display: grid !important;
+  grid-template-columns: 50% 50% !important;
+  place-items: stretch !important;
+  align-items: stretch !important;
+  justify-items: stretch !important;
   background: var(--creme, #FBF6EA);
   box-sizing: border-box;
   font-family: var(--sans);
 }
 
-/* LADO ESQUERDO: HERO INSTITUCIONAL USINA DA VIDA */
+/* LADO ESQUERDO: HERO INSTITUCIONAL USINA DA VIDA (100% ALTURA - AZUL #085EC3) */
 .split-lado-institucional {
-  background: var(--azul, #085EC3);
-  color: #fff;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 28px 36px 20px;
-  box-sizing: border-box;
-  border-right: 3px solid var(--tinta, #1d2430);
+  width: 100% !important;
+  height: 100% !important;
+  background: var(--azul, #085EC3) !important;
+  color: #fff !important;
+  position: relative !important;
+  overflow-y: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  padding: 32px 48px 24px !important;
+  box-sizing: border-box !important;
+  border-right: 3px solid var(--tinta, #1d2430) !important;
 }
 
 .split-marca-dagua {
@@ -1804,16 +1812,18 @@ html {
   margin-top: 18px;
 }
 
-/* LADO DIREITO: FORMULÁRIO DE LOGIN COM CARTÃO USINA DA VIDA */
+/* LADO DIREITO: FORMULÁRIO DE LOGIN COM CARTÃO USINA DA VIDA (100% ALTURA - CREME #FBF6EA) */
 .split-lado-formulario {
-  background: var(--creme, #FBF6EA);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 32px 24px;
-  box-sizing: border-box;
-  min-height: 100%;
+  width: 100% !important;
+  height: 100% !important;
+  background: var(--creme, #FBF6EA) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 32px 32px !important;
+  box-sizing: border-box !important;
+  overflow-y: auto !important;
 }
 
 .split-cartao {
@@ -2006,11 +2016,17 @@ html {
     grid-template-columns: 1fr !important;
     display: flex !important;
     flex-direction: column !important;
+    overflow-y: auto !important;
   }
   .split-lado-institucional {
-    padding: 36px 20px 32px;
-    border-right: none;
-    border-bottom: 3px solid var(--tinta, #1d2430);
+    height: auto !important;
+    padding: 36px 20px 32px !important;
+    border-right: none !important;
+    border-bottom: 3px solid var(--tinta, #1d2430) !important;
+  }
+  .split-lado-formulario {
+    height: auto !important;
+    padding: 32px 16px 44px !important;
   }
   .split-corpo-hero {
     margin: 16px 0;
