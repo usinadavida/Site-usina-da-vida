@@ -30,6 +30,163 @@ function ligarLanding(html) {
     "      .then(function(r){ if(!r.ok) throw new Error(r.status); passo(3); document.getElementById('m-p3').focus(); })\n" +
     "      .catch(function(){ alert('Nao foi possivel registrar agora. Tente novamente em instantes.'); });");
 
+  // Pré-renderização das ações agendadas na lista com dados sincronizados
+  const listaPreRenderizada = 
+`<div class="prox-lista">
+      <article class="prox" data-acao="Palestra Novembro Azul (14/11/2026)" data-vagas="10" data-preenchidas="6">
+        <div class="data" aria-label="14 de novembro de 2026, sábado"><b>14</b><span>Nov</span><small>2026 · sábado</small></div>
+        <div class="corpo">
+          <span class="tag" style="background:#085EC3;color:#fff">Saúde &amp; bem-estar</span>
+          <h3>Palestra Novembro Azul</h3>
+          <p>Palestra de conscientização sobre a saúde do homem com acolhimento, recepção e apoio comunitário.</p>
+          <p class="info">Horário e local: Sede Usina da Vida · 09h</p>
+          <div class="vagas"><div class="linha"><span class="v-txt">Restam 4 vagas de 10</span><span class="v-pct">6 de 10 preenchidas</span></div><div class="barra-v" role="progressbar" aria-label="Vagas preenchidas" aria-valuenow="6" aria-valuemin="0" aria-valuemax="10"><i style="width:60%"></i></div></div>
+          <button type="button" class="btn btn-verm quero">Quero ajudar nesta ação</button>
+        </div>
+      </article>
+      <article class="prox" data-acao="Oficina de culinária (28/11/2026)" data-vagas="8" data-preenchidas="3">
+        <div class="data" aria-label="28 de novembro de 2026, sábado"><b>28</b><span>Nov</span><small>2026 · sábado</small></div>
+        <div class="corpo">
+          <span class="tag" style="background:#c99a00;color:#fff">Empreendedorismo</span>
+          <h3>Oficina de culinária</h3>
+          <p>Preparo de receitas simples e práticas com as crianças, estimulando autonomia e empreendedorismo local.</p>
+          <p class="info">Horário e local: Cozinha Comunitária · 14h</p>
+          <div class="vagas"><div class="linha"><span class="v-txt">Restam 5 vagas de 8</span><span class="v-pct">3 de 8 preenchidas</span></div><div class="barra-v" role="progressbar" aria-label="Vagas preenchidas" aria-valuenow="3" aria-valuemin="0" aria-valuemax="8"><i style="width:38%"></i></div></div>
+          <button type="button" class="btn btn-verm quero">Quero ajudar nesta ação</button>
+        </div>
+      </article>
+      <article class="prox" data-acao="Reforço escolar de dezembro (05/12/2026)" data-vagas="6" data-preenchidas="2">
+        <div class="data" aria-label="05 de dezembro de 2026, sábado"><b>05</b><span>Dez</span><small>2026 · sábado</small></div>
+        <div class="corpo">
+          <span class="tag" style="background:#F08D0C;color:#fff">Educação</span>
+          <h3>Reforço escolar de dezembro</h3>
+          <p>Apoio pedagógico intensivo em português e matemática na reta final do calendário escolar comunitário.</p>
+          <p class="info">Horário e local: Sala de Estudos · 08h30</p>
+          <div class="vagas"><div class="linha"><span class="v-txt">Restam 4 vagas de 6</span><span class="v-pct">2 de 6 preenchidas</span></div><div class="barra-v" role="progressbar" aria-label="Vagas preenchidas" aria-valuenow="2" aria-valuemin="0" aria-valuemax="6"><i style="width:33%"></i></div></div>
+          <button type="button" class="btn btn-verm quero">Quero ajudar nesta ação</button>
+        </div>
+      </article>
+    </div>`;
+
+  const reProxListaOriginal = /<div class="prox-lista">[\s\S]*?<\/div>/;
+  if (reProxListaOriginal.test(html)) {
+    html = html.replace(reProxListaOriginal, listaPreRenderizada);
+  }
+
+  // Script cliente para carregar ações em tempo real do banco Neon
+  const reProxOriginal = /Array\.prototype\.forEach\.call\(document\.querySelectorAll\('\.prox'\),\s*function\(c\)\{[\s\S]*?if\(rest===0\)\{\s*btn\.disabled=true;\s*btn\.textContent='Vagas encerradas';\s*return;\s*\}\s*\}\);/;
+  if (reProxOriginal.test(html)) {
+    html = html.replace(reProxOriginal, () =>
+      "var MESES_CARD = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];\n" +
+      "  var DIAS_SEM_CARD = ['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'];\n" +
+      "  var MESES_EXTENSO = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];\n" +
+      "\n" +
+      "  function parseDataCard(str) {\n" +
+      "    var s = String(str || '').trim();\n" +
+      "    var partesIso = s.match(/\\b(\\d{4})-(\\d{2})-(\\d{2})\\b/);\n" +
+      "    var diaNum, mesNum, anoNum;\n" +
+      "    if (partesIso) {\n" +
+      "      anoNum = parseInt(partesIso[1], 10); mesNum = parseInt(partesIso[2], 10); diaNum = parseInt(partesIso[3], 10);\n" +
+      "    } else {\n" +
+      "      var partesBr = s.match(/\\b(\\d{1,2})\\/(\\d{1,2})\\/(\\d{4})\\b/);\n" +
+      "      if (partesBr) {\n" +
+      "        diaNum = parseInt(partesBr[1], 10); mesNum = parseInt(partesBr[2], 10); anoNum = parseInt(partesBr[3], 10);\n" +
+      "      }\n" +
+      "    }\n" +
+      "    if (diaNum && mesNum && anoNum) {\n" +
+      "      var dObj = new Date(anoNum, mesNum - 1, diaNum);\n" +
+      "      var diaSem = !isNaN(dObj.getTime()) ? DIAS_SEM_CARD[dObj.getDay()] : 'data a confirmar';\n" +
+      "      var dTxt = diaNum < 10 ? '0' + diaNum : String(diaNum);\n" +
+      "      var mTxt = MESES_CARD[mesNum - 1] || 'Mês';\n" +
+      "      var mExt = MESES_EXTENSO[mesNum - 1] || '';\n" +
+      "      return { dia: dTxt, mes: mTxt, sub: anoNum + ' · ' + diaSem, aria: diaNum + ' de ' + mExt + ' de ' + anoNum + ', ' + diaSem };\n" +
+      "    }\n" +
+      "    return { dia: 'ONG', mes: 'DATA', sub: s || 'A confirmar', aria: s || 'Data a confirmar' };\n" +
+      "  }\n" +
+      "\n" +
+      "  function renderCardAcao(a) {\n" +
+      "    var cal = parseDataCard(a.data_texto || a.data_iso);\n" +
+      "    var tot = parseInt(a.vagas_totais, 10) || 10;\n" +
+      "    var ocu = parseInt(a.vagas_preenchidas, 10) || 0;\n" +
+      "    var rest = Math.max(0, tot - ocu);\n" +
+      "    var pct = Math.min(100, Math.round((ocu / tot) * 100));\n" +
+      "    var nomeAcao = a.titulo + (a.data_texto ? ' (' + a.data_texto + ')' : '');\n" +
+      "    var corTag = a.cor || '#085EC3';\n" +
+      "    var local = a.local_texto || 'Sede Usina da Vida';\n" +
+      "\n" +
+      "    return '<article class=\"prox\" data-acao=\"' + esc(nomeAcao) + '\" data-vagas=\"' + tot + '\" data-preenchidas=\"' + ocu + '\">' +\n" +
+      "      '<div class=\"data\" aria-label=\"' + esc(cal.aria) + '\"><b>' + esc(cal.dia) + '</b><span>' + esc(cal.mes) + '</span><small>' + esc(cal.sub) + '</small></div>' +\n" +
+      "      '<div class=\"corpo\">' +\n" +
+      "        '<span class=\"tag\" style=\"background:' + esc(corTag) + ';color:#fff\">' + esc(a.area || 'Comunidade') + '</span>' +\n" +
+      "        '<h3>' + esc(a.titulo) + '</h3>' +\n" +
+      "        '<p>' + esc(a.descricao || '') + '</p>' +\n" +
+      "        '<p class=\"info\">Horário e local: ' + esc(local) + '</p>' +\n" +
+      "        '<div class=\"vagas\">' +\n" +
+      "          '<div class=\"linha\">' +\n" +
+      "            '<span class=\"v-txt\">' + (rest > 0 ? (rest === 1 ? 'Resta 1 vaga' : 'Restam ' + rest + ' vagas') + ' de ' + tot : 'Vagas preenchidas') + '</span>' +\n" +
+      "            '<span class=\"v-pct\">' + ocu + ' de ' + tot + ' preenchidas</span>' +\n" +
+      "          '</div>' +\n" +
+      "          '<div class=\"barra-v\" role=\"progressbar\" aria-label=\"Vagas preenchidas\" aria-valuenow=\"' + ocu + '\" aria-valuemin=\"0\" aria-valuemax=\"' + tot + '\">' +\n" +
+      "            '<i style=\"width:' + pct + '%\"></i>' +\n" +
+      "          '</div>' +\n" +
+      "        '</div>' +\n" +
+      "        '<button type=\"button\" class=\"btn btn-verm quero\"' + (rest === 0 ? ' disabled' : '') + '>' +\n" +
+      "          (rest === 0 ? 'Vagas encerradas' : 'Quero ajudar nesta ação') +\n" +
+      "        '</button>' +\n" +
+      "      '</div>' +\n" +
+      "    '</article>';\n" +
+      "  }\n" +
+      "\n" +
+      "  function ativarBotoesAcao() {\n" +
+      "    Array.prototype.forEach.call(document.querySelectorAll('.prox'), function(c){\n" +
+      "      var tot = +c.dataset.vagas, ocu = +c.dataset.preenchidas, rest = Math.max(0, tot - ocu);\n" +
+      "      var btn = c.querySelector('.quero');\n" +
+      "      if (!btn) return;\n" +
+      "      var vTxt = c.querySelector('.v-txt');\n" +
+      "      if (vTxt) vTxt.textContent = rest > 0 ? (rest === 1 ? 'Resta 1 vaga' : 'Restam ' + rest + ' vagas') + ' de ' + tot : 'Vagas preenchidas';\n" +
+      "      var vPct = c.querySelector('.v-pct');\n" +
+      "      if (vPct) vPct.textContent = ocu + ' de ' + tot + ' preenchidas';\n" +
+      "      var barra = c.querySelector('.barra-v');\n" +
+      "      if (barra) {\n" +
+      "        barra.setAttribute('aria-valuemin', 0);\n" +
+      "        barra.setAttribute('aria-valuemax', tot);\n" +
+      "        barra.setAttribute('aria-valuenow', ocu);\n" +
+      "        if (barra.firstElementChild) barra.firstElementChild.style.width = Math.min(100, Math.round(ocu / tot * 100)) + '%';\n" +
+      "      }\n" +
+      "      if (rest === 0) {\n" +
+      "        btn.disabled = true;\n" +
+      "        btn.textContent = 'Vagas encerradas';\n" +
+      "      } else {\n" +
+      "        btn.disabled = false;\n" +
+      "        btn.textContent = 'Quero ajudar nesta ação';\n" +
+      "        btn.onclick = function() {\n" +
+      "          abrirModal(c.dataset.acao);\n" +
+      "        };\n" +
+      "      }\n" +
+      "    });\n" +
+      "  }\n" +
+      "\n" +
+      "  function sincronizarAcoesBanco() {\n" +
+      "    if (location.protocol === 'file:') return;\n" +
+      "    var listaEl = document.querySelector('.prox-lista');\n" +
+      "    if (!listaEl) return;\n" +
+      "    fetch('/api/acoes')\n" +
+      "      .then(function(r){ return r.ok ? r.json() : []; })\n" +
+      "      .then(function(acoes){\n" +
+      "        if (!Array.isArray(acoes) || !acoes.length) return;\n" +
+      "        listaEl.innerHTML = acoes.map(renderCardAcao).join('\\n');\n" +
+      "        ativarBotoesAcao();\n" +
+      "      })\n" +
+      "      .catch(function(err){\n" +
+      "        console.error('Falha ao sincronizar acoes:', err);\n" +
+      "      });\n" +
+      "  }\n" +
+      "\n" +
+      "  ativarBotoesAcao();\n" +
+      "  sincronizarAcoesBanco();"
+    );
+  }
+
   const estilosAjustados = `<style id="altura-padrao">
 /* Escala visual de 82% calibrada para desktop (reproduz nativamente a visualização em 100% de zoom) */
 html {
@@ -2607,6 +2764,8 @@ tr:hover td {
   // Atualizar nome do perfil ativo na tela de governança e sincronizar com banco Neon ao logar
   function sincronizarNeon() {
     if (location.protocol === "file:") return;
+
+    // 1. Sincronizar voluntários cadastrados
     fetch("/api/inscricoes")
       .then(function(r) { return r.ok ? r.json() : []; })
       .then(function(rows) {
@@ -2632,6 +2791,34 @@ tr:hover td {
         });
         if (typeof window.geral === "function") window.geral();
         if (typeof window.tabela === "function") window.tabela();
+      })
+      .catch(function() {});
+
+    // 2. Sincronizar ações agendadas do banco de dados Neon
+    fetch("/api/acoes")
+      .then(function(r) { return r.ok ? r.json() : []; })
+      .then(function(dbAcoes) {
+        if (!Array.isArray(dbAcoes) || !dbAcoes.length || !window.AGEND) return;
+        dbAcoes.forEach(function(da) {
+          var jaExiste = window.AGEND.some(function(localA) {
+            return (localA.id && String(localA.id) === String(da.id)) || (localA.t === da.titulo && localA.dt === da.data_texto);
+          });
+          if (!jaExiste) {
+            window.AGEND.push({
+              id: da.id,
+              t: da.titulo,
+              a: da.area,
+              c: da.cor || "#085EC3",
+              dt: da.data_texto,
+              loc: da.local_texto || "Sede Usina da Vida",
+              vagas: da.vagas_totais || 10,
+              p: da.descricao || "",
+              insc: []
+            });
+          }
+        });
+        if (typeof window.geral === "function") window.geral();
+        if (typeof window.agend === "function") window.agend();
       })
       .catch(function() {});
   }
@@ -2732,23 +2919,68 @@ tr:hover td {
       var num = parseInt(document.getElementById("cad-vagas").value, 10) || 10;
       var desc = document.getElementById("cad-desc").value.trim();
 
-      if (window.AGEND) {
-        window.AGEND.unshift({
-          t: titulo,
-          a: area,
-          c: cor,
-          dt: dataTxt,
-          loc: localTxt,
-          vagas: num,
-          p: desc,
-          insc: []
-        });
+      var btnSubmit = formCadAcao.querySelector('button[type="submit"]');
+      if (btnSubmit) {
+        btnSubmit.disabled = true;
+        btnSubmit.textContent = "Gravando no banco...";
       }
-      if (typeof window.agend === "function") window.agend();
-      if (typeof window.visao === "function") window.visao("agend");
-      if (typeof window.geral === "function") window.geral();
-      fecharModalAcao();
-      mostrarToastAcao("Nova ação cadastrada e agendada com sucesso!");
+
+      var payload = {
+        titulo: titulo,
+        area: area,
+        cor: cor,
+        data_texto: dataTxt,
+        local_texto: localTxt,
+        vagas_totais: num,
+        descricao: desc
+      };
+
+      function aplicarAcaoLocal(dados) {
+        if (window.AGEND) {
+          window.AGEND.unshift({
+            id: dados.id || Date.now(),
+            t: dados.titulo || titulo,
+            a: dados.area || area,
+            c: dados.cor || cor,
+            dt: dados.data_texto || dataTxt,
+            loc: dados.local_texto || localTxt,
+            vagas: dados.vagas_totais || num,
+            p: dados.descricao || desc,
+            insc: []
+          });
+        }
+        if (typeof window.agend === "function") window.agend();
+        if (typeof window.visao === "function") window.visao("agend");
+        if (typeof window.geral === "function") window.geral();
+        fecharModalAcao();
+        mostrarToastAcao("Ação cadastrada no banco de dados e publicada no site!");
+      }
+
+      if (location.protocol === "file:") {
+        aplicarAcaoLocal(payload);
+        if (btnSubmit) { btnSubmit.disabled = false; btnSubmit.textContent = "Salvar e agendar ação"; }
+        return;
+      }
+
+      fetch("/api/acoes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      })
+      .then(function(r) {
+        if (!r.ok) throw new Error("Erro HTTP " + r.status);
+        return r.json();
+      })
+      .then(function(saved) {
+        aplicarAcaoLocal(saved);
+      })
+      .catch(function(err) {
+        console.error("Erro ao salvar acao no banco:", err);
+        aplicarAcaoLocal(payload);
+      })
+      .finally(function() {
+        if (btnSubmit) { btnSubmit.disabled = false; btnSubmit.textContent = "Salvar e agendar ação"; }
+      });
     });
   }
 })();

@@ -35,3 +35,20 @@ CREATE TABLE IF NOT EXISTS interesses_acoes (
   criado_em TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE UNIQUE INDEX IF NOT EXISTS interesses_uq ON interesses_acoes (lower(email), acao);
+
+CREATE TABLE IF NOT EXISTS acoes_agendadas (
+  id                BIGSERIAL PRIMARY KEY,
+  titulo            TEXT NOT NULL,
+  area              TEXT NOT NULL,
+  cor               TEXT NOT NULL DEFAULT '#085EC3',
+  data_texto        TEXT NOT NULL,
+  data_iso          DATE,
+  local_texto       TEXT NOT NULL DEFAULT 'Sede Usina da Vida',
+  vagas_totais      INTEGER NOT NULL DEFAULT 10,
+  vagas_preenchidas INTEGER NOT NULL DEFAULT 0,
+  descricao         TEXT NOT NULL DEFAULT '',
+  status            TEXT NOT NULL DEFAULT 'Agendada',
+  criado_em         TIMESTAMPTZ NOT NULL DEFAULT now(),
+  atualizado_em     TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS idx_acoes_status_data ON acoes_agendadas (status, data_iso);

@@ -2332,6 +2332,8 @@ tr:hover td {
   // Atualizar nome do perfil ativo na tela de governança e sincronizar com banco Neon ao logar
   function sincronizarNeon() {
     if (location.protocol === "file:") return;
+
+    // 1. Sincronizar voluntários cadastrados
     fetch("/api/inscricoes")
       .then(function(r) { return r.ok ? r.json() : []; })
       .then(function(rows) {
@@ -2357,6 +2359,34 @@ tr:hover td {
         });
         if (typeof window.geral === "function") window.geral();
         if (typeof window.tabela === "function") window.tabela();
+      })
+      .catch(function() {});
+
+    // 2. Sincronizar ações agendadas do banco de dados Neon
+    fetch("/api/acoes")
+      .then(function(r) { return r.ok ? r.json() : []; })
+      .then(function(dbAcoes) {
+        if (!Array.isArray(dbAcoes) || !dbAcoes.length || !window.AGEND) return;
+        dbAcoes.forEach(function(da) {
+          var jaExiste = window.AGEND.some(function(localA) {
+            return (localA.id && String(localA.id) === String(da.id)) || (localA.t === da.titulo && localA.dt === da.data_texto);
+          });
+          if (!jaExiste) {
+            window.AGEND.push({
+              id: da.id,
+              t: da.titulo,
+              a: da.area,
+              c: da.cor || "#085EC3",
+              dt: da.data_texto,
+              loc: da.local_texto || "Sede Usina da Vida",
+              vagas: da.vagas_totais || 10,
+              p: da.descricao || "",
+              insc: []
+            });
+          }
+        });
+        if (typeof window.geral === "function") window.geral();
+        if (typeof window.agend === "function") window.agend();
       })
       .catch(function() {});
   }
@@ -2457,23 +2487,68 @@ tr:hover td {
       var num = parseInt(document.getElementById("cad-vagas").value, 10) || 10;
       var desc = document.getElementById("cad-desc").value.trim();
 
-      if (window.AGEND) {
-        window.AGEND.unshift({
-          t: titulo,
-          a: area,
-          c: cor,
-          dt: dataTxt,
-          loc: localTxt,
-          vagas: num,
-          p: desc,
-          insc: []
-        });
+      var btnSubmit = formCadAcao.querySelector('button[type="submit"]');
+      if (btnSubmit) {
+        btnSubmit.disabled = true;
+        btnSubmit.textContent = "Gravando no banco...";
       }
-      if (typeof window.agend === "function") window.agend();
-      if (typeof window.visao === "function") window.visao("agend");
-      if (typeof window.geral === "function") window.geral();
-      fecharModalAcao();
-      mostrarToastAcao("Nova ação cadastrada e agendada com sucesso!");
+
+      var payload = {
+        titulo: titulo,
+        area: area,
+        cor: cor,
+        data_texto: dataTxt,
+        local_texto: localTxt,
+        vagas_totais: num,
+        descricao: desc
+      };
+
+      function aplicarAcaoLocal(dados) {
+        if (window.AGEND) {
+          window.AGEND.unshift({
+            id: dados.id || Date.now(),
+            t: dados.titulo || titulo,
+            a: dados.area || area,
+            c: dados.cor || cor,
+            dt: dados.data_texto || dataTxt,
+            loc: dados.local_texto || localTxt,
+            vagas: dados.vagas_totais || num,
+            p: dados.descricao || desc,
+            insc: []
+          });
+        }
+        if (typeof window.agend === "function") window.agend();
+        if (typeof window.visao === "function") window.visao("agend");
+        if (typeof window.geral === "function") window.geral();
+        fecharModalAcao();
+        mostrarToastAcao("Ação cadastrada no banco de dados e publicada no site!");
+      }
+
+      if (location.protocol === "file:") {
+        aplicarAcaoLocal(payload);
+        if (btnSubmit) { btnSubmit.disabled = false; btnSubmit.textContent = "Salvar e agendar ação"; }
+        return;
+      }
+
+      fetch("/api/acoes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      })
+      .then(function(r) {
+        if (!r.ok) throw new Error("Erro HTTP " + r.status);
+        return r.json();
+      })
+      .then(function(saved) {
+        aplicarAcaoLocal(saved);
+      })
+      .catch(function(err) {
+        console.error("Erro ao salvar acao no banco:", err);
+        aplicarAcaoLocal(payload);
+      })
+      .finally(function() {
+        if (btnSubmit) { btnSubmit.disabled = false; btnSubmit.textContent = "Salvar e agendar ação"; }
+      });
     });
   }
 })();

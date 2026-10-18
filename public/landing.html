@@ -633,6 +633,38 @@ html {
       <article class="prox" data-acao="Palestra Novembro Azul (14/11/2026)" data-vagas="10" data-preenchidas="6">
         <div class="data" aria-label="14 de novembro de 2026, sábado"><b>14</b><span>Nov</span><small>2026 · sábado</small></div>
         <div class="corpo">
+          <span class="tag" style="background:#085EC3;color:#fff">Saúde &amp; bem-estar</span>
+          <h3>Palestra Novembro Azul</h3>
+          <p>Palestra de conscientização sobre a saúde do homem com acolhimento, recepção e apoio comunitário.</p>
+          <p class="info">Horário e local: Sede Usina da Vida · 09h</p>
+          <div class="vagas"><div class="linha"><span class="v-txt">Restam 4 vagas de 10</span><span class="v-pct">6 de 10 preenchidas</span></div><div class="barra-v" role="progressbar" aria-label="Vagas preenchidas" aria-valuenow="6" aria-valuemin="0" aria-valuemax="10"><i style="width:60%"></i></div></div>
+          <button type="button" class="btn btn-verm quero">Quero ajudar nesta ação</button>
+        </div>
+      </article>
+      <article class="prox" data-acao="Oficina de culinária (28/11/2026)" data-vagas="8" data-preenchidas="3">
+        <div class="data" aria-label="28 de novembro de 2026, sábado"><b>28</b><span>Nov</span><small>2026 · sábado</small></div>
+        <div class="corpo">
+          <span class="tag" style="background:#c99a00;color:#fff">Empreendedorismo</span>
+          <h3>Oficina de culinária</h3>
+          <p>Preparo de receitas simples e práticas com as crianças, estimulando autonomia e empreendedorismo local.</p>
+          <p class="info">Horário e local: Cozinha Comunitária · 14h</p>
+          <div class="vagas"><div class="linha"><span class="v-txt">Restam 5 vagas de 8</span><span class="v-pct">3 de 8 preenchidas</span></div><div class="barra-v" role="progressbar" aria-label="Vagas preenchidas" aria-valuenow="3" aria-valuemin="0" aria-valuemax="8"><i style="width:38%"></i></div></div>
+          <button type="button" class="btn btn-verm quero">Quero ajudar nesta ação</button>
+        </div>
+      </article>
+      <article class="prox" data-acao="Reforço escolar de dezembro (05/12/2026)" data-vagas="6" data-preenchidas="2">
+        <div class="data" aria-label="05 de dezembro de 2026, sábado"><b>05</b><span>Dez</span><small>2026 · sábado</small></div>
+        <div class="corpo">
+          <span class="tag" style="background:#F08D0C;color:#fff">Educação</span>
+          <h3>Reforço escolar de dezembro</h3>
+          <p>Apoio pedagógico intensivo em português e matemática na reta final do calendário escolar comunitário.</p>
+          <p class="info">Horário e local: Sala de Estudos · 08h30</p>
+          <div class="vagas"><div class="linha"><span class="v-txt">Restam 4 vagas de 6</span><span class="v-pct">2 de 6 preenchidas</span></div><div class="barra-v" role="progressbar" aria-label="Vagas preenchidas" aria-valuenow="2" aria-valuemin="0" aria-valuemax="6"><i style="width:33%"></i></div></div>
+          <button type="button" class="btn btn-verm quero">Quero ajudar nesta ação</button>
+        </div>
+      </article>
+    </div>
+        <div class="corpo">
           <span class="tag">Saúde &amp; bem-estar</span>
           <h3>Palestra Novembro Azul</h3>
           <p>Palestra de conscientização sobre a saúde do homem, aberta à comunidade. Precisamos de voluntários para recepção, organização do espaço e apoio durante o evento.</p>
@@ -1088,14 +1120,113 @@ html {
     if(nome){ escEl.innerHTML = 'Inscrição para: <b>'+esc(nome)+'</b><button type="button" id="limparacao">Remover</button>'; escEl.classList.add('vis'); document.getElementById('limparacao').addEventListener('click',function(){ marcarAcao(''); }); }
     else { escEl.innerHTML=''; escEl.classList.remove('vis'); }
   }
-  Array.prototype.forEach.call(document.querySelectorAll('.prox'), function(c){
-    var tot=+c.dataset.vagas, ocu=+c.dataset.preenchidas, rest=Math.max(0,tot-ocu), btn=c.querySelector('.quero');
-    c.querySelector('.v-txt').textContent = rest>0 ? (rest===1?'Resta 1 vaga':'Restam '+rest+' vagas')+' de '+tot : 'Vagas preenchidas';
-    c.querySelector('.v-pct').textContent = ocu+' de '+tot+' preenchidas';
-    var barra=c.querySelector('.barra-v'); barra.setAttribute('aria-valuemin',0); barra.setAttribute('aria-valuemax',tot); barra.setAttribute('aria-valuenow',ocu);
-    barra.firstElementChild.style.width = Math.min(100,ocu/tot*100)+'%';
-    if(rest===0){ btn.disabled=true; btn.textContent='Vagas encerradas'; return; }
-  });
+  var MESES_CARD = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  var DIAS_SEM_CARD = ['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'];
+  var MESES_EXTENSO = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+
+  function parseDataCard(str) {
+    var s = String(str || '').trim();
+    var partesIso = s.match(/\b(\d{4})-(\d{2})-(\d{2})\b/);
+    var diaNum, mesNum, anoNum;
+    if (partesIso) {
+      anoNum = parseInt(partesIso[1], 10); mesNum = parseInt(partesIso[2], 10); diaNum = parseInt(partesIso[3], 10);
+    } else {
+      var partesBr = s.match(/\b(\d{1,2})\/(\d{1,2})\/(\d{4})\b/);
+      if (partesBr) {
+        diaNum = parseInt(partesBr[1], 10); mesNum = parseInt(partesBr[2], 10); anoNum = parseInt(partesBr[3], 10);
+      }
+    }
+    if (diaNum && mesNum && anoNum) {
+      var dObj = new Date(anoNum, mesNum - 1, diaNum);
+      var diaSem = !isNaN(dObj.getTime()) ? DIAS_SEM_CARD[dObj.getDay()] : 'data a confirmar';
+      var dTxt = diaNum < 10 ? '0' + diaNum : String(diaNum);
+      var mTxt = MESES_CARD[mesNum - 1] || 'Mês';
+      var mExt = MESES_EXTENSO[mesNum - 1] || '';
+      return { dia: dTxt, mes: mTxt, sub: anoNum + ' · ' + diaSem, aria: diaNum + ' de ' + mExt + ' de ' + anoNum + ', ' + diaSem };
+    }
+    return { dia: 'ONG', mes: 'DATA', sub: s || 'A confirmar', aria: s || 'Data a confirmar' };
+  }
+
+  function renderCardAcao(a) {
+    var cal = parseDataCard(a.data_texto || a.data_iso);
+    var tot = parseInt(a.vagas_totais, 10) || 10;
+    var ocu = parseInt(a.vagas_preenchidas, 10) || 0;
+    var rest = Math.max(0, tot - ocu);
+    var pct = Math.min(100, Math.round((ocu / tot) * 100));
+    var nomeAcao = a.titulo + (a.data_texto ? ' (' + a.data_texto + ')' : '');
+    var corTag = a.cor || '#085EC3';
+    var local = a.local_texto || 'Sede Usina da Vida';
+
+    return '<article class="prox" data-acao="' + esc(nomeAcao) + '" data-vagas="' + tot + '" data-preenchidas="' + ocu + '">' +
+      '<div class="data" aria-label="' + esc(cal.aria) + '"><b>' + esc(cal.dia) + '</b><span>' + esc(cal.mes) + '</span><small>' + esc(cal.sub) + '</small></div>' +
+      '<div class="corpo">' +
+        '<span class="tag" style="background:' + esc(corTag) + ';color:#fff">' + esc(a.area || 'Comunidade') + '</span>' +
+        '<h3>' + esc(a.titulo) + '</h3>' +
+        '<p>' + esc(a.descricao || '') + '</p>' +
+        '<p class="info">Horário e local: ' + esc(local) + '</p>' +
+        '<div class="vagas">' +
+          '<div class="linha">' +
+            '<span class="v-txt">' + (rest > 0 ? (rest === 1 ? 'Resta 1 vaga' : 'Restam ' + rest + ' vagas') + ' de ' + tot : 'Vagas preenchidas') + '</span>' +
+            '<span class="v-pct">' + ocu + ' de ' + tot + ' preenchidas</span>' +
+          '</div>' +
+          '<div class="barra-v" role="progressbar" aria-label="Vagas preenchidas" aria-valuenow="' + ocu + '" aria-valuemin="0" aria-valuemax="' + tot + '">' +
+            '<i style="width:' + pct + '%"></i>' +
+          '</div>' +
+        '</div>' +
+        '<button type="button" class="btn btn-verm quero"' + (rest === 0 ? ' disabled' : '') + '>' +
+          (rest === 0 ? 'Vagas encerradas' : 'Quero ajudar nesta ação') +
+        '</button>' +
+      '</div>' +
+    '</article>';
+  }
+
+  function ativarBotoesAcao() {
+    Array.prototype.forEach.call(document.querySelectorAll('.prox'), function(c){
+      var tot = +c.dataset.vagas, ocu = +c.dataset.preenchidas, rest = Math.max(0, tot - ocu);
+      var btn = c.querySelector('.quero');
+      if (!btn) return;
+      var vTxt = c.querySelector('.v-txt');
+      if (vTxt) vTxt.textContent = rest > 0 ? (rest === 1 ? 'Resta 1 vaga' : 'Restam ' + rest + ' vagas') + ' de ' + tot : 'Vagas preenchidas';
+      var vPct = c.querySelector('.v-pct');
+      if (vPct) vPct.textContent = ocu + ' de ' + tot + ' preenchidas';
+      var barra = c.querySelector('.barra-v');
+      if (barra) {
+        barra.setAttribute('aria-valuemin', 0);
+        barra.setAttribute('aria-valuemax', tot);
+        barra.setAttribute('aria-valuenow', ocu);
+        if (barra.firstElementChild) barra.firstElementChild.style.width = Math.min(100, Math.round(ocu / tot * 100)) + '%';
+      }
+      if (rest === 0) {
+        btn.disabled = true;
+        btn.textContent = 'Vagas encerradas';
+      } else {
+        btn.disabled = false;
+        btn.textContent = 'Quero ajudar nesta ação';
+        btn.onclick = function() {
+          abrirModal(c.dataset.acao);
+        };
+      }
+    });
+  }
+
+  function sincronizarAcoesBanco() {
+    if (location.protocol === 'file:') return;
+    var listaEl = document.querySelector('.prox-lista');
+    if (!listaEl) return;
+    fetch('/api/acoes')
+      .then(function(r){ return r.ok ? r.json() : []; })
+      .then(function(acoes){
+        if (!Array.isArray(acoes) || !acoes.length) return;
+        listaEl.innerHTML = acoes.map(renderCardAcao).join('\n');
+        ativarBotoesAcao();
+      })
+      .catch(function(err){
+        console.error('Falha ao sincronizar acoes:', err);
+      });
+  }
+
+  ativarBotoesAcao();
+  sincronizarAcoesBanco();
   /* modal: já cadastrado ou novo */
   var dlg=document.getElementById('modal'), acaoAtual='';
   function passo(n){ [1,2,3].forEach(function(i){ document.getElementById('m-p'+i).classList.toggle('vis',i===n); }); }
