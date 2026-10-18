@@ -736,30 +736,6 @@ function redesenharPortal(html) {
   html = html.replace(/<p class="nota">Sugestão inicial para validar com a ONG[\s\S]*?<\/p>/, '');
   html = html.replace(/<em>Ver detalhes &rarr;<\/em>/g, '');
 
-  // 2. Corrigir textos de login, placeholders institucionais e credenciais (gestão / 0987 ou novembro)
-  html = html.replace('Acesso exclusivo à presidência, à coordenação e a colaboradores autorizados.', 'Painel Administrativo do Voluntariado · Autenticação Restrita');
-  html = html.replace('<label for="usuario">Usuário (e-mail)</label>', '<label for="usuario">Login</label>');
-  html = html.replace('type="email" autocomplete="username" placeholder="nome@exemplo.com"', 'type="text" autocomplete="username" placeholder="gestão"');
-  html = html.replace('<input id="senha" type="password" autocomplete="current-password">', '<input id="senha" type="password" autocomplete="current-password" placeholder="••••">');
-  html = html.replace(
-    'if(!$("usuario").value.trim() || !$("senha").value){ $("erro-login").textContent="Informe usuário e senha."; return; }\n    perfil = $("perfil").value;\n    var nomes = {presidencia:"Presidência",coordenacao:"Coordenação",colaborador:"Colaborador autorizado"};\n    $("quem").textContent = $("usuario").value;',
-    'var u = $("usuario").value.trim(), s = $("senha").value.trim();\n    if(!u || !s){ $("erro-login").textContent="Informe o login e a senha."; return; }\n    var uNorm = u.toLowerCase(), sNorm = s.toLowerCase();\n    var loginValido = (uNorm === "gestão" || uNorm === "gestao" || uNorm === "novembro");\n    var senhaValida = (s === "0987" || sNorm === "novembro");\n    if(!loginValido || !senhaValida){ $("erro-login").textContent="Login ou senha incorretos."; return; }\n    perfil = $("perfil").value;\n    var nomes = {presidencia:"Presidência",coordenacao:"Coordenação",colaborador:"Colaborador autorizado"};\n    $("quem").textContent = u;'
-  );
-  html = html.replace('<button class="btn btn-azul" type="submit" style="width:100%">Entrar</button>', '<button class="btn btn-azul" type="submit" style="width:100%;font-size:1rem;padding:12px">Entrar no Portal de Gestão</button>');
-
-  // 3. Corrigir links para a raiz da landing page
-  html = html.split('href="index.html"').join('href="/"');
-  html = html.replace('← Voltar ao site da Usina da Vida', '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg> Retornar ao site institucional');
-
-  // 4. Transformar Visão Geral com cabeçalho institucional limpo (sem badge 'Base de dados sincronizada')
-  html = html.replace('<h2>Visão geral dos cadastros</h2>', 
-    '<div class="painel-cab">' +
-    '  <div>' +
-    '    <h2>Visão Geral dos Cadastros</h2>' +
-    '    <p class="subtitulo-painel">Acompanhamento de voluntários inscritos, etapas de triagem e ações comunitárias.</p>' +
-    '  </div>' +
-    '</div>');
-
   // Ícones SVG reutilizáveis
   const svgSearch = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>';
   const svgPin = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>';
@@ -773,6 +749,148 @@ function redesenharPortal(html) {
   const svgShield = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>';
   const svgEdit = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>';
   const svgTrash = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>';
+  const svgBarChart = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>';
+  const svgEye = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="10" r="3"/></svg>';
+  const svgEyeOff = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
+  const svgArrowRight = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+
+  // 2. Substituir tela de login pelo layout split-screen de alta fidelidade
+  const sectionLoginNova =
+    '<section id="login" class="login-split-tela" aria-labelledby="login-t">\n' +
+    '  <div class="login-split-grid">\n' +
+    '    <!-- COLUNA ESQUERDA: HERO INSTITUCIONAL (DARK NAVY) -->\n' +
+    '    <div class="login-lado-marca">\n' +
+    '      <div class="login-marca-decoracao" aria-hidden="true"></div>\n' +
+    '      <div class="login-marca-cabecalho">\n' +
+    '        <a class="login-marca-logo-link" href="/" title="Ir para o site institucional">\n' +
+    '          <div class="login-logo-circulo">\n' +
+    '            <img src="/assets/img-01.png" alt="Emblema Usina da Vida" class="login-logo-img">\n' +
+    '          </div>\n' +
+    '          <div class="login-marca-titulos">\n' +
+    '            <span class="login-marca-nome">Usina da Vida</span>\n' +
+    '            <span class="login-marca-sub">PORTAL DE GESTÃO INSTITUCIONAL</span>\n' +
+    '          </div>\n' +
+    '        </a>\n' +
+    '      </div>\n' +
+    '      <div class="login-marca-corpo">\n' +
+    '        <h2 class="login-marca-chamada">Plataforma de Gestão do Voluntariado</h2>\n' +
+    '        <p class="login-marca-desc">\n' +
+    '          Ambiente administrativo unificado para coordenação de ações sociais, triagem de voluntários, controle de presença e governança de impacto comunitário em Salvador.\n' +
+    '        </p>\n' +
+    '        <div class="login-beneficios-lista">\n' +
+    '          <div class="login-beneficio-item">\n' +
+    '            <div class="login-beneficio-icone" aria-hidden="true">\n' +
+    '              ' + svgShield + '\n' +
+    '            </div>\n' +
+    '            <div class="login-beneficio-texto">\n' +
+    '              <h3>Segurança e Conformidade LGPD</h3>\n' +
+    '              <p>Governança de dados pessoais, trilha de auditoria e controle restrito de permissões por perfil.</p>\n' +
+    '            </div>\n' +
+    '          </div>\n' +
+    '          <div class="login-beneficio-item">\n' +
+    '            <div class="login-beneficio-icone" aria-hidden="true">\n' +
+    '              ' + svgUsers + '\n' +
+    '            </div>\n' +
+    '            <div class="login-beneficio-texto">\n' +
+    '              <h3>Gestão de Voluntários e Vagas</h3>\n' +
+    '              <p>Acompanhamento de cadastros em tempo real, disponibilidades e alocação territorial nos bairros.</p>\n' +
+    '            </div>\n' +
+    '          </div>\n' +
+    '          <div class="login-beneficio-item">\n' +
+    '            <div class="login-beneficio-icone" aria-hidden="true">\n' +
+    '              ' + svgBarChart + '\n' +
+    '            </div>\n' +
+    '            <div class="login-beneficio-texto">\n' +
+    '              <h3>Planejamento e Execução de Ações</h3>\n' +
+    '              <p>Coordenação integrada de datas, pontos focais comunitários e monitoramento de metas sociais.</p>\n' +
+    '            </div>\n' +
+    '          </div>\n' +
+    '        </div>\n' +
+    '      </div>\n' +
+    '      <div class="login-marca-rodape">\n' +
+    '        <span>Usina da Vida · Projeto de Extensão Comunitária UCSal</span>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
+    '    <!-- COLUNA DIREITA: FORMULÁRIO (LIGHT FLOATING CARD) -->\n' +
+    '    <div class="login-lado-form">\n' +
+    '      <div class="login-card-flutuante">\n' +
+    '        <div class="login-card-topo">\n' +
+    '          <div class="login-badge-seguro">\n' +
+    '            ' + svgLock + '\n' +
+    '            <span>ACESSO SEGURO</span>\n' +
+    '          </div>\n' +
+    '          <h1 id="login-t" class="login-card-titulo">Entrar na plataforma</h1>\n' +
+    '          <p class="login-card-subtitulo">Informe suas credenciais para gerenciar a instituição</p>\n' +
+    '        </div>\n' +
+    '        <form id="f-login" novalidate>\n' +
+    '          <div class="login-campo-grupo">\n' +
+    '            <label for="perfil" class="login-label">Perfil de acesso</label>\n' +
+    '            <div class="login-select-wrapper">\n' +
+    '              <select id="perfil" class="login-input login-select">\n' +
+    '                <option value="presidencia">Presidência</option>\n' +
+    '                <option value="coordenacao">Coordenação</option>\n' +
+    '                <option value="colaborador">Colaborador autorizado</option>\n' +
+    '              </select>\n' +
+    '            </div>\n' +
+    '          </div>\n' +
+    '          <div class="login-campo-grupo">\n' +
+    '            <label for="usuario" class="login-label">Login</label>\n' +
+    '            <input id="usuario" type="text" autocomplete="username" placeholder="gestão" class="login-input" required>\n' +
+    '          </div>\n' +
+    '          <div class="login-campo-grupo">\n' +
+    '            <label for="senha" class="login-label">Senha</label>\n' +
+    '            <div class="login-senha-wrapper">\n' +
+    '              <input id="senha" type="password" autocomplete="current-password" placeholder="••••••••" class="login-input" required>\n' +
+    '              <button type="button" id="btn-toggle-senha" class="login-btn-toggle-senha" aria-label="Mostrar ou ocultar senha" title="Mostrar ou ocultar senha">\n' +
+    '                ' + svgEye + '\n' +
+    '              </button>\n' +
+    '            </div>\n' +
+    '          </div>\n' +
+    '          <div class="login-linha-auxiliar">\n' +
+    '            <label class="login-lembrar-check">\n' +
+    '              <input type="checkbox" id="lembrar-login" checked>\n' +
+    '              <span>Lembrar meu acesso</span>\n' +
+    '            </label>\n' +
+    '            <button type="button" id="link-esqueci-senha" class="login-link-esqueci">Esqueci minha senha</button>\n' +
+    '          </div>\n' +
+    '          <div class="erro" id="erro-login" role="alert"></div>\n' +
+    '          <button class="login-btn-submeter" type="submit">\n' +
+    '            <span>Entrar na plataforma</span>\n' +
+    '            ' + svgArrowRight + '\n' +
+    '          </button>\n' +
+    '        </form>\n' +
+    '        <div class="login-card-rodape">\n' +
+    '          <a class="login-link-voltar" href="/">\n' +
+    '            <svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:16px;height:16px"><path d="m15 18-6-6 6-6"/></svg>\n' +
+    '            <span>Retornar ao site institucional</span>\n' +
+    '          </a>\n' +
+    '        </div>\n' +
+    '      </div>\n' +
+    '      <div class="login-subrodape-externo">\n' +
+    '        <p>© 2025 Usina da Vida · Plataforma de Gestão do Voluntariado</p>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
+    '  </div>\n' +
+    '</section>';
+
+  html = html.replace(/<section id="login"[\s\S]*?<\/section>/, sectionLoginNova);
+  html = html.replace(
+    'if(!$("usuario").value.trim() || !$("senha").value){ $("erro-login").textContent="Informe usuário e senha."; return; }\n    perfil = $("perfil").value;\n    var nomes = {presidencia:"Presidência",coordenacao:"Coordenação",colaborador:"Colaborador autorizado"};\n    $("quem").textContent = $("usuario").value;',
+    'var u = $("usuario").value.trim(), s = $("senha").value.trim();\n    if(!u || !s){ $("erro-login").textContent="Informe o login e a senha."; return; }\n    var uNorm = u.toLowerCase(), sNorm = s.toLowerCase();\n    var loginValido = (uNorm === "gestão" || uNorm === "gestao" || uNorm === "novembro");\n    var senhaValida = (s === "0987" || sNorm === "novembro");\n    if(!loginValido || !senhaValida){ $("erro-login").textContent="Login ou senha incorretos."; return; }\n    perfil = $("perfil").value;\n    var nomes = {presidencia:"Presidência",coordenacao:"Coordenação",colaborador:"Colaborador autorizado"};\n    $("quem").textContent = u;'
+  );
+  html = html.replace('$("login").style.display="grid";', '$("login").style.display="flex";');
+
+  // 3. Corrigir links para a raiz da landing page
+  html = html.split('href="index.html"').join('href="/"');
+
+  // 4. Transformar Visão Geral com cabeçalho institucional limpo (sem badge \'Base de dados sincronizada\')
+  html = html.replace('<h2>Visão geral dos cadastros</h2>', 
+    '<div class="painel-cab">' +
+    '  <div>' +
+    '    <h2>Visão Geral dos Cadastros</h2>' +
+    '    <p class="subtitulo-painel">Acompanhamento de voluntários inscritos, etapas de triagem e ações comunitárias.</p>' +
+    '  </div>' +
+    '</div>');
 
   // 5. Transformar Voluntários: cabeçalho com ações no topo, filtros com máscara de exclusividade e gaveta territorial
   const volAntigo = /<h2>Voluntários cadastrados<\/h2>\s*<div class="filtros"[\s\S]*?<\/table>\s*<div id="vazio"/;
@@ -1460,92 +1578,505 @@ body {
   }
 }
 
-/* TELA DE LOGIN FIXA E 100% PREENCHIDA */
+/* TELA DE LOGIN FIXA SPLIT-SCREEN (LAYOUT INSTITUCIONAL) */
 #login {
   position: fixed;
   inset: 0;
   width: 100vw;
   height: 100vh;
   height: 100dvh;
-  background: var(--azul);
+  background: #030c1d;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
+  flex-direction: column;
   z-index: 1000;
   overflow-y: auto;
   box-sizing: border-box;
 }
-#login::after {
-  content: '';
+
+.login-split-tela {
+  width: 100%;
+  min-height: 100%;
+}
+
+.login-split-grid {
+  display: grid;
+  grid-template-columns: minmax(440px, 48%) 1fr;
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
+}
+
+/* COLUNA ESQUERDA: MARCA E APRESENTAÇÃO INSTITUCIONAL */
+.login-lado-marca {
+  background: radial-gradient(circle at 12% 18%, #0d2854 0%, #06152d 52%, #030c1d 100%);
+  color: #ffffff;
+  padding: 56px 52px 44px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.login-marca-decoracao {
   position: absolute;
-  right: -60px;
-  bottom: -60px;
-  width: 520px;
-  height: 520px;
+  right: -90px;
+  bottom: -90px;
+  width: 480px;
+  height: 480px;
   background: url('/assets/img-03.png') no-repeat center / contain;
-  opacity: 0.08;
+  opacity: 0.05;
   pointer-events: none;
 }
-.cartao {
+
+.login-marca-cabecalho {
   position: relative;
   z-index: 2;
-  background: #fff;
-  border: 2px solid var(--tinta);
-  border-radius: 6px;
-  box-shadow: 8px 8px 0 var(--amarelo);
-  padding: 38px 34px;
+}
+
+.login-marca-logo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  text-decoration: none;
+  color: #ffffff;
+  transition: opacity 0.15s;
+}
+
+.login-marca-logo-link:hover {
+  opacity: 0.92;
+}
+
+.login-logo-circulo {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  flex-shrink: 0;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+.login-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.login-marca-titulos {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-marca-nome {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.login-marca-sub {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #38bdf8;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  margin-top: 3px;
+}
+
+.login-marca-corpo {
+  position: relative;
+  z-index: 2;
+  margin: 44px 0;
+  max-width: 520px;
+}
+
+.login-marca-chamada {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 2.15rem;
+  line-height: 1.25;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0 0 16px;
+  letter-spacing: -0.01em;
+}
+
+.login-marca-desc {
+  font-size: 0.96rem;
+  line-height: 1.62;
+  color: #94a3b8;
+  margin: 0 0 34px;
+}
+
+.login-beneficios-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.login-beneficio-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.login-beneficio-icone {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #38bdf8;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.login-beneficio-icone svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.login-beneficio-texto h3 {
+  margin: 0 0 4px;
+  font-size: 0.94rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  letter-spacing: 0.01em;
+}
+
+.login-beneficio-texto p {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: #94a3b8;
+}
+
+.login-marca-rodape {
+  position: relative;
+  z-index: 2;
+  font-size: 0.78rem;
+  color: #64748b;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* COLUNA DIREITA: FORMULÁRIO FLUTUANTE (LIGHT CLEAN) */
+.login-lado-form {
+  background: #f4f6fa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 44px 32px;
+  box-sizing: border-box;
+  position: relative;
+  min-height: 100%;
+}
+
+.login-card-flutuante {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 20px 45px -12px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(226, 232, 240, 0.85);
   width: 100%;
   max-width: 440px;
+  padding: 38px 36px 30px;
+  box-sizing: border-box;
+  text-align: left;
+  position: relative;
+  z-index: 2;
 }
-.cartao .marca img {
-  height: 46px;
-  width: auto;
-  margin: 0 auto 12px;
+
+.login-card-topo {
+  margin-bottom: 22px;
+}
+
+.login-badge-seguro {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #e0f2fe;
+  color: #0284c7;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  margin-bottom: 12px;
+}
+
+.login-badge-seguro svg {
+  width: 13px;
+  height: 13px;
   display: block;
 }
-.cartao h1 {
-  color: var(--azul);
-  font-size: 1.75rem;
-  margin: 8px 0 4px;
-  text-align: center;
+
+.login-card-titulo {
+  font-size: 1.58rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 6px;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
 }
-.login-sub {
-  text-align: center;
-  font-size: 0.86rem;
-  color: #64748b;
-  margin: 0 0 20px;
-}
-.cartao label {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--tinta);
-  margin-top: 14px;
-  display: block;
-}
-.cartao input, .cartao select {
-  margin-top: 4px;
-  border: 1.5px solid #cbd5e1;
-  border-radius: 4px;
-  padding: 10px 12px;
-  font-size: 0.95rem;
-}
-.cartao input:focus, .cartao select:focus {
-  border-color: var(--azul);
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(8,94,195,0.18);
-}
-.cartao .voltar {
-  display: block;
-  text-align: center;
-  margin-top: 18px;
+
+.login-card-subtitulo {
   font-size: 0.88rem;
-  color: var(--azul);
-  text-decoration: none;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.45;
+}
+
+.login-campo-grupo {
+  margin-bottom: 16px;
+}
+
+.login-label {
+  display: block;
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 6px;
+}
+
+.login-input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 11px 14px;
+  font-size: 0.93rem;
+  color: #0f172a;
+  background: #ffffff;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  outline: none;
+  font-family: inherit;
+}
+
+.login-input:focus {
+  border-color: #085ec3;
+  box-shadow: 0 0 0 3px rgba(8, 94, 195, 0.16);
+}
+
+.login-select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.login-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 16px 16px;
+  padding-right: 40px;
+  cursor: pointer;
+}
+
+.login-senha-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.login-senha-wrapper input {
+  padding-right: 44px;
+}
+
+.login-btn-toggle-senha {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  padding: 6px 8px;
+  color: #64748b;
+  cursor: pointer;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s, background-color 0.15s;
+}
+
+.login-btn-toggle-senha:hover {
+  color: #0f172a;
+  background: #f1f5f9;
+}
+
+.login-btn-toggle-senha svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+.login-linha-auxiliar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px 0 16px;
+  font-size: 0.82rem;
+}
+
+.login-lembrar-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #475569;
+  cursor: pointer;
+  user-select: none;
   font-weight: 500;
 }
-.cartao .voltar:hover {
+
+.login-lembrar-check input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  accent-color: #085ec3;
+  cursor: pointer;
+  margin: 0;
+}
+
+.login-link-esqueci {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #085ec3;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: inherit;
+}
+
+.login-link-esqueci:hover {
   text-decoration: underline;
+  color: #064894;
+}
+
+.erro#erro-login {
+  color: #dc2626;
+  font-size: 0.84rem;
+  font-weight: 500;
+  min-height: 1.25em;
+  margin-bottom: 12px;
+}
+
+.login-btn-submeter {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #085ec3;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 13px 18px;
+  font-size: 0.96rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s, transform 0.1s;
+  font-family: inherit;
+  box-shadow: 0 4px 12px rgba(8, 94, 195, 0.25);
+}
+
+.login-btn-submeter:hover {
+  background: #064894;
+}
+
+.login-btn-submeter:active {
+  transform: scale(0.99);
+}
+
+.login-btn-submeter svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+.login-card-rodape {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid #f1f5f9;
+  text-align: center;
+}
+
+.login-link-voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #475569;
+  font-size: 0.84rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.login-link-voltar:hover {
+  color: #085ec3;
+  text-decoration: underline;
+}
+
+.login-subrodape-externo {
+  margin-top: 20px;
+  font-size: 0.76rem;
+  color: #94a3b8;
+  text-align: center;
+}
+
+/* RESPONSIVIDADE (MOBILE & TABLET VERTICAL) */
+@media (max-width: 960px) {
+  .login-split-grid {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+  .login-lado-marca {
+    padding: 36px 24px;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .login-marca-corpo {
+    margin: 24px 0;
+  }
+  .login-marca-chamada {
+    font-size: 1.65rem;
+  }
+  .login-beneficios-lista {
+    gap: 14px;
+  }
+  .login-beneficio-icone {
+    width: 38px;
+    height: 38px;
+  }
+  .login-beneficio-icone svg {
+    width: 18px;
+    height: 18px;
+  }
+  .login-lado-form {
+    padding: 32px 16px 48px;
+  }
+  .login-card-flutuante {
+    padding: 28px 22px 24px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+  }
 }
 
 /* BARRA SUPERIOR */
@@ -3697,9 +4228,49 @@ tr:hover td {
       .catch(function() {});
   }
 
+  // Lógica da tela de login split-screen (revelar senha, lembrar acesso, esqueci senha)
+  var btnToggleSenha = document.getElementById("btn-toggle-senha");
+  var inputSenha = document.getElementById("senha");
+  var svgEyeHtml = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+  var svgEyeOffHtml = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
+
+  if (btnToggleSenha && inputSenha) {
+    btnToggleSenha.addEventListener("click", function() {
+      var isPass = inputSenha.type === "password";
+      inputSenha.type = isPass ? "text" : "password";
+      btnToggleSenha.setAttribute("aria-label", isPass ? "Ocultar senha" : "Mostrar senha");
+      btnToggleSenha.setAttribute("title", isPass ? "Ocultar senha" : "Mostrar senha");
+      btnToggleSenha.innerHTML = isPass ? svgEyeOffHtml : svgEyeHtml;
+    });
+  }
+
+  var linkEsqueci = document.getElementById("link-esqueci-senha");
+  if (linkEsqueci) {
+    linkEsqueci.addEventListener("click", function(e) {
+      e.preventDefault();
+      alert("Para redefinição ou recuperação de credenciais de acesso, entre em contato diretamente com a Presidência ou Coordenação institucional da Usina da Vida.");
+    });
+  }
+
+  var checkLembrar = document.getElementById("lembrar-login");
+  var inputUsuario = document.getElementById("usuario");
+  if (inputUsuario) {
+    try {
+      var loginSalvo = localStorage.getItem("usina_login_salvo");
+      if (loginSalvo) inputUsuario.value = loginSalvo;
+    } catch(e) {}
+  }
+
   var formLogin = document.getElementById("f-login");
   if (formLogin) {
     formLogin.addEventListener("submit", function() {
+      try {
+        if (checkLembrar && checkLembrar.checked && inputUsuario && inputUsuario.value.trim()) {
+          localStorage.setItem("usina_login_salvo", inputUsuario.value.trim());
+        } else if (checkLembrar && !checkLembrar.checked) {
+          localStorage.removeItem("usina_login_salvo");
+        }
+      } catch(e) {}
       setTimeout(function() {
         var elApp = document.getElementById("app");
         if (!elApp || elApp.style.display === "none") return;
@@ -3711,6 +4282,18 @@ tr:hover td {
         atualizarBotoesPermissao();
         sincronizarNeon();
       }, 50);
+    });
+  }
+
+  var btnSair = document.getElementById("sair");
+  if (btnSair) {
+    btnSair.addEventListener("click", function() {
+      if (inputSenha) inputSenha.type = "password";
+      if (btnToggleSenha) {
+        btnToggleSenha.setAttribute("aria-label", "Mostrar senha");
+        btnToggleSenha.setAttribute("title", "Mostrar senha");
+        btnToggleSenha.innerHTML = svgEyeHtml;
+      }
     });
   }
 
