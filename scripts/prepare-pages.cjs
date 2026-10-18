@@ -825,7 +825,7 @@ function redesenharPortal(html) {
     '        </div>\n' +
     '        <div class="split-campo">\n' +
     '          <label for="usuario">Login</label>\n' +
-    '          <input id="usuario" type="text" autocomplete="username" placeholder="gestão" required>\n' +
+    '          <input id="usuario" type="text" autocomplete="username" placeholder="gestão ou presidência" required>\n' +
     '        </div>\n' +
     '        <div class="split-campo">\n' +
     '          <label for="senha">Senha</label>\n' +
@@ -861,7 +861,18 @@ function redesenharPortal(html) {
   html = html.replace(/<section id="login"[\s\S]*?<\/section>/, sectionLoginSplit);
   html = html.replace(
     'if(!$("usuario").value.trim() || !$("senha").value){ $("erro-login").textContent="Informe usuário e senha."; return; }\n    perfil = $("perfil").value;\n    var nomes = {presidencia:"Presidência",coordenacao:"Coordenação",colaborador:"Colaborador autorizado"};\n    $("quem").textContent = $("usuario").value;',
-    'var u = $("usuario").value.trim(), s = $("senha").value.trim();\n    if(!u || !s){ $("erro-login").textContent="Informe o login e a senha."; return; }\n    var uNorm = u.toLowerCase(), sNorm = s.toLowerCase();\n    var loginValido = (uNorm === "gestão" || uNorm === "gestao" || uNorm === "novembro");\n    var senhaValida = (s === "0987" || sNorm === "novembro");\n    if(!loginValido || !senhaValida){ $("erro-login").textContent="Login ou senha incorretos."; return; }\n    perfil = $("perfil").value;\n    var nomes = {presidencia:"Presidência",coordenacao:"Coordenação",colaborador:"Colaborador autorizado"};\n    $("quem").textContent = u;'
+    'var u = $("usuario").value.trim(), s = $("senha").value.trim();\n' +
+    '    if(!u || !s){ $("erro-login").textContent="Informe o login e a senha."; return; }\n' +
+    '    var uNorm = u.toLowerCase().normalize("NFD").replace(/[\\u0300-\\u036f]/g, ""), sNorm = s.toLowerCase();\n' +
+    '    var loginValido = (uNorm === "gestao" || uNorm === "presidencia" || uNorm === "presidente" || uNorm === "coordenacao" || uNorm === "coordenador" || uNorm === "colaborador" || uNorm === "admin" || uNorm === "novembro");\n' +
+    '    var senhaValida = (s === "0987" || sNorm === "novembro");\n' +
+    '    if(!loginValido || !senhaValida){ $("erro-login").textContent="Login ou senha incorretos."; return; }\n' +
+    '    if(uNorm === "presidencia" || uNorm === "presidente"){ $("perfil").value = "presidencia"; }\n' +
+    '    else if(uNorm === "coordenacao" || uNorm === "coordenador"){ $("perfil").value = "coordenacao"; }\n' +
+    '    else if(uNorm === "colaborador"){ $("perfil").value = "colaborador"; }\n' +
+    '    perfil = $("perfil").value;\n' +
+    '    var nomes = {presidencia:"Presidência",coordenacao:"Coordenação",colaborador:"Colaborador autorizado"};\n' +
+    '    $("quem").textContent = (uNorm === "presidencia" || uNorm === "presidente") ? "Presidência" : ((uNorm === "coordenacao" || uNorm === "coordenador") ? "Coordenação" : u);'
   );
 
   // 3. Corrigir links para a raiz da landing page

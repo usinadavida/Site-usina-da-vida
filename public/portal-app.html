@@ -2130,7 +2130,7 @@ tr:hover td {
         </div>
         <div class="split-campo">
           <label for="usuario">Login</label>
-          <input id="usuario" type="text" autocomplete="username" placeholder="gestão" required>
+          <input id="usuario" type="text" autocomplete="username" placeholder="gestão ou presidência" required>
         </div>
         <div class="split-campo">
           <label for="senha">Senha</label>
@@ -2490,13 +2490,16 @@ tr:hover td {
     e.preventDefault();
     var u = $("usuario").value.trim(), s = $("senha").value.trim();
     if(!u || !s){ $("erro-login").textContent="Informe o login e a senha."; return; }
-    var uNorm = u.toLowerCase(), sNorm = s.toLowerCase();
-    var loginValido = (uNorm === "gestão" || uNorm === "gestao" || uNorm === "novembro");
+    var uNorm = u.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""), sNorm = s.toLowerCase();
+    var loginValido = (uNorm === "gestao" || uNorm === "presidencia" || uNorm === "presidente" || uNorm === "coordenacao" || uNorm === "coordenador" || uNorm === "colaborador" || uNorm === "admin" || uNorm === "novembro");
     var senhaValida = (s === "0987" || sNorm === "novembro");
     if(!loginValido || !senhaValida){ $("erro-login").textContent="Login ou senha incorretos."; return; }
+    if(uNorm === "presidencia" || uNorm === "presidente"){ $("perfil").value = "presidencia"; }
+    else if(uNorm === "coordenacao" || uNorm === "coordenador"){ $("perfil").value = "coordenacao"; }
+    else if(uNorm === "colaborador"){ $("perfil").value = "colaborador"; }
     perfil = $("perfil").value;
     var nomes = {presidencia:"Presidência",coordenacao:"Coordenação",colaborador:"Colaborador autorizado"};
-    $("quem").textContent = u;
+    $("quem").textContent = (uNorm === "presidencia" || uNorm === "presidente") ? "Presidência" : ((uNorm === "coordenacao" || uNorm === "coordenador") ? "Coordenação" : u);
     $("perfil-tag").textContent = nomes[perfil];
     $("login").style.display="none"; $("app").style.display="block";
     $("erro-login").textContent=""; $("senha").value="";
