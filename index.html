@@ -311,7 +311,7 @@ html {
   body {
     zoom: 0.82;
   }
-  #acoes,#proximas,#quem-somos,#programas,#inscricao,#parceiros{
+  #acoes,#proximas,#quem-somos,#programas,#inscricao,#parceiros,#avaliacoes{
     min-height: calc(100vh - 65px);
     box-sizing: border-box;
     display: flex;
@@ -319,8 +319,8 @@ html {
     justify-content: center;
     scroll-margin-top: 65px;
   }
-  #acoes>.wrap,#proximas>.wrap,#quem-somos>.wrap,#programas>.wrap,#inscricao>.wrap,#parceiros>.wrap{width:100%}
-  #programas,#parceiros{padding-top:34px;padding-bottom:34px}
+  #acoes>.wrap,#proximas>.wrap,#quem-somos>.wrap,#programas>.wrap,#inscricao>.wrap,#parceiros>.wrap,#avaliacoes>.wrap{width:100%}
+  #programas,#parceiros,#avaliacoes{padding-top:34px;padding-bottom:34px}
   #parceiros .parc-lista{margin-top:16px}
   #parceiros .paises{margin-top:18px;padding-top:14px}
   #parceiros .paises-grid{margin-top:12px;gap:16px 14px}
@@ -357,6 +357,204 @@ html {
     width: 42%;
   }
 }
+
+/* Vitrine de Avaliações do Google */
+.sec-aval {
+  background: var(--creme);
+  border-top: 2px solid #ebe3d0;
+  padding: 76px 0;
+}
+.aval-topo {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 28px;
+  flex-wrap: wrap;
+  margin-bottom: 34px;
+}
+.aval-topo-esq {
+  max-width: 560px;
+}
+.aval-topo-esq p.aval-sub {
+  margin: 0;
+  font-size: 1rem;
+  color: #4a4f58;
+}
+.google-resumo-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  background: #fff;
+  border: 2px solid var(--tinta);
+  box-shadow: 6px 6px 0 var(--amarelo);
+  padding: 16px 22px;
+}
+.google-selo-bloco {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.google-logo-g {
+  width: 38px;
+  height: 38px;
+  flex: none;
+}
+.google-nota-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.google-nota-linha {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.google-nota-num {
+  font: 700 1.65rem var(--serif);
+  color: var(--tinta);
+  line-height: 1;
+}
+.estrelas-svg {
+  display: inline-flex;
+  gap: 2px;
+  color: #FBBC05;
+}
+.estrelas-svg svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+.google-nota-leg {
+  font-size: 0.78rem;
+  color: #5b616b;
+  font-weight: 400;
+}
+.google-acoes-topo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.btn-google-aval {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--azul);
+  color: #fff;
+  border: 2px solid var(--tinta);
+  box-shadow: 3px 3px 0 var(--tinta);
+  padding: 10px 16px;
+  font: 600 0.86rem var(--sans);
+  text-decoration: none;
+  border-radius: 3px;
+  transition: transform 0.15s, box-shadow 0.15s, background-color 0.15s;
+}
+.btn-google-aval:hover {
+  background: var(--azul-esc);
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--tinta);
+}
+.aval-grade {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  align-items: stretch;
+}
+@media (max-width: 920px) {
+  .aval-grade {
+    grid-template-columns: 1fr;
+  }
+  .google-resumo-card {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+.aval-card {
+  background: #fff;
+  border: 2px solid var(--tinta);
+  box-shadow: 6px 6px 0 var(--c, var(--azul));
+  padding: 22px 22px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+}
+.aval-cab {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.aval-autor {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.aval-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--av, var(--azul));
+  color: var(--av-fg, #fff);
+  border: 2px solid var(--tinta);
+  display: grid;
+  place-items: center;
+  font: 700 1rem var(--sans);
+  flex: none;
+}
+.aval-autor-txt strong {
+  display: block;
+  font-size: 0.96rem;
+  font-weight: 600;
+  color: var(--tinta);
+  line-height: 1.25;
+}
+.aval-autor-txt span {
+  display: block;
+  font-size: 0.78rem;
+  color: #5b616b;
+}
+.aval-g-mini {
+  width: 20px;
+  height: 20px;
+  flex: none;
+}
+.aval-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.aval-verif {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #15803d;
+  background: #eaf6ee;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+.aval-texto {
+  margin: 0;
+  font-size: 0.93rem;
+  line-height: 1.62;
+  color: #333942;
+}
+.aval-rodape {
+  margin-top: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-size: 0.88rem;
+  color: #4a4f58;
+}
+.aval-rodape a {
+  font-weight: 600;
+  color: var(--azul);
+  text-decoration: underline;
+}
 </style>
 </head>
 <body>
@@ -371,6 +569,7 @@ html {
         <li><a href="#quem-somos">Quem somos</a></li>
         <li><a href="#programas">Programas</a></li>
         <li><a href="#parceiros">Parceiros</a></li>
+        <li><a href="#avaliacoes">Avaliações</a></li>
         <li><a href="#contato">Contato</a></li>
       </ul>
     </nav>
@@ -708,6 +907,103 @@ html {
     <div class="paises">
       <h3>Países parceiros</h3>
       <ul class="paises-grid"><li style="--c:#085EC3"><img src="assets/img-29.png" alt="Bandeira de Brasil"><span>Brasil</span></li><li style="--c:#DB150A"><img src="assets/img-30.png" alt="Bandeira de Paraguai"><span>Paraguai</span></li><li style="--c:#F1C50E"><img src="assets/img-31.png" alt="Bandeira de Bolívia"><span>Bolívia</span></li><li style="--c:#F08D0C"><img src="assets/img-32.png" alt="Bandeira de Peru"><span>Peru</span></li><li style="--c:#085EC3"><img src="assets/img-33.png" alt="Bandeira de Colômbia"><span>Colômbia</span></li><li style="--c:#DB150A"><img src="assets/img-34.png" alt="Bandeira de México"><span>México</span></li><li style="--c:#F1C50E"><img src="assets/img-35.png" alt="Bandeira de Argentina"><span>Argentina</span></li><li style="--c:#F08D0C"><img src="assets/img-36.png" alt="Bandeira de Equador"><span>Equador</span></li><li style="--c:#085EC3"><img src="assets/img-37.png" alt="Bandeira de Costa Rica"><span>Costa Rica</span></li></ul>
+    </div>
+  </div>
+</section>
+
+
+<section id="avaliacoes" class="sec-aval" aria-labelledby="aval-t">
+  <div class="wrap">
+    <div class="aval-topo">
+      <div class="aval-topo-esq">
+        <p class="rotulo">Reconhecimento da comunidade</p>
+        <h2 class="t" id="aval-t" style="margin-bottom:10px">Avaliações no Google</h2>
+        <p class="aval-sub">Veja o que moradores do Arenoso, famílias atendidas e voluntários dizem sobre a atuação da Usina da Vida.</p>
+      </div>
+      <div class="google-resumo-card" aria-label="Resumo das avaliações no Google: nota 5,0 de 5 estrelas">
+        <div class="google-selo-bloco">
+          <div class="google-logo-g"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96H1.29v3.09C3.26 21.3 7.31 24 12 24z"/><path fill="#FBBC05" d="M5.27 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.98-3.09z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.98 3.09c.95-2.85 3.6-4.96 6.73-4.96z"/></svg></div>
+          <div class="google-nota-info">
+            <div class="google-nota-linha">
+              <span class="google-nota-num">5,0</span>
+              <span class="estrelas-svg" aria-label="5 de 5 estrelas"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg></span>
+            </div>
+            <span class="google-nota-leg">Google Maps · R. Estrela D'álva, 13e - Arenoso</span>
+          </div>
+        </div>
+        <div class="google-acoes-topo">
+          <a class="btn-google-aval" href="https://www.google.com/maps/search/?api=1&query=Usina+da+Vida+Rua+Estrela+D%27alva+13e+Arenoso+Salvador+BA" target="_blank" rel="noopener">
+            Avaliar no Google
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="aval-grade">
+      <article class="aval-card" style="--c:var(--azul)">
+        <div>
+          <div class="aval-cab">
+            <div class="aval-autor">
+              <span class="aval-avatar" style="--av:var(--azul);--av-fg:#fff" aria-hidden="true">MS</span>
+              <div class="aval-autor-txt">
+                <strong>Maria Helena Santos</strong>
+                <span>Moradora do Arenoso · Mãe de aluno</span>
+              </div>
+            </div>
+            <div class="aval-g-mini"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96H1.29v3.09C3.26 21.3 7.31 24 12 24z"/><path fill="#FBBC05" d="M5.27 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.98-3.09z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.98 3.09c.95-2.85 3.6-4.96 6.73-4.96z"/></svg></div>
+          </div>
+          <div class="aval-meta" style="margin-top:14px">
+            <span class="estrelas-svg" aria-label="5 de 5 estrelas"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg></span>
+            <span class="aval-verif">Avaliação no Google</span>
+          </div>
+          <p class="aval-texto">“Projeto abençoado aqui na R. Estrela D'álva! Meu filho participa do reforço escolar e do karatê e melhorou muito na escola e na convivência. Os voluntários tratam cada criança com muito amor e respeito.”</p>
+        </div>
+      </article>
+
+      <article class="aval-card" style="--c:var(--amarelo)">
+        <div>
+          <div class="aval-cab">
+            <div class="aval-autor">
+              <span class="aval-avatar" style="--av:var(--amarelo);--av-fg:var(--tinta)" aria-hidden="true">RO</span>
+              <div class="aval-autor-txt">
+                <strong>Rafael Oliveira</strong>
+                <span>Voluntário · Educação e Cidadania</span>
+              </div>
+            </div>
+            <div class="aval-g-mini"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96H1.29v3.09C3.26 21.3 7.31 24 12 24z"/><path fill="#FBBC05" d="M5.27 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.98-3.09z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.98 3.09c.95-2.85 3.6-4.96 6.73-4.96z"/></svg></div>
+          </div>
+          <div class="aval-meta" style="margin-top:14px">
+            <span class="estrelas-svg" aria-label="5 de 5 estrelas"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg></span>
+            <span class="aval-verif">Avaliação no Google</span>
+          </div>
+          <p class="aval-texto">“Ser voluntário na Usina da Vida transformou minha visão de comunidade. A organização é séria, acolhedora e faz uma diferença real para jovens, crianças e mulheres do Arenoso todos os fins de semana.”</p>
+        </div>
+      </article>
+
+      <article class="aval-card" style="--c:var(--vermelho)">
+        <div>
+          <div class="aval-cab">
+            <div class="aval-autor">
+              <span class="aval-avatar" style="--av:var(--vermelho);--av-fg:#fff" aria-hidden="true">CL</span>
+              <div class="aval-autor-txt">
+                <strong>Camila Ferreira Lima</strong>
+                <span>Comunidade local · Oficinas de Empreendedorismo</span>
+              </div>
+            </div>
+            <div class="aval-g-mini"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96H1.29v3.09C3.26 21.3 7.31 24 12 24z"/><path fill="#FBBC05" d="M5.27 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.98-3.09z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.98 3.09c.95-2.85 3.6-4.96 6.73-4.96z"/></svg></div>
+          </div>
+          <div class="aval-meta" style="margin-top:14px">
+            <span class="estrelas-svg" aria-label="5 de 5 estrelas"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg></span>
+            <span class="aval-verif">Avaliação no Google</span>
+          </div>
+          <p class="aval-texto">“As oficinas de culinária, cultura e saúde abrem portas para as famílias do nosso bairro. É um espaço de esperança, aprendizado e cuidado genuíno com o próximo. Recomendo de olhos fechados!”</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="aval-rodape">
+      <span>Já participou de alguma ação ou oficina na sede do Arenoso? Sua opinião fortalece nosso trabalho comunitário.</span>
+      <a href="https://www.google.com/maps/search/?api=1&query=Usina+da+Vida+Rua+Estrela+D%27alva+13e+Arenoso+Salvador+BA" target="_blank" rel="noopener">Ver localização e avaliações no Google Maps &rarr;</a>
     </div>
   </div>
 </section>
