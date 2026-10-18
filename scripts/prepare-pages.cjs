@@ -185,11 +185,11 @@ html {
 }
 .aval-grade {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 24px;
   align-items: stretch;
 }
-@media (max-width: 920px) {
+@media (max-width: 860px) {
   .aval-grade {
     grid-template-columns: 1fr;
   }
@@ -330,17 +330,16 @@ html {
     <div class="aval-topo">
       <div class="aval-topo-esq">
         <p class="rotulo">Reconhecimento da comunidade</p>
-        <h2 class="t" id="aval-t" style="margin-bottom:10px">Avaliações no Google</h2>
-        <p class="aval-sub">Avaliações registradas na ficha oficial da ONG Usina da Vida no Google Maps (R. Estrela D'álva, Arenoso).</p>
+        <h2 class="t" id="aval-t" style="margin-bottom:10px">Avaliação no Google</h2>
+        <p class="aval-sub">Depoimento real registrado na ficha oficial da ONG Usina da Vida no Google Maps (R. Estrela D'álva, Arenoso).</p>
       </div>
-      <div class="google-resumo-card" aria-label="Resumo das avaliações no Google: nota 5,0 de 5 estrelas com 2 avaliações">
+      <div class="google-resumo-card" aria-label="Resumo no Google Maps: nota 5,0 de 5 estrelas">
         <div class="google-selo-bloco">
           <div class="google-logo-g">${svgGoogleG}</div>
           <div class="google-nota-info">
             <div class="google-nota-linha">
               <span class="google-nota-num">5,0</span>
               ${svgEstrelas5}
-              <span style="font-weight:600;font-size:0.9rem;color:var(--tinta)">(2)</span>
             </div>
             <span class="google-nota-leg">ONG Usina da Vida · Google Maps · Arenoso</span>
           </div>
@@ -355,7 +354,7 @@ html {
     </div>
 
     <div class="aval-grade">
-      <!-- AVALIAÇÃO REAL 1 (COM TEXTO): ERICA SUZI -->
+      <!-- A ÚNICA AVALIAÇÃO REAL COM TEXTO DO GOOGLE MAPS -->
       <article class="aval-card" style="--c:var(--azul)">
         <div>
           <div class="aval-cab">
@@ -376,36 +375,15 @@ html {
         </div>
       </article>
 
-      <!-- AVALIAÇÃO REAL 2 (NOTA MÁXIMA REGISTRADA NA FICHA) -->
-      <article class="aval-card" style="--c:var(--amarelo)">
-        <div>
-          <div class="aval-cab">
-            <div class="aval-autor">
-              <span class="aval-avatar" style="--av:var(--amarelo);--av-fg:var(--tinta)" aria-hidden="true">★</span>
-              <div class="aval-autor-txt">
-                <strong>Avaliação no Google Maps</strong>
-                <span>Avaliação verificada · 5 estrelas</span>
-              </div>
-            </div>
-            <div class="aval-g-mini">${svgGoogleG}</div>
-          </div>
-          <div class="aval-meta" style="margin-top:14px">
-            ${svgEstrelas5}
-            <span class="aval-verif">Avaliação 5 estrelas</span>
-          </div>
-          <p class="aval-texto">“Avaliação máxima de 5 estrelas registrada na ficha oficial do Google Maps, reconhecendo o serviço e o acolhimento comunitário prestado pela ONG Usina da Vida no Arenoso.”</p>
-        </div>
-      </article>
-
-      <!-- CONVITE DIRETO PARA ABRIR A CAIXA DE AVALIAÇÃO -->
+      <!-- CONVITE DIRETO PARA NOVAS AVALIAÇÕES NO GOOGLE -->
       <article class="aval-card" style="--c:var(--vermelho);background:#fffdfa">
         <div>
           <div class="aval-cab">
             <div class="aval-autor">
               <span class="aval-avatar" style="--av:var(--vermelho);--av-fg:#fff" aria-hidden="true">✍</span>
               <div class="aval-autor-txt">
-                <strong>Deixe sua avaliação</strong>
-                <span>Ajude a fortalecer a nossa ONG</span>
+                <strong>Seja o próximo a avaliar</strong>
+                <span>Compartilhe sua experiência no Google</span>
               </div>
             </div>
             <div class="aval-g-mini">${svgGoogleG}</div>
@@ -414,7 +392,7 @@ html {
             ${svgEstrelas5}
             <span class="aval-verif" style="background:#fee2e2;color:#991b1b">Participe</span>
           </div>
-          <p class="aval-texto">Você já viveu de perto alguma ação, oficina ou atividade na Usina da Vida? Conte sua experiência no Google e ajude mais pessoas a conhecerem nosso projeto social!</p>
+          <p class="aval-texto">Você é voluntário, mora no Arenoso ou participou de alguma oficina na Usina da Vida? Deixe sua avaliação no Google e ajude a fortalecer a nossa ONG!</p>
         </div>
         <div style="margin-top:10px">
           <a class="btn-google-aval" style="width:100%;justify-content:center;background:var(--vermelho)" href="${urlAvaliarDireto}" target="_blank" rel="noopener">

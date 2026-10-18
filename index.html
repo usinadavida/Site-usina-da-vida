@@ -457,11 +457,11 @@ html {
 }
 .aval-grade {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 24px;
   align-items: stretch;
 }
-@media (max-width: 920px) {
+@media (max-width: 860px) {
   .aval-grade {
     grid-template-columns: 1fr;
   }
@@ -917,17 +917,16 @@ html {
     <div class="aval-topo">
       <div class="aval-topo-esq">
         <p class="rotulo">Reconhecimento da comunidade</p>
-        <h2 class="t" id="aval-t" style="margin-bottom:10px">Avaliações no Google</h2>
-        <p class="aval-sub">Avaliações registradas na ficha oficial da ONG Usina da Vida no Google Maps (R. Estrela D'álva, Arenoso).</p>
+        <h2 class="t" id="aval-t" style="margin-bottom:10px">Avaliação no Google</h2>
+        <p class="aval-sub">Depoimento real registrado na ficha oficial da ONG Usina da Vida no Google Maps (R. Estrela D'álva, Arenoso).</p>
       </div>
-      <div class="google-resumo-card" aria-label="Resumo das avaliações no Google: nota 5,0 de 5 estrelas com 2 avaliações">
+      <div class="google-resumo-card" aria-label="Resumo no Google Maps: nota 5,0 de 5 estrelas">
         <div class="google-selo-bloco">
           <div class="google-logo-g"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96H1.29v3.09C3.26 21.3 7.31 24 12 24z"/><path fill="#FBBC05" d="M5.27 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.98-3.09z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.98 3.09c.95-2.85 3.6-4.96 6.73-4.96z"/></svg></div>
           <div class="google-nota-info">
             <div class="google-nota-linha">
               <span class="google-nota-num">5,0</span>
               <span class="estrelas-svg" aria-label="5 de 5 estrelas"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg></span>
-              <span style="font-weight:600;font-size:0.9rem;color:var(--tinta)">(2)</span>
             </div>
             <span class="google-nota-leg">ONG Usina da Vida · Google Maps · Arenoso</span>
           </div>
@@ -942,7 +941,7 @@ html {
     </div>
 
     <div class="aval-grade">
-      <!-- AVALIAÇÃO REAL 1 (COM TEXTO): ERICA SUZI -->
+      <!-- A ÚNICA AVALIAÇÃO REAL COM TEXTO DO GOOGLE MAPS -->
       <article class="aval-card" style="--c:var(--azul)">
         <div>
           <div class="aval-cab">
@@ -963,36 +962,15 @@ html {
         </div>
       </article>
 
-      <!-- AVALIAÇÃO REAL 2 (NOTA MÁXIMA REGISTRADA NA FICHA) -->
-      <article class="aval-card" style="--c:var(--amarelo)">
-        <div>
-          <div class="aval-cab">
-            <div class="aval-autor">
-              <span class="aval-avatar" style="--av:var(--amarelo);--av-fg:var(--tinta)" aria-hidden="true">★</span>
-              <div class="aval-autor-txt">
-                <strong>Avaliação no Google Maps</strong>
-                <span>Avaliação verificada · 5 estrelas</span>
-              </div>
-            </div>
-            <div class="aval-g-mini"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96H1.29v3.09C3.26 21.3 7.31 24 12 24z"/><path fill="#FBBC05" d="M5.27 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.98-3.09z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.98 3.09c.95-2.85 3.6-4.96 6.73-4.96z"/></svg></div>
-          </div>
-          <div class="aval-meta" style="margin-top:14px">
-            <span class="estrelas-svg" aria-label="5 de 5 estrelas"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg></span>
-            <span class="aval-verif">Avaliação 5 estrelas</span>
-          </div>
-          <p class="aval-texto">“Avaliação máxima de 5 estrelas registrada na ficha oficial do Google Maps, reconhecendo o serviço e o acolhimento comunitário prestado pela ONG Usina da Vida no Arenoso.”</p>
-        </div>
-      </article>
-
-      <!-- CONVITE DIRETO PARA ABRIR A CAIXA DE AVALIAÇÃO -->
+      <!-- CONVITE DIRETO PARA NOVAS AVALIAÇÕES NO GOOGLE -->
       <article class="aval-card" style="--c:var(--vermelho);background:#fffdfa">
         <div>
           <div class="aval-cab">
             <div class="aval-autor">
               <span class="aval-avatar" style="--av:var(--vermelho);--av-fg:#fff" aria-hidden="true">✍</span>
               <div class="aval-autor-txt">
-                <strong>Deixe sua avaliação</strong>
-                <span>Ajude a fortalecer a nossa ONG</span>
+                <strong>Seja o próximo a avaliar</strong>
+                <span>Compartilhe sua experiência no Google</span>
               </div>
             </div>
             <div class="aval-g-mini"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96H1.29v3.09C3.26 21.3 7.31 24 12 24z"/><path fill="#FBBC05" d="M5.27 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.98-3.09z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.98 3.09c.95-2.85 3.6-4.96 6.73-4.96z"/></svg></div>
@@ -1001,7 +979,7 @@ html {
             <span class="estrelas-svg" aria-label="5 de 5 estrelas"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg></span>
             <span class="aval-verif" style="background:#fee2e2;color:#991b1b">Participe</span>
           </div>
-          <p class="aval-texto">Você já viveu de perto alguma ação, oficina ou atividade na Usina da Vida? Conte sua experiência no Google e ajude mais pessoas a conhecerem nosso projeto social!</p>
+          <p class="aval-texto">Você é voluntário, mora no Arenoso ou participou de alguma oficina na Usina da Vida? Deixe sua avaliação no Google e ajude a fortalecer a nossa ONG!</p>
         </div>
         <div style="margin-top:10px">
           <a class="btn-google-aval" style="width:100%;justify-content:center;background:var(--vermelho)" href="https://search.google.com/local/writereview?placeid=ChIJz0-0St-5YQcRz_lFbwe_b2U" target="_blank" rel="noopener">
