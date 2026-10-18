@@ -68,7 +68,7 @@ function ligarLanding(html) {
       </article>
     </div>`;
 
-  const reProxListaOriginal = /<div class="prox-lista">[\s\S]*?<\/div>/;
+  const reProxListaOriginal = /<div class="prox-lista">[\s\S]*?<\/div>(?=\s*<p class="prox-nota">)/;
   if (reProxListaOriginal.test(html)) {
     html = html.replace(reProxListaOriginal, listaPreRenderizada);
   }
