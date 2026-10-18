@@ -441,14 +441,14 @@ function redesenharPortal(html) {
   html = html.replace(/<p class="nota">Sugestão inicial para validar com a ONG[\s\S]*?<\/p>/, '');
   html = html.replace(/<em>Ver detalhes &rarr;<\/em>/g, '');
 
-  // 2. Corrigir textos de login, placeholders institucionais e credenciais (gestão / 0987)
+  // 2. Corrigir textos de login, placeholders institucionais e credenciais (gestão / 0987 ou novembro)
   html = html.replace('Acesso exclusivo à presidência, à coordenação e a colaboradores autorizados.', 'Painel Administrativo do Voluntariado · Autenticação Restrita');
   html = html.replace('<label for="usuario">Usuário (e-mail)</label>', '<label for="usuario">Login</label>');
   html = html.replace('type="email" autocomplete="username" placeholder="nome@exemplo.com"', 'type="text" autocomplete="username" placeholder="gestão"');
   html = html.replace('<input id="senha" type="password" autocomplete="current-password">', '<input id="senha" type="password" autocomplete="current-password" placeholder="••••">');
   html = html.replace(
     'if(!$("usuario").value.trim() || !$("senha").value){ $("erro-login").textContent="Informe usuário e senha."; return; }\n    perfil = $("perfil").value;\n    var nomes = {presidencia:"Presidência",coordenacao:"Coordenação",colaborador:"Colaborador autorizado"};\n    $("quem").textContent = $("usuario").value;',
-    'var u = $("usuario").value.trim(), s = $("senha").value.trim();\n    if(!u || !s){ $("erro-login").textContent="Informe o login e a senha."; return; }\n    var uNorm = u.toLowerCase();\n    if((uNorm !== "gestão" && uNorm !== "gestao") || s !== "0987"){ $("erro-login").textContent="Login ou senha incorretos."; return; }\n    perfil = $("perfil").value;\n    var nomes = {presidencia:"Presidência",coordenacao:"Coordenação",colaborador:"Colaborador autorizado"};\n    $("quem").textContent = "gestão";'
+    'var u = $("usuario").value.trim(), s = $("senha").value.trim();\n    if(!u || !s){ $("erro-login").textContent="Informe o login e a senha."; return; }\n    var uNorm = u.toLowerCase(), sNorm = s.toLowerCase();\n    var loginValido = (uNorm === "gestão" || uNorm === "gestao" || uNorm === "novembro");\n    var senhaValida = (s === "0987" || sNorm === "novembro");\n    if(!loginValido || !senhaValida){ $("erro-login").textContent="Login ou senha incorretos."; return; }\n    perfil = $("perfil").value;\n    var nomes = {presidencia:"Presidência",coordenacao:"Coordenação",colaborador:"Colaborador autorizado"};\n    $("quem").textContent = u;'
   );
   html = html.replace('<button class="btn btn-azul" type="submit" style="width:100%">Entrar</button>', '<button class="btn btn-azul" type="submit" style="width:100%;font-size:1rem;padding:12px">Entrar no Portal de Gestão</button>');
 

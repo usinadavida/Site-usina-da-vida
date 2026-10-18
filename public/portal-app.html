@@ -1683,11 +1683,13 @@ tr:hover td {
     e.preventDefault();
     var u = $("usuario").value.trim(), s = $("senha").value.trim();
     if(!u || !s){ $("erro-login").textContent="Informe o login e a senha."; return; }
-    var uNorm = u.toLowerCase();
-    if((uNorm !== "gestão" && uNorm !== "gestao") || s !== "0987"){ $("erro-login").textContent="Login ou senha incorretos."; return; }
+    var uNorm = u.toLowerCase(), sNorm = s.toLowerCase();
+    var loginValido = (uNorm === "gestão" || uNorm === "gestao" || uNorm === "novembro");
+    var senhaValida = (s === "0987" || sNorm === "novembro");
+    if(!loginValido || !senhaValida){ $("erro-login").textContent="Login ou senha incorretos."; return; }
     perfil = $("perfil").value;
     var nomes = {presidencia:"Presidência",coordenacao:"Coordenação",colaborador:"Colaborador autorizado"};
-    $("quem").textContent = "gestão";
+    $("quem").textContent = u;
     $("perfil-tag").textContent = nomes[perfil];
     $("login").style.display="none"; $("app").style.display="block";
     $("erro-login").textContent=""; $("senha").value="";
