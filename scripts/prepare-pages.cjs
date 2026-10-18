@@ -134,9 +134,15 @@ function redesenharPortal(html) {
   html = html.replace(/<p class="nota">Sugestão inicial para validar com a ONG[\s\S]*?<\/p>/, '');
   html = html.replace(/<em>Ver detalhes &rarr;<\/em>/g, '');
 
-  // 2. Corrigir textos de login e placeholders institucionais
+  // 2. Corrigir textos de login, placeholders institucionais e credenciais (gestão / 0987)
   html = html.replace('Acesso exclusivo à presidência, à coordenação e a colaboradores autorizados.', 'Painel Administrativo do Voluntariado · Autenticação Restrita');
-  html = html.replace('placeholder="nome@exemplo.com"', 'placeholder="admin@usinadavida.org.br"');
+  html = html.replace('<label for="usuario">Usuário (e-mail)</label>', '<label for="usuario">Login</label>');
+  html = html.replace('type="email" autocomplete="username" placeholder="nome@exemplo.com"', 'type="text" autocomplete="username" placeholder="gestão"');
+  html = html.replace('<input id="senha" type="password" autocomplete="current-password">', '<input id="senha" type="password" autocomplete="current-password" placeholder="••••">');
+  html = html.replace(
+    'if(!$("usuario").value.trim() || !$("senha").value){ $("erro-login").textContent="Informe usuário e senha."; return; }\n    perfil = $("perfil").value;\n    var nomes = {presidencia:"Presidência",coordenacao:"Coordenação",colaborador:"Colaborador autorizado"};\n    $("quem").textContent = $("usuario").value;',
+    'var u = $("usuario").value.trim(), s = $("senha").value.trim();\n    if(!u || !s){ $("erro-login").textContent="Informe o login e a senha."; return; }\n    var uNorm = u.toLowerCase();\n    if((uNorm !== "gestão" && uNorm !== "gestao") || s !== "0987"){ $("erro-login").textContent="Login ou senha incorretos."; return; }\n    perfil = $("perfil").value;\n    var nomes = {presidencia:"Presidência",coordenacao:"Coordenação",colaborador:"Colaborador autorizado"};\n    $("quem").textContent = "gestão";'
+  );
   html = html.replace('<button class="btn btn-azul" type="submit" style="width:100%">Entrar</button>', '<button class="btn btn-azul" type="submit" style="width:100%;font-size:1rem;padding:12px">Entrar no Portal de Gestão</button>');
 
   // 3. Corrigir links para a raiz da landing page
@@ -2366,6 +2372,8 @@ tr:hover td {
   if (formLogin) {
     formLogin.addEventListener("submit", function() {
       setTimeout(function() {
+        var elApp = document.getElementById("app");
+        if (!elApp || elApp.style.display === "none") return;
         var elTag = document.getElementById("perfil-tag");
         var elNomeAcesso = document.getElementById("perfil-ativo-nome");
         if (elTag && elNomeAcesso) {
@@ -2510,13 +2518,19 @@ fs.copyFileSync(path.join(OUT, 'landing.html'), path.join(OUT, 'index.html'));
 // Na raiz do projeto, ajusta para caminhos relativos para funcionar tanto no servidor quanto dando duplo clique no Windows
 let htmlRaiz = fs.readFileSync(path.join(OUT, 'landing.html'), 'utf8');
 htmlRaiz = htmlRaiz.replace(/(src|href)=["']\/assets\//g, '$1="assets/');
+htmlRaiz = htmlRaiz.split('href="/portal"').join('href="portal.html"');
 fs.writeFileSync(path.join(__dirname, '..', 'index.html'), htmlRaiz, 'utf8');
+
+let portalRaiz = fs.readFileSync(path.join(OUT, 'portal-app.html'), 'utf8');
+portalRaiz = portalRaiz.replace(/(src|href)=["']\/assets\//g, '$1="assets/');
+portalRaiz = portalRaiz.split('href="/"').join('href="index.html"');
+fs.writeFileSync(path.join(__dirname, '..', 'portal.html'), portalRaiz, 'utf8');
 
 const ROOT_ASSETS = path.join(__dirname, '..', 'assets');
 if (!fs.existsSync(ROOT_ASSETS)) fs.mkdirSync(ROOT_ASSETS, { recursive: true });
 for (const f of fs.readdirSync(ASSETS)) {
   fs.copyFileSync(path.join(ASSETS, f), path.join(ROOT_ASSETS, f));
 }
-console.log('index.html disponibilizado em public/ e na raiz com assets');
+console.log('index.html e portal.html disponibilizados em public/ e na raiz com assets');
 console.log('imagens unicas:', n);
 

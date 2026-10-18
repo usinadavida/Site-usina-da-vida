@@ -1452,10 +1452,10 @@ tr:hover td {
         <option value="coordenacao">Coordenação</option>
         <option value="colaborador">Colaborador autorizado</option>
       </select>
-      <label for="usuario">Usuário (e-mail)</label>
-      <input id="usuario" type="email" autocomplete="username" placeholder="admin@usinadavida.org.br">
+      <label for="usuario">Login</label>
+      <input id="usuario" type="text" autocomplete="username" placeholder="gestão">
       <label for="senha">Senha</label>
-      <input id="senha" type="password" autocomplete="current-password">
+      <input id="senha" type="password" autocomplete="current-password" placeholder="••••">
       <div class="erro" id="erro-login" role="alert"></div>
       
       <button class="btn btn-azul" type="submit" style="width:100%;font-size:1rem;padding:12px">Entrar no Portal de Gestão</button>
@@ -1681,10 +1681,13 @@ tr:hover td {
   /* login */
   $("f-login").addEventListener("submit", function(e){
     e.preventDefault();
-    if(!$("usuario").value.trim() || !$("senha").value){ $("erro-login").textContent="Informe usuário e senha."; return; }
+    var u = $("usuario").value.trim(), s = $("senha").value.trim();
+    if(!u || !s){ $("erro-login").textContent="Informe o login e a senha."; return; }
+    var uNorm = u.toLowerCase();
+    if((uNorm !== "gestão" && uNorm !== "gestao") || s !== "0987"){ $("erro-login").textContent="Login ou senha incorretos."; return; }
     perfil = $("perfil").value;
     var nomes = {presidencia:"Presidência",coordenacao:"Coordenação",colaborador:"Colaborador autorizado"};
-    $("quem").textContent = $("usuario").value;
+    $("quem").textContent = "gestão";
     $("perfil-tag").textContent = nomes[perfil];
     $("login").style.display="none"; $("app").style.display="block";
     $("erro-login").textContent=""; $("senha").value="";
@@ -2360,6 +2363,8 @@ tr:hover td {
   if (formLogin) {
     formLogin.addEventListener("submit", function() {
       setTimeout(function() {
+        var elApp = document.getElementById("app");
+        if (!elApp || elApp.style.display === "none") return;
         var elTag = document.getElementById("perfil-tag");
         var elNomeAcesso = document.getElementById("perfil-ativo-nome");
         if (elTag && elNomeAcesso) {
