@@ -1,4 +1,5 @@
 import { db } from '../../../lib/db.js';
+import { registrarAuditoria, obterIp } from '../../../lib/audit.js';
 
 const SENHAS_PRESIDENCIA = ['0987', 'novembro'];
 
@@ -80,6 +81,17 @@ export async function POST(req) {
         permissoes = EXCLUDED.permissoes,
         atualizado_por = 'Presidência',
         atualizado_em = now()`;
+
+    await registrarAuditoria({
+      acao: 'ALTERACAO_PERMISSOES',
+      entidade: 'config_permissoes',
+      entidade_id: 'matriz_permissoes',
+      usuario: 'Presidência',
+      detalhes: {
+        permissoes: permissoes
+      },
+      ip: obterIp(req)
+    });
 
     return Response.json({ ok: true, permissoes }, { status: 200 });
   } catch (e) {

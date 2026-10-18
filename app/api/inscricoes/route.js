@@ -1,5 +1,6 @@
 import { db, texto, lista, emailValido } from '../../../lib/db.js';
 import { validarSenhaPresidencia } from '../permissoes/route.js';
+import { registrarAuditoria, obterIp } from '../../../lib/audit.js';
 
 export async function POST(req) {
   let b;
@@ -90,6 +91,21 @@ export async function PUT(req) {
       RETURNING id, nome, email, telefone, bairro, formacao, areas, disponibilidade, status, acao_interesse, criado_em`;
 
     if (!rows.length) return Response.json({ erro: 'Voluntário não encontrado' }, { status: 404 });
+
+    await registrarAuditoria({
+      acao: 'EDICAO_VOLUNTARIO',
+      entidade: 'voluntarios',
+      entidade_id: id,
+      usuario: 'Presidência',
+      detalhes: {
+        nome: rows[0].nome,
+        email: rows[0].email,
+        status: rows[0].status,
+        bairro: rows[0].bairro
+      },
+      ip: obterIp(req)
+    });
+
     return Response.json(rows[0], { status: 200 });
   } catch (e) {
     console.error('inscricoes PUT:', e.message);
@@ -118,10 +134,25 @@ export async function DELETE(req) {
 
   try {
     const sql = db();
-    await sql`DELETE FROM voluntarios WHERE id = ${id}`;
+    const rows = await sql`DELETE FROM voluntarios WHERE id = ${id} RETURNING id, nome, email`;
+    
+    await registrarAuditoria({
+      acao: 'EXCLUSAO_VOLUNTARIO',
+      entidade: 'voluntarios',
+      entidade_id: id,
+      usuario: 'Presidência',
+      detalhes: {
+        excluido_id: id,
+        nome: rows[0]?.nome || 'Desconhecido',
+        email: rows[0]?.email || 'Desconhecido'
+      },
+      ip: obterIp(req)
+    });
+
     return Response.json({ ok: true, id }, { status: 200 });
   } catch (e) {
     console.error('inscricoes DELETE:', e.message);
     return Response.json({ erro: 'Falha ao excluir voluntário no banco' }, { status: 500 });
   }
 }
+

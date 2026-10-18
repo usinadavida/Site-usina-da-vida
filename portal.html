@@ -1601,6 +1601,59 @@ tr:hover td {
 .governo-alerta-texto b {
   color: var(--azul);
 }
+
+/* TRILHA DE AUDITORIA & LGPD */
+.tabela-auditoria th, .tabela-auditoria td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--borda);
+  text-align: left;
+}
+.tabela-auditoria tr:hover {
+  background: #f8fafc;
+}
+.badge-audit {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.badge-audit-edicao {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+}
+.badge-audit-exclusao {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+.badge-audit-criacao {
+  background: #f0fdf4;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+.badge-audit-permissoes {
+  background: #faf5ff;
+  color: #7e22ce;
+  border: 1px solid #e9d5ff;
+}
+.audit-detalhe-pill {
+  display: inline-block;
+  font-size: 0.78rem;
+  color: #475569;
+  background: #f1f5f9;
+  padding: 2px 8px;
+  border-radius: 4px;
+  max-width: 420px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 </style>
 </head>
 <body>
@@ -1879,6 +1932,37 @@ tr:hover td {
           <svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> <span>Salvar e Instituir Permissões</span>
         </button>
       </div>
+    </div>
+  </div>
+
+  <!-- TRILHA DE AUDITORIA E LOGS LGPD -->
+  <div class="box" id="box-trilha-auditoria" style="margin-top: 24px; padding: 0; overflow: hidden;">
+    <div style="padding: 16px 20px; border-bottom: 1px solid var(--borda); background: #f8fafc; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+      <div>
+        <h3 style="margin: 0; font-size: 1.05rem; color: var(--azul); display: flex; align-items: center; gap: 8px;"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Trilha de Auditoria e Conformidade LGPD (Audit Trail)</h3>
+        <p style="margin: 4px 0 0 0; font-size: 0.82rem; color: #64748b;">Registro cronológico e imutável de operações sensíveis no banco de dados Neon.</p>
+      </div>
+      <button type="button" id="btn-atualizar-auditoria" class="btn btn-sm btn-sec2" style="font-size: 0.82rem; padding: 6px 14px; font-weight: 600; cursor: pointer;">
+        ↻ Atualizar Logs
+      </button>
+    </div>
+    <div class="tabela-wrap" style="box-shadow: none; border-radius: 0; border: none; max-height: 380px; overflow-y: auto;">
+      <table class="tabela-auditoria" style="width: 100%; border-collapse: collapse; font-size: 0.84rem;">
+        <thead style="position: sticky; top: 0; background: #f1f5f9; z-index: 1;">
+          <tr>
+            <th style="padding: 10px 14px; text-align: left; width: 150px;">Data / Hora</th>
+            <th style="padding: 10px 14px; text-align: left; width: 170px;">Operação</th>
+            <th style="padding: 10px 14px; text-align: left; width: 140px;">Entidade / ID</th>
+            <th style="padding: 10px 14px; text-align: left; width: 130px;">Responsável</th>
+            <th style="padding: 10px 14px; text-align: left;">Detalhes da Ação</th>
+          </tr>
+        </thead>
+        <tbody id="corpo-auditoria">
+          <tr>
+            <td colspan="5" style="text-align: center; padding: 24px; color: #64748b;">Carregando registros de auditoria...</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </section>
@@ -3264,6 +3348,7 @@ tr:hover td {
             if (typeof window.tabela === "function") window.tabela();
             if (typeof window.geral === "function") window.geral();
             mostrarToastAcao("Cadastro de voluntário atualizado com sucesso!");
+            if (typeof carregarTrilhaAuditoria === "function") carregarTrilhaAuditoria();
           })
           .catch(function(err) {
             setErroValida(err.message);
@@ -3312,6 +3397,7 @@ tr:hover td {
           if (typeof window.tabela === "function") window.tabela();
           if (typeof window.geral === "function") window.geral();
           mostrarToastAcao("Voluntário excluído do banco de dados!");
+          if (typeof carregarTrilhaAuditoria === "function") carregarTrilhaAuditoria();
         })
         .catch(function(err) {
           setErroValida(err.message);
@@ -3430,6 +3516,7 @@ tr:hover td {
             if (typeof window.agend === "function") window.agend();
             if (typeof window.geral === "function") window.geral();
             mostrarToastAcao("Ação atualizada e sincronizada no site institucional!");
+            if (typeof carregarTrilhaAuditoria === "function") carregarTrilhaAuditoria();
           })
           .catch(function(err) {
             setErroValida(err.message);
@@ -3478,6 +3565,7 @@ tr:hover td {
           if (typeof window.agend === "function") window.agend();
           if (typeof window.geral === "function") window.geral();
           mostrarToastAcao("Ação excluída com sucesso do banco e do site!");
+          if (typeof carregarTrilhaAuditoria === "function") carregarTrilhaAuditoria();
         })
         .catch(function(err) {
           setErroValida(err.message);
@@ -3583,6 +3671,7 @@ tr:hover td {
             if (typeof window.tabela === "function") window.tabela();
             if (typeof window.agend === "function") window.agend();
             mostrarToastAcao("Permissões de acesso instituídas com sucesso!");
+            carregarTrilhaAuditoria();
           })
           .catch(function(err) {
             setErroValida(err.message);
@@ -3591,6 +3680,91 @@ tr:hover td {
       );
     });
   }
+
+  // Trilha de Auditoria (Logs Neon e LGPD)
+  function formatarOperacaoBadge(acao) {
+    if (acao === 'EDICAO_VOLUNTARIO') return '<span class="badge-audit badge-audit-edicao">Edição Voluntário</span>';
+    if (acao === 'EXCLUSAO_VOLUNTARIO') return '<span class="badge-audit badge-audit-exclusao">Exclusão Voluntário</span>';
+    if (acao === 'CRIACAO_ACAO') return '<span class="badge-audit badge-audit-criacao">Criação Ação</span>';
+    if (acao === 'EDICAO_ACAO') return '<span class="badge-audit badge-audit-edicao">Edição Ação</span>';
+    if (acao === 'EXCLUSAO_ACAO') return '<span class="badge-audit badge-audit-exclusao">Exclusão Ação</span>';
+    if (acao === 'ALTERACAO_PERMISSOES') return '<span class="badge-audit badge-audit-permissoes">Governança</span>';
+    return '<span class="badge-audit">' + (acao || 'Operação') + '</span>';
+  }
+
+  function formatarDetalhesAuditoria(item) {
+    var d = item.detalhes || {};
+    var partes = [];
+    if (d.nome) partes.push('Nome: ' + d.nome);
+    if (d.titulo) partes.push('Título: ' + d.titulo);
+    if (d.status) partes.push('Status: ' + d.status);
+    if (d.bairro) partes.push('Bairro: ' + d.bairro);
+    if (d.excluido_id) partes.push('ID: #' + d.excluido_id);
+    if (d.id_excluido) partes.push('ID: #' + d.id_excluido);
+    if (d.vagas) partes.push('Vagas: ' + d.vagas);
+    if (d.data_texto) partes.push('Data: ' + d.data_texto);
+    if (d.matriz || d.permissoes) partes.push('Matriz de permissões atualizada');
+    if (!partes.length) {
+      try {
+        var str = JSON.stringify(d);
+        if (str !== '{}') partes.push(str.slice(0, 70));
+      } catch (e) {}
+    }
+    return '<span class="audit-detalhe-pill" title="' + (partes.join(' · ') || 'Sem detalhes adicionais') + '">' + (partes.join(' · ') || 'Operação registrada') + '</span>';
+  }
+
+  function carregarTrilhaAuditoria() {
+    var corpo = document.getElementById("corpo-auditoria");
+    if (!corpo) return;
+    if (location.protocol === "file:") {
+      corpo.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px; color: #64748b;">Trilha de auditoria conectada ao banco Neon em ambiente online (HTTPS).</td></tr>';
+      return;
+    }
+    fetch("/api/auditoria")
+      .then(function(r) { return r.ok ? r.json() : []; })
+      .then(function(logs) {
+        if (!Array.isArray(logs) || !logs.length) {
+          corpo.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px; color: #64748b;">Nenhuma operação sensível registrada até o momento.</td></tr>';
+          return;
+        }
+        corpo.innerHTML = logs.map(function(item) {
+          var dataFmt = item.criado_em_fmt || new Date(item.criado_em).toLocaleString("pt-BR");
+          var badgeOp = formatarOperacaoBadge(item.acao);
+          var entidade = (item.entidade || '') + (item.entidade_id ? ' #' + item.entidade_id : '');
+          var detalhes = formatarDetalhesAuditoria(item);
+          return '<tr>' +
+            '<td style="font-weight: 500; color: #334155; white-space: nowrap;">' + dataFmt + '</td>' +
+            '<td>' + badgeOp + '</td>' +
+            '<td style="font-family: monospace; font-size: 0.8rem; color: #085EC3;">' + entidade + '</td>' +
+            '<td style="font-weight: 600; color: #475569;">' + (item.usuario || 'Presidência') + '</td>' +
+            '<td>' + detalhes + '</td>' +
+          '</tr>';
+        }).join('');
+      })
+      .catch(function(err) {
+        console.error("Erro ao carregar auditoria:", err);
+        corpo.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px; color: #dc2626;">Falha ao carregar trilha de auditoria do banco.</td></tr>';
+      });
+  }
+
+  var btnAtualizarAuditoria = document.getElementById("btn-atualizar-auditoria");
+  if (btnAtualizarAuditoria) {
+    btnAtualizarAuditoria.addEventListener("click", function() {
+      carregarTrilhaAuditoria();
+      mostrarToastAcao("Trilha de auditoria atualizada!");
+    });
+  }
+
+  // Carregar auditoria ao alternar para a aba Governança
+  document.addEventListener("click", function(e) {
+    var tab = e.target.closest("[data-painel], .aba, .tab-btn, a[href^='#p-acesso'], button[id*='acesso']");
+    if (tab) {
+      setTimeout(carregarTrilhaAuditoria, 150);
+    }
+  });
+
+  // Carregamento inicial de auditoria
+  setTimeout(carregarTrilhaAuditoria, 500);
 })();
 </script>
 </body>

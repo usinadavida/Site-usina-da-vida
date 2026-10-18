@@ -1,5 +1,6 @@
 import { db, texto } from '../../../lib/db.js';
 import { validarSenhaPresidencia } from '../permissoes/route.js';
+import { registrarAuditoria, obterIp } from '../../../lib/audit.js';
 
 function extrairDataIso(textoData) {
   if (!textoData || typeof textoData !== 'string') return null;
@@ -88,6 +89,20 @@ export async function POST(req) {
       )
       RETURNING id, titulo, area, cor, data_texto, to_char(data_iso, 'YYYY-MM-DD') as data_iso, local_texto, vagas_totais, vagas_preenchidas, descricao, status, criado_em`;
 
+    await registrarAuditoria({
+      acao: 'CRIACAO_ACAO',
+      entidade: 'acoes_agendadas',
+      entidade_id: rows[0].id,
+      usuario: 'Presidência/Coordenação',
+      detalhes: {
+        titulo: rows[0].titulo,
+        area: rows[0].area,
+        data_texto: rows[0].data_texto,
+        vagas: rows[0].vagas_totais
+      },
+      ip: obterIp(req)
+    });
+
     return Response.json(rows[0], { status: 201 });
   } catch (e) {
     console.error('acoes POST:', e.message);
@@ -139,6 +154,21 @@ export async function PUT(req) {
       RETURNING id, titulo, area, cor, data_texto, to_char(data_iso, 'YYYY-MM-DD') as data_iso, local_texto, vagas_totais, vagas_preenchidas, descricao, status, criado_em`;
 
     if (!rows.length) return Response.json({ erro: 'Ação não encontrada' }, { status: 404 });
+
+    await registrarAuditoria({
+      acao: 'EDICAO_ACAO',
+      entidade: 'acoes_agendadas',
+      entidade_id: id,
+      usuario: 'Presidência',
+      detalhes: {
+        titulo: rows[0].titulo,
+        data_texto: rows[0].data_texto,
+        local: rows[0].local_texto,
+        vagas: rows[0].vagas_totais
+      },
+      ip: obterIp(req)
+    });
+
     return Response.json(rows[0], { status: 200 });
   } catch (e) {
     console.error('acoes PUT:', e.message);
@@ -167,10 +197,25 @@ export async function DELETE(req) {
 
   try {
     const sql = db();
-    await sql`DELETE FROM acoes_agendadas WHERE id = ${id}`;
+    const rows = await sql`DELETE FROM acoes_agendadas WHERE id = ${id} RETURNING id, titulo, data_texto`;
+    
+    await registrarAuditoria({
+      acao: 'EXCLUSAO_ACAO',
+      entidade: 'acoes_agendadas',
+      entidade_id: id,
+      usuario: 'Presidência',
+      detalhes: {
+        id_excluido: id,
+        titulo: rows[0]?.titulo || 'Ação',
+        data_texto: rows[0]?.data_texto || ''
+      },
+      ip: obterIp(req)
+    });
+
     return Response.json({ ok: true, id }, { status: 200 });
   } catch (e) {
     console.error('acoes DELETE:', e.message);
     return Response.json({ erro: 'Falha ao excluir ação no banco' }, { status: 500 });
   }
 }
+

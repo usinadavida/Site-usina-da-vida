@@ -438,7 +438,142 @@ html {
   color: var(--azul);
   text-decoration: underline;
 }
+
+/* Modal da Política de Privacidade e LGPD */
+.modal-lgpd {
+  border: none;
+  background: transparent;
+  padding: 0;
+  max-width: 820px;
+  width: 92%;
+  border-radius: 12px;
+  margin: auto;
+}
+.modal-lgpd::backdrop {
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+}
+.modal-lgpd-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-height: 85vh;
+  border: 1px solid #cbd5e1;
+}
+.modal-lgpd-cab {
+  background: #085EC3;
+  color: #ffffff;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.modal-lgpd-cab h3 {
+  margin: 0;
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+.modal-lgpd-sub {
+  margin: 4px 0 0 0;
+  font-size: 0.8rem;
+  opacity: 0.92;
+}
+.fechar-lgpd {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.85;
+  padding: 0 4px;
+  transition: opacity 0.15s ease;
+}
+.fechar-lgpd:hover { opacity: 1; }
+.modal-lgpd-corpo {
+  padding: 24px;
+  overflow-y: auto;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: #334155;
+}
+.modal-lgpd-corpo h4 {
+  margin: 18px 0 6px 0;
+  color: #085EC3;
+  font-size: 0.98rem;
+  font-weight: 700;
+}
+.modal-lgpd-corpo h4:first-child { margin-top: 0; }
+.modal-lgpd-corpo p { margin: 0 0 10px 0; }
+.modal-lgpd-corpo ul { margin: 0 0 14px 20px; padding: 0; }
+.modal-lgpd-corpo li { margin-bottom: 5px; }
+.modal-lgpd-rodape {
+  padding: 14px 24px;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: flex-end;
+}
 </style>`;
+
+  const modalPoliticaLgpdHtml = `<!-- MODAL DE POLÍTICA DE PRIVACIDADE E LGPD -->
+<dialog class="modal-lgpd" id="modal-politica-lgpd" aria-labelledby="lgpd-titulo">
+  <div class="modal-lgpd-card">
+    <div class="modal-lgpd-cab">
+      <div>
+        <h3 id="lgpd-titulo">Política de Privacidade e Proteção de Dados (LGPD)</h3>
+        <p class="modal-lgpd-sub">Associação Comunitária Usina da Vida · Salvador - BA · Lei Federal nº 13.709/2018</p>
+      </div>
+      <button type="button" class="fechar-lgpd" id="btn-fechar-modal-lgpd" aria-label="Fechar">&times;</button>
+    </div>
+    <div class="modal-lgpd-corpo">
+      <h4>1. Compromisso Institucional com a Privacidade</h4>
+      <p>A Associação Comunitária Usina da Vida zela pela transparência, integridade e confidencialidade de todos os dados pessoais fornecidos por voluntários, colaboradores, parceiros e beneficiários, em estrita observância à Lei Geral de Proteção de Dados Pessoais (Lei Federal nº 13.709/2018 - LGPD).</p>
+
+      <h4>2. Quais Dados Pessoais Coletamos</h4>
+      <p>Ao se inscrever como voluntário(a) em nossa plataforma, coletamos estritamente os dados essenciais para operacionalização de nossas oficinas sociais:</p>
+      <ul>
+        <li><strong>Identificação e Contato:</strong> Nome completo, e-mail e telefone celular/WhatsApp.</li>
+        <li><strong>Localização Básica:</strong> Bairro e CEP (para viabilizar ações de proximidade geográfica na comunidade de Arenoso e Salvador).</li>
+        <li><strong>Perfil e Habilidades:</strong> Formação educacional, curso, ocupação profissional, áreas de interesse e disponibilidade de dias/horários.</li>
+      </ul>
+
+      <h4>3. Finalidade e Base Legal (Art. 7º, I da LGPD)</h4>
+      <p>O tratamento de seus dados é fundamentado no <strong>Consentimento do Titular</strong> (Art. 7º, inciso I da Lei 13.709/2018). As finalidades exclusivas são:</p>
+      <ul>
+        <li>Entrar em contato para convidar para reuniões, oficinas e ações sociais alinhadas com as suas competências;</li>
+        <li>Organizar as escalas de voluntariado e controlar o número de vagas de cada ação comunitária;</li>
+        <li>Emitir certificados ou declarações de horas complementares e de voluntariado.</li>
+      </ul>
+
+      <h4>4. Segurança e Não Compartilhamento</h4>
+      <p>Adotamos medidas técnicas de segurança rigorosas: banco de dados PostgreSQL seguro, criptografia em trânsito com protocolo HTTPS/TLS, controle estrito de perfis operacionais com mascaramento de dados de contato e trilha de auditoria para operações sensíveis. <strong>A Usina da Vida jamais comercializa, aluga ou compartilha seus dados pessoais com terceiros para finalidades publicitárias ou lucrativas.</strong></p>
+
+      <h4>5. Direitos do Titular (Art. 18 da LGPD)</h4>
+      <p>Como titular dos dados, você tem o direito garantido por lei de, a qualquer momento e gratuitamente:</p>
+      <ul>
+        <li>Confirmar a existência de tratamento e acessar os seus dados cadastrais;</li>
+        <li>Solicitar a correção ou atualização de dados incompletos ou inexatos;</li>
+        <li>Solicitar a eliminação completa (exclusão) ou anonimização de seus dados dos nossos registros;</li>
+        <li>Revogar o seu consentimento concedido anteriormente.</li>
+      </ul>
+
+      <h4>6. Canal de Atendimento do Encarregado (DPO)</h4>
+      <p>Para exercer qualquer um dos seus direitos previstos na LGPD, solicitar atualização ou exclusão definitiva de seu cadastro, entre em contato com nossa equipe gestora:</p>
+      <p><strong>E-mail Institucional:</strong> <a href="mailto:contato@usinadavida.org.br" style="color:var(--azul);font-weight:600">contato@usinadavida.org.br</a><br>
+      <strong>Endereço da Sede:</strong> R. Estrela D'álva, 13e - Arenoso, Salvador - BA, 41211-300</p>
+    </div>
+    <div class="modal-lgpd-rodape">
+      <button type="button" class="btn btn-verm" id="btn-entendido-lgpd" style="padding:10px 22px;font-weight:700">Entendido e Fechar</button>
+    </div>
+  </div>
+</dialog>`;
 
   const scriptScrollPreciso = `<script id="scroll-preciso">
 (function(){
@@ -465,6 +600,46 @@ html {
       if (history.pushState) history.pushState(null, null, href);
     }
   });
+
+  // Controle do Modal de Política de Privacidade e LGPD
+  var modalLgpd = document.getElementById('modal-politica-lgpd');
+  function abrirModalLgpd(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    if (!modalLgpd) return;
+    if (typeof modalLgpd.showModal === 'function') {
+      modalLgpd.showModal();
+    } else {
+      modalLgpd.style.display = 'block';
+    }
+    document.body.style.overflow = 'hidden';
+  }
+  function fecharModalLgpd() {
+    if (!modalLgpd) return;
+    if (typeof modalLgpd.close === 'function') {
+      modalLgpd.close();
+    } else {
+      modalLgpd.style.display = 'none';
+    }
+    document.body.style.overflow = '';
+  }
+
+  var linkFormLgpd = document.getElementById('link-abrir-lgpd');
+  if (linkFormLgpd) linkFormLgpd.addEventListener('click', abrirModalLgpd);
+
+  var linkRodapeLgpd = document.getElementById('link-rodape-lgpd');
+  if (linkRodapeLgpd) linkRodapeLgpd.addEventListener('click', abrirModalLgpd);
+
+  var btnFecharLgpd = document.getElementById('btn-fechar-modal-lgpd');
+  if (btnFecharLgpd) btnFecharLgpd.addEventListener('click', fecharModalLgpd);
+
+  var btnEntendidoLgpd = document.getElementById('btn-entendido-lgpd');
+  if (btnEntendidoLgpd) btnEntendidoLgpd.addEventListener('click', fecharModalLgpd);
+
+  if (modalLgpd) {
+    modalLgpd.addEventListener('click', function(e) {
+      if (e.target === modalLgpd) fecharModalLgpd();
+    });
+  }
 })();
 </script>`;
 
@@ -541,9 +716,11 @@ html {
   html = html.replace('<li><a href="#parceiros">Parceiros</a></li>', '<li><a href="#parceiros">Parceiros</a></li>\n        <li><a href="#avaliacoes">Avaliações</a></li>');
   html = html.replace('<h1>Transformando <em>sonhos</em> em realidade</h1>', '<h1>Transformando <em>sonhos</em> em <em>realidade</em></h1>');
   html = html.replace('<li><small>Onde estamos</small>Usina da Vida, Salvador, Bahia – Brasil</li>', '<li><small>Onde estamos</small>R. Estrela D\'álva, 13e - Arenoso, Salvador - BA, 41211-300</li>');
+  html = html.replace('<span>Concordo que a Usina da Vida use estes dados somente para contato e organização do voluntariado. Posso pedir a correção ou a exclusão a qualquer momento. *</span>', '<span>Concordo que a Usina da Vida use estes dados somente para contato e organização do voluntariado, em conformidade com a <a href="#" id="link-abrir-lgpd" style="color:var(--azul);text-decoration:underline;font-weight:600">Política de Privacidade e LGPD</a>. Posso pedir a correção ou a exclusão a qualquer momento. *</span>');
+  html = html.replace('<span>Projeto de extensão – Universidade Católica do Salvador</span>', '<span><a href="#" id="link-rodape-lgpd" style="color:rgba(255,255,255,0.9);text-decoration:underline">Política de Privacidade & LGPD</a> · Projeto de extensão – Universidade Católica do Salvador</span>');
   html = html.replace('<section id="contato" class="contato">', () => secaoAvaliacoesHtml + '\n\n<section id="contato" class="contato">');
   html = html.replace('</head>', () => estilosAjustados + '\n</head>');
-  html = html.replace('</body>', () => scriptScrollPreciso + '\n</body>');
+  html = html.replace('</body>', () => modalPoliticaLgpdHtml + '\n' + scriptScrollPreciso + '\n</body>');
   html = html.split('href="portal.html"').join('href="/portal"');
   return html;
 }
@@ -1198,6 +1375,36 @@ function redesenharPortal(html) {
     '          ' + svgCheck + ' <span>Salvar e Instituir Permissões</span>\n' +
     '        </button>\n' +
     '      </div>\n' +
+    '    </div>\n' +
+    '  </div>\n\n' +
+    '  <!-- TRILHA DE AUDITORIA E LOGS LGPD -->\n' +
+    '  <div class="box" id="box-trilha-auditoria" style="margin-top: 24px; padding: 0; overflow: hidden;">\n' +
+    '    <div style="padding: 16px 20px; border-bottom: 1px solid var(--borda); background: #f8fafc; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">\n' +
+    '      <div>\n' +
+    '        <h3 style="margin: 0; font-size: 1.05rem; color: var(--azul); display: flex; align-items: center; gap: 8px;">' + svgShield + ' Trilha de Auditoria e Conformidade LGPD (Audit Trail)</h3>\n' +
+    '        <p style="margin: 4px 0 0 0; font-size: 0.82rem; color: #64748b;">Registro cronológico e imutável de operações sensíveis no banco de dados Neon.</p>\n' +
+    '      </div>\n' +
+    '      <button type="button" id="btn-atualizar-auditoria" class="btn btn-sm btn-sec2" style="font-size: 0.82rem; padding: 6px 14px; font-weight: 600; cursor: pointer;">\n' +
+    '        ↻ Atualizar Logs\n' +
+    '      </button>\n' +
+    '    </div>\n' +
+    '    <div class="tabela-wrap" style="box-shadow: none; border-radius: 0; border: none; max-height: 380px; overflow-y: auto;">\n' +
+    '      <table class="tabela-auditoria" style="width: 100%; border-collapse: collapse; font-size: 0.84rem;">\n' +
+    '        <thead style="position: sticky; top: 0; background: #f1f5f9; z-index: 1;">\n' +
+    '          <tr>\n' +
+    '            <th style="padding: 10px 14px; text-align: left; width: 150px;">Data / Hora</th>\n' +
+    '            <th style="padding: 10px 14px; text-align: left; width: 170px;">Operação</th>\n' +
+    '            <th style="padding: 10px 14px; text-align: left; width: 140px;">Entidade / ID</th>\n' +
+    '            <th style="padding: 10px 14px; text-align: left; width: 130px;">Responsável</th>\n' +
+    '            <th style="padding: 10px 14px; text-align: left;">Detalhes da Ação</th>\n' +
+    '          </tr>\n' +
+    '        </thead>\n' +
+    '        <tbody id="corpo-auditoria">\n' +
+    '          <tr>\n' +
+    '            <td colspan="5" style="text-align: center; padding: 24px; color: #64748b;">Carregando registros de auditoria...</td>\n' +
+    '          </tr>\n' +
+    '        </tbody>\n' +
+    '      </table>\n' +
     '    </div>\n' +
     '  </div>\n' +
     '</section>';
@@ -2712,6 +2919,59 @@ tr:hover td {
 .governo-alerta-texto b {
   color: var(--azul);
 }
+
+/* TRILHA DE AUDITORIA & LGPD */
+.tabela-auditoria th, .tabela-auditoria td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--borda);
+  text-align: left;
+}
+.tabela-auditoria tr:hover {
+  background: #f8fafc;
+}
+.badge-audit {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.badge-audit-edicao {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+}
+.badge-audit-exclusao {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+.badge-audit-criacao {
+  background: #f0fdf4;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+.badge-audit-permissoes {
+  background: #faf5ff;
+  color: #7e22ce;
+  border: 1px solid #e9d5ff;
+}
+.audit-detalhe-pill {
+  display: inline-block;
+  font-size: 0.78rem;
+  color: #475569;
+  background: #f1f5f9;
+  padding: 2px 8px;
+  border-radius: 4px;
+  max-width: 420px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 </style>`;
 
   const svgClose = `<svg class="ico-svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
@@ -3717,6 +3977,7 @@ tr:hover td {
             if (typeof window.tabela === "function") window.tabela();
             if (typeof window.geral === "function") window.geral();
             mostrarToastAcao("Cadastro de voluntário atualizado com sucesso!");
+            if (typeof carregarTrilhaAuditoria === "function") carregarTrilhaAuditoria();
           })
           .catch(function(err) {
             setErroValida(err.message);
@@ -3765,6 +4026,7 @@ tr:hover td {
           if (typeof window.tabela === "function") window.tabela();
           if (typeof window.geral === "function") window.geral();
           mostrarToastAcao("Voluntário excluído do banco de dados!");
+          if (typeof carregarTrilhaAuditoria === "function") carregarTrilhaAuditoria();
         })
         .catch(function(err) {
           setErroValida(err.message);
@@ -3883,6 +4145,7 @@ tr:hover td {
             if (typeof window.agend === "function") window.agend();
             if (typeof window.geral === "function") window.geral();
             mostrarToastAcao("Ação atualizada e sincronizada no site institucional!");
+            if (typeof carregarTrilhaAuditoria === "function") carregarTrilhaAuditoria();
           })
           .catch(function(err) {
             setErroValida(err.message);
@@ -3931,6 +4194,7 @@ tr:hover td {
           if (typeof window.agend === "function") window.agend();
           if (typeof window.geral === "function") window.geral();
           mostrarToastAcao("Ação excluída com sucesso do banco e do site!");
+          if (typeof carregarTrilhaAuditoria === "function") carregarTrilhaAuditoria();
         })
         .catch(function(err) {
           setErroValida(err.message);
@@ -4036,6 +4300,7 @@ tr:hover td {
             if (typeof window.tabela === "function") window.tabela();
             if (typeof window.agend === "function") window.agend();
             mostrarToastAcao("Permissões de acesso instituídas com sucesso!");
+            carregarTrilhaAuditoria();
           })
           .catch(function(err) {
             setErroValida(err.message);
@@ -4044,6 +4309,91 @@ tr:hover td {
       );
     });
   }
+
+  // Trilha de Auditoria (Logs Neon e LGPD)
+  function formatarOperacaoBadge(acao) {
+    if (acao === 'EDICAO_VOLUNTARIO') return '<span class="badge-audit badge-audit-edicao">Edição Voluntário</span>';
+    if (acao === 'EXCLUSAO_VOLUNTARIO') return '<span class="badge-audit badge-audit-exclusao">Exclusão Voluntário</span>';
+    if (acao === 'CRIACAO_ACAO') return '<span class="badge-audit badge-audit-criacao">Criação Ação</span>';
+    if (acao === 'EDICAO_ACAO') return '<span class="badge-audit badge-audit-edicao">Edição Ação</span>';
+    if (acao === 'EXCLUSAO_ACAO') return '<span class="badge-audit badge-audit-exclusao">Exclusão Ação</span>';
+    if (acao === 'ALTERACAO_PERMISSOES') return '<span class="badge-audit badge-audit-permissoes">Governança</span>';
+    return '<span class="badge-audit">' + (acao || 'Operação') + '</span>';
+  }
+
+  function formatarDetalhesAuditoria(item) {
+    var d = item.detalhes || {};
+    var partes = [];
+    if (d.nome) partes.push('Nome: ' + d.nome);
+    if (d.titulo) partes.push('Título: ' + d.titulo);
+    if (d.status) partes.push('Status: ' + d.status);
+    if (d.bairro) partes.push('Bairro: ' + d.bairro);
+    if (d.excluido_id) partes.push('ID: #' + d.excluido_id);
+    if (d.id_excluido) partes.push('ID: #' + d.id_excluido);
+    if (d.vagas) partes.push('Vagas: ' + d.vagas);
+    if (d.data_texto) partes.push('Data: ' + d.data_texto);
+    if (d.matriz || d.permissoes) partes.push('Matriz de permissões atualizada');
+    if (!partes.length) {
+      try {
+        var str = JSON.stringify(d);
+        if (str !== '{}') partes.push(str.slice(0, 70));
+      } catch (e) {}
+    }
+    return '<span class="audit-detalhe-pill" title="' + (partes.join(' · ') || 'Sem detalhes adicionais') + '">' + (partes.join(' · ') || 'Operação registrada') + '</span>';
+  }
+
+  function carregarTrilhaAuditoria() {
+    var corpo = document.getElementById("corpo-auditoria");
+    if (!corpo) return;
+    if (location.protocol === "file:") {
+      corpo.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px; color: #64748b;">Trilha de auditoria conectada ao banco Neon em ambiente online (HTTPS).</td></tr>';
+      return;
+    }
+    fetch("/api/auditoria")
+      .then(function(r) { return r.ok ? r.json() : []; })
+      .then(function(logs) {
+        if (!Array.isArray(logs) || !logs.length) {
+          corpo.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px; color: #64748b;">Nenhuma operação sensível registrada até o momento.</td></tr>';
+          return;
+        }
+        corpo.innerHTML = logs.map(function(item) {
+          var dataFmt = item.criado_em_fmt || new Date(item.criado_em).toLocaleString("pt-BR");
+          var badgeOp = formatarOperacaoBadge(item.acao);
+          var entidade = (item.entidade || '') + (item.entidade_id ? ' #' + item.entidade_id : '');
+          var detalhes = formatarDetalhesAuditoria(item);
+          return '<tr>' +
+            '<td style="font-weight: 500; color: #334155; white-space: nowrap;">' + dataFmt + '</td>' +
+            '<td>' + badgeOp + '</td>' +
+            '<td style="font-family: monospace; font-size: 0.8rem; color: #085EC3;">' + entidade + '</td>' +
+            '<td style="font-weight: 600; color: #475569;">' + (item.usuario || 'Presidência') + '</td>' +
+            '<td>' + detalhes + '</td>' +
+          '</tr>';
+        }).join('');
+      })
+      .catch(function(err) {
+        console.error("Erro ao carregar auditoria:", err);
+        corpo.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px; color: #dc2626;">Falha ao carregar trilha de auditoria do banco.</td></tr>';
+      });
+  }
+
+  var btnAtualizarAuditoria = document.getElementById("btn-atualizar-auditoria");
+  if (btnAtualizarAuditoria) {
+    btnAtualizarAuditoria.addEventListener("click", function() {
+      carregarTrilhaAuditoria();
+      mostrarToastAcao("Trilha de auditoria atualizada!");
+    });
+  }
+
+  // Carregar auditoria ao alternar para a aba Governança
+  document.addEventListener("click", function(e) {
+    var tab = e.target.closest("[data-painel], .aba, .tab-btn, a[href^='#p-acesso'], button[id*='acesso']");
+    if (tab) {
+      setTimeout(carregarTrilhaAuditoria, 150);
+    }
+  });
+
+  // Carregamento inicial de auditoria
+  setTimeout(carregarTrilhaAuditoria, 500);
 })();
 </script>`;
 
