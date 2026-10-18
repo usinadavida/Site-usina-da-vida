@@ -736,30 +736,6 @@ function redesenharPortal(html) {
   html = html.replace(/<p class="nota">Sugestão inicial para validar com a ONG[\s\S]*?<\/p>/, '');
   html = html.replace(/<em>Ver detalhes &rarr;<\/em>/g, '');
 
-  // 2. Corrigir textos de login, placeholders institucionais e credenciais (gestão / 0987 ou novembro)
-  html = html.replace('Acesso exclusivo à presidência, à coordenação e a colaboradores autorizados.', 'Painel Administrativo do Voluntariado · Autenticação Restrita');
-  html = html.replace('<label for="usuario">Usuário (e-mail)</label>', '<label for="usuario">Login</label>');
-  html = html.replace('type="email" autocomplete="username" placeholder="nome@exemplo.com"', 'type="text" autocomplete="username" placeholder="gestão"');
-  html = html.replace('<input id="senha" type="password" autocomplete="current-password">', '<input id="senha" type="password" autocomplete="current-password" placeholder="••••">');
-  html = html.replace(
-    'if(!$("usuario").value.trim() || !$("senha").value){ $("erro-login").textContent="Informe usuário e senha."; return; }\n    perfil = $("perfil").value;\n    var nomes = {presidencia:"Presidência",coordenacao:"Coordenação",colaborador:"Colaborador autorizado"};\n    $("quem").textContent = $("usuario").value;',
-    'var u = $("usuario").value.trim(), s = $("senha").value.trim();\n    if(!u || !s){ $("erro-login").textContent="Informe o login e a senha."; return; }\n    var uNorm = u.toLowerCase(), sNorm = s.toLowerCase();\n    var loginValido = (uNorm === "gestão" || uNorm === "gestao" || uNorm === "novembro");\n    var senhaValida = (s === "0987" || sNorm === "novembro");\n    if(!loginValido || !senhaValida){ $("erro-login").textContent="Login ou senha incorretos."; return; }\n    perfil = $("perfil").value;\n    var nomes = {presidencia:"Presidência",coordenacao:"Coordenação",colaborador:"Colaborador autorizado"};\n    $("quem").textContent = u;'
-  );
-  html = html.replace('<button class="btn btn-azul" type="submit" style="width:100%">Entrar</button>', '<button class="btn btn-azul" type="submit" style="width:100%;font-size:1rem;padding:12px">Entrar no Portal de Gestão</button>');
-
-  // 3. Corrigir links para a raiz da landing page
-  html = html.split('href="index.html"').join('href="/"');
-  html = html.replace('← Voltar ao site da Usina da Vida', '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg> Retornar ao site institucional');
-
-  // 4. Transformar Visão Geral com cabeçalho institucional limpo (sem badge 'Base de dados sincronizada')
-  html = html.replace('<h2>Visão geral dos cadastros</h2>', 
-    '<div class="painel-cab">' +
-    '  <div>' +
-    '    <h2>Visão Geral dos Cadastros</h2>' +
-    '    <p class="subtitulo-painel">Acompanhamento de voluntários inscritos, etapas de triagem e ações comunitárias.</p>' +
-    '  </div>' +
-    '</div>');
-
   // Ícones SVG reutilizáveis
   const svgSearch = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>';
   const svgPin = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>';
@@ -773,6 +749,132 @@ function redesenharPortal(html) {
   const svgShield = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>';
   const svgEdit = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>';
   const svgTrash = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>';
+  const svgEye = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:18px;height:18px"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="10" r="3"/></svg>';
+  const svgEyeOff = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:18px;height:18px"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
+  const svgArrowRight = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:18px;height:18px"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+
+  // 2. Tela de Login Split-Screen com a essência e os elementos autênticos da Landing Page
+  const sectionLoginSplit =
+    '<section id="login" class="login-split-layout" aria-labelledby="login-t">\n' +
+    '  <!-- LADO ESQUERDO: HERO INSTITUCIONAL USINA DA VIDA -->\n' +
+    '  <div class="split-lado-institucional">\n' +
+    '    <img class="split-marca-dagua" src="/assets/img-03.png" alt="" aria-hidden="true">\n' +
+    '    <div class="split-conteudo-institucional">\n' +
+    '      <div class="split-cabecalho-marca">\n' +
+    '        <a class="split-logo-link" href="/" title="Ir para o site institucional da Usina da Vida">\n' +
+    '          <img src="/assets/img-01.png" alt="Emblema Usina da Vida" class="split-logo-emblema">\n' +
+    '          <img src="/assets/img-02.png" alt="Usina da Vida" class="split-logo-texto">\n' +
+    '        </a>\n' +
+    '      </div>\n' +
+    '      <div class="split-corpo-hero">\n' +
+    '        <p class="sobre-split">Organização filantrópica · Salvador, Bahia</p>\n' +
+    '        <h1 class="split-chamada">Transformando <em>sonhos</em> em <em>realidade</em></h1>\n' +
+    '        <p class="split-lead">\n' +
+    '          Ambiente administrativo unificado para coordenação de voluntários, gestão de vagas comunitárias e acompanhamento de impacto social em Salvador.\n' +
+    '        </p>\n' +
+    '        <div class="split-colagem-mini" aria-hidden="true">\n' +
+    '          <span class="peca-split p1-split"></span>\n' +
+    '          <span class="peca-split p2-split"></span>\n' +
+    '          <span class="peca-split p3-split"></span>\n' +
+    '          <img class="foto-c1" src="/assets/img-04.jpg" alt="Ação com crianças e voluntários">\n' +
+    '          <img class="foto-c2" src="/assets/img-05.jpg" alt="Voluntária em atividade">\n' +
+    '        </div>\n' +
+    '        <div class="split-pilares-lista">\n' +
+    '          <div class="split-pilar-item">\n' +
+    '            <span class="split-pilar-marcador p-azul"></span>\n' +
+    '            <div>\n' +
+    '              <b>Gestão de Voluntários &amp; Vagas</b>\n' +
+    '              <span>Triagem de cadastros, disponibilidades e alocação por bairros de Salvador.</span>\n' +
+    '            </div>\n' +
+    '          </div>\n' +
+    '          <div class="split-pilar-item">\n' +
+    '            <span class="split-pilar-marcador p-amarelo"></span>\n' +
+    '            <div>\n' +
+    '              <b>Ações Comunitárias</b>\n' +
+    '              <span>Oficinas de educação, empreendedorismo, cultura, esporte e saúde.</span>\n' +
+    '            </div>\n' +
+    '          </div>\n' +
+    '          <div class="split-pilar-item">\n' +
+    '            <span class="split-pilar-marcador p-vermelho"></span>\n' +
+    '            <div>\n' +
+    '              <b>Segurança &amp; Governança LGPD</b>\n' +
+    '              <span>Acesso restrito por perfil com trilha de auditoria transparente.</span>\n' +
+    '            </div>\n' +
+    '          </div>\n' +
+    '        </div>\n' +
+    '      </div>\n' +
+    '      <div class="split-rodape-institucional">\n' +
+    '        <span>Usina da Vida · Comunidade Cristã Proclamação do Reino · Projeto de Extensão Comunitária UCSal</span>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
+    '  </div>\n' +
+    '  <!-- LADO DIREITO: FORMULÁRIO DE LOGIN COM CARTÃO USINA DA VIDA -->\n' +
+    '  <div class="split-lado-formulario">\n' +
+    '    <div class="cartao split-cartao">\n' +
+    '      <div class="rotulo" style="margin-bottom:8px">Autenticação Restrita</div>\n' +
+    '      <h2 id="login-t" class="split-cartao-titulo">Portal de Gestão</h2>\n' +
+    '      <p class="split-cartao-sub">Acesso exclusivo à presidência, coordenação e colaboradores autorizados.</p>\n' +
+    '      <form id="f-login" novalidate>\n' +
+    '        <div class="split-campo">\n' +
+    '          <label for="perfil">Perfil de acesso</label>\n' +
+    '          <select id="perfil">\n' +
+    '            <option value="presidencia">Presidência</option>\n' +
+    '            <option value="coordenacao">Coordenação</option>\n' +
+    '            <option value="colaborador">Colaborador autorizado</option>\n' +
+    '          </select>\n' +
+    '        </div>\n' +
+    '        <div class="split-campo">\n' +
+    '          <label for="usuario">Login</label>\n' +
+    '          <input id="usuario" type="text" autocomplete="username" placeholder="gestão" required>\n' +
+    '        </div>\n' +
+    '        <div class="split-campo">\n' +
+    '          <label for="senha">Senha</label>\n' +
+    '          <div class="split-senha-wrap">\n' +
+    '            <input id="senha" type="password" autocomplete="current-password" placeholder="••••" required>\n' +
+    '            <button type="button" id="btn-toggle-senha" class="split-btn-olho" aria-label="Mostrar ou ocultar senha" title="Mostrar ou ocultar senha">\n' +
+    '              ' + svgEye + '\n' +
+    '            </button>\n' +
+    '          </div>\n' +
+    '        </div>\n' +
+    '        <div class="split-linha-ajuda">\n' +
+    '          <label class="split-lembrar">\n' +
+    '            <input type="checkbox" id="lembrar-login" checked>\n' +
+    '            <span>Lembrar meu acesso</span>\n' +
+    '          </label>\n' +
+    '          <button type="button" id="link-esqueci-senha" class="split-link-esqueci">Esqueci minha senha</button>\n' +
+    '        </div>\n' +
+    '        <div class="erro" id="erro-login" role="alert"></div>\n' +
+    '        <button class="btn btn-portal split-btn-entrar" type="submit">\n' +
+    '          <span>Entrar no Portal de Gestão</span>\n' +
+    '          ' + svgArrowRight + '\n' +
+    '        </button>\n' +
+    '      </form>\n' +
+    '      <a class="voltar" href="/">\n' +
+    '        <svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:16px;height:16px"><path d="m15 18-6-6 6-6"/></svg>\n' +
+    '        <span>Retornar ao site institucional</span>\n' +
+    '      </a>\n' +
+    '    </div>\n' +
+    '    <p class="split-copyright">Usina da Vida · Organização Filantrópica · Salvador, BA</p>\n' +
+    '  </div>\n' +
+    '</section>';
+
+  html = html.replace(/<section id="login"[\s\S]*?<\/section>/, sectionLoginSplit);
+  html = html.replace(
+    'if(!$("usuario").value.trim() || !$("senha").value){ $("erro-login").textContent="Informe usuário e senha."; return; }\n    perfil = $("perfil").value;\n    var nomes = {presidencia:"Presidência",coordenacao:"Coordenação",colaborador:"Colaborador autorizado"};\n    $("quem").textContent = $("usuario").value;',
+    'var u = $("usuario").value.trim(), s = $("senha").value.trim();\n    if(!u || !s){ $("erro-login").textContent="Informe o login e a senha."; return; }\n    var uNorm = u.toLowerCase(), sNorm = s.toLowerCase();\n    var loginValido = (uNorm === "gestão" || uNorm === "gestao" || uNorm === "novembro");\n    var senhaValida = (s === "0987" || sNorm === "novembro");\n    if(!loginValido || !senhaValida){ $("erro-login").textContent="Login ou senha incorretos."; return; }\n    perfil = $("perfil").value;\n    var nomes = {presidencia:"Presidência",coordenacao:"Coordenação",colaborador:"Colaborador autorizado"};\n    $("quem").textContent = u;'
+  );
+
+  // 3. Corrigir links para a raiz da landing page
+  html = html.split('href="index.html"').join('href="/"');
+
+  // 4. Transformar Visão Geral com cabeçalho institucional limpo (sem badge \'Base de dados sincronizada\')
+  html = html.replace('<h2>Visão geral dos cadastros</h2>', 
+    '<div class="painel-cab">' +
+    '  <div>' +
+    '    <h2>Visão Geral dos Cadastros</h2>' +
+    '    <p class="subtitulo-painel">Acompanhamento de voluntários inscritos, etapas de triagem e ações comunitárias.</p>' +
+    '  </div>' +
+    '</div>');
 
   // 5. Transformar Voluntários: cabeçalho com ações no topo, filtros com máscara de exclusividade e gaveta territorial
   const volAntigo = /<h2>Voluntários cadastrados<\/h2>\s*<div class="filtros"[\s\S]*?<\/table>\s*<div id="vazio"/;
@@ -1460,92 +1562,472 @@ body {
   }
 }
 
-/* TELA DE LOGIN FIXA E 100% PREENCHIDA */
-#login {
+/* TELA DE LOGIN FIXA SPLIT-SCREEN (IDENTIDADE VISUAL DA LANDING PAGE) */
+#login.login-split-layout {
   position: fixed;
   inset: 0;
   width: 100vw;
   height: 100vh;
   height: 100dvh;
-  background: var(--azul);
+  z-index: 1000;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: minmax(460px, 48%) 1fr;
+  background: var(--creme, #FBF6EA);
+  box-sizing: border-box;
+  font-family: var(--sans);
+}
+
+/* LADO ESQUERDO: HERO INSTITUCIONAL USINA DA VIDA */
+.split-lado-institucional {
+  background: var(--azul, #085EC3);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 48px 48px 36px;
+  box-sizing: border-box;
+  border-right: 3px solid var(--tinta, #1d2430);
+}
+
+.split-marca-dagua {
+  position: absolute;
+  right: -80px;
+  bottom: -90px;
+  width: 440px;
+  opacity: 0.12;
+  filter: brightness(0.2);
+  pointer-events: none;
+}
+
+.split-conteudo-institucional {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.split-cabecalho-marca {
+  margin-bottom: 24px;
+}
+
+.split-logo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  background: #fff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: 2px solid var(--tinta, #1d2430);
+  box-shadow: 4px 4px 0 var(--amarelo, #F1C50E);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.split-logo-link:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--amarelo, #F1C50E);
+}
+
+.split-logo-emblema {
+  height: 38px;
+  width: auto;
+  display: block;
+}
+
+.split-logo-texto {
+  height: 32px;
+  width: auto;
+  display: block;
+}
+
+.split-corpo-hero {
+  margin: auto 0;
+  padding: 16px 0;
+  max-width: 500px;
+}
+
+.sobre-split {
+  font: 400 0.8rem var(--sans);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--amarelo, #F1C50E);
+  margin-bottom: 12px;
+}
+
+.split-chamada {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  line-height: 1.18;
+  color: #fff;
+  margin: 0 0 16px;
+}
+
+.split-chamada em {
+  font-style: italic;
+  color: var(--amarelo, #F1C50E);
+}
+
+.split-lead {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: #e6f0ff;
+  margin-bottom: 24px;
+}
+
+/* Colagem fotográfica com recortes geométricos da marca */
+.split-colagem-mini {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  max-width: 440px;
+  margin-bottom: 24px;
+}
+
+.split-colagem-mini img {
+  position: absolute;
+  display: block;
+  object-fit: cover;
+}
+
+.split-colagem-mini .foto-c1 {
+  left: 0;
+  top: 4%;
+  width: 76%;
+  aspect-ratio: 4 / 2.7;
+  clip-path: polygon(0 6%, 100% 0, 96% 100%, 2% 94%);
+  border: 2px solid var(--tinta, #1d2430);
+  box-shadow: 5px 5px 0 var(--amarelo, #F1C50E);
+}
+
+.split-colagem-mini .foto-c2 {
+  right: 0;
+  bottom: 0;
+  width: 44%;
+  aspect-ratio: 1 / 1;
+  clip-path: polygon(7% 0, 100% 5%, 94% 100%, 0 95%);
+  border: 2px solid var(--tinta, #1d2430);
+  box-shadow: 4px 4px 0 var(--vermelho, #DB150A);
+}
+
+.peca-split {
+  position: absolute;
+  display: block;
+  z-index: 1;
+}
+
+.p1-split {
+  right: 6%;
+  top: -4%;
+  width: 18%;
+  aspect-ratio: 1;
+  background: var(--amarelo, #F1C50E);
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+
+.p2-split {
+  left: -2%;
+  bottom: 0;
+  width: 14%;
+  aspect-ratio: 1;
+  background: var(--vermelho, #DB150A);
+  transform: rotate(14deg);
+}
+
+.p3-split {
+  right: 36%;
+  bottom: -6%;
+  width: 12%;
+  aspect-ratio: 1.4 / 1;
+  background: var(--laranja, #F08D0C);
+  clip-path: polygon(0 0, 100% 40%, 35% 100%);
+}
+
+/* Pilares da Usina da Vida */
+.split-pilares-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.split-pilar-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 4px;
+  padding: 10px 14px;
+  font-size: 0.88rem;
+}
+
+.split-pilar-marcador {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+.split-pilar-marcador.p-azul { background: var(--amarelo, #F1C50E); }
+.split-pilar-marcador.p-amarelo { background: var(--laranja, #F08D0C); }
+.split-pilar-marcador.p-vermelho { background: var(--vermelho, #DB150A); }
+
+.split-pilar-item b {
+  display: block;
+  font-weight: 600;
+  color: #fff;
+  font-size: 0.92rem;
+  line-height: 1.3;
+}
+
+.split-pilar-item span {
+  display: block;
+  color: #d4e4ff;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+.split-rodape-institucional {
+  font-size: 0.8rem;
+  color: #c0d8ff;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  padding-top: 16px;
+  margin-top: 24px;
+}
+
+/* LADO DIREITO: FORMULÁRIO DE LOGIN COM CARTÃO USINA DA VIDA */
+.split-lado-formulario {
+  background: var(--creme, #FBF6EA);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 32px;
+  box-sizing: border-box;
+  min-height: 100%;
+}
+
+.split-cartao {
+  background: #fff;
+  border: 2px solid var(--tinta, #1d2430);
+  border-radius: 6px;
+  box-shadow: 8px 8px 0 var(--amarelo, #F1C50E);
+  padding: 40px 36px 32px;
+  width: 100%;
+  max-width: 440px;
+  box-sizing: border-box;
+}
+
+.split-cartao .rotulo {
+  font: 400 0.78rem var(--sans);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--vermelho, #DB150A);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.split-cartao .rotulo::before {
+  content: "";
+  width: 20px;
+  height: 13px;
+  background: var(--amarelo, #F1C50E);
+  clip-path: polygon(0 0, 100% 0, 70% 100%, 0 100%);
+  display: inline-block;
+}
+
+.split-cartao-titulo {
+  font-family: var(--serif);
+  font-size: 1.85rem;
+  color: var(--azul, #085EC3);
+  margin: 0 0 6px;
+  line-height: 1.2;
+}
+
+.split-cartao-sub {
+  font-size: 0.88rem;
+  color: #5b616b;
+  margin: 0 0 22px;
+  line-height: 1.45;
+}
+
+.split-campo {
+  margin-bottom: 16px;
+}
+
+.split-campo label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.86rem;
+  margin-bottom: 5px;
+  color: var(--tinta, #1d2430);
+}
+
+.split-campo input, .split-campo select {
+  width: 100%;
+  font: inherit;
+  font-weight: 400;
+  padding: 11px 12px;
+  border: 2px solid #b9c4d4;
+  border-radius: 4px;
+  background: #fff;
+  color: var(--tinta, #1d2430);
+  box-sizing: border-box;
+  font-size: 0.95rem;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.split-campo input:focus, .split-campo select:focus {
+  border-color: var(--azul, #085EC3);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(8, 94, 195, 0.22);
+}
+
+.split-senha-wrap {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.split-senha-wrap input {
+  padding-right: 44px;
+}
+
+.split-btn-olho {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  padding: 6px 8px;
+  color: #6b7280;
+  cursor: pointer;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
-  z-index: 1000;
-  overflow-y: auto;
-  box-sizing: border-box;
 }
-#login::after {
-  content: '';
-  position: absolute;
-  right: -60px;
-  bottom: -60px;
-  width: 520px;
-  height: 520px;
-  background: url('/assets/img-03.png') no-repeat center / contain;
-  opacity: 0.08;
-  pointer-events: none;
+
+.split-btn-olho:hover {
+  color: var(--tinta, #1d2430);
+  background: #f3f4f6;
 }
-.cartao {
-  position: relative;
-  z-index: 2;
-  background: #fff;
-  border: 2px solid var(--tinta);
-  border-radius: 6px;
-  box-shadow: 8px 8px 0 var(--amarelo);
-  padding: 38px 34px;
-  width: 100%;
-  max-width: 440px;
+
+.split-linha-ajuda {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 8px 0 16px;
+  font-size: 0.83rem;
 }
-.cartao .marca img {
-  height: 46px;
-  width: auto;
-  margin: 0 auto 12px;
-  display: block;
+
+.split-lembrar {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #4b5563;
+  cursor: pointer;
+  user-select: none;
 }
-.cartao h1 {
-  color: var(--azul);
-  font-size: 1.75rem;
-  margin: 8px 0 4px;
-  text-align: center;
+
+.split-lembrar input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--azul, #085EC3);
+  margin: 0;
+  cursor: pointer;
 }
-.login-sub {
-  text-align: center;
-  font-size: 0.86rem;
-  color: #64748b;
-  margin: 0 0 20px;
-}
-.cartao label {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--tinta);
-  margin-top: 14px;
-  display: block;
-}
-.cartao input, .cartao select {
-  margin-top: 4px;
-  border: 1.5px solid #cbd5e1;
-  border-radius: 4px;
-  padding: 10px 12px;
-  font-size: 0.95rem;
-}
-.cartao input:focus, .cartao select:focus {
-  border-color: var(--azul);
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(8,94,195,0.18);
-}
-.cartao .voltar {
-  display: block;
-  text-align: center;
-  margin-top: 18px;
-  font-size: 0.88rem;
-  color: var(--azul);
-  text-decoration: none;
-  font-weight: 500;
-}
-.cartao .voltar:hover {
+
+.split-link-esqueci {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--azul, #085EC3);
+  font: 500 0.83rem var(--sans);
   text-decoration: underline;
+  cursor: pointer;
+}
+
+.split-link-esqueci:hover {
+  color: var(--azul-esc, #064a9c);
+}
+
+.split-btn-entrar {
+  width: 100%;
+  padding: 13px 20px;
+  font-size: 0.98rem;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.split-cartao .voltar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.88rem;
+  color: var(--azul, #085EC3);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.split-cartao .voltar:hover {
+  text-decoration: underline;
+}
+
+.split-copyright {
+  margin-top: 20px;
+  font-size: 0.78rem;
+  color: #8c93a0;
+  text-align: center;
+}
+
+/* RESPONSIVIDADE (TABLET E MOBILE) */
+@media (max-width: 960px) {
+  #login.login-split-layout {
+    grid-template-columns: 1fr !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .split-lado-institucional {
+    padding: 36px 20px 32px;
+    border-right: none;
+    border-bottom: 3px solid var(--tinta, #1d2430);
+  }
+  .split-corpo-hero {
+    margin: 16px 0;
+  }
+  .split-chamada {
+    font-size: 1.85rem;
+  }
+  .split-colagem-mini {
+    max-width: 320px;
+    margin-bottom: 20px;
+  }
+  .split-pilares-lista {
+    gap: 10px;
+  }
+  .split-lado-formulario {
+    padding: 32px 16px 44px;
+  }
+  .split-cartao {
+    padding: 30px 22px 24px;
+    box-shadow: 6px 6px 0 var(--amarelo, #F1C50E);
+  }
 }
 
 /* BARRA SUPERIOR */
@@ -3229,6 +3711,8 @@ tr:hover td {
   var icoPinInline = '${svgPin}';
   var icoUsersInline = '${svgUsers}';
   var icoCheckInline = '${svgCheck}';
+  var icoEyeInline = '${svgEye}';
+  var icoEyeOffInline = '${svgEyeOff}';
   var icoSedeInline = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9.5 12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1V9.5z"/></svg>';
 
   function calcKmCoords(a, b) {
@@ -3697,9 +4181,63 @@ tr:hover td {
       .catch(function() {});
   }
 
+  // Interações da tela de Login Split-Screen (mostrar/ocultar senha, lembrar usuário, suporte de acesso)
+  var btnToggleSenha = document.getElementById("btn-toggle-senha");
+  var inSenha = document.getElementById("senha");
+  var inUsuario = document.getElementById("usuario");
+  var chkLembrar = document.getElementById("lembrar-login");
+  var linkEsqueciSenha = document.getElementById("link-esqueci-senha");
+  var btnSair = document.getElementById("sair");
+
+  if (btnToggleSenha && inSenha) {
+    btnToggleSenha.addEventListener("click", function(e) {
+      e.preventDefault();
+      var ehSenha = inSenha.type === "password";
+      inSenha.type = ehSenha ? "text" : "password";
+      btnToggleSenha.innerHTML = ehSenha ? icoEyeOffInline : icoEyeInline;
+      btnToggleSenha.setAttribute("aria-label", ehSenha ? "Ocultar senha" : "Ver senha");
+      btnToggleSenha.setAttribute("title", ehSenha ? "Ocultar senha" : "Ver senha");
+    });
+  }
+
+  if (linkEsqueciSenha) {
+    linkEsqueciSenha.addEventListener("click", function(e) {
+      e.preventDefault();
+      alert("Acesso Restrito ao Portal Usina da Vida\n\nPor políticas de conformidade e segurança da informação (LGPD), as credenciais de acesso ao Portal de Gestão são concedidas e gerenciadas diretamente pela Presidência e pela Coordenação Geral.\n\nCaso necessite de recuperação de senha ou autorização de perfil, contate a administração institucional da Usina da Vida.");
+    });
+  }
+
+  // Preenche usuário previamente salvo se houver
+  try {
+    var usuarioSalvo = localStorage.getItem("usina_login_salvo");
+    if (usuarioSalvo && inUsuario) {
+      inUsuario.value = usuarioSalvo;
+    }
+  } catch(e) {}
+
+  if (btnSair) {
+    btnSair.addEventListener("click", function() {
+      if (inSenha) inSenha.type = "password";
+      if (btnToggleSenha) {
+        btnToggleSenha.innerHTML = icoEyeInline;
+        btnToggleSenha.setAttribute("aria-label", "Mostrar ou ocultar senha");
+        btnToggleSenha.setAttribute("title", "Mostrar ou ocultar senha");
+      }
+    });
+  }
+
   var formLogin = document.getElementById("f-login");
   if (formLogin) {
     formLogin.addEventListener("submit", function() {
+      if (chkLembrar && inUsuario) {
+        try {
+          if (chkLembrar.checked && inUsuario.value.trim()) {
+            localStorage.setItem("usina_login_salvo", inUsuario.value.trim());
+          } else {
+            localStorage.removeItem("usina_login_salvo");
+          }
+        } catch(e) {}
+      }
       setTimeout(function() {
         var elApp = document.getElementById("app");
         if (!elApp || elApp.style.display === "none") return;
