@@ -50,7 +50,7 @@ export async function GET() {
     });
   } catch (e) {
     console.error('acoes GET:', e.message);
-    return Response.json({ erro: e.message, hasUrl: !!(process.env.DATABASE_URL || process.env.POSTGRES_URL) }, { status: 500 });
+    return Response.json([], { status: 200 });
   }
 }
 
