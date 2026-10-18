@@ -243,6 +243,66 @@ html {
   }
 }
 
+/* Layout Responsivo para "Nossos Programas": 2 programas por linha no mobile */
+@media (max-width: 760px) {
+  #programas .wrap {
+    padding: 0 16px !important;
+  }
+  .progs {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 0 !important;
+    border-top: 3px solid var(--tinta, #1d2430) !important;
+  }
+  .prog {
+    padding: 16px 10px 18px 0 !important;
+    border-bottom: 1px solid #d7dbe2 !important;
+    border-left: none !important;
+    border-right: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+  .prog:nth-child(odd) {
+    padding-left: 0 !important;
+    padding-right: 12px !important;
+    border-right: 1px solid #d7dbe2 !important;
+  }
+  .prog:nth-child(even) {
+    padding-left: 12px !important;
+    padding-right: 0 !important;
+    border-right: none !important;
+  }
+  .prog .ic {
+    height: 46px !important;
+    margin-bottom: 8px !important;
+    display: flex !important;
+    align-items: flex-end !important;
+  }
+  .prog .ic img {
+    max-height: 44px !important;
+    max-width: 76px !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
+  }
+  .prog h3 {
+    font-size: clamp(0.74rem, 3.2vw, 0.94rem) !important;
+    line-height: 1.22 !important;
+    letter-spacing: 0.01em !important;
+    margin-bottom: 5px !important;
+    overflow-wrap: break-word !important;
+    white-space: nowrap !important;
+  }
+  .prog p {
+    font-size: clamp(0.74rem, 2.9vw, 0.82rem) !important;
+    line-height: 1.4 !important;
+    color: #4a4f58 !important;
+    margin: 0 !important;
+  }
+}
+
 /* Vitrine de Avaliações do Google */
 .sec-aval {
   background: var(--creme);
