@@ -1,4 +1,5 @@
 import { db, texto, lista, emailValido } from '../../../lib/db.js';
+import { validarSenhaPresidencia } from '../permissoes/route.js';
 
 export async function POST(req) {
   let b;
@@ -37,10 +38,90 @@ export async function GET() {
       FROM voluntarios
       ORDER BY id DESC
       LIMIT 200`;
-    return Response.json(rows);
+    return Response.json(rows, {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate'
+      }
+    });
   } catch (e) {
     console.error('inscricoes GET:', e.message);
     return Response.json([], { status: 200 });
   }
 }
 
+export async function PUT(req) {
+  let b;
+  try { b = await req.json(); } catch { return Response.json({ erro: 'JSON invalido' }, { status: 400 }); }
+
+  const { id, nome, email, telefone, bairro, formacao, status, areas, disp, disponibilidade, ativ, acao_interesse } = b || {};
+  const senha = b?.senha || b?.senha_presidencia;
+
+  if (!id) return Response.json({ erro: 'ID do voluntário é obrigatório' }, { status: 422 });
+
+  if (!validarSenhaPresidencia(senha)) {
+    return Response.json({ erro: 'Senha da Presidência incorreta para autorizar a alteração deste cadastro.' }, { status: 401 });
+  }
+
+  const nomeLimpo = texto(nome, 150);
+  const emailLimpo = texto(email, 200).toLowerCase();
+  const telLimpo = texto(telefone, 30);
+  const bairroLimpo = texto(bairro, 100);
+  const formLimpo = texto(formacao, 60);
+  const stLimpo = texto(status, 40) || 'Recebida';
+  const areasArr = lista(areas);
+  const dispArr = lista(disp || disponibilidade);
+  const ativLimpo = texto(ativ || acao_interesse, 150);
+
+  try {
+    const sql = db();
+    const rows = await sql`
+      UPDATE voluntarios
+      SET 
+        nome = COALESCE(NULLIF(${nomeLimpo}, ''), nome),
+        email = COALESCE(NULLIF(${emailLimpo}, ''), email),
+        telefone = COALESCE(NULLIF(${telLimpo}, ''), telefone),
+        bairro = COALESCE(NULLIF(${bairroLimpo}, ''), bairro),
+        formacao = COALESCE(NULLIF(${formLimpo}, ''), formacao),
+        status = ${stLimpo},
+        areas = CASE WHEN cardinality(${areasArr}::text[]) > 0 THEN ${areasArr}::text[] ELSE areas END,
+        disponibilidade = CASE WHEN cardinality(${dispArr}::text[]) > 0 THEN ${dispArr}::text[] ELSE disponibilidade END,
+        acao_interesse = COALESCE(NULLIF(${ativLimpo}, ''), acao_interesse)
+      WHERE id = ${id}
+      RETURNING id, nome, email, telefone, bairro, formacao, areas, disponibilidade, status, acao_interesse, criado_em`;
+
+    if (!rows.length) return Response.json({ erro: 'Voluntário não encontrado' }, { status: 404 });
+    return Response.json(rows[0], { status: 200 });
+  } catch (e) {
+    console.error('inscricoes PUT:', e.message);
+    return Response.json({ erro: 'Falha ao atualizar voluntário no banco' }, { status: 500 });
+  }
+}
+
+export async function DELETE(req) {
+  const url = new URL(req.url);
+  let id = url.searchParams.get('id');
+  let senha = url.searchParams.get('senha') || url.searchParams.get('senha_presidencia');
+
+  if (!id) {
+    try {
+      const b = await req.json();
+      id = b.id;
+      senha = b.senha || b.senha_presidencia;
+    } catch {}
+  }
+
+  if (!id) return Response.json({ erro: 'ID do voluntário é obrigatório' }, { status: 422 });
+
+  if (!validarSenhaPresidencia(senha)) {
+    return Response.json({ erro: 'Senha da Presidência incorreta para autorizar a exclusão deste cadastro.' }, { status: 401 });
+  }
+
+  try {
+    const sql = db();
+    await sql`DELETE FROM voluntarios WHERE id = ${id}`;
+    return Response.json({ ok: true, id }, { status: 200 });
+  } catch (e) {
+    console.error('inscricoes DELETE:', e.message);
+    return Response.json({ erro: 'Falha ao excluir voluntário no banco' }, { status: 500 });
+  }
+}

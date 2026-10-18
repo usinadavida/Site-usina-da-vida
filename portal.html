@@ -1434,6 +1434,173 @@ tr:hover td {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* GESTÃO DA PRESIDÊNCIA: BOTÕES DE EDIÇÃO E EXCLUSÃO NA TABELA E CARDS */
+.tb-acoes-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.btn-tb-acao {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  border-radius: 4px;
+  border: 1px solid var(--borda);
+  background: #ffffff;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  line-height: 1;
+}
+.btn-tb-editar {
+  color: var(--azul);
+  border-color: #bfdbfe;
+}
+.btn-tb-editar:hover {
+  background: #eff6ff;
+  border-color: var(--azul);
+}
+.btn-tb-excluir {
+  color: var(--vermelho);
+  border-color: #fecaca;
+}
+.btn-tb-excluir:hover {
+  background: #fef2f2;
+  border-color: var(--vermelho);
+}
+.acao-gestao-botoes {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+}
+.btn-acao-gestao {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: #ffffff;
+  line-height: 1;
+}
+.btn-acao-editar {
+  color: var(--azul);
+}
+.btn-acao-editar:hover {
+  background: #eff6ff;
+  border-color: var(--azul);
+}
+.btn-acao-excluir {
+  color: var(--vermelho);
+}
+.btn-acao-excluir:hover {
+  background: #fef2f2;
+  border-color: var(--vermelho);
+}
+.tag-status-readonly {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  background: #f1f5f9;
+  color: #475569;
+}
+
+/* MODAL DE VALIDAÇÃO DA PRESIDÊNCIA */
+.modal-card-valida {
+  max-width: 440px !important;
+  border-top: 4px solid var(--azul) !important;
+}
+.valida-badge-pres {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  background: #eff6ff;
+  color: var(--azul);
+  border: 1px solid #bfdbfe;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.valida-msg-erro {
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: #fef2f2;
+  color: var(--vermelho);
+  border: 1px solid #fecaca;
+  border-radius: 4px;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+/* MATRIZ DE GOVERNANÇA E PERMISSÕES */
+.tag-presidencia-total {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #eff6ff;
+  color: var(--azul);
+  border: 1px solid #bfdbfe;
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+.perm-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  user-select: none;
+}
+.chk-perm {
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
+  accent-color: var(--azul);
+}
+.chk-perm:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+.perm-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--tinta);
+}
+.governo-alerta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: #fff;
+  padding: 16px 20px;
+  border-top: 1px solid var(--borda);
+  flex-wrap: wrap;
+}
+.governo-alerta-texto {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.86rem;
+  color: #475569;
+}
+.governo-alerta-texto b {
+  color: var(--azul);
+}
 </style>
 </head>
 <body>
@@ -1495,7 +1662,7 @@ tr:hover td {
 <!-- BARRA PRINCIPAL DE FILTROS --><div class="filtros-barra" id="filtros-barra-principal" role="search" aria-label="Filtros de voluntários">  <div class="filtros-gerais-grupo" id="filtros-gerais-grupo">    <div class="filtro-campo campo-busca">      <label for="f-busca">Buscar por nome</label>      <div class="busca-input-wrap">        <span class="busca-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>        <input id="f-busca" type="text" placeholder="Digite o nome do voluntário...">      </div>    </div>    <div class="filtro-campo">      <label for="f-area">Área de atuação</label>      <select id="f-area"></select>    </div>    <div class="filtro-campo">      <label for="f-status">Status da inscrição</label>      <select id="f-status"></select>    </div>    <div class="filtro-campo">      <label for="f-disp">Disponibilidade</label>      <select id="f-disp"></select>    </div>  </div>  <div class="filtro-campo campo-btn-geo">    <label>&nbsp;</label>    <button type="button" id="btn-toggle-geo" class="btn-geo-toggle" aria-expanded="false">      <svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> <span id="txt-btn-geo">Filtros Territoriais &amp; Mapa</span>    </button>  </div></div>
 <!-- GAVETA EXPANSÍVEL DE FILTROS AVANÇADOS E MAPA TERRITORIAL --><div class="gaveta-geo" id="gaveta-geo" style="display:none">  <div class="gaveta-grid">    <div class="geo-filtros-extra">      <div class="filtro-campo" id="wrap-f-bairro"><label for="f-bairro">Bairro / Localidade</label><select id="f-bairro"></select></div>      <div class="filtro-campo" id="wrap-f-form"><label for="f-form">Formação acadêmica</label><select id="f-form"></select></div>      <div class="filtro-campo" id="wrap-f-ativ"><label for="f-ativ">Alocação em atividade</label><select id="f-ativ"></select></div>      <div class="filtro-campo" id="wrap-f-ref"><label for="f-ref">Ponto focal de referência</label><select id="f-ref"></select></div>      <div class="filtro-campo" id="wrap-f-raio"><label for="f-raio">Raio de proximidade (km)</label><input id="f-raio" type="number" min="0" max="200" step="0.5" inputmode="decimal" list="raios" placeholder="Ex.: 4,5"><datalist id="raios"><option value="3"><option value="5"><option value="8"><option value="12"><option value="20"></datalist></div>    </div>    <div class="geo-mapa-wrap">      <div class="mapa-cab"><b class="mapa-titulo-ic"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg> Mapa Territorial de Salvador</b><span id="mapa-leg"></span></div>      <div id="mapa-leaflet" role="region" aria-label="Mapa interativo dos bairros de Salvador"></div>      <svg id="mapa" viewBox="0 0 330 175" role="img" aria-label="Mapa esquemático dos bairros com o raio de distância" style="display:none"></svg>      <p class="mapa-info">Sede da ONG: <b>R. Estrela D'álva, 13e - Arenoso, Salvador - BA, 41211-300</b>. Clique em qualquer bairro para filtrar ou alterar o ponto focal.</p>    </div>  </div></div>
 <div class="tabela-meta-barra">  <span id="contagem" aria-live="polite"></span></div>
-<div class="tabela-wrap">  <table>    <caption class="oculto" style="position:absolute;left:-999px">Lista de voluntários</caption>    <thead><tr><th>Nome</th><th>Área(s)</th><th>Formação</th><th>Disponibilidade</th><th>Localização</th><th>Atividade</th><th>Contato Direto</th><th>Status</th></tr></thead>    <tbody id="corpo"></tbody>  </table>
+<div class="tabela-wrap">  <table>    <caption class="oculto" style="position:absolute;left:-999px">Lista de voluntários</caption>    <thead><tr><th>Nome</th><th>Área(s)</th><th>Formação</th><th>Disponibilidade</th><th>Localização</th><th>Atividade</th><th>Contato Direto</th><th>Status</th><th style="text-align:center;min-width:130px">Ações</th></tr></thead>    <tbody id="corpo"></tbody>  </table>
   <div id="vazio" class="vazio" style="display:none">Nenhum voluntário encontrado com esses filtros.</div>
       </div>
     </section>
@@ -1581,60 +1748,137 @@ tr:hover td {
     </div>
   </div>
 
-  <!-- TABELA MATRIZ DE PERMISSÕES -->
+  <!-- TABELA MATRIZ DE PERMISSÕES INTERATIVA -->
   <div class="box" style="margin-top: 24px; padding: 0; overflow: hidden;">
-    <div style="padding: 16px 20px; border-bottom: 1px solid var(--borda); background: #f8fafc;">
-      <h3 style="margin: 0; font-size: 1.05rem; color: var(--azul);">Matriz Comparativa de Permissões</h3>
+    <div style="padding: 16px 20px; border-bottom: 1px solid var(--borda); background: #f8fafc; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+      <div>
+        <h3 style="margin: 0; font-size: 1.05rem; color: var(--azul);">Matriz de Governança e Permissões Institucionais</h3>
+        <p style="margin: 4px 0 0 0; font-size: 0.82rem; color: #64748b;">Configure as permissões operacionais do sistema. Modificações exigem autorização da Presidência.</p>
+      </div>
+      <span class="sessao-badge" style="font-size: 0.78rem;"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> <span>Governança Ativa</span></span>
     </div>
     <div class="tabela-wrap" style="box-shadow: none; border-radius: 0; border: none;">
       <table class="tabela-matriz">
         <thead>
           <tr>
-            <th style="width: 46%;">Funcionalidade / Operação</th>
-            <th style="text-align: center;">Presidência</th>
-            <th style="text-align: center;">Coordenação</th>
-            <th style="text-align: center;">Colaborador</th>
+            <th style="width: 44%;">Funcionalidade / Operação</th>
+            <th style="text-align: center; width: 22%;">Presidência</th>
+            <th style="text-align: center; width: 17%;">Coordenação</th>
+            <th style="text-align: center; width: 17%;">Colaborador</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><b>Painel Geral:</b> Acompanhar indicadores e gráficos</td>
-            <td style="text-align: center;"><span class="tag-sim">Permitido</span></td>
+            <td><b>Painel Geral:</b> Acompanhar indicadores, funil e gráficos</td>
+            <td style="text-align: center;"><span class="tag-presidencia-total"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Acesso Pleno</span></td>
             <td style="text-align: center;"><span class="tag-sim">Permitido</span></td>
             <td style="text-align: center;"><span class="tag-sim">Permitido</span></td>
           </tr>
           <tr>
             <td><b>Banco de Voluntários:</b> Filtrar competências e disponibilidade</td>
-            <td style="text-align: center;"><span class="tag-sim">Permitido</span></td>
+            <td style="text-align: center;"><span class="tag-presidencia-total"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Acesso Pleno</span></td>
             <td style="text-align: center;"><span class="tag-sim">Permitido</span></td>
             <td style="text-align: center;"><span class="tag-sim">Permitido</span></td>
           </tr>
           <tr>
             <td><b>Privacidade (LGPD):</b> Visualizar WhatsApp e e-mail</td>
-            <td style="text-align: center;"><span class="tag-sim">Permitido</span></td>
-            <td style="text-align: center;"><span class="tag-sim">Permitido</span></td>
-            <td style="text-align: center;"><span class="tag-restrito">Protegido</span></td>
+            <td style="text-align: center;"><span class="tag-presidencia-total"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Acesso Pleno</span></td>
+            <td style="text-align: center;">
+              <label class="perm-switch">
+                <input type="checkbox" id="chk-coord-verContatos" class="chk-perm" data-perfil="coordenacao" data-perm="verContatos" checked>
+                <span class="perm-label">Permitido</span>
+              </label>
+            </td>
+            <td style="text-align: center;">
+              <label class="perm-switch">
+                <input type="checkbox" id="chk-colab-verContatos" class="chk-perm" data-perfil="colaborador" data-perm="verContatos">
+                <span class="perm-label">Protegido</span>
+              </label>
+            </td>
           </tr>
           <tr>
             <td><b>Triagem de Inscrição:</b> Atualizar status do voluntário</td>
-            <td style="text-align: center;"><span class="tag-sim">Permitido</span></td>
-            <td style="text-align: center;"><span class="tag-sim">Permitido</span></td>
-            <td style="text-align: center;"><span class="tag-nao">Bloqueado</span></td>
+            <td style="text-align: center;"><span class="tag-presidencia-total"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Acesso Pleno</span></td>
+            <td style="text-align: center;">
+              <label class="perm-switch">
+                <input type="checkbox" id="chk-coord-alterarStatus" class="chk-perm" data-perfil="coordenacao" data-perm="alterarStatus" checked>
+                <span class="perm-label">Permitido</span>
+              </label>
+            </td>
+            <td style="text-align: center;">
+              <label class="perm-switch">
+                <input type="checkbox" id="chk-colab-alterarStatus" class="chk-perm" data-perfil="colaborador" data-perm="alterarStatus">
+                <span class="perm-label">Bloqueado</span>
+              </label>
+            </td>
           </tr>
           <tr>
-            <td><b>Ações Sociais:</b> Confirmar voluntários em oficinas</td>
-            <td style="text-align: center;"><span class="tag-sim">Permitido</span></td>
-            <td style="text-align: center;"><span class="tag-sim">Permitido</span></td>
-            <td style="text-align: center;"><span class="tag-nao">Bloqueado</span></td>
+            <td><b>Ações Sociais:</b> Confirmar voluntários em vagas de oficinas</td>
+            <td style="text-align: center;"><span class="tag-presidencia-total"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Acesso Pleno</span></td>
+            <td style="text-align: center;">
+              <label class="perm-switch">
+                <input type="checkbox" id="chk-coord-confirmarInscricoes" class="chk-perm" data-perfil="coordenacao" data-perm="confirmarInscricoes" checked>
+                <span class="perm-label">Permitido</span>
+              </label>
+            </td>
+            <td style="text-align: center;">
+              <label class="perm-switch">
+                <input type="checkbox" id="chk-colab-confirmarInscricoes" class="chk-perm" data-perfil="colaborador" data-perm="confirmarInscricoes">
+                <span class="perm-label">Bloqueado</span>
+              </label>
+            </td>
           </tr>
           <tr>
-            <td><b>Exportação Corporativa:</b> Download da lista em formato CSV</td>
-            <td style="text-align: center;"><span class="tag-sim">Exclusivo</span></td>
-            <td style="text-align: center;"><span class="tag-nao">Bloqueado</span></td>
-            <td style="text-align: center;"><span class="tag-nao">Bloqueado</span></td>
+            <td><b>Ações Sociais:</b> Cadastrar e agendar novas oficinas comunitárias</td>
+            <td style="text-align: center;"><span class="tag-presidencia-total"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Acesso Pleno</span></td>
+            <td style="text-align: center;">
+              <label class="perm-switch">
+                <input type="checkbox" id="chk-coord-cadastrarAcoes" class="chk-perm" data-perfil="coordenacao" data-perm="cadastrarAcoes" checked>
+                <span class="perm-label">Permitido</span>
+              </label>
+            </td>
+            <td style="text-align: center;">
+              <label class="perm-switch">
+                <input type="checkbox" id="chk-colab-cadastrarAcoes" class="chk-perm" data-perfil="colaborador" data-perm="cadastrarAcoes">
+                <span class="perm-label">Bloqueado</span>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td><b>Exportação de Base:</b> Download da lista em formato CSV</td>
+            <td style="text-align: center;"><span class="tag-presidencia-total"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Acesso Pleno</span></td>
+            <td style="text-align: center;">
+              <label class="perm-switch">
+                <input type="checkbox" id="chk-coord-exportarCsv" class="chk-perm" data-perfil="coordenacao" data-perm="exportarCsv">
+                <span class="perm-label">Bloqueado</span>
+              </label>
+            </td>
+            <td style="text-align: center;">
+              <label class="perm-switch">
+                <input type="checkbox" id="chk-colab-exportarCsv" class="chk-perm" data-perfil="colaborador" data-perm="exportarCsv">
+                <span class="perm-label">Bloqueado</span>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td><b>Edição e Exclusão:</b> Alterar ou deletar voluntários e ações</td>
+            <td style="text-align: center;"><span class="tag-presidencia-total" style="background:#fef2f2;color:#dc2626;border-color:#fecaca"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Exclusivo Presidência</span></td>
+            <td style="text-align: center;"><span class="tag-nao">Restrito</span></td>
+            <td style="text-align: center;"><span class="tag-nao">Restrito</span></td>
           </tr>
         </tbody>
       </table>
+    </div>
+    <div class="governo-alerta" id="box-governo-acoes">
+      <div class="governo-alerta-texto">
+        <svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <div><b>Prerrogativa da Presidência:</b> Salvar ou alterar permissões exige a autenticação com senha institucional da Presidência.</div>
+      </div>
+      <div>
+        <button type="button" id="btn-salvar-permissoes" class="btn btn-azul" style="display:inline-flex;align-items:center;gap:8px;font-weight:700">
+          <svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> <span>Salvar e Instituir Permissões</span>
+        </button>
+      </div>
     </div>
   </div>
 </section>
@@ -1755,18 +1999,71 @@ tr:hover td {
       return (!q||v.nome.toLowerCase().indexOf(q)>-1)&&(!a||v.areas.indexOf(a)>-1)&&(!f||v.form===f)&&(!d||v.disp.indexOf(d)>-1)&&(!b||v.bairro===b)&&(!s||v.status===s)&&(!grupo||grupo.indexOf(v.status)>-1)&&(!t||v.ativ===t)&&noRaio(v);
     });
   }
+  window.PERMISSOES_SISTEMA = {
+    coordenacao: { verContatos: true, alterarStatus: true, cadastrarAcoes: true, confirmarInscricoes: true, exportarCsv: false },
+    colaborador: { verContatos: false, alterarStatus: false, cadastrarAcoes: false, confirmarInscricoes: false, exportarCsv: false }
+  };
+
+  function podeAcao(chavePermissao) {
+    if (perfil === "presidencia") return true;
+    var p = (window.PERMISSOES_SISTEMA && window.PERMISSOES_SISTEMA[perfil]) || {};
+    return !!p[chavePermissao];
+  }
+  window.podeAcao = podeAcao;
+
   function tabela(){
-    var lista = filtrados(), pode = perfil!=="colaborador";
-    $("contagem").textContent = lista.length+" de "+vols.length+" voluntários"+(grupo?" · status: "+grupo.join(" ou "):""); mapa(lista);
-    $("vazio").style.display = lista.length? "none":"block";
+    var lista = filtrados();
+    var podeContatos = podeAcao("verContatos");
+    var podeStatus = podeAcao("alterarStatus");
+    var ePresid = (perfil === "presidencia");
+
+    $("contagem").textContent = lista.length + " de " + vols.length + " voluntários" + (grupo ? " · status: " + grupo.join(" ou ") : "");
+    mapa(lista);
+    $("vazio").style.display = lista.length ? "none" : "block";
+
     $("corpo").innerHTML = lista.map(function(v){
-      var contato = pode ? '<a class="link-wa" href="https://wa.me/55'+v.tel.replace(/\D/g,"")+'" target="_blank" rel="noopener" title="Abrir conversa no WhatsApp"><span class="wa-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span> '+esc(v.tel)+'</a><div class="txt-email">'+esc(v.email)+'</div>' : '<span class="tag-restrito"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Protegido (LGPD)</span>';
-      var st = pode ? '<select class="st" data-id="'+v.id+'" aria-label="Status de '+esc(v.nome)+'">'+STATUS.map(function(x){return '<option'+(x===v.status?' selected':'')+'>'+x+'</option>'}).join("")+'</select>' : esc(v.status);
-      return '<tr><td><b>'+esc(v.nome)+'</b></td><td>'+v.areas.map(function(a){return '<span class="tag">'+esc(a)+'</span>'}).join("")+'</td><td>'+esc(v.form)+'</td><td>'+esc(v.disp.join(", "))+'</td><td>'+esc(v.bairro)+('<br><small class="dist-sede">'+(v.bairro===$("f-ref").value ? (v.bairro==="Arenoso"?"Sede da ONG (0 km)":"Ponto focal (0 km)") : km(v.bairro,$("f-ref").value).toFixed(1).replace(".",",")+' km '+($("f-ref").value==="Arenoso"?"da Sede":"de "+$("f-ref").value))+'</small>')+'</td><td>'+esc(v.ativ)+'</td><td>'+contato+'</td><td>'+st+'</td></tr>';
+      var contato = podeContatos
+        ? '<a class="link-wa" href="https://wa.me/55' + v.tel.replace(/\D/g,"") + '" target="_blank" rel="noopener" title="Abrir conversa no WhatsApp"><span class="wa-ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span> ' + esc(v.tel) + '</a><div class="txt-email">' + esc(v.email) + '</div>'
+        : '<span class="tag-restrito"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Protegido (LGPD)</span>';
+
+      var st = podeStatus
+        ? '<select class="st" data-id="' + v.id + '" aria-label="Status de ' + esc(v.nome) + '">' + STATUS.map(function(x){ return '<option' + (x === v.status ? ' selected' : '') + '>' + x + '</option>'; }).join("") + '</select>'
+        : '<span class="tag-status-readonly">' + esc(v.status) + '</span>';
+
+      var acoesVol = ePresid
+        ? '<div class="tb-acoes-wrap">' +
+            '<button type="button" class="btn-tb-acao btn-tb-editar" data-vol-id="' + v.id + '" title="Editar voluntário (requer validação da Presidência)">' +
+              '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> <span>Editar</span>' +
+            '</button>' +
+            '<button type="button" class="btn-tb-acao btn-tb-excluir" data-vol-id="' + v.id + '" title="Excluir voluntário (requer validação da Presidência)">' +
+              '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg> <span>Excluir</span>' +
+            '</button>' +
+          '</div>'
+        : '<span style="color:#94a3b8;font-size:0.75rem;">—</span>';
+
+      var distTxt = '<br><small class="dist-sede">' + (v.bairro === $("f-ref").value ? (v.bairro === "Arenoso" ? "Sede da ONG (0 km)" : "Ponto focal (0 km)") : km(v.bairro, $("f-ref").value).toFixed(1).replace(".", ",") + ' km ' + ($("f-ref").value === "Arenoso" ? "da Sede" : "de " + $("f-ref").value)) + '</small>';
+
+      return '<tr>' +
+        '<td><b>' + esc(v.nome) + '</b></td>' +
+        '<td>' + v.areas.map(function(a){ return '<span class="tag">' + esc(a) + '</span>'; }).join("") + '</td>' +
+        '<td>' + esc(v.form) + '</td>' +
+        '<td>' + esc(v.disp.join(", ")) + '</td>' +
+        '<td>' + esc(v.bairro) + distTxt + '</td>' +
+        '<td>' + esc(v.ativ) + '</td>' +
+        '<td>' + contato + '</td>' +
+        '<td>' + st + '</td>' +
+        '<td class="col-acoes-vol" style="text-align:center">' + acoesVol + '</td>' +
+      '</tr>';
     }).join("");
+
     Array.prototype.forEach.call(document.querySelectorAll("select.st"), function(sel){
-      sel.addEventListener("change", function(){ vols.filter(function(v){return v.id==sel.dataset.id})[0].status = sel.value; geral(); });
+      sel.addEventListener("change", function(){
+        var alvo = vols.filter(function(v){ return v.id == sel.dataset.id; })[0];
+        if (alvo) alvo.status = sel.value;
+        geral();
+      });
     });
+  });
   }
 
   /* visão geral */
@@ -1892,7 +2189,9 @@ tr:hover td {
   }
   function ocupadas(a){ return a.insc.filter(function(i){return i[1]===1}).length; }
   function agend(){
-    var pode = perfil!=="colaborador";
+    var pode = (typeof podeAcao === "function") ? podeAcao("confirmarInscricoes") : (perfil!=="colaborador");
+    var podeTel = (typeof podeAcao === "function") ? podeAcao("verContatos") : (perfil!=="colaborador");
+    var ePresid = (perfil === "presidencia");
     $("n-todas").textContent="("+(ACOES.length+AGEND.length)+")"; $("n-real").textContent="("+ACOES.length+")"; $("n-agend").textContent="("+AGEND.length+")";
     $("agend").innerHTML = AGEND.map(function(a,k){
       var oc=ocupadas(a), pend=a.insc.length-oc, rest=Math.max(0,a.vagas-oc);
@@ -1902,8 +2201,20 @@ tr:hover td {
       var vars = '--solid:' + tm.solid + ';--fg:' + tm.fg + ';--sem-bg:' + tm.semBg + ';--pill-bg:' + tm.pillBg + ';--pill-fg:' + tm.pillFg + ';--bar:' + tm.bar + ';--bg:' + tm.bg + ';--bd:' + tm.bd;
       var li = a.insc.map(function(i,j){
         var v=vols[i[0]-1], ok=i[1]===1;
-        return '<li><span>'+esc(v.nome)+(pode?' <small class="oculto">· '+esc(v.tel)+'</small>':'')+'</span><span>'+(ok?'<span class="ok">Confirmada</span>':'<span class="pend">Pendente</span> '+(pode?'<button type="button" data-k="'+k+'" data-j="'+j+'"'+(rest===0?' disabled title="Sem vagas"':'')+'>Confirmar</button>':''))+'</span></li>';
+        return '<li><span>'+(v?esc(v.nome):"Voluntário")+(podeTel&&v?' <small class="oculto">· '+esc(v.tel)+'</small>':'')+'</span><span>'+(ok?'<span class="ok">Confirmada</span>':'<span class="pend">Pendente</span> '+(pode?'<button type="button" data-k="'+k+'" data-j="'+j+'"'+(rest===0?' disabled title="Sem vagas"':'')+'>Confirmar</button>':''))+'</span></li>';
       }).join("");
+
+      var botoesAcao = ePresid
+        ? '<div class="acao-gestao-botoes">' +
+            '<button type="button" class="btn-acao-gestao btn-acao-editar" data-k="'+k+'" data-acao-id="'+(a.id||'')+'" title="Editar ação agendada (requer senha da Presidência)">' +
+              '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> <span>Editar</span>' +
+            '</button>' +
+            '<button type="button" class="btn-acao-gestao btn-acao-excluir" data-k="'+k+'" data-acao-id="'+(a.id||'')+'" title="Excluir ação do sistema (requer senha da Presidência)">' +
+              '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg> <span>Excluir</span>' +
+            '</button>' +
+          '</div>'
+        : '';
+
       return '<article class="acao" style="' + vars + '">' +
         '<div class="acao-side">' +
           '<span class="dia">' + esc(cal.dia) + '</span>' +
@@ -1911,7 +2222,10 @@ tr:hover td {
           '<span class="sem">' + esc(cal.sem) + '</span>' +
         '</div>' +
         '<div class="acao-main">' +
-          '<div><span class="acao-tag-pill">' + esc(a.a) + '</span></div>' +
+          '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px">' +
+            '<span class="acao-tag-pill">' + esc(a.a) + '</span>' +
+            botoesAcao +
+          '</div>' +
           '<h3 class="acao-titulo" title="' + esc(a.t) + '">' + esc(a.t) + '</h3>' +
           '<p class="acao-desc" title="' + esc(descInfo.completo) + '">' + esc(descInfo.visivel) + '</p>' +
           '<div class="acao-foot-inline">' +
@@ -1956,7 +2270,7 @@ tr:hover td {
 
   /* CSV (somente presidência) */
   $("csv").addEventListener("click", function(){
-    if(perfil!=="presidencia") return;
+    if(typeof podeAcao === "function" && !podeAcao("exportarCsv")) { alert("Seu perfil atual não possui permissão para exportação de dados."); return; }
     var linhas = [["Nome","Áreas","Formação","Disponibilidade","Localização","Atividade","Status"]].concat(filtrados().map(function(v){ return [v.nome,v.areas.join("; "),v.form,v.disp.join("; "),v.bairro,v.ativ,v.status]; }));
     var csv = "﻿"+linhas.map(function(l){return l.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"'}).join(";")}).join("\r\n");
     var a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"})); a.download="voluntarios-usina-da-vida.csv"; a.click();
@@ -2022,6 +2336,171 @@ tr:hover td {
         <button type="button" class="btn btn-cont" id="btn-cancelar-cad-acao">Cancelar</button>
         <button type="submit" class="btn btn-amarelo btn-salvar-acao">
           <svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> <span>Cadastrar e Publicar Ação</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>\n<!-- MODAL DE EDIÇÃO DE VOLUNTÁRIO -->
+<div class="modal-backdrop" id="modal-editar-voluntario" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="modal-edit-vol-titulo">
+  <div class="modal-card">
+    <div class="modal-cab">
+      <div class="modal-cab-info">
+        <div class="valida-badge-pres"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> <span>Gestão da Presidência</span></div>
+        <h3 id="modal-edit-vol-titulo" style="margin-top:6px">Editar Cadastro de Voluntário</h3>
+        <p class="modal-subtitulo">Atualize os dados cadastrais. A alteração será validada com a senha da Presidência.</p>
+      </div>
+      <button type="button" class="modal-fechar" id="btn-fechar-modal-edit-vol" aria-label="Fechar formulário"><svg class="ico-svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+
+    <form id="form-editar-vol" class="form-modal-acao">
+      <input type="hidden" id="edit-vol-id">
+      <div class="form-campo">
+        <label for="edit-vol-nome" class="form-label">Nome Completo <span class="req">*</span></label>
+        <input type="text" id="edit-vol-nome" class="form-input" required maxlength="120">
+      </div>
+
+      <div class="form-linha-dupla">
+        <div class="form-campo">
+          <label for="edit-vol-email" class="form-label">E-mail <span class="req">*</span></label>
+          <input type="email" id="edit-vol-email" class="form-input" required>
+        </div>
+        <div class="form-campo">
+          <label for="edit-vol-tel" class="form-label">Telefone / WhatsApp <span class="req">*</span></label>
+          <input type="text" id="edit-vol-tel" class="form-input" required>
+        </div>
+      </div>
+
+      <div class="form-linha-dupla">
+        <div class="form-campo">
+          <label for="edit-vol-bairro" class="form-label">Bairro / Localidade <span class="req">*</span></label>
+          <select id="edit-vol-bairro" class="form-select" required>
+            <option value="Arenoso">Arenoso (Sede da ONG)</option>
+            <option value="Pituba">Pituba</option>
+            <option value="Brotas">Brotas</option>
+            <option value="Itapuã">Itapuã</option>
+            <option value="Liberdade">Liberdade</option>
+            <option value="Cabula">Cabula</option>
+            <option value="Federação">Federação</option>
+            <option value="Barra">Barra</option>
+            <option value="Ondina">Ondina</option>
+          </select>
+        </div>
+        <div class="form-campo">
+          <label for="edit-vol-form" class="form-label">Formação Acadêmica</label>
+          <input type="text" id="edit-vol-form" class="form-input" placeholder="Ex.: Superior completo">
+        </div>
+      </div>
+
+      <div class="form-linha-dupla">
+        <div class="form-campo">
+          <label for="edit-vol-status" class="form-label">Status da Inscrição <span class="req">*</span></label>
+          <select id="edit-vol-status" class="form-select" required>
+            <option value="Recebida">Recebida</option>
+            <option value="Em triagem">Em triagem</option>
+            <option value="Aprovada">Aprovada</option>
+            <option value="Em atividade">Em atividade</option>
+            <option value="Não selecionada">Não selecionada</option>
+          </select>
+        </div>
+        <div class="form-campo">
+          <label for="edit-vol-ativ" class="form-label">Atividade de Interesse / Alocação</label>
+          <input type="text" id="edit-vol-ativ" class="form-input" placeholder="Ex.: Reforço escolar de dezembro">
+        </div>
+      </div>
+
+      <div class="modal-rodape">
+        <button type="button" class="btn btn-cont" id="btn-cancelar-edit-vol">Cancelar</button>
+        <button type="submit" class="btn btn-azul" id="btn-salvar-edit-vol" style="font-weight:700">
+          <svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> <span>Avançar para Validação</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>\n<!-- MODAL DE EDIÇÃO DE AÇÃO AGENDADA -->
+<div class="modal-backdrop" id="modal-editar-acao" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="modal-edit-acao-titulo">
+  <div class="modal-card">
+    <div class="modal-cab">
+      <div class="modal-cab-info">
+        <div class="valida-badge-pres"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> <span>Gestão da Presidência</span></div>
+        <h3 id="modal-edit-acao-titulo" style="margin-top:6px">Editar Ação Social Agendada</h3>
+        <p class="modal-subtitulo">Atualize os detalhes da ação agendada no banco de dados e no site.</p>
+      </div>
+      <button type="button" class="modal-fechar" id="btn-fechar-modal-edit-acao" aria-label="Fechar formulário"><svg class="ico-svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+
+    <form id="form-editar-acao" class="form-modal-acao">
+      <input type="hidden" id="edit-acao-id">
+      <input type="hidden" id="edit-acao-k">
+      <div class="form-campo">
+        <label for="edit-acao-titulo" class="form-label">Título da Ação <span class="req">*</span></label>
+        <input type="text" id="edit-acao-titulo" class="form-input" required maxlength="60">
+      </div>
+
+      <div class="form-linha-dupla">
+        <div class="form-campo">
+          <label for="edit-acao-area" class="form-label">Área de Atuação <span class="req">*</span></label>
+          <select id="edit-acao-area" class="form-select" required>
+            <option value="Educação" data-cor="#F08D0C">Educação</option>
+            <option value="Saúde & bem-estar" data-cor="#085EC3">Saúde & bem-estar</option>
+            <option value="Empreendedorismo" data-cor="#c99a00">Empreendedorismo</option>
+            <option value="Esportes" data-cor="#8e1fc2">Esportes</option>
+            <option value="Cultura" data-cor="#085EC3">Cultura</option>
+            <option value="Socialização" data-cor="#DB150A">Socialização</option>
+            <option value="Inovação & Tecnologia" data-cor="#0f9d58">Inovação & Tecnologia</option>
+          </select>
+        </div>
+        <div class="form-campo">
+          <label for="edit-acao-data" class="form-label">Data ou Período <span class="req">*</span></label>
+          <input type="text" id="edit-acao-data" class="form-input" required placeholder="Ex.: Sáb, 21/11/2026">
+        </div>
+      </div>
+
+      <div class="form-linha-dupla">
+        <div class="form-campo">
+          <label for="edit-acao-vagas" class="form-label">Vagas Totais <span class="req">*</span></label>
+          <input type="number" id="edit-acao-vagas" class="form-input" min="1" max="100" required>
+        </div>
+        <div class="form-campo">
+          <label for="edit-acao-local" class="form-label">Local / Horário</label>
+          <input type="text" id="edit-acao-local" class="form-input" placeholder="Ex.: Sede Usina da Vida · 09h">
+        </div>
+      </div>
+
+      <div class="form-campo">
+        <label for="edit-acao-desc" class="form-label">Descrição Resumida da Ação <span class="req">*</span></label>
+        <textarea id="edit-acao-desc" class="form-textarea" rows="2" required maxlength="140"></textarea>
+      </div>
+
+      <div class="modal-rodape">
+        <button type="button" class="btn btn-cont" id="btn-cancelar-edit-acao">Cancelar</button>
+        <button type="submit" class="btn btn-azul" id="btn-salvar-edit-acao" style="font-weight:700">
+          <svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> <span>Avançar para Validação</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>\n<!-- MODAL DE VALIDAÇÃO DA PRESIDÊNCIA -->
+<div class="modal-backdrop" id="modal-valida-presidencia" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="valida-titulo">
+  <div class="modal-card modal-card-valida">
+    <div class="modal-cab">
+      <div class="modal-cab-info">
+        <div class="valida-badge-pres"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> <span>Autenticação da Presidência</span></div>
+        <h3 id="valida-titulo" style="margin-top:6px;font-size:1.15rem;color:var(--tinta)">Validação da Presidência</h3>
+        <p class="modal-subtitulo" id="valida-desc">Insira a senha da Presidência para autorizar esta operação sensível.</p>
+      </div>
+      <button type="button" class="modal-fechar" id="btn-fechar-modal-valida" aria-label="Fechar validação"><svg class="ico-svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+
+    <form id="form-valida-presidencia" class="form-modal-acao">
+      <div class="form-campo" style="margin-top:6px">
+        <label for="valida-senha" class="form-label">Senha Institucional da Presidência <span class="req">*</span></label>
+        <input type="password" id="valida-senha" class="form-input" autocomplete="current-password" placeholder="••••" required style="font-size:1rem;letter-spacing:2px">
+        <div id="valida-erro" class="valida-msg-erro" style="display:none"></div>
+      </div>
+      <div class="modal-rodape" style="margin-top:16px">
+        <button type="button" class="btn btn-cont" id="btn-cancela-valida">Cancelar</button>
+        <button type="submit" class="btn btn-azul" id="btn-confirma-valida" style="font-weight:700">
+          <svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> <span>Confirmar Operação</span>
         </button>
       </div>
     </form>
@@ -2329,9 +2808,123 @@ tr:hover td {
     });
   }
 
+  // Permissões e Segurança da Presidência
+  function atualizarBotoesPermissao() {
+    var podeCadastrar = (typeof podeAcao === 'function') ? podeAcao('cadastrarAcoes') : (perfil !== 'colaborador');
+    var podeCsv = (typeof podeAcao === 'function') ? podeAcao('exportarCsv') : (perfil === 'presidencia');
+    var ePresid = (perfil === 'presidencia');
+
+    var btnCad = document.getElementById('btn-nova-acao');
+    if (btnCad) {
+      btnCad.style.display = podeCadastrar ? 'inline-flex' : 'none';
+    }
+
+    var btnCsv = document.getElementById('csv');
+    if (btnCsv) {
+      btnCsv.disabled = !podeCsv;
+      btnCsv.style.opacity = podeCsv ? '1' : '0.4';
+      btnCsv.title = podeCsv ? 'Exportar lista de voluntários em CSV' : 'Exportação bloqueada para este perfil';
+    }
+
+    var chks = document.querySelectorAll('.chk-perm');
+    Array.prototype.forEach.call(chks, function(ck) {
+      ck.disabled = !ePresid;
+    });
+
+    var btnSalvarPerm = document.getElementById('btn-salvar-permissoes');
+    if (btnSalvarPerm) {
+      btnSalvarPerm.style.display = ePresid ? 'inline-flex' : 'none';
+    }
+  }
+  window.atualizarBotoesPermissao = atualizarBotoesPermissao;
+
+  // Modal de Validação com Senha da Presidência
+  function pedirSenhaPresidencia(titulo, desc, onConfirmar) {
+    var modalValida = document.getElementById("modal-valida-presidencia");
+    if (!modalValida) return;
+    var tEl = document.getElementById("valida-titulo");
+    var dEl = document.getElementById("valida-desc");
+    var inSenha = document.getElementById("valida-senha");
+    var errEl = document.getElementById("valida-erro");
+    var formValida = document.getElementById("form-valida-presidencia");
+    var btnCanc = document.getElementById("btn-cancela-valida");
+    var btnFechar = document.getElementById("btn-fechar-modal-valida");
+    var btnConfirma = document.getElementById("btn-confirma-valida");
+
+    if (tEl) tEl.textContent = titulo || "Validação da Presidência";
+    if (dEl) dEl.textContent = desc || "Insira a senha da Presidência para autorizar esta operação sensível.";
+    if (inSenha) inSenha.value = "";
+    if (errEl) { errEl.textContent = ""; errEl.style.display = "none"; }
+
+    modalValida.style.display = "flex";
+    document.body.style.overflow = "hidden";
+    setTimeout(function() { if (inSenha) inSenha.focus(); }, 60);
+
+    function fecharModalValida() {
+      modalValida.style.display = "none";
+      document.body.style.overflow = "";
+      if (formValida) formValida.onsubmit = null;
+    }
+
+    if (btnCanc) btnCanc.onclick = fecharModalValida;
+    if (btnFechar) btnFechar.onclick = fecharModalValida;
+
+    if (formValida) {
+      formValida.onsubmit = function(ev) {
+        ev.preventDefault();
+        var s = inSenha ? inSenha.value.trim() : "";
+        if (!s) {
+          if (errEl) { errEl.textContent = "Por favor, digite a senha da Presidência."; errEl.style.display = "block"; }
+          return;
+        }
+
+        if (btnConfirma) {
+          btnConfirma.disabled = true;
+          btnConfirma.textContent = "Validando...";
+        }
+
+        onConfirmar(
+          s,
+          function() {
+            if (btnConfirma) { btnConfirma.disabled = false; btnConfirma.textContent = "Confirmar Operação"; }
+            fecharModalValida();
+          },
+          function(msgErro) {
+            if (btnConfirma) { btnConfirma.disabled = false; btnConfirma.textContent = "Confirmar Operação"; }
+            if (errEl) { errEl.textContent = msgErro || "Senha incorreta."; errEl.style.display = "block"; }
+            if (inSenha) { inSenha.focus(); inSenha.select(); }
+          }
+        );
+      };
+    }
+  }
+
   // Atualizar nome do perfil ativo na tela de governança e sincronizar com banco Neon ao logar
   function sincronizarNeon() {
     if (location.protocol === "file:") return;
+
+    // Sincronizar matriz de permissões atualizada
+    fetch("/api/permissoes")
+      .then(function(r) { return r.ok ? r.json() : null; })
+      .then(function(perms) {
+        if (perms && typeof perms === "object") {
+          window.PERMISSOES_SISTEMA = perms;
+          ['coordenacao', 'colaborador'].forEach(function(role) {
+            if (perms[role]) {
+              Object.keys(perms[role]).forEach(function(pKey) {
+                var el = document.getElementById('chk-' + (role === 'coordenacao' ? 'coord' : 'colab') + '-' + pKey);
+                if (el) el.checked = !!perms[role][pKey];
+              });
+            }
+          });
+        }
+        atualizarBotoesPermissao();
+        if (typeof window.tabela === "function") window.tabela();
+        if (typeof window.agend === "function") window.agend();
+      })
+      .catch(function(err) {
+        console.error("Erro ao sincronizar permissoes:", err);
+      });
 
     // 1. Sincronizar voluntários cadastrados
     fetch("/api/inscricoes")
@@ -2340,16 +2933,16 @@ tr:hover td {
         if (!Array.isArray(rows) || !rows.length || !window.vols) return;
         rows.forEach(function(dbVol) {
           var jaExiste = window.vols.some(function(v) {
-            return v.email && dbVol.email && v.email.toLowerCase() === dbVol.email.toLowerCase();
+            return (v.id && String(v.id) === String(dbVol.id)) || (v.email && dbVol.email && v.email.toLowerCase() === dbVol.email.toLowerCase());
           });
           if (!jaExiste) {
             window.vols.unshift({
-              id: 1000 + Number(dbVol.id || Date.now()),
+              id: dbVol.id || (1000 + Date.now()),
               nome: dbVol.nome || "Voluntário",
               areas: Array.isArray(dbVol.areas) && dbVol.areas.length ? dbVol.areas : ["Apoio operacional"],
               form: dbVol.formacao || "Graduado(a)",
               disp: Array.isArray(dbVol.disponibilidade) && dbVol.disponibilidade.length ? dbVol.disponibilidade : ["Fins de semana"],
-              bairro: dbVol.bairro || "Brotas",
+              bairro: dbVol.bairro || "Arenoso",
               status: dbVol.status || "Recebida",
               tel: dbVol.telefone || "(71) 90000-0000",
               email: dbVol.email || "",
@@ -2402,8 +2995,16 @@ tr:hover td {
         if (elTag && elNomeAcesso) {
           elNomeAcesso.textContent = elTag.textContent;
         }
+        atualizarBotoesPermissao();
         sincronizarNeon();
       }, 50);
+    });
+  }
+
+  var selPerfilLogin = document.getElementById("perfil");
+  if (selPerfilLogin) {
+    selPerfilLogin.addEventListener("change", function() {
+      if (typeof atualizarBotoesPermissao === "function") atualizarBotoesPermissao();
     });
   }
 
@@ -2443,8 +3044,12 @@ tr:hover td {
   }
 
   document.addEventListener("keydown", function(e) {
-    if (e.key === "Escape" && modalNovaAcao && modalNovaAcao.style.display === "flex") {
-      fecharModalAcao();
+    if (e.key === "Escape") {
+      if (modalNovaAcao && modalNovaAcao.style.display === "flex") fecharModalAcao();
+      if (modalEditVol && modalEditVol.style.display === "flex") fecharModalEditVol();
+      if (modalEditAcao && modalEditAcao.style.display === "flex") fecharModalEditAcao();
+      var modalValida = document.getElementById("modal-valida-presidencia");
+      if (modalValida && modalValida.style.display === "flex") modalValida.style.display = "none";
     }
   });
 
@@ -2549,6 +3154,441 @@ tr:hover td {
       .finally(function() {
         if (btnSubmit) { btnSubmit.disabled = false; btnSubmit.textContent = "Salvar e agendar ação"; }
       });
+    });
+  }
+
+  // Lógica do Modal de Edição de Voluntário
+  var modalEditVol = document.getElementById("modal-editar-voluntario");
+  var formEditVol = document.getElementById("form-editar-vol");
+  var btnFecharEditVol = document.getElementById("btn-fechar-modal-edit-vol");
+  var btnCancelaEditVol = document.getElementById("btn-cancelar-edit-vol");
+
+  function abrirModalEditVol(volId) {
+    if (!modalEditVol || !window.vols) return;
+    var v = window.vols.find(function(x) { return String(x.id) === String(volId); });
+    if (!v) return;
+
+    document.getElementById("edit-vol-id").value = v.id;
+    document.getElementById("edit-vol-nome").value = v.nome || "";
+    document.getElementById("edit-vol-email").value = v.email || "";
+    document.getElementById("edit-vol-tel").value = v.tel || "";
+    var selBairro = document.getElementById("edit-vol-bairro");
+    if (selBairro) selBairro.value = v.bairro || "Arenoso";
+    document.getElementById("edit-vol-form").value = v.form || "";
+    var selStatus = document.getElementById("edit-vol-status");
+    if (selStatus) selStatus.value = v.status || "Recebida";
+    document.getElementById("edit-vol-ativ").value = v.ativ || "";
+
+    modalEditVol.style.display = "flex";
+    document.body.style.overflow = "hidden";
+  }
+
+  function fecharModalEditVol() {
+    if (!modalEditVol) return;
+    modalEditVol.style.display = "none";
+    document.body.style.overflow = "";
+    if (formEditVol) formEditVol.reset();
+  }
+
+  if (btnFecharEditVol) btnFecharEditVol.addEventListener("click", fecharModalEditVol);
+  if (btnCancelaEditVol) btnCancelaEditVol.addEventListener("click", fecharModalEditVol);
+
+  if (formEditVol) {
+    formEditVol.addEventListener("submit", function(e) {
+      e.preventDefault();
+      var id = document.getElementById("edit-vol-id").value;
+      var nome = document.getElementById("edit-vol-nome").value.trim();
+      var email = document.getElementById("edit-vol-email").value.trim();
+      var tel = document.getElementById("edit-vol-tel").value.trim();
+      var bairro = document.getElementById("edit-vol-bairro").value;
+      var formacao = document.getElementById("edit-vol-form").value.trim();
+      var status = document.getElementById("edit-vol-status").value;
+      var ativ = document.getElementById("edit-vol-ativ").value.trim();
+
+      pedirSenhaPresidencia(
+        "Editar Cadastro de Voluntário",
+        "Confirme a senha da Presidência para salvar as alterações cadastrais de " + nome + ":",
+        function(senha, fecharValida, setErroValida) {
+          if (location.protocol === "file:") {
+            var sNorm = senha.trim().toLowerCase();
+            if (sNorm !== "0987" && sNorm !== "novembro") {
+              setErroValida("Senha da Presidência incorreta.");
+              return;
+            }
+            var vLocal = window.vols.find(function(x) { return String(x.id) === String(id); });
+            if (vLocal) {
+              vLocal.nome = nome; vLocal.email = email; vLocal.tel = tel; vLocal.bairro = bairro;
+              vLocal.form = formacao; vLocal.status = status; vLocal.ativ = ativ;
+            }
+            fecharValida();
+            fecharModalEditVol();
+            if (typeof window.tabela === "function") window.tabela();
+            if (typeof window.geral === "function") window.geral();
+            mostrarToastAcao("Cadastro de voluntário atualizado com sucesso!");
+            return;
+          }
+
+          fetch("/api/inscricoes", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              id: id,
+              nome: nome,
+              email: email,
+              telefone: tel,
+              bairro: bairro,
+              formacao: formacao,
+              status: status,
+              ativ: ativ,
+              senha: senha
+            })
+          })
+          .then(function(r) {
+            if (r.status === 401) throw new Error("Senha da Presidência incorreta.");
+            if (!r.ok) throw new Error("Falha ao salvar alterações do voluntário.");
+            return r.json();
+          })
+          .then(function(updated) {
+            var vLocal = window.vols && window.vols.find(function(x) { return String(x.id) === String(id); });
+            if (vLocal) {
+              vLocal.nome = updated.nome || nome;
+              vLocal.email = updated.email || email;
+              vLocal.tel = updated.telefone || tel;
+              vLocal.bairro = updated.bairro || bairro;
+              vLocal.form = updated.formacao || formacao;
+              vLocal.status = updated.status || status;
+              vLocal.ativ = updated.acao_interesse || ativ;
+            }
+            fecharValida();
+            fecharModalEditVol();
+            if (typeof window.tabela === "function") window.tabela();
+            if (typeof window.geral === "function") window.geral();
+            mostrarToastAcao("Cadastro de voluntário atualizado com sucesso!");
+          })
+          .catch(function(err) {
+            setErroValida(err.message);
+          });
+        }
+      );
+    });
+  }
+
+  function confirmarExcluirVol(volId) {
+    if (!window.vols) return;
+    var v = window.vols.find(function(x) { return String(x.id) === String(volId); });
+    if (!v) return;
+
+    pedirSenhaPresidencia(
+      "Excluir Voluntário do Banco",
+      "Atenção: A exclusão é permanente. Confirme a senha da Presidência para excluir o voluntário '" + v.nome + "':",
+      function(senha, fecharValida, setErroValida) {
+        if (location.protocol === "file:") {
+          var sNorm = senha.trim().toLowerCase();
+          if (sNorm !== "0987" && sNorm !== "novembro") {
+            setErroValida("Senha da Presidência incorreta.");
+            return;
+          }
+          window.vols = window.vols.filter(function(x) { return String(x.id) !== String(volId); });
+          fecharValida();
+          if (typeof window.tabela === "function") window.tabela();
+          if (typeof window.geral === "function") window.geral();
+          mostrarToastAcao("Voluntário excluído com sucesso!");
+          return;
+        }
+
+        fetch("/api/inscricoes", {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: v.id, senha: senha })
+        })
+        .then(function(r) {
+          if (r.status === 401) throw new Error("Senha da Presidência incorreta.");
+          if (!r.ok) throw new Error("Falha ao excluir voluntário no banco.");
+          return r.json();
+        })
+        .then(function() {
+          window.vols = window.vols.filter(function(x) { return String(x.id) !== String(volId); });
+          fecharValida();
+          if (typeof window.tabela === "function") window.tabela();
+          if (typeof window.geral === "function") window.geral();
+          mostrarToastAcao("Voluntário excluído do banco de dados!");
+        })
+        .catch(function(err) {
+          setErroValida(err.message);
+        });
+      }
+    );
+  }
+
+  // Lógica do Modal de Edição de Ação Agendada
+  var modalEditAcao = document.getElementById("modal-editar-acao");
+  var formEditAcao = document.getElementById("form-editar-acao");
+  var btnFecharEditAcao = document.getElementById("btn-fechar-modal-edit-acao");
+  var btnCancelaEditAcao = document.getElementById("btn-cancelar-edit-acao");
+
+  function abrirModalEditAcao(kIndex) {
+    if (!modalEditAcao || !window.AGEND) return;
+    var a = window.AGEND[kIndex];
+    if (!a) return;
+
+    document.getElementById("edit-acao-id").value = a.id || "";
+    document.getElementById("edit-acao-k").value = kIndex;
+    document.getElementById("edit-acao-titulo").value = a.t || "";
+    var selArea = document.getElementById("edit-acao-area");
+    if (selArea) selArea.value = a.a || "Educação";
+    document.getElementById("edit-acao-data").value = a.dt || "";
+    document.getElementById("edit-acao-vagas").value = a.vagas || 10;
+    document.getElementById("edit-acao-local").value = a.loc || "Sede Usina da Vida";
+    document.getElementById("edit-acao-desc").value = a.p || "";
+
+    modalEditAcao.style.display = "flex";
+    document.body.style.overflow = "hidden";
+  }
+
+  function fecharModalEditAcao() {
+    if (!modalEditAcao) return;
+    modalEditAcao.style.display = "none";
+    document.body.style.overflow = "";
+    if (formEditAcao) formEditAcao.reset();
+  }
+
+  if (btnFecharEditAcao) btnFecharEditAcao.addEventListener("click", fecharModalEditAcao);
+  if (btnCancelaEditAcao) btnCancelaEditAcao.addEventListener("click", fecharModalEditAcao);
+
+  if (formEditAcao) {
+    formEditAcao.addEventListener("submit", function(e) {
+      e.preventDefault();
+      var id = document.getElementById("edit-acao-id").value;
+      var kIndex = parseInt(document.getElementById("edit-acao-k").value, 10);
+      var titulo = document.getElementById("edit-acao-titulo").value.trim();
+      var selArea = document.getElementById("edit-acao-area");
+      var area = selArea ? selArea.value : "Educação";
+      var cor = (selArea && selArea.selectedIndex >= 0) ? (selArea.options[selArea.selectedIndex].getAttribute("data-cor") || "#085EC3") : "#085EC3";
+      var dataTxt = document.getElementById("edit-acao-data").value.trim();
+      var vagas = parseInt(document.getElementById("edit-acao-vagas").value, 10) || 10;
+      var localTxt = document.getElementById("edit-acao-local").value.trim() || "Sede Usina da Vida";
+      var desc = document.getElementById("edit-acao-desc").value.trim();
+
+      pedirSenhaPresidencia(
+        "Editar Ação Social Agendada",
+        "Confirme a senha da Presidência para salvar as alterações da ação '" + titulo + "':",
+        function(senha, fecharValida, setErroValida) {
+          if (location.protocol === "file:") {
+            var sNorm = senha.trim().toLowerCase();
+            if (sNorm !== "0987" && sNorm !== "novembro") {
+              setErroValida("Senha da Presidência incorreta.");
+              return;
+            }
+            var aLocal = window.AGEND && window.AGEND[kIndex];
+            if (aLocal) {
+              aLocal.t = titulo; aLocal.a = area; aLocal.c = cor; aLocal.dt = dataTxt;
+              aLocal.vagas = vagas; aLocal.loc = localTxt; aLocal.p = desc;
+            }
+            fecharValida();
+            fecharModalEditAcao();
+            if (typeof window.agend === "function") window.agend();
+            if (typeof window.geral === "function") window.geral();
+            mostrarToastAcao("Ação atualizada no sistema!");
+            return;
+          }
+
+          var payload = {
+            id: id,
+            titulo: titulo,
+            area: area,
+            cor: cor,
+            data_texto: dataTxt,
+            vagas_totais: vagas,
+            local_texto: localTxt,
+            descricao: desc,
+            senha: senha
+          };
+
+          fetch("/api/acoes", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          })
+          .then(function(r) {
+            if (r.status === 401) throw new Error("Senha da Presidência incorreta.");
+            if (!r.ok) throw new Error("Falha ao salvar alterações da ação.");
+            return r.json();
+          })
+          .then(function(updated) {
+            var aLocal = window.AGEND && window.AGEND[kIndex];
+            if (aLocal) {
+              aLocal.t = updated.titulo || titulo;
+              aLocal.a = updated.area || area;
+              aLocal.c = updated.cor || cor;
+              aLocal.dt = updated.data_texto || dataTxt;
+              aLocal.vagas = updated.vagas_totais || vagas;
+              aLocal.loc = updated.local_texto || localTxt;
+              aLocal.p = updated.descricao || desc;
+            }
+            fecharValida();
+            fecharModalEditAcao();
+            if (typeof window.agend === "function") window.agend();
+            if (typeof window.geral === "function") window.geral();
+            mostrarToastAcao("Ação atualizada e sincronizada no site institucional!");
+          })
+          .catch(function(err) {
+            setErroValida(err.message);
+          });
+        }
+      );
+    });
+  }
+
+  function confirmarExcluirAcao(kIndex) {
+    if (!window.AGEND) return;
+    var a = window.AGEND[kIndex];
+    if (!a) return;
+
+    pedirSenhaPresidencia(
+      "Excluir Ação Agendada",
+      "Atenção: A ação '" + a.t + "' será removida do sistema e do site. Confirme a senha da Presidência:",
+      function(senha, fecharValida, setErroValida) {
+        if (location.protocol === "file:") {
+          var sNorm = senha.trim().toLowerCase();
+          if (sNorm !== "0987" && sNorm !== "novembro") {
+            setErroValida("Senha da Presidência incorreta.");
+            return;
+          }
+          window.AGEND.splice(kIndex, 1);
+          fecharValida();
+          if (typeof window.agend === "function") window.agend();
+          if (typeof window.geral === "function") window.geral();
+          mostrarToastAcao("Ação excluída com sucesso!");
+          return;
+        }
+
+        fetch("/api/acoes", {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: a.id, senha: senha })
+        })
+        .then(function(r) {
+          if (r.status === 401) throw new Error("Senha da Presidência incorreta.");
+          if (!r.ok) throw new Error("Falha ao excluir ação no banco.");
+          return r.json();
+        })
+        .then(function() {
+          window.AGEND.splice(kIndex, 1);
+          fecharValida();
+          if (typeof window.agend === "function") window.agend();
+          if (typeof window.geral === "function") window.geral();
+          mostrarToastAcao("Ação excluída com sucesso do banco e do site!");
+        })
+        .catch(function(err) {
+          setErroValida(err.message);
+        });
+      }
+    );
+  }
+
+  // Delegação de cliques para botões de gestão em voluntários e ações
+  var corpoEl = document.getElementById("corpo");
+  if (corpoEl) {
+    corpoEl.addEventListener("click", function(e) {
+      var btnEdit = e.target.closest(".btn-tb-editar");
+      if (btnEdit) {
+        var id = btnEdit.getAttribute("data-vol-id");
+        abrirModalEditVol(id);
+        return;
+      }
+      var btnExcl = e.target.closest(".btn-tb-excluir");
+      if (btnExcl) {
+        var id = btnExcl.getAttribute("data-vol-id");
+        confirmarExcluirVol(id);
+        return;
+      }
+    });
+  }
+
+  var agendEl = document.getElementById("agend");
+  if (agendEl) {
+    agendEl.addEventListener("click", function(e) {
+      var btnEdit = e.target.closest(".btn-acao-editar");
+      if (btnEdit) {
+        var k = parseInt(btnEdit.getAttribute("data-k"), 10);
+        abrirModalEditAcao(k);
+        return;
+      }
+      var btnExcl = e.target.closest(".btn-acao-excluir");
+      if (btnExcl) {
+        var k = parseInt(btnExcl.getAttribute("data-k"), 10);
+        confirmarExcluirAcao(k);
+        return;
+      }
+    });
+  }
+
+  // Salvamento e Instituição das Permissões na aba Governança
+  var btnSalvarPerm = document.getElementById("btn-salvar-permissoes");
+  if (btnSalvarPerm) {
+    btnSalvarPerm.addEventListener("click", function() {
+      pedirSenhaPresidencia(
+        "Instituir Permissões de Acesso",
+        "Confirme a senha da Presidência para homologar e salvar as novas diretrizes no banco de dados:",
+        function(senha, fecharValida, setErroValida) {
+          var novasPerms = {
+            coordenacao: {
+              verContatos: document.getElementById('chk-coord-verContatos') ? document.getElementById('chk-coord-verContatos').checked : true,
+              alterarStatus: document.getElementById('chk-coord-alterarStatus') ? document.getElementById('chk-coord-alterarStatus').checked : true,
+              cadastrarAcoes: document.getElementById('chk-coord-cadastrarAcoes') ? document.getElementById('chk-coord-cadastrarAcoes').checked : true,
+              confirmarInscricoes: document.getElementById('chk-coord-confirmarInscricoes') ? document.getElementById('chk-coord-confirmarInscricoes').checked : true,
+              exportarCsv: document.getElementById('chk-coord-exportarCsv') ? document.getElementById('chk-coord-exportarCsv').checked : false
+            },
+            colaborador: {
+              verContatos: document.getElementById('chk-colab-verContatos') ? document.getElementById('chk-colab-verContatos').checked : false,
+              alterarStatus: document.getElementById('chk-colab-alterarStatus') ? document.getElementById('chk-colab-alterarStatus').checked : false,
+              cadastrarAcoes: document.getElementById('chk-colab-cadastrarAcoes') ? document.getElementById('chk-colab-cadastrarAcoes').checked : false,
+              confirmarInscricoes: document.getElementById('chk-colab-confirmarInscricoes') ? document.getElementById('chk-colab-confirmarInscricoes').checked : false,
+              exportarCsv: document.getElementById('chk-colab-exportarCsv') ? document.getElementById('chk-colab-exportarCsv').checked : false
+            }
+          };
+
+          if (location.protocol === "file:") {
+            var sNorm = senha.trim().toLowerCase();
+            if (sNorm !== "0987" && sNorm !== "novembro") {
+              setErroValida("Senha da Presidência incorreta.");
+              return;
+            }
+            window.PERMISSOES_SISTEMA = novasPerms;
+            fecharValida();
+            atualizarBotoesPermissao();
+            if (typeof window.tabela === "function") window.tabela();
+            if (typeof window.agend === "function") window.agend();
+            mostrarToastAcao("Permissões de acesso instituídas com sucesso!");
+            return;
+          }
+
+          fetch("/api/permissoes", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              senha: senha,
+              permissoes: novasPerms
+            })
+          })
+          .then(function(r) {
+            if (r.status === 401) throw new Error("Senha da Presidência incorreta.");
+            if (!r.ok) throw new Error("Falha ao salvar permissões no banco.");
+            return r.json();
+          })
+          .then(function(res) {
+            window.PERMISSOES_SISTEMA = res.permissoes || novasPerms;
+            fecharValida();
+            atualizarBotoesPermissao();
+            if (typeof window.tabela === "function") window.tabela();
+            if (typeof window.agend === "function") window.agend();
+            mostrarToastAcao("Permissões de acesso instituídas com sucesso!");
+          })
+          .catch(function(err) {
+            setErroValida(err.message);
+          });
+        }
+      );
     });
   }
 })();

@@ -52,3 +52,10 @@ CREATE TABLE IF NOT EXISTS acoes_agendadas (
   atualizado_em     TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS idx_acoes_status_data ON acoes_agendadas (status, data_iso);
+
+CREATE TABLE IF NOT EXISTS config_permissoes (
+  id              TEXT PRIMARY KEY,
+  permissoes      JSONB NOT NULL,
+  atualizado_por  TEXT NOT NULL DEFAULT 'Presidência',
+  atualizado_em   TIMESTAMPTZ NOT NULL DEFAULT now()
+);
