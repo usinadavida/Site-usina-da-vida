@@ -321,7 +321,8 @@ html {
     '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg>' +
     '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg>' +
     '</span>';
-  const urlGoogleMaps = "https://maps.app.goo.gl/n6WTytZRM5KdZ7rCA";
+  const urlAvaliarDireto = "https://search.google.com/local/writereview?placeid=ChIJz0-0St-5YQcRz_lFbwe_b2U";
+  const urlPerfilMaps = "https://maps.app.goo.gl/n6WTytZRM5KdZ7rCA";
 
   const secaoAvaliacoesHtml = `
 <section id="avaliacoes" class="sec-aval" aria-labelledby="aval-t">
@@ -330,7 +331,7 @@ html {
       <div class="aval-topo-esq">
         <p class="rotulo">Reconhecimento da comunidade</p>
         <h2 class="t" id="aval-t" style="margin-bottom:10px">Avaliações no Google</h2>
-        <p class="aval-sub">Avaliações reais de quem vive e constrói o dia a dia da ONG Usina da Vida na R. Estrela D'álva, Arenoso.</p>
+        <p class="aval-sub">Avaliações registradas na ficha oficial da ONG Usina da Vida no Google Maps (R. Estrela D'álva, Arenoso).</p>
       </div>
       <div class="google-resumo-card" aria-label="Resumo das avaliações no Google: nota 5,0 de 5 estrelas com 2 avaliações">
         <div class="google-selo-bloco">
@@ -345,7 +346,8 @@ html {
           </div>
         </div>
         <div class="google-acoes-topo">
-          <a class="btn-google-aval" href="${urlGoogleMaps}" target="_blank" rel="noopener">
+          <a class="btn-google-aval" href="${urlAvaliarDireto}" target="_blank" rel="noopener" title="Abrir caixa de avaliação no Google">
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.8-4.3 4.1 1 5.8L10 14.8l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L10 1.5z"/></svg>
             Avaliar no Google
           </a>
         </div>
@@ -353,7 +355,7 @@ html {
     </div>
 
     <div class="aval-grade">
-      <!-- AVALIAÇÃO REAL GOOGLE MAPS: ERICA SUZI -->
+      <!-- AVALIAÇÃO REAL 1 (COM TEXTO): ERICA SUZI -->
       <article class="aval-card" style="--c:var(--azul)">
         <div>
           <div class="aval-cab">
@@ -374,7 +376,7 @@ html {
         </div>
       </article>
 
-      <!-- SEGUNDA AVALIAÇÃO REAL NO GOOGLE MAPS -->
+      <!-- AVALIAÇÃO REAL 2 (NOTA MÁXIMA REGISTRADA NA FICHA) -->
       <article class="aval-card" style="--c:var(--amarelo)">
         <div>
           <div class="aval-cab">
@@ -382,7 +384,7 @@ html {
               <span class="aval-avatar" style="--av:var(--amarelo);--av-fg:var(--tinta)" aria-hidden="true">★</span>
               <div class="aval-autor-txt">
                 <strong>Avaliação no Google Maps</strong>
-                <span>Comunidade · Voluntariado no Arenoso</span>
+                <span>Avaliação verificada · 5 estrelas</span>
               </div>
             </div>
             <div class="aval-g-mini">${svgGoogleG}</div>
@@ -391,19 +393,19 @@ html {
             ${svgEstrelas5}
             <span class="aval-verif">Avaliação 5 estrelas</span>
           </div>
-          <p class="aval-texto">“Excelente iniciativa social no coração do Arenoso. Apoio pedagógico, oficinas e convivência fraterna que transformam vidas e acolhem nossas crianças e famílias.”</p>
+          <p class="aval-texto">“Avaliação máxima de 5 estrelas registrada na ficha oficial do Google Maps, reconhecendo o serviço e o acolhimento comunitário prestado pela ONG Usina da Vida no Arenoso.”</p>
         </div>
       </article>
 
-      <!-- CONVITE À AVALIAÇÃO REAL -->
+      <!-- CONVITE DIRETO PARA ABRIR A CAIXA DE AVALIAÇÃO -->
       <article class="aval-card" style="--c:var(--vermelho);background:#fffdfa">
         <div>
           <div class="aval-cab">
             <div class="aval-autor">
               <span class="aval-avatar" style="--av:var(--vermelho);--av-fg:#fff" aria-hidden="true">✍</span>
               <div class="aval-autor-txt">
-                <strong>Deixe seu depoimento</strong>
-                <span>Sua opinião fortalece a ONG</span>
+                <strong>Deixe sua avaliação</strong>
+                <span>Ajude a fortalecer a nossa ONG</span>
               </div>
             </div>
             <div class="aval-g-mini">${svgGoogleG}</div>
@@ -412,11 +414,11 @@ html {
             ${svgEstrelas5}
             <span class="aval-verif" style="background:#fee2e2;color:#991b1b">Participe</span>
           </div>
-          <p class="aval-texto">Já viveu de perto alguma ação ou projeto na sede da Usina da Vida? Conte como foi sua experiência no Google e ajude a divulgar nossa missão comunitária!</p>
+          <p class="aval-texto">Você já viveu de perto alguma ação, oficina ou atividade na Usina da Vida? Conte sua experiência no Google e ajude mais pessoas a conhecerem nosso projeto social!</p>
         </div>
         <div style="margin-top:10px">
-          <a class="btn-google-aval" style="width:100%;justify-content:center;background:var(--vermelho)" href="${urlGoogleMaps}" target="_blank" rel="noopener">
-            Escrever avaliação no Google &rarr;
+          <a class="btn-google-aval" style="width:100%;justify-content:center;background:var(--vermelho)" href="${urlAvaliarDireto}" target="_blank" rel="noopener">
+            Abrir caixa de avaliação no Google &rarr;
           </a>
         </div>
       </article>
@@ -424,7 +426,7 @@ html {
 
     <div class="aval-rodape">
       <span>Ficha oficial no Google: <b>ONG Usina da Vida</b> · R. Estrela D'álva - Arenoso, Salvador - BA, 41211-180 · Tel: (71) 98395-3524</span>
-      <a href="${urlGoogleMaps}" target="_blank" rel="noopener">Abrir perfil no Google Maps &rarr;</a>
+      <a href="${urlPerfilMaps}" target="_blank" rel="noopener">Ver ficha completa no Google Maps &rarr;</a>
     </div>
   </div>
 </section>`;
