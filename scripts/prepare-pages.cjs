@@ -185,14 +185,11 @@ html {
 }
 .aval-grade {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   gap: 24px;
   align-items: stretch;
 }
 @media (max-width: 860px) {
-  .aval-grade {
-    grid-template-columns: 1fr;
-  }
   .google-resumo-card {
     width: 100%;
     justify-content: space-between;
@@ -202,7 +199,7 @@ html {
   background: #fff;
   border: 2px solid var(--tinta);
   box-shadow: 6px 6px 0 var(--c, var(--azul));
-  padding: 22px 22px 20px;
+  padding: 26px 28px 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -264,9 +261,10 @@ html {
 }
 .aval-texto {
   margin: 0;
-  font-size: 0.93rem;
-  line-height: 1.62;
-  color: #333942;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: #24292f;
+  font-style: italic;
 }
 .aval-rodape {
   margin-top: 22px;
@@ -372,32 +370,6 @@ html {
             <span class="aval-verif">Avaliação real no Google</span>
           </div>
           <p class="aval-texto">“Tenho um enorme prazer em fazer parte da equipe de voluntários dessa instituição. Amo a ONG e o serviço prestado à comunidade.”</p>
-        </div>
-      </article>
-
-      <!-- CONVITE DIRETO PARA NOVAS AVALIAÇÕES NO GOOGLE -->
-      <article class="aval-card" style="--c:var(--vermelho);background:#fffdfa">
-        <div>
-          <div class="aval-cab">
-            <div class="aval-autor">
-              <span class="aval-avatar" style="--av:var(--vermelho);--av-fg:#fff" aria-hidden="true">✍</span>
-              <div class="aval-autor-txt">
-                <strong>Seja o próximo a avaliar</strong>
-                <span>Compartilhe sua experiência no Google</span>
-              </div>
-            </div>
-            <div class="aval-g-mini">${svgGoogleG}</div>
-          </div>
-          <div class="aval-meta" style="margin-top:14px">
-            ${svgEstrelas5}
-            <span class="aval-verif" style="background:#fee2e2;color:#991b1b">Participe</span>
-          </div>
-          <p class="aval-texto">Você é voluntário, mora no Arenoso ou participou de alguma oficina na Usina da Vida? Deixe sua avaliação no Google e ajude a fortalecer a nossa ONG!</p>
-        </div>
-        <div style="margin-top:10px">
-          <a class="btn-google-aval" style="width:100%;justify-content:center;background:var(--vermelho)" href="${urlAvaliarDireto}" target="_blank" rel="noopener">
-            Abrir caixa de avaliação no Google &rarr;
-          </a>
         </div>
       </article>
     </div>
