@@ -756,50 +756,40 @@ function redesenharPortal(html) {
   // 2. Tela de Login Split-Screen com a essência e os elementos autênticos da Landing Page
   const sectionLoginSplit =
     '<section id="login" class="login-split-layout" aria-labelledby="login-t">\n' +
-    '  <!-- LADO ESQUERDO: HERO INSTITUCIONAL USINA DA VIDA -->\n' +
+    '  <!-- LADO ESQUERDO: BLOCO INSTITUCIONAL USINA DA VIDA (FUNDO AZUL) -->\n' +
     '  <div class="split-lado-institucional">\n' +
-    '    <img class="split-marca-dagua" src="/assets/img-03.png" alt="" aria-hidden="true">\n' +
-    '    <div class="split-conteudo-institucional">\n' +
-    '      <div class="split-cabecalho-marca">\n' +
-    '        <a class="split-logo-link" href="/" title="Ir para o site institucional da Usina da Vida">\n' +
-    '          <img src="/assets/img-01.png" alt="Emblema Usina da Vida" class="split-logo-emblema">\n' +
-    '          <img src="/assets/img-02.png" alt="Usina da Vida" class="split-logo-texto">\n' +
-    '        </a>\n' +
+    '    <div class="split-bloco-institucional">\n' +
+    '      <img class="split-marca-dagua" src="/assets/img-03.png" alt="" aria-hidden="true">\n' +
+    '      <p class="split-lead">\n' +
+    '        Ambiente administrativo unificado para coordenação de voluntários, gestão de vagas comunitárias e acompanhamento de impacto social em Salvador.\n' +
+    '      </p>\n' +
+    '      <div class="split-colagem-mini" aria-hidden="true">\n' +
+    '        <span class="peca-split p1-split"></span>\n' +
+    '        <span class="peca-split p2-split"></span>\n' +
+    '        <span class="peca-split p3-split"></span>\n' +
+    '        <img class="foto-c1" src="/assets/img-04.jpg" alt="Ação com crianças e voluntários">\n' +
+    '        <img class="foto-c2" src="/assets/img-05.jpg" alt="Voluntária em atividade">\n' +
     '      </div>\n' +
-    '      <div class="split-corpo-hero">\n' +
-    '        <p class="sobre-split">Organização filantrópica · Salvador, Bahia</p>\n' +
-    '        <h1 class="split-chamada">Transformando <em>sonhos</em> em <em>realidade</em></h1>\n' +
-    '        <p class="split-lead">\n' +
-    '          Ambiente administrativo unificado para coordenação de voluntários, gestão de vagas comunitárias e acompanhamento de impacto social em Salvador.\n' +
-    '        </p>\n' +
-    '        <div class="split-colagem-mini" aria-hidden="true">\n' +
-    '          <span class="peca-split p1-split"></span>\n' +
-    '          <span class="peca-split p2-split"></span>\n' +
-    '          <span class="peca-split p3-split"></span>\n' +
-    '          <img class="foto-c1" src="/assets/img-04.jpg" alt="Ação com crianças e voluntários">\n' +
-    '          <img class="foto-c2" src="/assets/img-05.jpg" alt="Voluntária em atividade">\n' +
+    '      <div class="split-pilares-lista">\n' +
+    '        <div class="split-pilar-item">\n' +
+    '          <span class="split-pilar-marcador p-azul"></span>\n' +
+    '          <div>\n' +
+    '            <b>Gestão de Voluntários &amp; Vagas</b>\n' +
+    '            <span>Triagem de cadastros, disponibilidades e alocação por bairros de Salvador.</span>\n' +
+    '          </div>\n' +
     '        </div>\n' +
-    '        <div class="split-pilares-lista">\n' +
-    '          <div class="split-pilar-item">\n' +
-    '            <span class="split-pilar-marcador p-azul"></span>\n' +
-    '            <div>\n' +
-    '              <b>Gestão de Voluntários &amp; Vagas</b>\n' +
-    '              <span>Triagem de cadastros, disponibilidades e alocação por bairros de Salvador.</span>\n' +
-    '            </div>\n' +
+    '        <div class="split-pilar-item">\n' +
+    '          <span class="split-pilar-marcador p-amarelo"></span>\n' +
+    '          <div>\n' +
+    '            <b>Ações Comunitárias</b>\n' +
+    '            <span>Oficinas de educação, empreendedorismo, cultura, esporte e saúde.</span>\n' +
     '          </div>\n' +
-    '          <div class="split-pilar-item">\n' +
-    '            <span class="split-pilar-marcador p-amarelo"></span>\n' +
-    '            <div>\n' +
-    '              <b>Ações Comunitárias</b>\n' +
-    '              <span>Oficinas de educação, empreendedorismo, cultura, esporte e saúde.</span>\n' +
-    '            </div>\n' +
-    '          </div>\n' +
-    '          <div class="split-pilar-item">\n' +
-    '            <span class="split-pilar-marcador p-vermelho"></span>\n' +
-    '            <div>\n' +
-    '              <b>Segurança &amp; Governança LGPD</b>\n' +
-    '              <span>Acesso restrito por perfil com trilha de auditoria transparente.</span>\n' +
-    '            </div>\n' +
+    '        </div>\n' +
+    '        <div class="split-pilar-item">\n' +
+    '          <span class="split-pilar-marcador p-vermelho"></span>\n' +
+    '          <div>\n' +
+    '            <b>Segurança &amp; Governança LGPD</b>\n' +
+    '            <span>Acesso restrito por perfil com trilha de auditoria transparente.</span>\n' +
     '          </div>\n' +
     '        </div>\n' +
     '      </div>\n' +
@@ -811,6 +801,12 @@ function redesenharPortal(html) {
     '  <!-- LADO DIREITO: FORMULÁRIO DE LOGIN COM CARTÃO USINA DA VIDA -->\n' +
     '  <div class="split-lado-formulario">\n' +
     '    <div class="cartao split-cartao">\n' +
+    '      <div class="split-card-marca">\n' +
+    '        <a class="split-logo-link" href="/" title="Ir para o site institucional da Usina da Vida">\n' +
+    '          <img src="/assets/img-01.png" alt="Emblema Usina da Vida" class="split-logo-emblema">\n' +
+    '          <img src="/assets/img-02.png" alt="Usina da Vida" class="split-logo-texto">\n' +
+    '        </a>\n' +
+    '      </div>\n' +
     '      <div class="rotulo" style="margin-bottom:8px">Autenticação Restrita</div>\n' +
     '      <h2 id="login-t" class="split-cartao-titulo">Portal de Gestão</h2>\n' +
     '      <p class="split-cartao-sub">Acesso exclusivo à presidência, coordenação e colaboradores autorizados.</p>\n' +
@@ -1619,7 +1615,7 @@ html {
   pointer-events: none !important;
 }
 
-/* LADO ESQUERDO: HERO INSTITUCIONAL USINA DA VIDA (100% ALTURA - AZUL #085EC3) */
+/* LADO ESQUERDO: BLOCO INSTITUCIONAL USINA DA VIDA (FUNDO AZUL #085EC3) */
 .split-lado-institucional {
   width: 100% !important;
   height: 100% !important;
@@ -1629,97 +1625,73 @@ html {
   overflow-y: auto !important;
   display: flex !important;
   flex-direction: column !important;
-  justify-content: space-between !important;
-  padding: 32px 48px 24px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 40px 44px !important;
   box-sizing: border-box !important;
   border-right: 3px solid var(--tinta, #1d2430) !important;
 }
 
-.split-marca-dagua {
-  position: absolute;
-  right: -80px;
-  bottom: -90px;
-  width: 440px;
-  opacity: 0.12;
-  filter: brightness(0.2);
-  pointer-events: none;
-}
-
-.split-conteudo-institucional {
+.split-bloco-institucional {
   position: relative;
   z-index: 2;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
+  width: 100%;
+  max-width: 480px;
 }
 
-.split-cabecalho-marca {
-  margin-bottom: 16px;
+.split-marca-dagua {
+  position: absolute;
+  right: -40px;
+  bottom: 0px;
+  width: 320px;
+  opacity: 0.14;
+  filter: brightness(0.2);
+  pointer-events: none;
+  z-index: 1;
 }
 
-.split-logo-link {
+.split-lead {
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: #e6f0ff;
+  margin: 0 0 20px;
+  font-weight: 300;
+}
+
+.split-card-marca {
+  margin-bottom: 20px;
+  display: flex;
+}
+
+.split-card-marca .split-logo-link {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   text-decoration: none;
-  background: #fff;
-  padding: 8px 16px;
-  border-radius: 4px;
-  border: 2px solid var(--tinta, #1d2430);
-  box-shadow: 4px 4px 0 var(--amarelo, #F1C50E);
-  transition: transform 0.15s, box-shadow 0.15s;
+  background: transparent;
+  padding: 0;
+  border: none;
+  box-shadow: none;
+  transition: transform 0.15s ease, opacity 0.15s ease;
 }
 
-.split-logo-link:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 var(--amarelo, #F1C50E);
+.split-card-marca .split-logo-link:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
 }
 
 .split-logo-emblema {
-  height: 38px;
+  height: 42px;
   width: auto;
   display: block;
 }
 
 .split-logo-texto {
-  height: 32px;
+  height: 36px;
   width: auto;
   display: block;
-}
-
-.split-corpo-hero {
-  margin: auto 0;
-  padding: 8px 0;
-  max-width: 500px;
-}
-
-.sobre-split {
-  font: 400 0.8rem var(--sans);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--amarelo, #F1C50E);
-  margin-bottom: 10px;
-}
-
-.split-chamada {
-  font-family: var(--serif);
-  font-size: clamp(1.85rem, 2.6vw, 2.3rem);
-  line-height: 1.18;
-  color: #fff;
-  margin: 0 0 12px;
-}
-
-.split-chamada em {
-  font-style: italic;
-  color: var(--amarelo, #F1C50E);
-}
-
-.split-lead {
-  font-size: 0.98rem;
-  line-height: 1.5;
-  color: #e6f0ff;
-  margin-bottom: 16px;
 }
 
 /* Colagem fotográfica com recortes geométricos da marca */
@@ -2045,25 +2017,29 @@ html {
 @media (max-width: 960px) {
   #login.login-split-layout {
     grid-template-columns: 1fr !important;
-    display: flex;
-    flex-direction: column !important;
+    display: block !important;
     overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
   }
   .split-lado-institucional {
+    width: 100% !important;
     height: auto !important;
+    min-height: auto !important;
     padding: 36px 20px 32px !important;
     border-right: none !important;
     border-bottom: 3px solid var(--tinta, #1d2430) !important;
+    display: block !important;
   }
   .split-lado-formulario {
+    width: 100% !important;
     height: auto !important;
+    min-height: auto !important;
     padding: 32px 16px 44px !important;
+    display: flex !important;
   }
-  .split-corpo-hero {
-    margin: 16px 0;
-  }
-  .split-chamada {
-    font-size: 1.85rem;
+  .split-bloco-institucional {
+    max-width: 440px;
+    margin: 0 auto;
   }
   .split-colagem-mini {
     max-width: 320px;
