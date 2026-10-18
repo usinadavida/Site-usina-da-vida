@@ -179,17 +179,17 @@ export async function PUT(req) {
 export async function DELETE(req) {
   const url = new URL(req.url);
   let id = url.searchParams.get('id');
+  let titulo = url.searchParams.get('titulo') || url.searchParams.get('t');
   let senha = url.searchParams.get('senha') || url.searchParams.get('senha_presidencia');
 
-  if (!id) {
+  if (!id && !titulo) {
     try {
       const b = await req.json();
-      id = b.id;
-      senha = b.senha || b.senha_presidencia;
+      id = b?.id;
+      titulo = b?.titulo || b?.t;
+      senha = b?.senha || b?.senha_presidencia;
     } catch {}
   }
-
-  if (!id) return Response.json({ erro: 'ID da ação é obrigatório' }, { status: 422 });
 
   if (!validarSenhaPresidencia(senha)) {
     return Response.json({ erro: 'Senha da Presidência incorreta para autorizar a exclusão desta ação.' }, { status: 401 });
@@ -197,25 +197,33 @@ export async function DELETE(req) {
 
   try {
     const sql = db();
-    const rows = await sql`DELETE FROM acoes_agendadas WHERE id = ${id} RETURNING id, titulo, data_texto`;
-    
+    let rows = [];
+
+    if (id && !isNaN(Number(id))) {
+      rows = await sql`DELETE FROM acoes_agendadas WHERE id = ${Number(id)} RETURNING id, titulo, data_texto`;
+    } else if (titulo) {
+      rows = await sql`DELETE FROM acoes_agendadas WHERE lower(titulo) = lower(${titulo.trim()}) RETURNING id, titulo, data_texto`;
+    } else if (id) {
+      rows = await sql`DELETE FROM acoes_agendadas WHERE lower(titulo) = lower(${String(id).trim()}) RETURNING id, titulo, data_texto`;
+    }
+
     await registrarAuditoria({
       acao: 'EXCLUSAO_ACAO',
       entidade: 'acoes_agendadas',
-      entidade_id: id,
+      entidade_id: String(rows[0]?.id || id || '0'),
       usuario: 'Presidência',
       detalhes: {
-        id_excluido: id,
-        titulo: rows[0]?.titulo || 'Ação',
+        id_excluido: rows[0]?.id || id || null,
+        titulo: rows[0]?.titulo || titulo || 'Ação comunitária',
         data_texto: rows[0]?.data_texto || ''
       },
       ip: obterIp(req)
     });
 
-    return Response.json({ ok: true, id }, { status: 200 });
+    return Response.json({ ok: true, id: rows[0]?.id || id, removido: true }, { status: 200 });
   } catch (e) {
     console.error('acoes DELETE:', e.message);
-    return Response.json({ erro: 'Falha ao excluir ação no banco' }, { status: 500 });
+    return Response.json({ erro: 'Falha ao excluir ação no banco: ' + e.message }, { status: 500 });
   }
 }
 

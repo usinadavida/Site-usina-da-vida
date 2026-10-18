@@ -884,6 +884,10 @@ function redesenharPortal(html) {
     '$("sair").addEventListener("click", function(){ $("app").style.setProperty("display", "none", "important"); $("login").classList.remove("login-oculto"); $("login").style.removeProperty("display"); $("login").style.display="grid"; });'
   );
 
+  html = html.replace('{t:"Palestra Novembro Azul",', '{id:1,t:"Palestra Novembro Azul",');
+  html = html.replace('{t:"Oficina de culinária",', '{id:2,t:"Oficina de culinária",');
+  html = html.replace('{t:"Reforço escolar de dezembro",', '{id:3,t:"Reforço escolar de dezembro",');
+
   // 3. Corrigir links para a raiz da landing page
   html = html.split('href="index.html"').join('href="/"');
 
@@ -4205,10 +4209,19 @@ tr:hover td {
       .then(function(dbAcoes) {
         if (!Array.isArray(dbAcoes) || !dbAcoes.length || !window.AGEND) return;
         dbAcoes.forEach(function(da) {
-          var jaExiste = window.AGEND.some(function(localA) {
+          var localExistente = window.AGEND.find(function(localA) {
             return (localA.id && String(localA.id) === String(da.id)) || (localA.t === da.titulo && localA.dt === da.data_texto);
           });
-          if (!jaExiste) {
+          if (localExistente) {
+            localExistente.id = da.id;
+            localExistente.t = da.titulo;
+            localExistente.a = da.area;
+            localExistente.c = da.cor || "#085EC3";
+            localExistente.dt = da.data_texto;
+            localExistente.loc = da.local_texto || "Sede Usina da Vida";
+            localExistente.vagas = da.vagas_totais || 10;
+            localExistente.p = da.descricao || "";
+          } else {
             window.AGEND.push({
               id: da.id,
               t: da.titulo,
@@ -4749,12 +4762,13 @@ tr:hover td {
       "Excluir Ação Agendada",
       "Atenção: A ação '" + a.t + "' será removida do sistema e do site. Confirme a senha da Presidência:",
       function(senha, fecharValida, setErroValida) {
+        var sNorm = senha.trim().toLowerCase();
+        if (sNorm !== "0987" && sNorm !== "novembro") {
+          setErroValida("Senha da Presidência incorreta.");
+          return;
+        }
+
         if (location.protocol === "file:") {
-          var sNorm = senha.trim().toLowerCase();
-          if (sNorm !== "0987" && sNorm !== "novembro") {
-            setErroValida("Senha da Presidência incorreta.");
-            return;
-          }
           window.AGEND.splice(kIndex, 1);
           fecharValida();
           if (typeof window.agend === "function") window.agend();
@@ -4766,11 +4780,17 @@ tr:hover td {
         fetch("/api/acoes", {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id: a.id, senha: senha })
+          body: JSON.stringify({ id: a.id || null, titulo: a.t, data_texto: a.dt, senha: senha.trim() })
         })
         .then(function(r) {
           if (r.status === 401) throw new Error("Senha da Presidência incorreta.");
-          if (!r.ok) throw new Error("Falha ao excluir ação no banco.");
+          if (!r.ok) {
+            return r.json().then(function(errData) {
+              throw new Error(errData.erro || "Falha ao excluir ação no banco.");
+            }).catch(function() {
+              throw new Error("Falha ao excluir ação no banco.");
+            });
+          }
           return r.json();
         })
         .then(function() {
