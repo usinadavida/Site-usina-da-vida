@@ -875,6 +875,15 @@ function redesenharPortal(html) {
     '    $("quem").textContent = (uNorm === "presidencia" || uNorm === "presidente") ? "Presidência" : ((uNorm === "coordenacao" || uNorm === "coordenador") ? "Coordenação" : u);'
   );
 
+  html = html.replace(
+    '$("login").style.display="none"; $("app").style.display="block";',
+    '$("login").style.setProperty("display", "none", "important"); $("login").classList.add("login-oculto"); $("app").style.setProperty("display", "block", "important");'
+  );
+  html = html.replace(
+    '$("sair").addEventListener("click", function(){ $("app").style.display="none"; $("login").style.display="grid"; });',
+    '$("sair").addEventListener("click", function(){ $("app").style.setProperty("display", "none", "important"); $("login").classList.remove("login-oculto"); $("login").style.removeProperty("display"); $("login").style.display="grid"; });'
+  );
+
   // 3. Corrigir links para a raiz da landing page
   html = html.split('href="index.html"').join('href="/"');
 
@@ -1589,7 +1598,7 @@ html {
   margin: 0 !important;
   z-index: 1000;
   overflow: hidden !important;
-  display: grid !important;
+  display: grid;
   grid-template-columns: 50% 50% !important;
   place-items: stretch !important;
   align-items: stretch !important;
@@ -1597,6 +1606,13 @@ html {
   background: var(--creme, #FBF6EA);
   box-sizing: border-box;
   font-family: var(--sans);
+}
+
+#login[style*="none"],
+#login.login-oculto {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
 }
 
 /* LADO ESQUERDO: HERO INSTITUCIONAL USINA DA VIDA (100% ALTURA - AZUL #085EC3) */
@@ -2025,7 +2041,7 @@ html {
 @media (max-width: 960px) {
   #login.login-split-layout {
     grid-template-columns: 1fr !important;
-    display: flex !important;
+    display: flex;
     flex-direction: column !important;
     overflow-y: auto !important;
   }
