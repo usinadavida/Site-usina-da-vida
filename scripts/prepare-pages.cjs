@@ -973,7 +973,7 @@ function redesenharPortal(html) {
     '$("mapa-leg").textContent = r ? "Raio de "+String(r).replace(".",",")+" km a partir de "+ref : "Selecione um raio para ver o alcance";',
     '$("mapa-leg").textContent = r ? "Raio de "+String(r).replace(".",",")+" km a partir de "+(ref==="Arenoso"?"R. Estrela D\'álva, 13e - Arenoso":ref) : "Sede: R. Estrela D\'álva, 13e - Arenoso (41211-300)"; if (typeof window.atualizarMapaLeaflet === "function") window.atualizarMapaLeaflet(lista, ref, r, cont, COORD, BAIRROS, km);'
   );
-  const fnTabelaAntigo = /function tabela\(\)\{[\s\S]*?Array\.prototype\.forEach\.call\(document\.querySelectorAll\("select\.st"\)[\s\S]*?\}\);\s*\}/;
+  const fnTabelaAntigo = /function tabela\(\)\{[\s\S]*?Array\.prototype\.forEach\.call[\s\S]*?\}\);\s*\}\);?\s*\}/;
   const fnTabelaNovo = 
 `window.PERMISSOES_SISTEMA = {
     coordenacao: { verContatos: true, alterarStatus: true, cadastrarAcoes: true, confirmarInscricoes: true, exportarCsv: false },
@@ -1554,21 +1554,25 @@ body {
   line-height: 1.6;
 }
 
-/* Escala desktop 82% focada no aplicativo interno (elimina quebras em tela cheia do login) */
+/* Escala visual de 82% calibrada para desktop (reproduz nativamente a visualização em 100% de zoom, idêntica à landing page) */
+html {
+  scroll-behavior: smooth;
+}
 @media (min-width: 1001px) {
-  #app {
+  body {
     zoom: 0.82;
-    width: 100%;
   }
 }
 
 /* TELA DE LOGIN FIXA SPLIT-SCREEN (IDENTIDADE VISUAL DA LANDING PAGE) */
 #login.login-split-layout {
   position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  height: 100dvh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: auto;
+  height: auto;
   z-index: 1000;
   overflow-y: auto;
   display: grid;
@@ -1587,7 +1591,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 48px 48px 36px;
+  padding: 28px 36px 20px;
   box-sizing: border-box;
   border-right: 3px solid var(--tinta, #1d2430);
 }
@@ -1612,7 +1616,7 @@ body {
 }
 
 .split-cabecalho-marca {
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 .split-logo-link {
@@ -1647,7 +1651,7 @@ body {
 
 .split-corpo-hero {
   margin: auto 0;
-  padding: 16px 0;
+  padding: 8px 0;
   max-width: 500px;
 }
 
@@ -1656,15 +1660,15 @@ body {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--amarelo, #F1C50E);
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .split-chamada {
   font-family: var(--serif);
-  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  font-size: clamp(1.85rem, 2.6vw, 2.3rem);
   line-height: 1.18;
   color: #fff;
-  margin: 0 0 16px;
+  margin: 0 0 12px;
 }
 
 .split-chamada em {
@@ -1673,18 +1677,18 @@ body {
 }
 
 .split-lead {
-  font-size: 1.05rem;
-  line-height: 1.65;
+  font-size: 0.98rem;
+  line-height: 1.5;
   color: #e6f0ff;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 /* Colagem fotográfica com recortes geométricos da marca */
 .split-colagem-mini {
   position: relative;
   aspect-ratio: 16 / 9;
-  max-width: 440px;
-  margin-bottom: 24px;
+  max-width: 360px;
+  margin-bottom: 16px;
 }
 
 .split-colagem-mini img {
@@ -1750,18 +1754,18 @@ body {
 .split-pilares-lista {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .split-pilar-item {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
+  gap: 10px;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 4px;
-  padding: 10px 14px;
-  font-size: 0.88rem;
+  padding: 8px 12px;
+  font-size: 0.86rem;
 }
 
 .split-pilar-marcador {
@@ -1769,7 +1773,7 @@ body {
   height: 10px;
   border-radius: 2px;
   flex-shrink: 0;
-  margin-top: 5px;
+  margin-top: 4px;
 }
 
 .split-pilar-marcador.p-azul { background: var(--amarelo, #F1C50E); }
@@ -1780,24 +1784,24 @@ body {
   display: block;
   font-weight: 600;
   color: #fff;
-  font-size: 0.92rem;
-  line-height: 1.3;
+  font-size: 0.88rem;
+  line-height: 1.25;
 }
 
 .split-pilar-item span {
   display: block;
   color: #d4e4ff;
-  font-size: 0.82rem;
-  line-height: 1.4;
+  font-size: 0.8rem;
+  line-height: 1.35;
   margin-top: 2px;
 }
 
 .split-rodape-institucional {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: #c0d8ff;
   border-top: 1px solid rgba(255, 255, 255, 0.18);
-  padding-top: 16px;
-  margin-top: 24px;
+  padding-top: 12px;
+  margin-top: 18px;
 }
 
 /* LADO DIREITO: FORMULÁRIO DE LOGIN COM CARTÃO USINA DA VIDA */
@@ -1807,7 +1811,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 48px 32px;
+  padding: 32px 24px;
   box-sizing: border-box;
   min-height: 100%;
 }
@@ -1817,7 +1821,7 @@ body {
   border: 2px solid var(--tinta, #1d2430);
   border-radius: 6px;
   box-shadow: 8px 8px 0 var(--amarelo, #F1C50E);
-  padding: 40px 36px 32px;
+  padding: 36px 34px 28px;
   width: 100%;
   max-width: 440px;
   box-sizing: border-box;
@@ -4203,7 +4207,7 @@ tr:hover td {
   if (linkEsqueciSenha) {
     linkEsqueciSenha.addEventListener("click", function(e) {
       e.preventDefault();
-      alert("Acesso Restrito ao Portal Usina da Vida\n\nPor políticas de conformidade e segurança da informação (LGPD), as credenciais de acesso ao Portal de Gestão são concedidas e gerenciadas diretamente pela Presidência e pela Coordenação Geral.\n\nCaso necessite de recuperação de senha ou autorização de perfil, contate a administração institucional da Usina da Vida.");
+      alert("Acesso Restrito ao Portal Usina da Vida\\n\\nPor políticas de conformidade e segurança da informação (LGPD), as credenciais de acesso ao Portal de Gestão são concedidas e gerenciadas diretamente pela Presidência e pela Coordenação Geral.\\n\\nCaso necessite de recuperação de senha ou autorização de perfil, contate a administração institucional da Usina da Vida.");
     });
   }
 
