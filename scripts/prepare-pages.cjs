@@ -2017,43 +2017,32 @@ html {
 @media (max-width: 960px) {
   #login.login-split-layout {
     grid-template-columns: 1fr !important;
-    display: block !important;
+    display: flex !important;
+    flex-direction: column !important;
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch;
+    background: var(--creme, #FBF6EA) !important;
   }
   .split-lado-institucional {
-    width: 100% !important;
-    height: auto !important;
-    min-height: auto !important;
-    padding: 36px 20px 32px !important;
-    border-right: none !important;
-    border-bottom: 3px solid var(--tinta, #1d2430) !important;
-    display: block !important;
+    display: none !important;
   }
   .split-lado-formulario {
     width: 100% !important;
+    min-height: 100% !important;
     height: auto !important;
-    min-height: auto !important;
-    padding: 32px 16px 44px !important;
     display: flex !important;
-  }
-  .split-bloco-institucional {
-    max-width: 440px;
-    margin: 0 auto;
-  }
-  .split-colagem-mini {
-    max-width: 320px;
-    margin-bottom: 20px;
-  }
-  .split-pilares-lista {
-    gap: 10px;
-  }
-  .split-lado-formulario {
-    padding: 32px 16px 44px;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 24px 16px 32px !important;
+    box-sizing: border-box !important;
+    margin: auto 0 !important;
   }
   .split-cartao {
-    padding: 30px 22px 24px;
-    box-shadow: 6px 6px 0 var(--amarelo, #F1C50E);
+    width: 100% !important;
+    max-width: 440px !important;
+    padding: 28px 20px 24px !important;
+    box-shadow: 6px 6px 0 var(--amarelo, #F1C50E) !important;
   }
 }
 
