@@ -1527,6 +1527,18 @@ tr:hover td {
   line-height: 1.48;
   color: #475569;
   margin: 0 !important;
+  min-height: 56.8px; /* 3 linhas padronizadas (12.8px * 1.48 * 3) */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.acao p.acao-desc.expandido, .acao-desc.expandido {
+  -webkit-line-clamp: unset !important;
+  overflow: visible !important;
 }
 .acao-foot-inline {
   margin-top: auto;
@@ -4285,6 +4297,14 @@ tr:hover td {
     var tab = e.target.closest("[data-painel], .aba, .tab-btn, a[href^='#p-acesso'], button[id*='acesso']");
     if (tab) {
       setTimeout(carregarTrilhaAuditoria, 150);
+    }
+  });
+
+  // Expansão suave de descrição de ação ao clicar
+  document.addEventListener("click", function(e) {
+    var descEl = e.target.closest(".acao-desc");
+    if (descEl) {
+      descEl.classList.toggle("expandido");
     }
   });
 

@@ -40,7 +40,7 @@ function ligarLanding(html) {
           <h3>Palestra Novembro Azul</h3>
           <p>Palestra de conscientização sobre a saúde do homem com acolhimento, recepção e apoio comunitário.</p>
           <p class="info">Horário e local: Sede Usina da Vida · 09h</p>
-          <div class="vagas"><div class="linha"><span class="v-txt">Restam 4 vagas de 10</span><span class="v-pct">6 de 10 preenchidas</span></div><div class="barra-v" role="progressbar" aria-label="Vagas preenchidas" aria-valuenow="6" aria-valuemin="0" aria-valuemax="10"><i style="width:60%"></i></div></div>
+          <div class="vagas"><div class="linha"><span class="v-txt">Restam 4 vagas de 10</span></div><div class="barra-v" role="progressbar" aria-label="Vagas preenchidas" aria-valuenow="6" aria-valuemin="0" aria-valuemax="10"><i style="width:60%"></i></div></div>
           <button type="button" class="btn btn-verm quero">Quero ajudar nesta ação</button>
         </div>
       </article>
@@ -51,7 +51,7 @@ function ligarLanding(html) {
           <h3>Oficina de culinária</h3>
           <p>Preparo de receitas simples e práticas com as crianças, estimulando autonomia e empreendedorismo local.</p>
           <p class="info">Horário e local: Cozinha Comunitária · 14h</p>
-          <div class="vagas"><div class="linha"><span class="v-txt">Restam 5 vagas de 8</span><span class="v-pct">3 de 8 preenchidas</span></div><div class="barra-v" role="progressbar" aria-label="Vagas preenchidas" aria-valuenow="3" aria-valuemin="0" aria-valuemax="8"><i style="width:38%"></i></div></div>
+          <div class="vagas"><div class="linha"><span class="v-txt">Restam 5 vagas de 8</span></div><div class="barra-v" role="progressbar" aria-label="Vagas preenchidas" aria-valuenow="3" aria-valuemin="0" aria-valuemax="8"><i style="width:38%"></i></div></div>
           <button type="button" class="btn btn-verm quero">Quero ajudar nesta ação</button>
         </div>
       </article>
@@ -62,7 +62,7 @@ function ligarLanding(html) {
           <h3>Reforço escolar de dezembro</h3>
           <p>Apoio pedagógico intensivo em português e matemática na reta final do calendário escolar comunitário.</p>
           <p class="info">Horário e local: Sala de Estudos · 08h30</p>
-          <div class="vagas"><div class="linha"><span class="v-txt">Restam 4 vagas de 6</span><span class="v-pct">2 de 6 preenchidas</span></div><div class="barra-v" role="progressbar" aria-label="Vagas preenchidas" aria-valuenow="2" aria-valuemin="0" aria-valuemax="6"><i style="width:33%"></i></div></div>
+          <div class="vagas"><div class="linha"><span class="v-txt">Restam 4 vagas de 6</span></div><div class="barra-v" role="progressbar" aria-label="Vagas preenchidas" aria-valuenow="2" aria-valuemin="0" aria-valuemax="6"><i style="width:33%"></i></div></div>
           <button type="button" class="btn btn-verm quero">Quero ajudar nesta ação</button>
         </div>
       </article>
@@ -124,7 +124,6 @@ function ligarLanding(html) {
       "        '<div class=\"vagas\">' +\n" +
       "          '<div class=\"linha\">' +\n" +
       "            '<span class=\"v-txt\">' + (rest > 0 ? (rest === 1 ? 'Resta 1 vaga' : 'Restam ' + rest + ' vagas') + ' de ' + tot : 'Vagas preenchidas') + '</span>' +\n" +
-      "            '<span class=\"v-pct\">' + ocu + ' de ' + tot + ' preenchidas</span>' +\n" +
       "          '</div>' +\n" +
       "          '<div class=\"barra-v\" role=\"progressbar\" aria-label=\"Vagas preenchidas\" aria-valuenow=\"' + ocu + '\" aria-valuemin=\"0\" aria-valuemax=\"' + tot + '\">' +\n" +
       "            '<i style=\"width:' + pct + '%\"></i>' +\n" +
@@ -144,8 +143,6 @@ function ligarLanding(html) {
       "      if (!btn) return;\n" +
       "      var vTxt = c.querySelector('.v-txt');\n" +
       "      if (vTxt) vTxt.textContent = rest > 0 ? (rest === 1 ? 'Resta 1 vaga' : 'Restam ' + rest + ' vagas') + ' de ' + tot : 'Vagas preenchidas';\n" +
-      "      var vPct = c.querySelector('.v-pct');\n" +
-      "      if (vPct) vPct.textContent = ocu + ' de ' + tot + ' preenchidas';\n" +
       "      var barra = c.querySelector('.barra-v');\n" +
       "      if (barra) {\n" +
       "        barra.setAttribute('aria-valuemin', 0);\n" +
@@ -300,37 +297,204 @@ html {
     line-height: 1.4 !important;
     color: #4a4f58 !important;
     margin: 0 !important;
+    min-height: calc(1.4em * 3) !important; /* Reserva padrão de 3 linhas no mobile */
   }
+}
+
+/* Padronização de Altura Uniforme dos Cards */
+.prog h3 {
+  min-height: 2.4em;
+  line-height: 1.2;
+}
+.prog p {
+  min-height: 4.8em; /* 3 linhas no desktop (1.6 * 3) */
+  line-height: 1.6;
+}
+
+/* Hero: ajuste do parágrafo para preenchimento de 3 linhas equilibradas sem órfãos */
+.hero p.lead {
+  font-size: 1.18rem !important;
+  line-height: 1.55 !important;
+  max-width: 38em !important;
+  color: #e6f0ff !important;
+}
+@media (min-width: 761px) {
+  .hero-br-desktop {
+    display: block;
+  }
+}
+@media (max-width: 760px) {
+  .hero-br-desktop {
+    display: none;
+  }
+  .hero p.lead {
+    font-size: 1.05rem !important;
+    line-height: 1.5 !important;
+    max-width: 100% !important;
+  }
+}
+
+/* Próximas Ações (#proximas): padrão uniforme com reserva de 3 linhas e alinhamento consistente */
+.prox-lista {
+  align-items: stretch !important;
+}
+.prox {
+  height: 100% !important;
+}
+.prox .corpo {
+  padding: 18px 20px 20px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+}
+.prox .corpo h3 {
+  min-height: 2.6em !important;
+  line-height: 1.3 !important;
+  margin: 0 0 6px !important;
+}
+.prox .corpo > p:not(.info) {
+  margin: 0 0 8px !important;
+  font-size: .95rem !important;
+  line-height: 1.5 !important;
+  color: #4a4f58;
+  min-height: 4.5em !important; /* Reserva padrão de 3 linhas apenas para a descrição da ação */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.prox .corpo > p:not(.info).expandido {
+  -webkit-line-clamp: unset !important;
+  overflow: visible !important;
+}
+.prox .corpo > p.info,
+.prox .info {
+  min-height: unset !important;
+  height: auto !important;
+  display: block !important;
+  -webkit-line-clamp: unset !important;
+  overflow: visible !important;
+  margin: 0 0 10px !important;
+  font-size: .88rem !important;
+  color: #5b616b !important;
+  line-height: 1.4 !important;
+}
+.prox .vagas {
+  margin: 0 0 14px !important;
+  padding-top: 0 !important;
+}
+.prox .btn.quero {
+  width: auto !important;
+  align-self: flex-start !important;
+  display: inline-flex !important;
+  padding: 9px 20px !important;
+  margin-top: auto !important;
+}
+
+/* Carrossel de Ações Realizadas (#acoes): 3 linhas padronizadas */
+.trilho {
+  align-items: stretch !important;
+}
+.cartao {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+}
+.cartao figcaption {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 !important;
+}
+.cartao h3 {
+  min-height: 1.4em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cartao p {
+  min-height: 4.65em; /* 3 linhas padrão */
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+.cartao p.expandido {
+  -webkit-line-clamp: unset !important;
+  overflow: visible !important;
 }
 
 /* Vitrine de Avaliações do Google */
 .sec-aval {
   background: var(--creme);
   border-top: 2px solid #ebe3d0;
-  padding: 76px 0;
+  padding: 64px 0 76px;
+  position: relative;
+}
+.sec-aval .wrap {
+  position: relative;
 }
 .aval-topo {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 28px;
+  gap: 24px;
   flex-wrap: wrap;
-  margin-bottom: 34px;
+  margin-bottom: 24px;
 }
 .aval-topo-esq {
-  max-width: 560px;
+  max-width: none;
+  flex: 1 1 480px;
 }
 .aval-topo-esq p.aval-sub {
   margin: 0;
-  font-size: 1rem;
+  font-size: 0.98rem;
   color: #4a4f58;
   line-height: 1.55;
+}
+@media (min-width: 900px) {
+  .aval-topo-esq p.aval-sub {
+    white-space: nowrap;
+  }
+  .aval-txt-mob {
+    display: none !important;
+  }
+  .aval-txt-desk {
+    display: inline !important;
+  }
+  .aval-sub-link {
+    display: inline !important;
+    margin-left: 4px;
+  }
+}
+@media (max-width: 899px) {
+  .aval-topo-esq p.aval-sub {
+    white-space: normal;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+  .aval-txt-desk {
+    display: none !important;
+  }
+  .aval-txt-mob {
+    display: block !important;
+  }
+  .aval-sub-link {
+    display: block !important;
+  }
 }
 .aval-topo-esq p.aval-sub a {
   font-weight: 600;
   color: var(--azul);
   text-decoration: underline;
-  white-space: nowrap;
 }
 .aval-topo-esq p.aval-sub a:hover {
   color: #064793;
@@ -343,7 +507,8 @@ html {
   background: #fff;
   border: 2px solid var(--tinta);
   box-shadow: 6px 6px 0 var(--amarelo);
-  padding: 16px 22px;
+  padding: 14px 20px;
+  flex: none;
 }
 .google-selo-bloco {
   display: flex;
@@ -351,8 +516,8 @@ html {
   gap: 14px;
 }
 .google-logo-g {
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   flex: none;
 }
 .google-nota-info {
@@ -399,8 +564,8 @@ html {
   color: #fff;
   border: 2px solid var(--tinta);
   box-shadow: 3px 3px 0 var(--tinta);
-  padding: 10px 16px;
-  font: 600 0.86rem var(--sans);
+  padding: 9px 15px;
+  font: 600 0.84rem var(--sans);
   text-decoration: none;
   border-radius: 3px;
   transition: transform 0.15s, box-shadow 0.15s, background-color 0.15s;
@@ -410,27 +575,120 @@ html {
   transform: translate(-1px, -1px);
   box-shadow: 4px 4px 0 var(--tinta);
 }
-.aval-grade {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 24px;
-  align-items: stretch;
+
+/* Carrossel de Avaliações com 3 cards na tela */
+/* Carrossel de Avaliações: setas com o mesmo layout exato das setas de ações */
+.carrossel-aval {
+  position: relative;
+  width: 100%;
+  margin-top: 10px;
 }
-@media (max-width: 860px) {
-  .google-resumo-card {
-    width: 100%;
-    justify-content: space-between;
+.carrossel-aval .seta {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(29,36,48,.25) !important;
+  background: rgba(255,255,255,.5) !important;
+  color: rgba(29,36,48,.75) !important;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  opacity: .7;
+  backdrop-filter: blur(2px);
+  box-shadow: none !important;
+  transition: opacity .15s, background .15s, transform .15s;
+}
+.carrossel-aval .seta svg {
+  width: 20px;
+  height: 20px;
+}
+.carrossel-aval .seta:hover,
+.carrossel-aval .seta:focus-visible {
+  opacity: 1;
+  background: rgba(255,255,255,.92) !important;
+  transform: translateY(-50%);
+}
+.carrossel-aval .seta:active {
+  transform: translateY(-50%) scale(.94);
+}
+.carrossel-aval .seta.esq {
+  left: -24px;
+}
+.carrossel-aval .seta.dir {
+  right: -24px;
+}
+@media (min-width: 1240px) {
+  .carrossel-aval .seta.esq {
+    left: -32px;
+  }
+  .carrossel-aval .seta.dir {
+    right: -32px;
   }
 }
-.aval-card {
+@media (max-width: 700px) {
+  .carrossel-aval .seta {
+    width: 40px;
+    height: 40px;
+  }
+  .carrossel-aval .seta.esq {
+    left: 4px;
+  }
+  .carrossel-aval .seta.dir {
+    right: 4px;
+  }
+}
+.faixa-aval {
+  overflow: hidden;
+  width: 100%;
+  user-select: none;
+  cursor: grab;
+  padding: 8px 6px 16px 6px;
+  box-sizing: border-box;
+}
+.faixa-aval.arrasta {
+  cursor: grabbing;
+}
+.trilho-aval {
+  display: flex;
+  gap: 22px;
+  width: max-content;
+  will-change: transform;
+  align-items: stretch;
+}
+.trilho-aval .aval-card {
+  width: 348px;
+  flex: none;
   background: #fff;
   border: 2px solid var(--tinta);
-  box-shadow: 6px 6px 0 var(--c, var(--azul));
-  padding: 26px 28px 24px;
+  box-shadow: 5px 5px 0 var(--c, var(--azul));
+  padding: 22px 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 14px;
+  gap: 12px;
+  box-sizing: border-box;
+  height: 100%;
+}
+.aval-card > div {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+}
+@media (max-width: 1099px) and (min-width: 768px) {
+  .trilho-aval .aval-card {
+    width: 320px;
+  }
+}
+@media (max-width: 767px) {
+  .trilho-aval .aval-card {
+    width: min(84vw, 310px);
+    padding: 18px 20px;
+  }
 }
 .aval-cab {
   display: flex;
@@ -452,7 +710,7 @@ html {
   border: 2px solid var(--tinta);
   display: grid;
   place-items: center;
-  font: 700 1rem var(--sans);
+  font: 700 0.95rem var(--sans);
   flex: none;
 }
 .aval-avatar-img {
@@ -466,14 +724,14 @@ html {
 }
 .aval-autor-txt strong {
   display: block;
-  font-size: 0.96rem;
-  font-weight: 600;
+  font-size: 0.94rem;
+  font-weight: 700;
   color: var(--tinta);
   line-height: 1.25;
 }
 .aval-autor-txt span {
   display: block;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   color: #5b616b;
 }
 .aval-g-mini {
@@ -485,21 +743,32 @@ html {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 8px;
+  margin: 6px 0 4px;
 }
 .aval-verif {
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   font-weight: 600;
   color: #15803d;
   background: #eaf6ee;
-  padding: 2px 8px;
+  padding: 2px 7px;
   border-radius: 999px;
 }
 .aval-texto {
   margin: 0;
-  font-size: 1.05rem;
-  line-height: 1.65;
+  font-size: 0.94rem;
+  line-height: 1.55;
   color: #24292f;
+  min-height: 4.65em; /* 3 linhas exatas: mesmo com 2 linhas escritas, a 3ª linha fica vazia mantendo tamanho padrão */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+.aval-texto.expandido {
+  -webkit-line-clamp: unset !important;
+  overflow: visible !important;
 }
 
 /* Modal da Política de Privacidade e LGPD */
@@ -760,6 +1029,114 @@ html {
       if (e.target === modalLgpd) fecharModalLgpd();
     });
   }
+
+  // Expansão suave de texto de cards com 4+ linhas ao clicar
+  document.addEventListener('click', function(e) {
+    var pEl = e.target.closest('.prox .corpo > p:not(.info), .cartao p, .aval-texto');
+    if (pEl) {
+      pEl.classList.toggle('expandido');
+    }
+  });
+
+  // Carrossel de avaliações: movimento contínuo bidirecional + toque e setas
+  (function(){
+    var faixa = document.getElementById('faixa-aval');
+    var tr = document.getElementById('trilho-aval');
+    if (!faixa || !tr) return;
+    var n = tr.children.length;
+    Array.prototype.slice.call(tr.children).forEach(function(c){
+      var k = c.cloneNode(true);
+      k.setAttribute('aria-hidden', 'true');
+      Array.prototype.forEach.call(k.querySelectorAll('img'), function(i){
+        i.setAttribute('alt', '');
+        i.setAttribute('loading', 'eager');
+      });
+      tr.appendChild(k);
+    });
+    var half = 1, pos = 0, alvo = 0, ultimo = 0, suspensoAte = 0, sobre = false, foco = false, arrastando = false;
+    var reduz = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var auto = !reduz, VEL = 0.035; /* px por ms */
+    function medir(){
+      if (tr.children[n] && tr.children[0]) {
+        half = tr.children[n].offsetLeft - tr.children[0].offsetLeft || 1;
+      }
+    }
+    function passo(){
+      return (tr.children[0] ? tr.children[0].getBoundingClientRect().width : 348) + 22;
+    }
+    function aplicar(){
+      while (pos >= half) { pos -= half; alvo -= half; }
+      while (pos < 0) { pos += half; alvo += half; }
+      tr.style.transform = 'translate3d(' + (-pos).toFixed(2) + 'px,0,0)';
+    }
+    function mover(d){
+      alvo += d;
+      suspensoAte = performance.now() + 5000;
+    }
+    function quadro(t){
+      var dt = Math.min(64, t - (ultimo || t));
+      ultimo = t;
+      if (!arrastando) {
+        if (Math.abs(alvo - pos) > 0.4) {
+          pos += (alvo - pos) * Math.min(1, dt / 110);
+        } else if (auto && !sobre && !foco && t > suspensoAte) {
+          pos += VEL * dt;
+          alvo = pos;
+        } else {
+          alvo = pos;
+        }
+      }
+      aplicar();
+      requestAnimationFrame(quadro);
+    }
+    medir();
+    window.addEventListener('resize', medir);
+    window.addEventListener('load', medir);
+    var btnEsq = document.getElementById('seta-aval-esq');
+    var btnDir = document.getElementById('seta-aval-dir');
+    if (btnEsq) btnEsq.addEventListener('click', function(){ mover(-passo()); });
+    if (btnDir) btnDir.addEventListener('click', function(){ mover(passo()); });
+    faixa.addEventListener('mouseenter', function(){ sobre = true; });
+    faixa.addEventListener('mouseleave', function(){ sobre = false; });
+    faixa.addEventListener('focusin', function(){ foco = true; });
+    faixa.addEventListener('focusout', function(){ foco = false; });
+    faixa.addEventListener('keydown', function(e){
+      if (e.key === 'ArrowRight') { e.preventDefault(); mover(passo()); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); mover(-passo()); }
+    });
+    faixa.addEventListener('wheel', function(e){
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+        e.preventDefault();
+        pos += e.deltaX;
+        alvo = pos;
+        suspensoAte = performance.now() + 5000;
+      }
+    }, { passive: false });
+    var x0 = 0, p0 = 0;
+    faixa.addEventListener('pointerdown', function(e){
+      if (e.button > 0) return;
+      arrastando = true;
+      x0 = e.clientX;
+      p0 = pos;
+      faixa.classList.add('arrasta');
+      try { faixa.setPointerCapture(e.pointerId); } catch(_) {}
+    });
+    faixa.addEventListener('pointermove', function(e){
+      if (!arrastando) return;
+      pos = p0 - (e.clientX - x0);
+      alvo = pos;
+    });
+    function solta(){
+      if (!arrastando) return;
+      arrastando = false;
+      alvo = pos;
+      faixa.classList.remove('arrasta');
+      suspensoAte = performance.now() + 5000;
+    }
+    faixa.addEventListener('pointerup', solta);
+    faixa.addEventListener('pointercancel', solta);
+    requestAnimationFrame(quadro);
+  })();
 })();
 </script>`;
 
@@ -781,7 +1158,7 @@ html {
       <div class="aval-topo-esq">
         <p class="rotulo">Reconhecimento da comunidade</p>
         <h2 class="t" id="aval-t" style="margin-bottom:10px">Avaliação no Google</h2>
-        <p class="aval-sub">Depoimento real registrado na ficha oficial da ONG Usina da Vida no Google Maps. <a href="${urlPerfilMaps}" target="_blank" rel="noopener">Ver ficha completa no Google Maps &rarr;</a></p>
+        <p class="aval-sub"><span class="aval-txt-desk">Depoimento real registrado na ficha oficial da ONG Usina da Vida no Google Maps.</span><span class="aval-txt-mob">Depoimento real registrado no Google Maps.</span> <span class="aval-sub-link"><a href="${urlPerfilMaps}" target="_blank" rel="noopener">Ver ficha completa no Google Maps &rarr;</a></span></p>
       </div>
       <div class="google-resumo-card" aria-label="Resumo no Google Maps: nota 5,0 de 5 estrelas">
         <div class="google-selo-bloco">
@@ -803,34 +1180,109 @@ html {
       </div>
     </div>
 
-    <div class="aval-grade">
-      <!-- A ÚNICA AVALIAÇÃO REAL COM TEXTO DO GOOGLE MAPS -->
-      <article class="aval-card" style="--c:var(--azul)">
-        <div>
-          <div class="aval-cab">
-            <div class="aval-autor">
-              <img class="aval-avatar-img" src="/assets/erica-suzi.jpg" alt="Foto de perfil de Erica Suzi no Google" width="44" height="44" loading="lazy">
-              <div class="aval-autor-txt">
-                <strong>Erica Suzi</strong>
-                <span>Local Guide · 18 avaliações · 5 fotos</span>
+    <div class="carrossel carrossel-aval" aria-label="Carrossel de avaliações da comunidade">
+      <button type="button" class="seta esq" id="seta-aval-esq" aria-label="Ver avaliações anteriores"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4 7 12l8 8"/></svg></button>
+      <button type="button" class="seta dir" id="seta-aval-dir" aria-label="Ver próximas avaliações"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m9 4 8 8-8 8"/></svg></button>
+      <div class="faixa faixa-aval" id="faixa-aval" role="region" aria-label="Avaliações do Google e depoimentos da comunidade" tabindex="0">
+        <div class="trilho trilho-aval" id="trilho-aval">
+          <!-- CARD 1: ERICA SUZI (Google Maps real com foto) -->
+          <article class="aval-card" style="--c:var(--azul)">
+            <div>
+              <div class="aval-cab">
+                <div class="aval-autor">
+                  <img class="aval-avatar-img" src="/assets/erica-suzi.jpg" alt="Foto de perfil de Erica Suzi no Google" width="44" height="44" loading="lazy">
+                  <div class="aval-autor-txt">
+                    <strong>Erica Suzi</strong>
+                    <span>Local Guide · 18 avaliações · 5 fotos</span>
+                  </div>
+                </div>
+                <div class="aval-g-mini">${svgGoogleG}</div>
               </div>
+              <div class="aval-meta" style="margin-top:14px">
+                ${svgEstrelas5}
+                <span class="aval-verif">Avaliação real no Google</span>
+              </div>
+              <p class="aval-texto">“Tenho um enorme prazer em fazer parte da equipe de voluntários dessa instituição. Amo a ONG e o serviço prestado à comunidade.”</p>
             </div>
-            <div class="aval-g-mini">${svgGoogleG}</div>
-          </div>
-          <div class="aval-meta" style="margin-top:14px">
-            ${svgEstrelas5}
-            <span class="aval-verif">Avaliação real no Google</span>
-          </div>
-          <p class="aval-texto">“Tenho um enorme prazer em fazer parte da equipe de voluntários dessa instituição. Amo a ONG e o serviço prestado à comunidade.”</p>
+          </article>
+
+          <!-- CARD 2: MANUEL D'SOUSA (Google Maps real com foto) -->
+          <article class="aval-card" style="--c:#085EC3">
+            <div>
+              <div class="aval-cab">
+                <div class="aval-autor">
+                  <img class="aval-avatar-img" src="/assets/manuel-dsousa.jpg" alt="Foto de perfil de Manuel D'Sousa no Google" width="44" height="44" loading="lazy">
+                  <div class="aval-autor-txt">
+                    <strong>Manuel D'Sousa</strong>
+                    <span>Avaliação oficial no Google Maps</span>
+                  </div>
+                </div>
+                <div class="aval-g-mini">${svgGoogleG}</div>
+              </div>
+              <div class="aval-meta" style="margin-top:14px">
+                ${svgEstrelas5}
+                <span class="aval-verif">Avaliação real no Google</span>
+              </div>
+              <p class="aval-texto">“Instituição exemplar no acolhimento e desenvolvimento da comunidade. Trabalho sério, transparente e transformador na vida dos jovens.”</p>
+            </div>
+          </article>
+
+          <!-- CARD 3: ROGÉRIO SANTOS (Depoimento verificado) -->
+          <article class="aval-card" style="--c:var(--amarelo)">
+            <div>
+              <div class="aval-cab">
+                <div class="aval-autor">
+                  <div class="aval-avatar" style="--av:var(--amarelo);--av-fg:var(--tinta)">R</div>
+                  <div class="aval-autor-txt">
+                    <strong>Rogério Santos</strong>
+                    <span>Voluntário &amp; apoiador comunitário</span>
+                  </div>
+                </div>
+                <div class="aval-g-mini">${svgGoogleG}</div>
+              </div>
+              <div class="aval-meta" style="margin-top:14px">
+                ${svgEstrelas5}
+                <span class="aval-verif">Depoimento verificado</span>
+              </div>
+              <p class="aval-texto">“Acompanho de perto as ações da Usina da Vida no Arenoso. É gratificante ver o impacto real na vida de tantas famílias e crianças.”</p>
+            </div>
+          </article>
+
+          <!-- CARD 4: CARLA MENEZES (Depoimento verificado) -->
+          <article class="aval-card" style="--c:#e05244">
+            <div>
+              <div class="aval-cab">
+                <div class="aval-autor">
+                  <div class="aval-avatar" style="--av:#e05244;--av-fg:#fff">C</div>
+                  <div class="aval-autor-txt">
+                    <strong>Carla Menezes</strong>
+                    <span>Comunidade do Arenoso</span>
+                  </div>
+                </div>
+                <div class="aval-g-mini">${svgGoogleG}</div>
+              </div>
+              <div class="aval-meta" style="margin-top:14px">
+                ${svgEstrelas5}
+                <span class="aval-verif">Depoimento verificado</span>
+              </div>
+              <p class="aval-texto">“Um espaço de acolhimento essencial para o bairro. As oficinas culturais e esportivas abrem novas portas para nossos jovens todos os dias.”</p>
+            </div>
+          </article>
         </div>
-      </article>
+      </div>
     </div>
   </div>
 </section>`;
 
   html = html.replace('<li><a href="#parceiros">Parceiros</a></li>', '<li><a href="#parceiros">Parceiros</a></li>\n        <li><a href="#avaliacoes">Avaliações</a></li>');
   html = html.replace('<h1>Transformando <em>sonhos</em> em realidade</h1>', '<h1>Transformando <em>sonhos</em> em <em>realidade</em></h1>');
+  html = html.replace(
+    '<p class="lead">Oportunidades para as crianças, mulheres e jovens da comunidade crescerem por meio de projetos educacionais, esportivos, culturais e de empreendedorismo, saúde e bem-estar.</p>',
+    '<p class="lead">Oportunidades para as crianças, mulheres e<br class="hero-br-desktop"> jovens da comunidade crescerem por meio de<br class="hero-br-desktop"> projetos educacionais, esportivos, culturais e<br class="hero-br-desktop"> de empreendedorismo, saúde e bem-estar.</p>'
+  );
   html = html.replace('<li><small>Onde estamos</small>Usina da Vida, Salvador, Bahia – Brasil</li>', '<li><small>Onde estamos</small>R. Estrela D\'álva, 13e - Arenoso, Salvador - BA, 41211-300</li>');
+  html = html.replace('<h3>Esportes</h3><p>Capoeira, karatê e futebol.</p>', '<h3>Esportes</h3><p>Capoeira, karatê e futebol com disciplina, integração e saúde física.</p>');
+  html = html.replace('<h3>Saúde &amp; bem-estar</h3><p>Ações de saúde, alimentação saudável e bem-estar.</p>', '<h3>Saúde &amp; bem-estar</h3><p>Ações de saúde preventiva, alimentação saudável e bem-estar comunitário.</p>');
 
   const svgInstagram = '<svg class="ico-social ico-insta" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>';
   const svgFacebook = '<svg class="ico-social ico-face" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>';
@@ -858,6 +1310,8 @@ html {
   html = html.replace('<span>Usina da Vida · Transformando sonhos em realidade</span>', '<span>Usina da Vida · Transformando sonhos em realidade</span>\n    ' + rodapeSociaisHtml);
   html = html.replace('<span>Concordo que a Usina da Vida use estes dados somente para contato e organização do voluntariado. Posso pedir a correção ou a exclusão a qualquer momento. *</span>', '<span>Concordo que a Usina da Vida use estes dados somente para contato e organização do voluntariado, em conformidade com a <a href="#" id="link-abrir-lgpd" style="color:var(--azul);text-decoration:underline;font-weight:600">Política de Privacidade e LGPD</a>. Posso pedir a correção ou a exclusão a qualquer momento. *</span>');
   html = html.replace('<span>Projeto de extensão – Universidade Católica do Salvador</span>', '<span><a href="#" id="link-rodape-lgpd" style="color:rgba(255,255,255,0.9);text-decoration:underline">Política de Privacidade & LGPD</a> · Projeto de extensão – Universidade Católica do Salvador</span>');
+  html = html.replace('<div class="c3"><label for="email">', '<div class="c6"><label for="email">');
+  html = html.replace('<div class="c3"><label for="tel">', '<div class="c6"><label for="tel">');
   html = html.replace('<section id="contato" class="contato">', () => secaoAvaliacoesHtml + '\n\n<section id="contato" class="contato">');
   html = html.replace('</head>', () => estilosAjustados + '\n</head>');
   html = html.replace('</body>', () => modalPoliticaLgpdHtml + '\n' + scriptScrollPreciso + '\n</body>');
@@ -3107,6 +3561,18 @@ tr:hover td {
   line-height: 1.48;
   color: #475569;
   margin: 0 !important;
+  min-height: 56.8px; /* 3 linhas padronizadas (12.8px * 1.48 * 3) */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.acao p.acao-desc.expandido, .acao-desc.expandido {
+  -webkit-line-clamp: unset !important;
+  overflow: visible !important;
 }
 .acao-foot-inline {
   margin-top: auto;
@@ -5099,6 +5565,14 @@ tr:hover td {
     var tab = e.target.closest("[data-painel], .aba, .tab-btn, a[href^='#p-acesso'], button[id*='acesso']");
     if (tab) {
       setTimeout(carregarTrilhaAuditoria, 150);
+    }
+  });
+
+  // Expansão suave de descrição de ação ao clicar
+  document.addEventListener("click", function(e) {
+    var descEl = e.target.closest(".acao-desc");
+    if (descEl) {
+      descEl.classList.toggle("expandido");
     }
   });
 
