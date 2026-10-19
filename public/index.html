@@ -627,6 +627,8 @@ html {
   box-shadow: 6px 6px 0 var(--amarelo);
   padding: 14px 20px;
   flex: none;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 .google-selo-bloco {
   display: flex;
@@ -718,6 +720,7 @@ html {
 }
 .carrossel-aval.modo-estatico .aval-card {
   width: min(100%, 540px) !important;
+  box-sizing: border-box !important;
   margin: 0 auto !important;
 }
 .carrossel-aval .seta {
@@ -828,6 +831,42 @@ html {
   }
 }
 @media (max-width: 767px) {
+  .google-resumo-card {
+    width: 100% !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 14px !important;
+    padding: 14px 16px !important;
+  }
+  .google-selo-bloco {
+    gap: 12px !important;
+    width: 100% !important;
+  }
+  .google-logo-g {
+    width: 32px !important;
+    height: 32px !important;
+  }
+  .google-nota-leg {
+    font-size: 0.75rem !important;
+    line-height: 1.3 !important;
+    word-break: break-word !important;
+  }
+  .google-acoes-topo {
+    width: 100% !important;
+  }
+  .btn-google-aval {
+    width: 100% !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+  .carrossel-aval.modo-estatico .faixa-aval {
+    padding: 8px 4px 16px 4px !important;
+  }
+  .carrossel-aval.modo-estatico .aval-card {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 18px 18px !important;
+  }
   .trilho-aval .aval-card {
     width: min(84vw, 310px);
     padding: 18px 20px;
