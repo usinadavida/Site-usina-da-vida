@@ -185,6 +185,11 @@ function ligarLanding(html) {
   }
 
   const estilosAjustados = `<style id="altura-padrao">
+/* Normalização e bloqueio de font-boosting involuntário para todos os navegadores móveis */
+html, body {
+  -webkit-text-size-adjust: 100% !important;
+  text-size-adjust: 100% !important;
+}
 /* Escala visual de 82% calibrada para desktop (reproduz nativamente a visualização em 100% de zoom) */
 html {
   scroll-behavior: smooth;
@@ -1106,7 +1111,113 @@ footer .rodape-creditos a {
 footer .rodape-creditos a:hover {
   color: #ffffff !important;
 }
+/* ==========================================================================
+   CALIBRAÇÃO E PROPORÇÃO MOBILE UNIFICADA (Safari, Chrome, Samsung Internet)
+   ========================================================================== */
 @media (max-width: 768px) {
+  /* 1. Previne zoom indesejado no iOS Safari ao focar inputs/selects */
+  input[type=text],
+  input[type=email],
+  input[type=tel],
+  input[type=date],
+  select,
+  textarea,
+  .idioma select {
+    font-size: 16px !important;
+  }
+
+  /* 2. Topo/cabeçalho mais compacto (ganho de espaço útil na tela) */
+  .top .wrap {
+    min-height: 58px !important;
+    padding: 0 16px !important;
+  }
+  .marca img:first-child {
+    height: 38px !important;
+    width: auto !important;
+  }
+  .topo-botoes {
+    gap: 8px !important;
+  }
+  .topo-botoes .btn {
+    padding: 8px 12px !important;
+    font-size: 0.8rem !important;
+  }
+
+  /* 3. Hero calibrado e proporcional (sem títulos desmedidos) */
+  .hero .wrap {
+    padding-top: 28px !important;
+    padding-bottom: 42px !important;
+    gap: 22px !important;
+  }
+  .hero .sobre {
+    font-size: 0.74rem !important;
+    margin-bottom: 10px !important;
+    letter-spacing: 0.1em !important;
+  }
+  .hero h1 {
+    font-size: clamp(1.85rem, 5.8vw, 2.25rem) !important;
+    line-height: 1.18 !important;
+    margin-bottom: 14px !important;
+  }
+  .hero p.lead {
+    font-size: 0.98rem !important;
+    line-height: 1.58 !important;
+    margin-bottom: 18px !important;
+  }
+  .hero .acoes-btn {
+    margin-top: 18px !important;
+  }
+  .hero .colagem {
+    width: 100% !important;
+    max-width: 310px !important;
+    margin: 0 auto !important;
+  }
+
+  /* 4. Títulos de seções proporcionais */
+  h2.t, .vol h2 {
+    font-size: clamp(1.5rem, 4.6vw, 1.85rem) !important;
+    line-height: 1.2 !important;
+    margin-bottom: 14px !important;
+  }
+  .rotulo {
+    font-size: 0.74rem !important;
+    margin-bottom: 8px !important;
+  }
+
+  /* 5. Espaçamentos equilibrados entre seções (elimina os 176px de vazio vertical) */
+  section {
+    padding: 46px 0 !important;
+  }
+  .sec-prox {
+    padding: 46px 0 40px !important;
+  }
+  .contato {
+    padding: 46px 0 !important;
+  }
+  .wrap {
+    padding: 0 18px !important;
+  }
+
+  /* 6. Formatação do formulário de voluntários no mobile */
+  form {
+    padding: 22px 16px 20px !important;
+    box-shadow: 6px 6px 0 var(--amarelo) !important;
+  }
+  .f-grid {
+    gap: 8px 10px !important;
+  }
+
+  /* 7. Próximas ações e cards com espaçamento harmonioso */
+  .prox-lista {
+    gap: 18px !important;
+  }
+  .prox {
+    box-shadow: 4px 4px 0 var(--azul) !important;
+  }
+  .prox .corpo {
+    padding: 16px 14px 16px !important;
+  }
+
   footer {
     padding: 22px 16px 26px;
   }
@@ -1454,6 +1565,7 @@ footer .rodape-creditos a:hover {
   </div>
 </section>`;
 
+  html = html.replace('<meta name="viewport" content="width=device-width, initial-scale=1">', '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">');
   html = html.replace('<li><a href="#parceiros">Parceiros</a></li>', '<li><a href="#parceiros">Parceiros</a></li>\n        <li><a href="#avaliacoes">Avaliações</a></li>');
   html = html.replace('<h1>Transformando <em>sonhos</em> em realidade</h1>', '<h1>Transformando <em>sonhos</em> em <em>realidade</em></h1>');
   html = html.replace(
@@ -2339,6 +2451,8 @@ function redesenharPortal(html) {
 html {
   background: var(--suave);
   min-height: 100%;
+  -webkit-text-size-adjust: 100% !important;
+  text-size-adjust: 100% !important;
 }
 body {
   margin: 0;
@@ -2346,6 +2460,8 @@ body {
   background: var(--suave);
   color: var(--tinta);
   line-height: 1.6;
+  -webkit-text-size-adjust: 100% !important;
+  text-size-adjust: 100% !important;
 }
 
 /* Escala visual de 82% calibrada para desktop (reproduz nativamente a visualização em 100% de zoom, idêntica à landing page) */
