@@ -986,13 +986,45 @@ html {
   color: #93c5fd !important;
 }
 
+/* Bloco de contato organizado e alinhado */
+.contato ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 40px;
+  align-items: start;
+}
+.contato ul li:nth-child(1) {
+  grid-column: 1;
+  grid-row: 1;
+}
+.contato ul li:nth-child(2) {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+.contato ul li:nth-child(3) {
+  grid-column: 1;
+  grid-row: 2;
+}
+@media (max-width: 760px) {
+  .contato ul {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .contato ul li:nth-child(1),
+  .contato ul li:nth-child(2),
+  .contato ul li:nth-child(3) {
+    grid-column: auto;
+    grid-row: auto;
+  }
+}
+
 /* Botões sociais no contato e rodapé */
 .contato-sociais {
   display: flex;
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
-  margin-top: 6px;
+  margin-top: 10px;
 }
 .btn-social {
   display: inline-flex;
@@ -1437,10 +1469,7 @@ footer .rodape-creditos a:hover {
   const svgWhatsApp = '<svg class="ico-contato ico-wa" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>';
   const svgEmail = '<svg class="ico-contato ico-mail" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>';
 
-  const linkWhatsHtml = '<li><small>WhatsApp</small><a class="contato-link link-whatsapp" href="https://wa.me/5571983953524" target="_blank" rel="noopener" title="Falar com a Usina da Vida no WhatsApp">' + svgWhatsApp + '<span>71 9 8395-3524</span></a></li>';
-  const linkEmailHtml = '<li><small>E-mail</small><a class="contato-link link-email" href="mailto:assusinadavida@gmail.com" title="Enviar e-mail para a Usina da Vida">' + svgEmail + '<span>assusinadavida@gmail.com</span></a></li>';
-
-  const blocoSociaisHtml = '<li><small>Instagram e Facebook</small>\n' +
+  const linkWhatsHtml = '<li><small>WhatsApp</small><a class="contato-link link-whatsapp" href="https://wa.me/5571983953524" target="_blank" rel="noopener" title="Falar com a Usina da Vida no WhatsApp">' + svgWhatsApp + '<span>71 9 8395-3524</span></a>\n' +
     '          <div class="contato-sociais">\n' +
     '            <a class="btn-social btn-instagram" href="https://www.instagram.com/ong.usinadavida?obrf=MWN2YjR1NzdncmUyYQ==" target="_blank" rel="noopener" title="Siga a Usina da Vida no Instagram" aria-label="Instagram da Usina da Vida">\n' +
     '              ' + svgInstagram + '\n' +
@@ -1452,10 +1481,11 @@ footer .rodape-creditos a:hover {
     '            </a>\n' +
     '          </div>\n' +
     '        </li>';
+  const linkEmailHtml = '<li><small>E-mail</small><a class="contato-link link-email" href="mailto:assusinadavida@gmail.com" title="Enviar e-mail para a Usina da Vida">' + svgEmail + '<span>assusinadavida@gmail.com</span></a></li>';
 
   html = html.replace('<li><small>WhatsApp</small><a href="https://wa.me/5571983953524">71 9 8395-3524</a></li>', linkWhatsHtml);
   html = html.replace('<li><small>E-mail</small><a href="mailto:assusinadavida@gmail.com">assusinadavida@gmail.com</a></li>', linkEmailHtml);
-  html = html.replace('<li><small>Instagram e Facebook</small>@ong.usinadavida</li>', blocoSociaisHtml);
+  html = html.replace(/<li><small>Instagram e Facebook<\/small>@ong\.usinadavida<\/li>\s*/, '');
 
   html = html.replace('<span>Usina da Vida · Transformando sonhos em realidade</span>', '<span class="rodape-frase">Usina da Vida · Transformando sonhos em realidade</span>');
   html = html.replace('<span>Concordo que a Usina da Vida use estes dados somente para contato e organização do voluntariado. Posso pedir a correção ou a exclusão a qualquer momento. *</span>', '<span>Concordo que a Usina da Vida use estes dados somente para contato e organização do voluntariado, em conformidade com a <a href="#" id="link-abrir-lgpd" style="color:var(--azul);text-decoration:underline;font-weight:600">Política de Privacidade e LGPD</a>. Posso pedir a correção ou a exclusão a qualquer momento. *</span>');
