@@ -1086,7 +1086,7 @@ html {
       <h4>6. Canal de Atendimento do Encarregado (DPO)</h4>
       <p>Para exercer qualquer um dos seus direitos previstos na LGPD, solicitar atualização ou exclusão definitiva de seu cadastro, entre em contato com nossa equipe gestora:</p>
       <p><strong>E-mail Institucional:</strong> <a href="mailto:contato@usinadavida.org.br" style="color:var(--azul);font-weight:600">contato@usinadavida.org.br</a><br>
-      <strong>Endereço da Sede:</strong> R. Estrela D'álva, 13e - Arenoso, Salvador - BA, 41211-300</p>
+      <strong>Endereço da Sede:</strong> R. Estrela D'álva, Salvador - BA, 41211-300</p>
     </div>
     <div class="modal-lgpd-rodape">
       <button type="button" class="btn btn-verm" id="btn-entendido-lgpd" style="padding:10px 22px;font-weight:700">Entendido e Fechar</button>
@@ -1374,7 +1374,7 @@ html {
     '<p class="lead">Oportunidades para as crianças, mulheres e jovens da comunidade crescerem por meio de projetos educacionais, esportivos, culturais e de empreendedorismo, saúde e bem-estar.</p>',
     '<p class="lead">Oportunidades para as crianças, mulheres e<br class="hero-br-desktop"> jovens da comunidade crescerem por meio de<br class="hero-br-desktop"> projetos educacionais, esportivos, culturais e<br class="hero-br-desktop"> de empreendedorismo, saúde e bem-estar.</p>'
   );
-  html = html.replace('<li><small>Onde estamos</small>Usina da Vida, Salvador, Bahia – Brasil</li>', '<li><small>Onde estamos</small>R. Estrela D\'álva, 13e - Arenoso, Salvador - BA, 41211-300</li>');
+  html = html.replace('<li><small>Onde estamos</small>Usina da Vida, Salvador, Bahia – Brasil</li>', '<li><small>Onde estamos</small>R. Estrela D\'álva, Salvador - BA, 41211-300</li>');
   html = html.replace('<h3>Esportes</h3><p>Capoeira, karatê e futebol.</p>', '<h3>Esportes</h3><p>Capoeira, karatê e futebol com disciplina, integração e saúde física.</p>');
   html = html.replace('<h3>Saúde &amp; bem-estar</h3><p>Ações de saúde, alimentação saudável e bem-estar.</p>', '<h3>Saúde &amp; bem-estar</h3><p>Ações de saúde preventiva, alimentação saudável e bem-estar comunitário.</p>');
 
