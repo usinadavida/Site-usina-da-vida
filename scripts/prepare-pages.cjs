@@ -585,7 +585,7 @@ html {
   width: 100%;
   margin-top: 10px;
 }
-/* Quando houver menos de 3 avaliações: apresentação estática centralizada e elegante */
+/* Quando houver menos de 3 avaliações: card com tamanho padrão reduzido posicionado na lateral */
 .carrossel-aval.modo-estatico .seta {
   display: none !important;
 }
@@ -596,14 +596,15 @@ html {
 }
 .carrossel-aval.modo-estatico .trilho-aval {
   display: flex !important;
-  justify-content: center !important;
+  justify-content: flex-start !important;
   width: 100% !important;
   transform: none !important;
 }
 .carrossel-aval.modo-estatico .aval-card {
-  width: min(100%, 540px) !important;
+  width: 348px !important;
+  max-width: 100% !important;
   box-sizing: border-box !important;
-  margin: 0 auto !important;
+  margin: 0 !important;
 }
 .carrossel-aval .seta {
   position: absolute;
@@ -745,9 +746,11 @@ html {
     padding: 8px 4px 16px 4px !important;
   }
   .carrossel-aval.modo-estatico .aval-card {
-    width: 100% !important;
+    width: min(88vw, 320px) !important;
+    max-width: 100% !important;
     box-sizing: border-box !important;
-    padding: 18px 18px !important;
+    padding: 18px 20px !important;
+    margin: 0 !important;
   }
   .trilho-aval .aval-card {
     width: min(84vw, 310px);
@@ -1020,24 +1023,75 @@ html {
   background: rgba(24, 119, 242, 0.22);
   color: #cfe2ff !important;
 }
-.btn-social svg {
-  flex-shrink: 0;
+/* Endereço com quebra elegante no mobile */
+.end-linha1 {
+  display: inline;
 }
-.rodape-sociais {
-  display: inline-flex;
+.end-linha2 {
+  display: inline;
+  margin-left: 4px;
+}
+@media (max-width: 768px) {
+  .end-linha1 {
+    display: block;
+    margin-bottom: 2px;
+  }
+  .end-linha2 {
+    display: block;
+    margin-left: 0;
+    white-space: nowrap;
+  }
+}
+
+/* Layout organizado e limpo do rodapé */
+footer {
+  background: #0f141b;
+  color: #9aa3b2;
+  font-size: 0.84rem;
+  padding: 22px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+footer .wrap {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
+  flex-wrap: wrap;
 }
-.link-social-rodape {
-  color: #9aa3b2 !important;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.15s ease, transform 0.15s ease;
+footer .rodape-frase {
+  color: #d1d5db;
+  font-weight: 500;
+  letter-spacing: 0.01em;
 }
-.link-social-rodape:hover {
+footer .rodape-creditos {
+  color: #9aa3b2;
+}
+footer .rodape-creditos a {
+  color: #cbd5e1 !important;
+  text-decoration: underline;
+  transition: color 0.15s ease;
+}
+footer .rodape-creditos a:hover {
   color: #ffffff !important;
-  transform: translateY(-2px);
+}
+@media (max-width: 768px) {
+  footer {
+    padding: 22px 16px 26px;
+  }
+  footer .wrap {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+  }
+  footer .rodape-frase {
+    font-size: 0.86rem;
+  }
+  footer .rodape-creditos {
+    font-size: 0.78rem;
+    line-height: 1.5;
+  }
 }
 </style>`;
 
@@ -1374,7 +1428,7 @@ html {
     '<p class="lead">Oportunidades para as crianças, mulheres e jovens da comunidade crescerem por meio de projetos educacionais, esportivos, culturais e de empreendedorismo, saúde e bem-estar.</p>',
     '<p class="lead">Oportunidades para as crianças, mulheres e<br class="hero-br-desktop"> jovens da comunidade crescerem por meio de<br class="hero-br-desktop"> projetos educacionais, esportivos, culturais e<br class="hero-br-desktop"> de empreendedorismo, saúde e bem-estar.</p>'
   );
-  html = html.replace('<li><small>Onde estamos</small>Usina da Vida, Salvador, Bahia – Brasil</li>', '<li><small>Onde estamos</small>R. Estrela D\'álva, Salvador - BA, 41211-300</li>');
+  html = html.replace('<li><small>Onde estamos</small>Usina da Vida, Salvador, Bahia – Brasil</li>', '<li><small>Onde estamos</small><span class="end-linha1">R. Estrela D\'álva,</span><span class="end-linha2">Salvador - BA, 41211-300</span></li>');
   html = html.replace('<h3>Esportes</h3><p>Capoeira, karatê e futebol.</p>', '<h3>Esportes</h3><p>Capoeira, karatê e futebol com disciplina, integração e saúde física.</p>');
   html = html.replace('<h3>Saúde &amp; bem-estar</h3><p>Ações de saúde, alimentação saudável e bem-estar.</p>', '<h3>Saúde &amp; bem-estar</h3><p>Ações de saúde preventiva, alimentação saudável e bem-estar comunitário.</p>');
 
@@ -1403,14 +1457,9 @@ html {
   html = html.replace('<li><small>E-mail</small><a href="mailto:assusinadavida@gmail.com">assusinadavida@gmail.com</a></li>', linkEmailHtml);
   html = html.replace('<li><small>Instagram e Facebook</small>@ong.usinadavida</li>', blocoSociaisHtml);
 
-  const rodapeSociaisHtml = '<div class="rodape-sociais">\n' +
-    '      <a class="link-social-rodape" href="https://www.instagram.com/ong.usinadavida?obrf=MWN2YjR1NzdncmUyYQ==" target="_blank" rel="noopener" title="Instagram da Usina da Vida" aria-label="Instagram">' + svgInstagram + '</a>\n' +
-    '      <a class="link-social-rodape" href="https://www.facebook.com/profile.php?id=61555567846773" target="_blank" rel="noopener" title="Facebook da Usina da Vida" aria-label="Facebook">' + svgFacebook + '</a>\n' +
-    '    </div>';
-
-  html = html.replace('<span>Usina da Vida · Transformando sonhos em realidade</span>', '<span>Usina da Vida · Transformando sonhos em realidade</span>\n    ' + rodapeSociaisHtml);
+  html = html.replace('<span>Usina da Vida · Transformando sonhos em realidade</span>', '<span class="rodape-frase">Usina da Vida · Transformando sonhos em realidade</span>');
   html = html.replace('<span>Concordo que a Usina da Vida use estes dados somente para contato e organização do voluntariado. Posso pedir a correção ou a exclusão a qualquer momento. *</span>', '<span>Concordo que a Usina da Vida use estes dados somente para contato e organização do voluntariado, em conformidade com a <a href="#" id="link-abrir-lgpd" style="color:var(--azul);text-decoration:underline;font-weight:600">Política de Privacidade e LGPD</a>. Posso pedir a correção ou a exclusão a qualquer momento. *</span>');
-  html = html.replace('<span>Projeto de extensão – Universidade Católica do Salvador</span>', '<span><a href="#" id="link-rodape-lgpd" style="color:rgba(255,255,255,0.9);text-decoration:underline">Política de Privacidade & LGPD</a> · Projeto de extensão – Universidade Católica do Salvador</span>');
+  html = html.replace('<span>Projeto de extensão – Universidade Católica do Salvador</span>', '<span class="rodape-creditos"><a href="#" id="link-rodape-lgpd">Política de Privacidade &amp; LGPD</a> · Projeto de extensão – Universidade Católica do Salvador</span>');
   html = html.replace('<div class="c3"><label for="email">', '<div class="c6"><label for="email">');
   html = html.replace('<div class="c3"><label for="tel">', '<div class="c6"><label for="tel">');
   html = html.replace('<section id="contato" class="contato">', () => secaoAvaliacoesHtml + '\n\n<section id="contato" class="contato">');
