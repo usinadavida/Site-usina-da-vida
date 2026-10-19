@@ -583,6 +583,25 @@ html {
   width: 100%;
   margin-top: 10px;
 }
+/* Quando houver menos de 3 avaliações: apresentação estática centralizada e elegante */
+.carrossel-aval.modo-estatico .seta {
+  display: none !important;
+}
+.carrossel-aval.modo-estatico .faixa-aval {
+  overflow: visible !important;
+  cursor: default !important;
+  padding: 8px 6px 16px 6px !important;
+}
+.carrossel-aval.modo-estatico .trilho-aval {
+  display: flex !important;
+  justify-content: center !important;
+  width: 100% !important;
+  transform: none !important;
+}
+.carrossel-aval.modo-estatico .aval-card {
+  width: min(100%, 540px) !important;
+  margin: 0 auto !important;
+}
 .carrossel-aval .seta {
   position: absolute;
   top: 50%;
@@ -1072,8 +1091,19 @@ html {
   (function(){
     var faixa = document.getElementById('faixa-aval');
     var tr = document.getElementById('trilho-aval');
-    if (!faixa || !tr) return;
-    var n = tr.children.length;
+    var carrosselEl = document.querySelector('.carrossel-aval');
+    if (!faixa || !tr || !carrosselEl) return;
+    var cards = tr.querySelectorAll('.aval-card');
+    var n = cards.length;
+
+    // Se houver menos de 3 avaliações, exibe somente as existentes de forma estática e centralizada
+    if (n < 3) {
+      carrosselEl.classList.add('modo-estatico');
+      return;
+    }
+
+    // Quando houver 3 ou mais avaliações, ativa automaticamente o carrossel contínuo de 3 cards
+    carrosselEl.classList.add('modo-carrossel');
     Array.prototype.slice.call(tr.children).forEach(function(c){
       var k = c.cloneNode(true);
       k.setAttribute('aria-hidden', 'true');
@@ -1226,7 +1256,7 @@ html {
       <button type="button" class="seta dir" id="seta-aval-dir" aria-label="Ver próximas avaliações"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m9 4 8 8-8 8"/></svg></button>
       <div class="faixa faixa-aval" id="faixa-aval" role="region" aria-label="Avaliações do Google e depoimentos da comunidade" tabindex="0">
         <div class="trilho trilho-aval" id="trilho-aval">
-          <!-- CARD 1: ERICA SUZI (Google Maps real com foto) -->
+          <!-- CARD 1: ERICA SUZI (Única avaliação real existente no Google Maps) -->
           <article class="aval-card" style="--c:var(--azul)">
             <div>
               <div class="aval-cab">
@@ -1244,69 +1274,6 @@ html {
                 <span class="aval-verif">Avaliação real no Google</span>
               </div>
               <p class="aval-texto">“Tenho um enorme prazer em fazer parte da equipe de voluntários dessa instituição. Amo a ONG e o serviço prestado à comunidade.”</p>
-            </div>
-          </article>
-
-          <!-- CARD 2: MANUEL D'SOUSA (Google Maps real com foto) -->
-          <article class="aval-card" style="--c:#085EC3">
-            <div>
-              <div class="aval-cab">
-                <div class="aval-autor">
-                  <img class="aval-avatar-img" src="/assets/manuel-dsousa.jpg" alt="Foto de perfil de Manuel D'Sousa no Google" width="44" height="44" loading="lazy">
-                  <div class="aval-autor-txt">
-                    <strong>Manuel D'Sousa</strong>
-                    <span>Avaliação oficial no Google Maps</span>
-                  </div>
-                </div>
-                <div class="aval-g-mini">${svgGoogleG}</div>
-              </div>
-              <div class="aval-meta" style="margin-top:14px">
-                ${svgEstrelas5}
-                <span class="aval-verif">Avaliação real no Google</span>
-              </div>
-              <p class="aval-texto">“Instituição exemplar no acolhimento e desenvolvimento da comunidade. Trabalho sério, transparente e transformador na vida dos jovens.”</p>
-            </div>
-          </article>
-
-          <!-- CARD 3: ROGÉRIO SANTOS (Depoimento verificado) -->
-          <article class="aval-card" style="--c:var(--amarelo)">
-            <div>
-              <div class="aval-cab">
-                <div class="aval-autor">
-                  <div class="aval-avatar" style="--av:var(--amarelo);--av-fg:var(--tinta)">R</div>
-                  <div class="aval-autor-txt">
-                    <strong>Rogério Santos</strong>
-                    <span>Voluntário &amp; apoiador comunitário</span>
-                  </div>
-                </div>
-                <div class="aval-g-mini">${svgGoogleG}</div>
-              </div>
-              <div class="aval-meta" style="margin-top:14px">
-                ${svgEstrelas5}
-                <span class="aval-verif">Depoimento verificado</span>
-              </div>
-              <p class="aval-texto">“Acompanho de perto as ações da Usina da Vida no Arenoso. É gratificante ver o impacto real na vida de tantas famílias e crianças.”</p>
-            </div>
-          </article>
-
-          <!-- CARD 4: CARLA MENEZES (Depoimento verificado) -->
-          <article class="aval-card" style="--c:#e05244">
-            <div>
-              <div class="aval-cab">
-                <div class="aval-autor">
-                  <div class="aval-avatar" style="--av:#e05244;--av-fg:#fff">C</div>
-                  <div class="aval-autor-txt">
-                    <strong>Carla Menezes</strong>
-                    <span>Comunidade do Arenoso</span>
-                  </div>
-                </div>
-                <div class="aval-g-mini">${svgGoogleG}</div>
-              </div>
-              <div class="aval-meta" style="margin-top:14px">
-                ${svgEstrelas5}
-                <span class="aval-verif">Depoimento verificado</span>
-              </div>
-              <p class="aval-texto">“Um espaço de acolhimento essencial para o bairro. As oficinas culturais e esportivas abrem novas portas para nossos jovens todos os dias.”</p>
             </div>
           </article>
         </div>
