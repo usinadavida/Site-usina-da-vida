@@ -672,6 +672,12 @@ html {
   gap: 12px;
   box-sizing: border-box;
   height: 100%;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.trilho-aval .aval-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 7px 7px 0 var(--c, var(--azul));
 }
 .aval-card > div {
   display: flex;
@@ -700,6 +706,8 @@ html {
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
+  flex: 1;
 }
 .aval-avatar {
   width: 44px;
@@ -722,17 +730,29 @@ html {
   flex: none;
   display: block;
 }
+.aval-autor-txt {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+}
 .aval-autor-txt strong {
   display: block;
   font-size: 0.94rem;
   font-weight: 700;
   color: var(--tinta);
   line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .aval-autor-txt span {
   display: block;
   font-size: 0.76rem;
   color: #5b616b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.35;
 }
 .aval-g-mini {
   width: 20px;
@@ -766,8 +786,13 @@ html {
   text-overflow: ellipsis;
   cursor: pointer;
 }
-.aval-texto.expandido {
+.aval-texto.expandido,
+.aval-card.expandido .aval-texto {
   -webkit-line-clamp: unset !important;
+  overflow: visible !important;
+}
+.aval-card.expandido .aval-autor-txt span {
+  white-space: normal !important;
   overflow: visible !important;
 }
 
@@ -1032,6 +1057,11 @@ html {
 
   // Expansão suave de texto de cards com 4+ linhas ao clicar
   document.addEventListener('click', function(e) {
+    var cardAval = e.target.closest('.aval-card');
+    if (cardAval) {
+      cardAval.classList.toggle('expandido');
+      return;
+    }
     var pEl = e.target.closest('.prox .corpo > p:not(.info), .cartao p, .aval-texto');
     if (pEl) {
       pEl.classList.toggle('expandido');
@@ -1112,10 +1142,11 @@ html {
         suspensoAte = performance.now() + 5000;
       }
     }, { passive: false });
-    var x0 = 0, p0 = 0;
+    var x0 = 0, p0 = 0, distArrasto = 0;
     faixa.addEventListener('pointerdown', function(e){
       if (e.button > 0) return;
       arrastando = true;
+      distArrasto = 0;
       x0 = e.clientX;
       p0 = pos;
       faixa.classList.add('arrasta');
@@ -1123,15 +1154,25 @@ html {
     });
     faixa.addEventListener('pointermove', function(e){
       if (!arrastando) return;
-      pos = p0 - (e.clientX - x0);
+      var diff = e.clientX - x0;
+      distArrasto = Math.abs(diff);
+      pos = p0 - diff;
       alvo = pos;
     });
-    function solta(){
+    function solta(e){
       if (!arrastando) return;
       arrastando = false;
       alvo = pos;
       faixa.classList.remove('arrasta');
       suspensoAte = performance.now() + 5000;
+      try { if (e && e.pointerId) faixa.releasePointerCapture(e.pointerId); } catch(_) {}
+      if (distArrasto < 6 && e && typeof e.clientX === 'number') {
+        var el = document.elementFromPoint(e.clientX, e.clientY);
+        var card = el ? el.closest('.aval-card') : null;
+        if (card) {
+          card.classList.toggle('expandido');
+        }
+      }
     }
     faixa.addEventListener('pointerup', solta);
     faixa.addEventListener('pointercancel', solta);
