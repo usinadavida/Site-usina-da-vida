@@ -899,10 +899,10 @@ html {
   }
   .carrossel-aval.modo-estatico .aval-card,
   .trilho-aval .aval-card {
-    width: 100% !important;
-    max-width: 480px !important;
+    width: min(82vw, 320px) !important;
+    flex: 0 0 min(82vw, 320px) !important;
     box-sizing: border-box !important;
-    padding: 22px 24px !important;
+    padding: 20px 22px !important;
     margin: 0 !important;
     border: 2px solid var(--tinta) !important;
     box-shadow: 7px 7px 0 var(--azul) !important;
@@ -911,8 +911,8 @@ html {
     -webkit-line-clamp: unset !important;
     overflow: visible !important;
     min-height: auto !important;
-    font-size: 0.94rem !important;
-    line-height: 1.55 !important;
+    font-size: 0.90rem !important;
+    line-height: 1.5 !important;
   }
 }
 .aval-cab {
