@@ -1623,21 +1623,36 @@ footer .rodape-creditos a:hover {
   }
 
   footer {
-    padding: 22px 16px 26px;
+    padding: 22px 16px 26px !important;
   }
   footer .wrap {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    text-align: center;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 8px !important;
+    text-align: center !important;
   }
   footer .rodape-frase {
-    font-size: 0.86rem;
+    display: block !important;
+    font-size: 0.86rem !important;
   }
   footer .rodape-creditos {
-    font-size: 0.78rem;
-    line-height: 1.5;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 6px !important;
+    font-size: 0.78rem !important;
+    line-height: 1.4 !important;
+  }
+  footer .rodape-lgpd-link {
+    display: block !important;
+  }
+  footer .rodape-sep {
+    display: none !important;
+  }
+  footer .rodape-extensao {
+    display: block !important;
   }
 }
 </style>
@@ -2107,7 +2122,7 @@ footer .rodape-creditos a:hover {
 <footer>
   <div class="wrap">
     <span class="rodape-frase">Usina da Vida · Transformando sonhos em realidade</span>
-    <span class="rodape-creditos"><a href="#" id="link-rodape-lgpd">Política de Privacidade &amp; LGPD</a> · Projeto de extensão – Universidade Católica do Salvador</span>
+    <span class="rodape-creditos"><a href="#" id="link-rodape-lgpd" class="rodape-lgpd-link">Política de Privacidade &amp; LGPD</a><span class="rodape-sep"> · </span><span class="rodape-extensao">Projeto de extensão – Universidade Católica do Salvador</span></span>
   </div>
 </footer>
 

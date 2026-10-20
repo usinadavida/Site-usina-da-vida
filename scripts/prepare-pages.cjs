@@ -1505,21 +1505,36 @@ footer .rodape-creditos a:hover {
   }
 
   footer {
-    padding: 22px 16px 26px;
+    padding: 22px 16px 26px !important;
   }
   footer .wrap {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    text-align: center;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 8px !important;
+    text-align: center !important;
   }
   footer .rodape-frase {
-    font-size: 0.86rem;
+    display: block !important;
+    font-size: 0.86rem !important;
   }
   footer .rodape-creditos {
-    font-size: 0.78rem;
-    line-height: 1.5;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 6px !important;
+    font-size: 0.78rem !important;
+    line-height: 1.4 !important;
+  }
+  footer .rodape-lgpd-link {
+    display: block !important;
+  }
+  footer .rodape-sep {
+    display: none !important;
+  }
+  footer .rodape-extensao {
+    display: block !important;
   }
 }
 </style>`;
@@ -1887,7 +1902,7 @@ footer .rodape-creditos a:hover {
 
   html = html.replace('<span>Usina da Vida · Transformando sonhos em realidade</span>', '<span class="rodape-frase">Usina da Vida · Transformando sonhos em realidade</span>');
   html = html.replace('<span>Concordo que a Usina da Vida use estes dados somente para contato e organização do voluntariado. Posso pedir a correção ou a exclusão a qualquer momento. *</span>', '<span>Concordo que a Usina da Vida use estes dados somente para contato e organização do voluntariado, em conformidade com a <a href="#" id="link-abrir-lgpd" style="color:var(--azul);text-decoration:underline;font-weight:600">Política de Privacidade e LGPD</a>. Posso pedir a correção ou a exclusão a qualquer momento. *</span>');
-  html = html.replace('<span>Projeto de extensão – Universidade Católica do Salvador</span>', '<span class="rodape-creditos"><a href="#" id="link-rodape-lgpd">Política de Privacidade &amp; LGPD</a> · Projeto de extensão – Universidade Católica do Salvador</span>');
+  html = html.replace('<span>Projeto de extensão – Universidade Católica do Salvador</span>', '<span class="rodape-creditos"><a href="#" id="link-rodape-lgpd" class="rodape-lgpd-link">Política de Privacidade &amp; LGPD</a><span class="rodape-sep"> · </span><span class="rodape-extensao">Projeto de extensão – Universidade Católica do Salvador</span></span>');
   html = html.replace('<div class="c3"><label for="email">', '<div class="c6"><label for="email">');
   html = html.replace('<div class="c3"><label for="tel">', '<div class="c6"><label for="tel">');
   html = html.replace('<section id="contato" class="contato">', () => secaoAvaliacoesHtml + '\n\n<section id="contato" class="contato">');
