@@ -189,10 +189,14 @@ function ligarLanding(html) {
 html, body {
   -webkit-text-size-adjust: 100% !important;
   text-size-adjust: 100% !important;
+  overflow-x: hidden !important;
 }
 /* Escala visual de 82% calibrada para desktop (reproduz nativamente a visualização em 100% de zoom) */
 html {
   scroll-behavior: smooth;
+}
+.hero {
+  overflow: hidden !important;
 }
 @media (min-width:1001px){
   body {
@@ -721,45 +725,74 @@ html {
 @media (max-width: 767px) {
   .google-resumo-card {
     width: 100% !important;
-    flex-direction: column !important;
-    align-items: stretch !important;
-    gap: 14px !important;
-    padding: 14px 16px !important;
+    max-width: 100% !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+    padding: 12px 14px !important;
+    box-sizing: border-box !important;
   }
   .google-selo-bloco {
-    gap: 12px !important;
-    width: 100% !important;
+    gap: 10px !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+    display: flex !important;
+    align-items: center !important;
   }
   .google-logo-g {
-    width: 32px !important;
-    height: 32px !important;
+    width: 34px !important;
+    height: 34px !important;
+    flex-shrink: 0 !important;
+  }
+  .google-nota-info {
+    min-width: 0 !important;
+  }
+  .google-nota-linha {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+  }
+  .google-nota-num {
+    font-size: 1.48rem !important;
+    line-height: 1 !important;
   }
   .google-nota-leg {
-    font-size: 0.75rem !important;
-    line-height: 1.3 !important;
-    word-break: break-word !important;
+    font-size: 0.70rem !important;
+    line-height: 1.2 !important;
+    color: #5b616b !important;
+    white-space: normal !important;
   }
   .google-acoes-topo {
-    width: 100% !important;
+    flex: none !important;
+    width: auto !important;
   }
   .btn-google-aval {
-    width: 100% !important;
-    justify-content: center !important;
-    box-sizing: border-box !important;
+    width: auto !important;
+    padding: 8px 12px !important;
+    font-size: 0.80rem !important;
+    white-space: nowrap !important;
   }
   .carrossel-aval.modo-estatico .faixa-aval {
-    padding: 8px 4px 16px 4px !important;
+    padding: 8px 4px 16px 0 !important;
   }
-  .carrossel-aval.modo-estatico .aval-card {
-    width: min(88vw, 320px) !important;
-    max-width: 100% !important;
-    box-sizing: border-box !important;
-    padding: 18px 20px !important;
-    margin: 0 !important;
-  }
+  .carrossel-aval.modo-estatico .aval-card,
   .trilho-aval .aval-card {
-    width: min(84vw, 310px);
-    padding: 18px 20px;
+    width: 100% !important;
+    max-width: 440px !important;
+    box-sizing: border-box !important;
+    padding: 20px 22px !important;
+    margin: 0 !important;
+    border: 2px solid var(--tinta) !important;
+    box-shadow: 6px 6px 0 var(--azul) !important;
+  }
+  .aval-texto {
+    -webkit-line-clamp: unset !important;
+    overflow: visible !important;
+    min-height: auto !important;
+    font-size: 0.92rem !important;
+    line-height: 1.5 !important;
   }
 }
 .aval-cab {
@@ -1221,6 +1254,133 @@ footer .rodape-creditos a:hover {
   }
   .prox .corpo {
     padding: 16px 14px 16px !important;
+  }
+
+  /* 8. Parceiros: Grid 3x3 no mobile (conforme Imagem 2 de referência) */
+  .parc-lista {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 22px 14px !important;
+    align-items: center !important;
+    justify-items: center !important;
+    margin-top: 26px !important;
+  }
+  .parc-lista figure {
+    margin: 0 !important;
+    width: 100% !important;
+    aspect-ratio: auto !important;
+    height: 82px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .parc-lista img {
+    max-height: 68px !important;
+    max-width: 94% !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
+  }
+
+  /* 9. Países Parceiros: Grid 3x3 no mobile (conforme Imagem 3 de referência) */
+  .paises-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 22px 14px !important;
+    margin-top: 18px !important;
+    padding: 0 !important;
+  }
+  .paises-grid li {
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  .paises-grid img {
+    width: 74px !important;
+    height: 50px !important;
+    object-fit: contain !important;
+    border-radius: 8px !important;
+    display: block !important;
+    margin: 0 auto 8px !important;
+  }
+  .paises-grid span {
+    display: block !important;
+    width: 100% !important;
+    font-weight: 700 !important;
+    font-size: 0.88rem !important;
+    color: var(--tinta) !important;
+    padding-bottom: 6px !important;
+    border-bottom: 2.5px solid var(--c) !important;
+  }
+
+  /* 10. Contato: Tangram à esquerda e informações em colunas (conforme Imagem 1 de referência) */
+  .contato .wrap {
+    display: grid !important;
+    grid-template-columns: auto 1fr !important;
+    gap: 16px !important;
+    align-items: center !important;
+  }
+  .contato .bf {
+    width: 92px !important;
+    max-width: 22vw !important;
+    height: auto !important;
+    display: block !important;
+  }
+  .contato h2 {
+    font-size: 1.75rem !important;
+    color: var(--amarelo) !important;
+    margin-bottom: 10px !important;
+  }
+  .contato ul {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px 14px !important;
+    align-items: start !important;
+  }
+  .contato ul li:nth-child(1) {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+  }
+  .contato ul li:nth-child(2) {
+    grid-column: 2 !important;
+    grid-row: 1 / span 2 !important;
+  }
+  .contato ul li:nth-child(3) {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+  }
+  .contato ul li small {
+    display: block !important;
+    color: #aab3c2 !important;
+    font-size: 0.70rem !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    margin-bottom: 4px !important;
+  }
+  .contato-link {
+    font-size: 0.82rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+  }
+  .contato-link.link-email span {
+    font-size: 0.72rem !important;
+    letter-spacing: -0.02em !important;
+  }
+  .contato-sociais {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 5px !important;
+    margin-top: 6px !important;
+    align-items: flex-start !important;
+  }
+  .btn-social {
+    padding: 5px 8px !important;
+    font-size: 0.72rem !important;
+    width: auto !important;
+    box-sizing: border-box !important;
+    white-space: nowrap !important;
   }
 
   footer {
