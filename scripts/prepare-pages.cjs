@@ -1238,10 +1238,18 @@ footer .rodape-creditos a:hover {
     padding: 0 18px !important;
   }
 
-  /* 6. Formatação do formulário de voluntários no mobile */
-  form {
-    padding: 22px 16px 20px !important;
+  /* 6. Formatação do formulário de voluntários no mobile (reduzido em 10%) */
+  form,
+  #inscricao form {
+    max-width: 435px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 20px 14px 18px !important;
     box-shadow: 6px 6px 0 var(--amarelo) !important;
+    box-sizing: border-box !important;
+  }
+  dialog.modal {
+    width: min(468px, calc(100% - 36px)) !important;
   }
   .f-grid {
     gap: 8px 10px !important;
