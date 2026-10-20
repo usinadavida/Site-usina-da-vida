@@ -723,7 +723,26 @@ html {
   }
 }
 @media (max-width: 767px) {
+  .aval-topo {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    gap: 16px !important;
+    margin-bottom: 20px !important;
+    width: 100% !important;
+    text-align: left !important;
+  }
+  .aval-topo-esq {
+    width: 100% !important;
+    flex: none !important;
+    text-align: left !important;
+  }
   .google-resumo-card {
+    align-self: flex-start !important;
+    margin: 0 !important;
+    margin-right: auto !important;
+    text-align: left !important;
     width: 100% !important;
     max-width: 480px !important;
     display: flex !important;
