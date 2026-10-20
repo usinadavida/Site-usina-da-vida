@@ -1209,7 +1209,7 @@ footer .rodape-creditos a:hover {
   }
   .hero .colagem {
     width: 100% !important;
-    max-width: 310px !important;
+    max-width: 403px !important;
     margin: 0 auto !important;
   }
 
