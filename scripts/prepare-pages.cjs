@@ -1115,6 +1115,11 @@ footer .rodape-creditos a:hover {
    CALIBRAÇÃO E PROPORÇÃO MOBILE UNIFICADA (Safari, Chrome, Samsung Internet)
    ========================================================================== */
 @media (max-width: 768px) {
+  /* Escala visual de 80% solicitada para a versão mobile */
+  body {
+    zoom: 0.8 !important;
+  }
+
   /* 1. Previne zoom indesejado no iOS Safari ao focar inputs/selects */
   input[type=text],
   input[type=email],
@@ -2471,6 +2476,11 @@ html {
 @media (min-width: 1001px) {
   body {
     zoom: 0.82;
+  }
+}
+@media (max-width: 768px) {
+  body {
+    zoom: 0.8 !important;
   }
 }
 
