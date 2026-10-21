@@ -1620,13 +1620,60 @@ footer .rodape-creditos a:hover {
   .btn-menu-mob {
     display: inline-flex !important;
   }
+  .topo-botoes {
+    display: flex !important;
+    gap: 8px !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+  }
+  .topo-botoes .btn-portal {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
 }
 @media (max-width: 640px) {
-  .topo-botoes .btn-portal {
-    display: none !important;
+  .top .wrap {
+    padding: 0 10px !important;
+    gap: 6px !important;
   }
   .topo-botoes {
-    gap: 8px !important;
+    gap: 6px !important;
+  }
+  .topo-botoes .btn {
+    padding: 7px 10px !important;
+    font-size: 0.78rem !important;
+    box-shadow: 2.5px 2.5px 0 var(--amarelo) !important;
+    white-space: nowrap !important;
+  }
+  .btn-menu-mob {
+    width: 34px !important;
+    height: 34px !important;
+    box-shadow: 2px 2px 0 var(--amarelo) !important;
+  }
+  .btn-menu-mob .linha-hamb {
+    width: 17px !important;
+    height: 2px !important;
+  }
+}
+@media (max-width: 380px) {
+  .top .wrap {
+    padding: 0 6px !important;
+    gap: 4px !important;
+  }
+  .topo-botoes {
+    gap: 4px !important;
+  }
+  .topo-botoes .btn {
+    padding: 6px 7px !important;
+    font-size: 0.72rem !important;
+  }
+  .btn-menu-mob {
+    width: 32px !important;
+    height: 32px !important;
+  }
+  .btn-menu-mob .linha-hamb {
+    width: 15px !important;
   }
 }
 
