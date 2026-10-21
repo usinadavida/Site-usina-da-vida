@@ -302,31 +302,25 @@
   footer{background:#0f141b;color:#9aa3b2;font-size:.82rem;padding:20px 0}
   footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 </style>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <script>
 (function(){
-  function detectarDispositivo() {
-    var isMob = false;
+  function estaMarcadoComoMobile() {
     try {
-      if (navigator.userAgentData && typeof navigator.userAgentData.mobile === 'boolean') {
-        isMob = navigator.userAgentData.mobile;
+      if (navigator.userAgentData && navigator.userAgentData.mobile === true) {
+        return true;
       }
-      if (!isMob) {
-        var ua = navigator.userAgent || navigator.vendor || window.opera || '';
-        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(ua)) {
-          isMob = true;
-        }
-      }
-      if (!isMob && window.matchMedia) {
-        var isCoarse = window.matchMedia('(pointer: coarse) and (hover: none)').matches;
-        var isNarrow = window.matchMedia('(max-width: 980px)').matches;
-        if (isCoarse && isNarrow) {
-          isMob = true;
-        }
-      }
+      var ua = navigator.userAgent || navigator.vendor || window.opera || '';
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(ua);
     } catch(e) {
-      isMob = false;
+      return false;
     }
+  }
 
+  function aplicarClassificacao() {
+    var isMob = estaMarcadoComoMobile();
     var docEl = document.documentElement;
     if (isMob) {
       docEl.classList.add('dispositivo-mobile');
@@ -336,9 +330,10 @@
       docEl.classList.remove('dispositivo-mobile');
     }
   }
-  detectarDispositivo();
-  window.addEventListener('resize', detectarDispositivo);
-  window.addEventListener('orientationchange', detectarDispositivo);
+
+  aplicarClassificacao();
+  window.addEventListener('resize', aplicarClassificacao);
+  window.addEventListener('orientationchange', aplicarClassificacao);
 })();
 </script>
 <style id="altura-padrao">
@@ -1776,45 +1771,52 @@ footer .rodape-creditos a:hover {
 /* ==========================================================================
    CONTROLE RIGOROSO: DESKTOP VS DISPOSITIVO MOBILE
    O menu hambúrguer SÓ aparece se o navegador estiver marcado como mobile.
-   No desktop/computador (mesmo com zoom de 125%, 150%, 200%), continua 100% normal.
+   No desktop/computador (mesmo com zoom de 125%, 150%, 200%, 300%), continua 100% normal.
    ========================================================================== */
 
 /* 1. COMPORTAMENTO DESKTOP: O menu hambúrguer NUNCA aparece e a barra desktop permanece visível */
-.btn-menu-mob,
-#menu-mob-dropdown {
-  display: none !important;
-}
-
+html:not(.dispositivo-mobile) .btn-menu-mob,
+html:not(.dispositivo-mobile) #menu-mob-dropdown,
+html:not(.dispositivo-mobile) .menu-mob-dropdown,
 html.dispositivo-desktop .btn-menu-mob,
 html.dispositivo-desktop #menu-mob-dropdown,
+html.dispositivo-desktop .menu-mob-dropdown,
 body.dispositivo-desktop .btn-menu-mob,
-body.dispositivo-desktop #menu-mob-dropdown {
+body.dispositivo-desktop #menu-mob-dropdown,
+body.dispositivo-desktop .menu-mob-dropdown {
   display: none !important;
 }
 
+html:not(.dispositivo-mobile) header.top nav,
 html.dispositivo-desktop header.top nav,
 body.dispositivo-desktop header.top nav {
   display: block !important;
 }
 
+html:not(.dispositivo-mobile) header.top nav ul,
 html.dispositivo-desktop header.top nav ul {
   display: flex !important;
-  align-items: center;
+  align-items: center !important;
+  flex-wrap: wrap !important;
   gap: clamp(10px, 1.8vw, 26px) !important;
 }
 
+html:not(.dispositivo-mobile) .top .wrap,
 html.dispositivo-desktop .top .wrap {
   display: flex !important;
-  align-items: center;
-  justify-content: space-between;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
 }
 
+html:not(.dispositivo-mobile) .topo-botoes,
 html.dispositivo-desktop .topo-botoes {
   display: flex !important;
   gap: 12px !important;
   align-items: center !important;
 }
 
+html:not(.dispositivo-mobile) .topo-botoes .btn,
 html.dispositivo-desktop .topo-botoes .btn {
   display: inline-flex !important;
   align-items: center !important;
@@ -1916,7 +1918,9 @@ html.dispositivo-mobile .topo-botoes .btn-portal {
   flex-direction: column;
   overflow: hidden;
 }
-.menu-mob-dropdown.aberto {
+.menu-mob-dropdown.aberto,
+#menu-mob-dropdown.aberto,
+html.dispositivo-mobile #menu-mob-dropdown.aberto {
   display: flex !important;
   animation: menuDropEntrada 0.15s ease-out;
 }
@@ -1951,12 +1955,6 @@ html.dispositivo-mobile .topo-botoes .btn-portal {
   background: #f8fafc;
   color: var(--azul);
   padding-left: 21px;
-}
-@media (min-width: 981px) {
-  .btn-menu-mob,
-  .menu-mob-dropdown {
-    display: none !important;
-  }
 }
 </style>
 </head>
