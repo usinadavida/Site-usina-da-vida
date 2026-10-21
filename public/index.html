@@ -1674,6 +1674,238 @@ footer .rodape-creditos a:hover {
     display: block !important;
   }
 }
+
+/* ==========================================================================
+   MENU MOBILE HAMBÚRGUER (3 LINHAS) E GAVETA DE NAVEGAÇÃO
+   ========================================================================== */
+.btn-menu-mob {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4.5px;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: #ffffff;
+  border: 2px solid var(--tinta);
+  box-shadow: 3px 3px 0 var(--amarelo);
+  border-radius: 4px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-menu-mob:hover,
+.btn-menu-mob:focus-visible {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--azul);
+}
+.btn-menu-mob:active {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 var(--azul);
+}
+.btn-menu-mob .linha-hamb {
+  display: block;
+  width: 20px;
+  height: 2.4px;
+  background-color: var(--tinta);
+  border-radius: 2px;
+  transition: transform 0.22s ease, opacity 0.22s ease;
+}
+.btn-menu-mob.aberto {
+  background: #fbf6ea;
+  box-shadow: 3px 3px 0 var(--azul);
+}
+.btn-menu-mob.aberto .linha-hamb:nth-child(1) {
+  transform: translateY(6.9px) rotate(45deg);
+}
+.btn-menu-mob.aberto .linha-hamb:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.btn-menu-mob.aberto .linha-hamb:nth-child(3) {
+  transform: translateY(-6.9px) rotate(-45deg);
+}
+
+@media (max-width: 980px) {
+  .btn-menu-mob {
+    display: inline-flex !important;
+  }
+}
+@media (max-width: 640px) {
+  .topo-botoes .btn-portal {
+    display: none !important;
+  }
+  .topo-botoes {
+    gap: 8px !important;
+  }
+}
+
+/* GAVETA / DRAWER MOBILE */
+.menu-mob-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  overflow: hidden;
+}
+.menu-mob-drawer.ativo {
+  display: block;
+}
+.menu-mob-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 20, 27, 0.58);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.menu-mob-drawer.visivel .menu-mob-backdrop {
+  opacity: 1;
+}
+.menu-mob-painel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(86vw, 340px);
+  background: #ffffff;
+  border-left: 3px solid var(--tinta);
+  box-shadow: -8px 0 28px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  transform: translateX(100%);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+.menu-mob-drawer.visivel .menu-mob-painel {
+  transform: translateX(0);
+}
+.menu-mob-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: #faf8f5;
+  border-bottom: 2px solid var(--tinta);
+}
+.menu-mob-marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.menu-mob-emblema {
+  height: 32px;
+  width: auto;
+}
+.menu-mob-marca-nome {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--azul);
+  letter-spacing: -0.01em;
+}
+.btn-fechar-menu-mob {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: #fff;
+  border: 2px solid var(--tinta);
+  box-shadow: 2px 2px 0 var(--amarelo);
+  border-radius: 4px;
+  color: var(--tinta);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
+}
+.btn-fechar-menu-mob:hover,
+.btn-fechar-menu-mob:focus-visible {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--vermelho);
+  color: var(--vermelho);
+}
+.menu-mob-nav {
+  display: block !important;
+  flex: 1 1 auto;
+  padding: 8px 0;
+}
+.menu-mob-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.menu-mob-lista li {
+  border-bottom: 1px solid #f1f5f9;
+}
+.menu-mob-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  text-decoration: none;
+  color: var(--tinta);
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 0.98rem;
+  transition: background 0.15s ease, color 0.15s ease, padding-left 0.15s ease;
+}
+.menu-mob-link:hover,
+.menu-mob-link:focus-visible {
+  background: #f8fafc;
+  color: var(--azul);
+  padding-left: 24px;
+}
+.menu-mob-link-num {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 0.05em;
+  min-width: 20px;
+}
+.menu-mob-link-txt {
+  flex: 1;
+}
+.menu-mob-link-seta {
+  font-size: 1.1rem;
+  color: #cbd5e1;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+.menu-mob-link:hover .menu-mob-link-seta {
+  color: var(--azul);
+  transform: translateX(3px);
+}
+.menu-mob-rodape {
+  padding: 16px 20px 24px;
+  background: #faf8f5;
+  border-top: 2px solid var(--tinta);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.menu-mob-btn-cta {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 100% !important;
+  padding: 11px 16px !important;
+  font-size: 0.90rem !important;
+  font-weight: 600 !important;
+  text-align: center;
+  box-sizing: border-box;
+}
+.menu-mob-info-inst {
+  margin-top: 4px;
+  font-size: 0.74rem;
+  color: #64748b;
+  text-align: center;
+}
 </style>
 </head>
 <body>
@@ -1695,6 +1927,11 @@ footer .rodape-creditos a:hover {
     <div class="topo-botoes">
       <a class="btn btn-verm" href="#inscricao">Voluntários</a>
       <a class="btn btn-portal" href="/portal">Acessar o portal</a>
+      <button type="button" class="btn-menu-mob" id="btn-menu-mob" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="menu-mob-drawer">
+        <span class="linha-hamb"></span>
+        <span class="linha-hamb"></span>
+        <span class="linha-hamb"></span>
+      </button>
     </div>
   </div>
 </header>
@@ -1858,7 +2095,7 @@ footer .rodape-creditos a:hover {
         <div class="f-grid">
           <div class="c6"><label for="nome">Nome completo *</label><input id="nome" name="nome" type="text" autocomplete="name"><span class="erro" data-erro="nome"></span></div>
           <div class="c6"><label for="email">E-mail *</label><input id="email" name="email" type="email" autocomplete="email" placeholder="voce@email.com"><span class="erro" data-erro="email"></span></div>
-          <div class="c6"><label for="tel">WhatsApp * <span class="dica-i">com DDD</span></label><input id="tel" name="tel" type="tel" autocomplete="tel" placeholder="(71) 90000-0000"><span class="erro" data-erro="tel"></span></div>
+          <div class="c3"><label for="tel">WhatsApp * <span class="dica-i">com DDD</span></label><input id="tel" name="tel" type="tel" autocomplete="tel" placeholder="(71) 90000-0000"><span class="erro" data-erro="tel"></span></div>
           <div class="c3"><label for="nasc">Nascimento *</label><input id="nasc" name="nasc" type="date" autocomplete="bday"><span class="erro" data-erro="nasc"></span></div>
           <div class="c3"><span class="rot" id="sexo-r">Sexo *</span>
             <div class="seg" role="radiogroup" aria-labelledby="sexo-r">
@@ -2427,6 +2664,71 @@ footer .rodape-creditos a:hover {
   });
 })();
 </script>
+<!-- GAVETA / MENU MOBILE NAVEGAÇÃO COMPLETA -->
+<div id="menu-mob-drawer" class="menu-mob-drawer" aria-hidden="true">
+  <div class="menu-mob-backdrop" id="menu-mob-backdrop"></div>
+  <div class="menu-mob-painel" role="dialog" aria-modal="true" aria-label="Menu de navegação móvel">
+    <div class="menu-mob-topo">
+      <div class="menu-mob-marca">
+        <img src="/assets/img-01.png" alt="" class="menu-mob-emblema">
+        <span class="menu-mob-marca-nome">Usina da Vida</span>
+      </div>
+      <button type="button" class="btn-fechar-menu-mob" id="btn-fechar-menu-mob" aria-label="Fechar menu">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="menu-mob-nav" role="navigation" aria-label="Navegação móvel principal">
+      <ul class="menu-mob-lista">
+        <li>
+          <a href="#acoes" class="menu-mob-link">
+            <span class="menu-mob-link-num">01</span>
+            <span class="menu-mob-link-txt">Nossas ações</span>
+            <span class="menu-mob-link-seta">&rarr;</span>
+          </a>
+        </li>
+        <li>
+          <a href="#quem-somos" class="menu-mob-link">
+            <span class="menu-mob-link-num">02</span>
+            <span class="menu-mob-link-txt">Quem somos</span>
+            <span class="menu-mob-link-seta">&rarr;</span>
+          </a>
+        </li>
+        <li>
+          <a href="#programas" class="menu-mob-link">
+            <span class="menu-mob-link-num">03</span>
+            <span class="menu-mob-link-txt">Programas</span>
+            <span class="menu-mob-link-seta">&rarr;</span>
+          </a>
+        </li>
+        <li>
+          <a href="#parceiros" class="menu-mob-link">
+            <span class="menu-mob-link-num">04</span>
+            <span class="menu-mob-link-txt">Parceiros</span>
+            <span class="menu-mob-link-seta">&rarr;</span>
+          </a>
+        </li>
+        <li>
+          <a href="#contato" class="menu-mob-link">
+            <span class="menu-mob-link-num">05</span>
+            <span class="menu-mob-link-txt">Contato</span>
+            <span class="menu-mob-link-seta">&rarr;</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="menu-mob-rodape">
+      <a class="btn btn-verm menu-mob-btn-cta" href="#inscricao">
+        <span>Quero ser voluntário(a)</span>
+      </a>
+      <a class="btn btn-portal menu-mob-btn-cta" href="/portal">
+        <span>Acessar o portal</span>
+      </a>
+      <div class="menu-mob-info-inst">
+        <span>Arenoso · Salvador, Bahia</span>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- MODAL DE POLÍTICA DE PRIVACIDADE E LGPD -->
 <dialog class="modal-lgpd" id="modal-politica-lgpd" aria-labelledby="lgpd-titulo">
   <div class="modal-lgpd-card">
@@ -2678,6 +2980,82 @@ footer .rodape-creditos a:hover {
     faixa.addEventListener('pointerup', solta);
     faixa.addEventListener('pointercancel', solta);
     requestAnimationFrame(quadro);
+  })();
+
+  // Controle do Menu Mobile Hambúrguer (3 Linhas)
+  (function(){
+    var btnHamb = document.getElementById('btn-menu-mob');
+    var drawer = document.getElementById('menu-mob-drawer');
+    var backdrop = document.getElementById('menu-mob-backdrop');
+    var btnFechar = document.getElementById('btn-fechar-menu-mob');
+
+    function abrirMenuMob() {
+      if (!drawer || !btnHamb) return;
+      drawer.classList.add('ativo');
+      void drawer.offsetWidth;
+      drawer.classList.add('visivel');
+      btnHamb.classList.add('aberto');
+      btnHamb.setAttribute('aria-expanded', 'true');
+      drawer.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      if (btnFechar) btnFechar.focus();
+    }
+
+    function fecharMenuMob() {
+      if (!drawer || !btnHamb) return;
+      drawer.classList.remove('visivel');
+      btnHamb.classList.remove('aberto');
+      btnHamb.setAttribute('aria-expanded', 'false');
+      drawer.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      setTimeout(function(){
+        if (!btnHamb.classList.contains('aberto')) {
+          drawer.classList.remove('ativo');
+        }
+      }, 280);
+      btnHamb.focus();
+    }
+
+    if (btnHamb) {
+      btnHamb.addEventListener('click', function(e){
+        e.stopPropagation();
+        if (drawer && drawer.classList.contains('visivel')) {
+          fecharMenuMob();
+        } else {
+          abrirMenuMob();
+        }
+      });
+    }
+
+    if (btnFechar) {
+      btnFechar.addEventListener('click', function(e){
+        e.stopPropagation();
+        fecharMenuMob();
+      });
+    }
+
+    if (backdrop) {
+      backdrop.addEventListener('click', function(e){
+        e.stopPropagation();
+        fecharMenuMob();
+      });
+    }
+
+    // Fechar ao clicar em qualquer link interno do menu
+    if (drawer) {
+      drawer.addEventListener('click', function(e){
+        var link = e.target.closest('a');
+        if (link) {
+          fecharMenuMob();
+        }
+      });
+    }
+
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape' && drawer && drawer.classList.contains('visivel')) {
+        fecharMenuMob();
+      }
+    });
   })();
 })();
 </script>
