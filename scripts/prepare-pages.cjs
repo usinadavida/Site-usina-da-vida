@@ -722,7 +722,7 @@ html {
     width: 320px;
   }
 }
-@media (max-width: 767px) {
+@media (max-width: 1000px), (orientation: landscape) and (max-height: 520px) {
   .aval-topo {
     display: flex !important;
     flex-direction: column !important;
@@ -1122,7 +1122,7 @@ html {
   display: inline;
   margin-left: 4px;
 }
-@media (max-width: 768px) {
+@media (max-width: 768px), (orientation: landscape) and (max-height: 520px) {
   .end-linha1 {
     display: block;
     margin-bottom: 2px;
@@ -1168,7 +1168,7 @@ footer .rodape-creditos a:hover {
 /* ==========================================================================
    CALIBRAÇÃO E PROPORÇÃO MOBILE UNIFICADA (Safari, Chrome, Samsung Internet)
    ========================================================================== */
-@media (max-width: 768px) {
+@media (max-width: 768px), (orientation: landscape) and (max-height: 520px) {
   /* Escala visual de 75% solicitada para a versão mobile */
   body {
     zoom: 0.75 !important;
@@ -2793,7 +2793,7 @@ html {
     zoom: 0.82;
   }
 }
-@media (max-width: 768px) {
+@media (max-width: 768px), (orientation: landscape) and (max-height: 520px) {
   body {
     zoom: 0.75 !important;
   }
