@@ -2487,6 +2487,20 @@ tr:hover td {
     var loginValido = (uNorm === "gestao" || uNorm === "presidencia" || uNorm === "presidente" || uNorm === "coordenacao" || uNorm === "coordenador" || uNorm === "colaborador" || uNorm === "admin" || uNorm === "novembro");
     var senhaValida = (s === "0987" || sNorm === "novembro");
     if(!loginValido || !senhaValida){ $("erro-login").textContent="Login ou senha incorretos."; return; }
+    try {
+      fetch("/api/auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ usuario: u, senha: s })
+      })
+      .then(function(res){ return res.ok ? res.json() : null; })
+      .then(function(data){
+        if (data && data.token) {
+          localStorage.setItem("usina_auth_token", data.token);
+        }
+      })
+      .catch(function(){});
+    } catch(e) {}
     if(uNorm === "presidencia" || uNorm === "presidente"){ $("perfil").value = "presidencia"; }
     else if(uNorm === "coordenacao" || uNorm === "coordenador"){ $("perfil").value = "coordenacao"; }
     else if(uNorm === "colaborador"){ $("perfil").value = "colaborador"; }
@@ -3487,7 +3501,7 @@ tr:hover td {
       });
 
     // 1. Sincronizar voluntários cadastrados
-    fetch("/api/inscricoes")
+    fetch("/api/inscricoes", { headers: { "Authorization": "Bearer " + (localStorage.getItem("usina_auth_token") || "") } })
       .then(function(r) { return r.ok ? r.json() : []; })
       .then(function(rows) {
         if (!Array.isArray(rows) || !rows.length || !window.vols) return;
@@ -4266,7 +4280,7 @@ tr:hover td {
       corpo.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px; color: #64748b;">Trilha de auditoria conectada ao banco Neon em ambiente online (HTTPS).</td></tr>';
       return;
     }
-    fetch("/api/auditoria")
+    fetch("/api/auditoria", { headers: { "Authorization": "Bearer " + (localStorage.getItem("usina_auth_token") || "") } })
       .then(function(r) { return r.ok ? r.json() : []; })
       .then(function(logs) {
         if (!Array.isArray(logs) || !logs.length) {

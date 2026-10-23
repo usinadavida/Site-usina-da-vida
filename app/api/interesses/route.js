@@ -4,6 +4,11 @@ export async function POST(req) {
   let b;
   try { b = await req.json(); } catch { return Response.json({ erro: 'JSON invalido' }, { status: 400 }); }
 
+  // Proteção Honeypot: se campo de bot vier preenchido, descarta
+  if (b.website) {
+    return Response.json({ ok: true }, { status: 201 });
+  }
+
   const nome = texto(b.nome, 150), email = texto(b.email, 200).toLowerCase(), tel = texto(b.tel, 30), acao = texto(b.acao, 150);
   if (!nome || !emailValido(email) || tel.replace(/\D/g, '').length < 10 || !acao) {
     return Response.json({ erro: 'Dados invalidos' }, { status: 422 });
@@ -32,4 +37,3 @@ export async function GET() {
     return Response.json([], { status: 200 });
   }
 }
-

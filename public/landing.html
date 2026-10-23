@@ -2139,6 +2139,10 @@ html.dispositivo-mobile #menu-mob-dropdown.aberto {
     </div>
 
     <form id="form" novalidate aria-labelledby="form-t">
+        <!-- Campo de seguranca antispam/honeypot para bots -->
+        <div style="position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;" aria-hidden="true">
+          <input type="text" name="website" id="website-hp" tabindex="-1" autocomplete="off">
+        </div>
       <input type="hidden" id="acao" name="acao" value="">
       <div class="escolhida" id="escolhida" role="status"></div>
       <div class="etapas" aria-hidden="true">

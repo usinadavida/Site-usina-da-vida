@@ -1,6 +1,13 @@
 import { db } from '../../../lib/db.js';
+import { verificarAutenticacao } from '../../../lib/auth.js';
 
-export async function GET() {
+export async function GET(req) {
+  // Apenas usuários autenticados no portal podem visualizar os logs de auditoria
+  const sessao = verificarAutenticacao(req);
+  if (!sessao) {
+    return Response.json({ erro: 'Acesso restrito. Autenticação necessária.' }, { status: 401 });
+  }
+
   try {
     const sql = db();
     const rows = await sql`

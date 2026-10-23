@@ -1,13 +1,8 @@
 import { db } from '../../../lib/db.js';
+import { validarSenhaPresidencia } from '../../../lib/auth.js';
 import { registrarAuditoria, obterIp } from '../../../lib/audit.js';
 
-const SENHAS_PRESIDENCIA = ['0987', 'novembro'];
-
-export function validarSenhaPresidencia(senha) {
-  if (!senha || typeof senha !== 'string') return false;
-  const s = senha.trim().toLowerCase();
-  return SENHAS_PRESIDENCIA.includes(s);
-}
+export { validarSenhaPresidencia };
 
 export async function GET() {
   try {

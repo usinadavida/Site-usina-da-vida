@@ -1,10 +1,15 @@
 import { db, texto, lista, emailValido } from '../../../lib/db.js';
-import { validarSenhaPresidencia } from '../permissoes/route.js';
+import { validarSenhaPresidencia, verificarAutenticacao } from '../../../lib/auth.js';
 import { registrarAuditoria, obterIp } from '../../../lib/audit.js';
 
 export async function POST(req) {
   let b;
   try { b = await req.json(); } catch { return Response.json({ erro: 'JSON invalido' }, { status: 400 }); }
+
+  // 1. Proteção Honeypot contra Bots: se o campo oculto 'website' vier preenchido, descarta silenciosamente
+  if (b.website) {
+    return Response.json({ ok: true }, { status: 201 });
+  }
 
   const nome = texto(b.nome, 150), email = texto(b.email, 200).toLowerCase(), tel = texto(b.tel, 30);
   if (!nome || !emailValido(email) || tel.replace(/\D/g, '').length < 10 || !b.lgpd) {
@@ -31,7 +36,13 @@ export async function POST(req) {
   }
 }
 
-export async function GET() {
+export async function GET(req) {
+  // 2. Proteção de Dados LGPD: apenas usuários autenticados no portal podem listar os voluntários
+  const sessao = verificarAutenticacao(req);
+  if (!sessao) {
+    return Response.json({ erro: 'Acesso restrito. Autenticação necessária.' }, { status: 401 });
+  }
+
   try {
     const sql = db();
     const rows = await sql`
@@ -155,4 +166,3 @@ export async function DELETE(req) {
     return Response.json({ erro: 'Falha ao excluir voluntário no banco' }, { status: 500 });
   }
 }
-
