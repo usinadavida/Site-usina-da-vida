@@ -137,7 +137,7 @@
 .ub-colunas-menu input { width: 16px; height: 16px; margin: 0; }
 
 #p-vol .tabela-wrap { overflow-x: auto; }
-#p-vol table { min-width: 0 !important; width: 100%; table-layout: auto; }
+#p-vol table { min-width: 1040px !important; width: 100%; border-collapse: collapse; }
 #p-vol th {
   font: 600 11.5px var(--sans) !important; letter-spacing: .05em; color: var(--color-text-secondary) !important;
   background: var(--color-surface-subtle) !important; border-bottom: 1px solid var(--color-border) !important;
@@ -159,9 +159,8 @@
 #p-vol table.ub-oculta-6 tr > *:nth-child(6),
 #p-vol table.ub-oculta-7 tr > *:nth-child(7) { display: none; }
 
-/* Coluna de ações sempre visível ao rolar horizontalmente */
-#p-vol tr > *:last-child { position: sticky; right: 0; background: var(--color-surface); box-shadow: -1px 0 0 var(--color-border); }
-#p-vol thead tr > *:last-child { background: var(--color-surface-subtle) !important; }
+/* Coluna de ações */
+#p-vol td:last-child { text-align: center; white-space: nowrap; }
 
 /* Paginação */
 .ub-paginacao {
