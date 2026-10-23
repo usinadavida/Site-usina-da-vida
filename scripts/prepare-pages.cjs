@@ -2583,7 +2583,7 @@ function redesenharPortal(html) {
     '<div class="tabela-wrap">' +
     '  <table>' +
     '    <caption class="oculto" style="position:absolute;left:-999px">Lista de voluntários</caption>' +
-    '    <thead><tr><th style="min-width:170px;width:190px">Voluntário (Nome / Contato)</th><th>Área(s)</th><th>Formação</th><th>Disponibilidade</th><th>Localização</th><th>Atividade</th><th>Status</th><th style="text-align:center;min-width:76px;width:76px">Ações</th></tr></thead>' +
+    '    <thead><tr><th style="min-width:170px;width:190px">Voluntário</th><th>Área(s)</th><th>Formação</th><th>Disponibilidade</th><th>Localização</th><th>Atividade</th><th>Status</th><th style="text-align:center;min-width:76px;width:76px">Ações</th></tr></thead>' +
     '    <tbody id="corpo"></tbody>' +
     '  </table>\n' +
     '  <div id="vazio"';
