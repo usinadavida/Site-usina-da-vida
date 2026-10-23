@@ -2692,7 +2692,7 @@ function redesenharPortal(html) {
         '<td>' + esc(v.bairro) + distTxt + '</td>' +
         '<td>' + esc(v.ativ) + '</td>' +
         '<td>' + st + '</td>' +
-        '<td class="col-acoes-vol" style="text-align:center">' + acoesVol + '</td>'' +
+        '<td class="col-acoes-vol" style="text-align:center">' + acoesVol + '</td>' +
       '</tr>';
     }).join("");
 
@@ -3736,7 +3736,7 @@ html {
 
 /* RESPONSIVIDADE (TABLET E MOBILE) */
 @media (max-width: 960px) {
-  #login.login-split-layout {
+  #login.login-split-layout:not(.login-oculto) {
     grid-template-columns: 1fr !important;
     display: flex !important;
     flex-direction: column !important;

@@ -278,7 +278,7 @@
    Eliminação total de sombras brutas amarelas, bordas pretas de 2px
    e fundos cremes amarelados.
    ===================================================================== */
-#login.login-split-layout {
+#login.login-split-layout:not(.login-oculto) {
   background: #f8fafc !important;
 }
 
@@ -565,7 +565,7 @@
 
 /* Responsividade Mobile (< 960px) */
 @media (max-width: 960px) {
-  #login.login-split-layout {
+  #login.login-split-layout:not(.login-oculto) {
     grid-template-columns: 1fr !important;
     display: flex !important;
     flex-direction: column !important;
@@ -710,3 +710,14 @@ button {
   height: 12px !important;
   display: inline-block !important;
 }
+
+/* Ocultação mandatória da tela de login após autenticação bem-sucedida */
+#login.login-oculto,
+#login[style*="none"] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  z-index: -1 !important;
+}
+
