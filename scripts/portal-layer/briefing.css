@@ -638,52 +638,50 @@ button {
 
 
 /* =====================================================================
-   CÉLULA UNIFICADA DE IDENTIFICAÇÃO (Nome + Contato WhatsApp e E-mail)
+   CÉLULA UNIFICADA DE IDENTIFICAÇÃO COMPACTA (Sem avatar, e-mail encurtado)
    ===================================================================== */
 .celula-identificacao {
   display: flex !important;
+  flex-direction: column !important;
   align-items: flex-start !important;
-  gap: 12px !important;
-  min-width: 270px !important;
+  gap: 2px !important;
+  min-width: 165px !important;
+  max-width: 200px !important;
+  padding: 2px 0 !important;
 }
 
 .avatar-circulo {
-  width: 38px !important;
-  height: 38px !important;
-  border-radius: 50% !important;
-  background: #eff6ff !important;
-  color: var(--color-brand-blue, #085ec3) !important;
-  border: 1.5px solid #bfdbfe !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  font-weight: 700 !important;
-  font-size: 0.82rem !important;
-  flex-shrink: 0 !important;
-  margin-top: 2px !important;
+  display: none !important;
 }
 
 .linhas-dados {
   display: flex !important;
   flex-direction: column !important;
-  gap: 3px !important;
+  gap: 2px !important;
+  width: 100% !important;
 }
 
 .linha-nome {
-  font-size: 0.94rem !important;
+  font-size: 0.88rem !important;
   font-weight: 600 !important;
   color: var(--color-text, #0f172a) !important;
   line-height: 1.25 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 195px !important;
+  display: block !important;
 }
 
 .linha-tel {
-  font-size: 0.80rem !important;
+  font-size: 0.77rem !important;
   color: #16a34a !important;
   display: inline-flex !important;
   align-items: center !important;
-  gap: 5px !important;
+  gap: 4px !important;
   text-decoration: none !important;
   font-weight: 500 !important;
+  white-space: nowrap !important;
 }
 
 .linha-tel:hover {
@@ -692,23 +690,35 @@ button {
 
 .linha-tel .wa-ico svg,
 .linha-tel .ico-svg {
-  width: 13px !important;
-  height: 13px !important;
-  display: inline-block !important;
-}
-
-.linha-email {
-  font-size: 0.78rem !important;
-  color: var(--color-text-muted, #64748b) !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 5px !important;
-}
-
-.linha-email .ico-svg {
   width: 12px !important;
   height: 12px !important;
   display: inline-block !important;
+  flex-shrink: 0 !important;
+}
+
+.linha-email {
+  font-size: 0.75rem !important;
+  color: var(--color-text-muted, #64748b) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  white-space: nowrap !important;
+  max-width: 195px !important;
+}
+
+.linha-email .email-texto {
+  display: inline-block !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 160px !important;
+}
+
+.linha-email .ico-svg {
+  width: 11px !important;
+  height: 11px !important;
+  display: inline-block !important;
+  flex-shrink: 0 !important;
 }
 
 /* Ocultação mandatória da tela de login após autenticação bem-sucedida */
