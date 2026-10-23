@@ -4412,6 +4412,7 @@ tr:hover td {
           return;
         }
         // Atualiza também o resumo na Visão Geral (Briefing Seção 10.1)
+        var escR = function(s){ return String(s == null ? "" : s).split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;"); };
         var resumoEl = document.getElementById("lista-auditoria-resumo");
         if (resumoEl) {
           var ultimos = logs.slice(0, 3);
@@ -4426,8 +4427,8 @@ tr:hover td {
                   badge +
                   '<span style="font-size:11px;color:var(--color-text-muted);">' + data + ' ' + hora + '</span>' +
                 '</div>' +
-                '<b style="font-size:12.5px;color:var(--color-text);">' + esc(item.autor || "Sistema") + ' &bull; ' + esc(item.entidade || "Geral") + '</b>' +
-                '<p style="font-size:11.5px;color:var(--color-text-secondary);margin:2px 0 0;">' + esc(item.detalhes || "") + '</p>' +
+                '<b style="font-size:12.5px;color:var(--color-text);">' + escR(item.autor || "Sistema") + ' &bull; ' + escR(item.entidade || "Geral") + '</b>' +
+                '<p style="font-size:11.5px;color:var(--color-text-secondary);margin:2px 0 0;">' + escR(item.detalhes || "") + '</p>' +
               '</div>' +
             '</div>';
           }).join("");
