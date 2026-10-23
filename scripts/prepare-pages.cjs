@@ -1859,7 +1859,7 @@ html.dispositivo-mobile #menu-mob-dropdown.aberto {
       <strong>Endereço da Sede:</strong> R. Estrela D'álva, Salvador - BA, 41211-300</p>
     </div>
     <div class="modal-lgpd-rodape">
-      <button type="button" class="btn btn-verm" id="btn-entendido-lgpd" style="padding:10px 22px;font-weight:700">Entendido e Fechar</button>
+      <button type="button" class="btn btn-azul" id="btn-entendido-lgpd">Entendido e Fechar</button>
     </div>
   </div>
 </dialog>`;
@@ -5286,7 +5286,7 @@ tr:hover td {
 
       <div class="modal-rodape">
         <button type="button" class="btn btn-cont" id="btn-cancelar-cad-acao">Cancelar</button>
-        <button type="submit" class="btn btn-amarelo btn-salvar-acao">
+        <button type="submit" class="btn btn-azul btn-salvar-acao">
           ${svgPlus} <span>Cadastrar e Publicar Ação</span>
         </button>
       </div>
