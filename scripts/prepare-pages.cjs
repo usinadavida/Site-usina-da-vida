@@ -2583,7 +2583,7 @@ function redesenharPortal(html) {
     '<div class="tabela-wrap">' +
     '  <table>' +
     '    <caption class="oculto" style="position:absolute;left:-999px">Lista de voluntários</caption>' +
-    '    <thead><tr><th>Nome</th><th>Área(s)</th><th>Formação</th><th>Disponibilidade</th><th>Localização</th><th>Atividade</th><th>Contato Direto</th><th>Status</th><th style="text-align:center;min-width:76px;width:76px">Ações</th></tr></thead>' +
+    '    <thead><tr><th style="min-width:280px">Voluntário (Nome / Contato)</th><th>Área(s)</th><th>Formação</th><th>Disponibilidade</th><th>Localização</th><th>Atividade</th><th>Status</th><th style="text-align:center;min-width:76px;width:76px">Ações</th></tr></thead>' +
     '    <tbody id="corpo"></tbody>' +
     '  </table>\n' +
     '  <div id="vazio"';
@@ -2664,16 +2664,35 @@ function redesenharPortal(html) {
 
       var distTxt = '<br><small class="dist-sede">' + (v.bairro === $("f-ref").value ? (v.bairro === "Arenoso" ? "Sede da ONG (0 km)" : "Ponto focal (0 km)") : km(v.bairro, $("f-ref").value).toFixed(1).replace(".", ",") + ' km ' + ($("f-ref").value === "Arenoso" ? "da Sede" : "de " + $("f-ref").value)) + '</small>';
 
+      var partesNome = (v.nome || "").trim().split(/\s+/);
+      var iniciais = (partesNome[0] ? partesNome[0][0] : "") + (partesNome.length > 1 ? partesNome[partesNome.length - 1][0] : "");
+      iniciais = iniciais.toUpperCase() || "V";
+
+      var blocoIdentificacao = '<div class="celula-identificacao">' +
+        '<div class="avatar-circulo">' + esc(iniciais) + '</div>' +
+        '<div class="linhas-dados">' +
+          '<span class="linha-nome">' + esc(v.nome) + '</span>' +
+          (podeContatos
+            ? '<a class="linha-tel" href="https://wa.me/55' + v.tel.replace(/\\D/g,"") + '" target="_blank" rel="noopener" title="Abrir conversa no WhatsApp">' +
+                '<span class="wa-ico">' + '${svgWa}' + '</span> ' + esc(v.tel) +
+              '</a>' +
+              '<span class="linha-email">' +
+                '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> ' +
+                esc(v.email) +
+              '</span>'
+            : '<span class="tag-restrito">' + '${svgLock}' + ' Contato protegido</span>') +
+        '</div>' +
+      '</div>';
+
       return '<tr>' +
-        '<td><b>' + esc(v.nome) + '</b></td>' +
+        '<td>' + blocoIdentificacao + '</td>' +
         '<td>' + v.areas.map(function(a){ return '<span class="tag">' + esc(a) + '</span>'; }).join("") + '</td>' +
         '<td>' + esc(v.form) + '</td>' +
         '<td>' + esc(v.disp.join(", ")) + '</td>' +
         '<td>' + esc(v.bairro) + distTxt + '</td>' +
         '<td>' + esc(v.ativ) + '</td>' +
-        '<td>' + contato + '</td>' +
         '<td>' + st + '</td>' +
-        '<td class="col-acoes-vol" style="text-align:center">' + acoesVol + '</td>' +
+        '<td class="col-acoes-vol" style="text-align:center">' + acoesVol + '</td>'' +
       '</tr>';
     }).join("");
 

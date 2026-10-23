@@ -16,8 +16,8 @@
 
   // Nomes das colunas correspondentes aos índices
   var NOMES_COLUNAS = [
-    'Nome', 'Área(s)', 'Formação', 'Disponibilidade',
-    'Localização', 'Atividade', 'Contato Direto', 'Status', 'Ações'
+    'Voluntário', 'Área(s)', 'Formação', 'Disponibilidade',
+    'Localização', 'Atividade', 'Status', 'Ações'
   ];
 
   // Adiciona data-label em todas as células da tabela para o layout mobile em cards
@@ -62,7 +62,7 @@
             '<label><input type="checkbox" data-col="4" checked> Disponibilidade</label>' +
             '<label><input type="checkbox" data-col="5" checked> Localização</label>' +
             '<label><input type="checkbox" data-col="6" checked> Atividade</label>' +
-            '<label><input type="checkbox" data-col="7" checked> Contato Direto</label>' +
+            '<label><input type="checkbox" data-col="7" checked> Status</label>' +
           '</div>' +
         '</div>';
 

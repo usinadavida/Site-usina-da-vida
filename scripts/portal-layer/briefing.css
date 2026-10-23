@@ -635,3 +635,78 @@ button {
   box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 10px 10px -5px rgba(15, 23, 42, 0.04) !important;
 }
 
+
+
+/* =====================================================================
+   CÉLULA UNIFICADA DE IDENTIFICAÇÃO (Nome + Contato WhatsApp e E-mail)
+   ===================================================================== */
+.celula-identificacao {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+  min-width: 270px !important;
+}
+
+.avatar-circulo {
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 50% !important;
+  background: #eff6ff !important;
+  color: var(--color-brand-blue, #085ec3) !important;
+  border: 1.5px solid #bfdbfe !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-weight: 700 !important;
+  font-size: 0.82rem !important;
+  flex-shrink: 0 !important;
+  margin-top: 2px !important;
+}
+
+.linhas-dados {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 3px !important;
+}
+
+.linha-nome {
+  font-size: 0.94rem !important;
+  font-weight: 600 !important;
+  color: var(--color-text, #0f172a) !important;
+  line-height: 1.25 !important;
+}
+
+.linha-tel {
+  font-size: 0.80rem !important;
+  color: #16a34a !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  text-decoration: none !important;
+  font-weight: 500 !important;
+}
+
+.linha-tel:hover {
+  text-decoration: underline !important;
+}
+
+.linha-tel .wa-ico svg,
+.linha-tel .ico-svg {
+  width: 13px !important;
+  height: 13px !important;
+  display: inline-block !important;
+}
+
+.linha-email {
+  font-size: 0.78rem !important;
+  color: var(--color-text-muted, #64748b) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+}
+
+.linha-email .ico-svg {
+  width: 12px !important;
+  height: 12px !important;
+  display: inline-block !important;
+}
