@@ -1804,6 +1804,224 @@ html.dispositivo-mobile #menu-mob-dropdown.aberto {
   color: var(--azul);
   padding-left: 21px;
 }
+
+/* STATUS BADGES & CELLS (BRIEFING SEÇÃO 9.3) */
+.st-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+.st-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.st-recebida, .st-novo {
+  background: var(--color-info-soft);
+  color: var(--color-info);
+  border-color: #b3d4f5;
+}
+.st-recebida .st-dot, .st-novo .st-dot { background: var(--color-info); }
+
+.st-triagem, .st-analise {
+  background: var(--color-pending-soft);
+  color: var(--color-pending);
+  border-color: #fed7aa;
+}
+.st-triagem .st-dot, .st-analise .st-dot { background: var(--color-pending); }
+
+.st-pendente {
+  background: var(--color-warning-soft);
+  color: var(--color-warning);
+  border-color: #fde68a;
+}
+.st-pendente .st-dot { background: var(--color-warning); }
+
+.st-aprovado, .st-aprovada, .st-ativo, .st-concluido, .st-atividade {
+  background: var(--color-success-soft);
+  color: var(--color-success);
+  border-color: #bbf7d0;
+}
+.st-aprovado .st-dot, .st-aprovada .st-dot, .st-ativo .st-dot, .st-concluido .st-dot, .st-atividade .st-dot { background: var(--color-success); }
+
+.st-bloqueado, .st-cancelado, .st-nao-selecionada {
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+  border-color: #fecaca;
+}
+.st-bloqueado .st-dot, .st-cancelado .st-dot, .st-nao-selecionada .st-dot { background: var(--color-danger); }
+
+.st-arquivado, .st-inativo {
+  background: var(--color-surface-subtle);
+  color: var(--color-text-secondary);
+  border-color: #cbd5e1;
+}
+.st-arquivado .st-dot, .st-inativo .st-dot { background: var(--color-text-secondary); }
+
+/* SELECT DE STATUS CUSTOMIZADO NA TABELA */
+.select-st-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  transition: all 0.15s ease;
+}
+.select-st-wrap select.st {
+  border: none !important;
+  background: transparent !important;
+  padding: 2px 4px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: inherit !important;
+  cursor: pointer;
+  outline: none !important;
+  box-shadow: none !important;
+  width: auto !important;
+}
+
+/* ESTADO VAZIO ELEGANTE (DUB - SEÇÃO 11) */
+.estado-vazio {
+  text-align: center;
+  padding: 48px 24px;
+  background: var(--color-surface);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  margin: 16px 0;
+}
+.vazio-icone {
+  width: 44px;
+  height: 44px;
+  margin: 0 auto 12px;
+  display: grid;
+  place-items: center;
+  background: var(--color-surface-subtle);
+  border-radius: 50%;
+  color: var(--color-brand-blue);
+}
+.vazio-icone svg {
+  width: 22px;
+  height: 22px;
+}
+.estado-vazio h3 {
+  font-size: 1.1rem;
+  font-family: var(--sans);
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 6px;
+}
+.estado-vazio p {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  margin: 0 0 16px;
+}
+
+/* BLOCO DE PENDÊNCIAS E ATIVIDADE RECENTE (VISITORS/ORDERFUL - SEÇÃO 10.1) */
+.box-resumo-operacional, .box-resumo-auditoria {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+.box-cab-duplo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--color-surface-subtle);
+}
+.box-cab-duplo h3 {
+  font-size: 1.05rem;
+  font-family: var(--sans);
+  font-weight: 600;
+  color: var(--color-brand-blue);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.badge-alerta-suave {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--color-warning-soft);
+  color: var(--color-warning);
+  border: 1px solid #fde68a;
+}
+.link-acao-discreta {
+  font-size: 12.5px;
+  color: var(--color-brand-blue);
+  text-decoration: none;
+  font-weight: 600;
+}
+.link-acao-discreta:hover {
+  text-decoration: underline;
+}
+.lista-itens-resumo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.item-resumo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: var(--color-surface-subtle);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+.item-resumo-ico {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.item-resumo-corpo {
+  flex: 1;
+}
+.item-resumo-corpo b {
+  display: block;
+  font-size: 13px;
+  color: var(--color-text);
+  line-height: 1.25;
+}
+.item-resumo-corpo p {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+.btn-ver-pendencia {
+  font-size: 12px;
+  padding: 5px 12px;
+}
+.badge-filtros-ativos {
+  background: var(--color-brand-blue-soft);
+  color: var(--color-brand-blue);
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  border: 1px solid #bfdbfe;
+  margin-left: 8px;
+}
+
 </style>`;
 
   const modalPoliticaLgpdHtml = `<!-- MODAL DE POLÍTICA DE PRIVACIDADE E LGPD -->
@@ -2306,6 +2524,7 @@ function redesenharPortal(html) {
   const svgWa = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>';
   const svgPlus = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>';
   const svgShield = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>';
+  const svgClock = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
   const svgEdit = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>';
   const svgTrash = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>';
   const svgEye = '<svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:18px;height:18px"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="10" r="3"/></svg>';
@@ -2455,6 +2674,58 @@ function redesenharPortal(html) {
     '  </div>' +
     '</div>');
 
+  // Bloco de Pendências Operacionais e Atividade Recente na Visão Geral (Briefing Seção 10.1)
+  const chartsGeralAntigo = /<div class="duas">\s*<div class="box"><h3>Voluntários por área de atuação<\/h3><div id="g-area"><\/div><\/div>\s*<div class="box"><h3>Inscrições por status<\/h3><div id="g-status"><\/div><\/div>\s*<\/div>/;
+  const chartsGeralNovo = 
+    '<div class="duas">\n' +
+    '        <div class="box"><h3>Voluntários por área de atuação</h3><div id="g-area"></div></div>\n' +
+    '        <div class="box"><h3>Inscrições por status</h3><div id="g-status"></div></div>\n' +
+    '      </div>\n' +
+    '      <div class="duas" style="margin-top: 20px;">\n' +
+    '        <div class="box box-resumo-operacional">\n' +
+    '          <div class="box-cab-duplo">\n' +
+    '            <h3>' + svgClock + ' Pendências Operacionais da Coordenação</h3>\n' +
+    '            <span class="badge-alerta-suave" id="badge-pendencias-count">Aguardando ação</span>\n' +
+    '          </div>\n' +
+    '          <div id="lista-pendencias-geral" class="lista-itens-resumo">\n' +
+    '            <div class="item-resumo">\n' +
+    '              <div class="item-resumo-ico st-triagem"><span class="st-dot"></span></div>\n' +
+    '              <div class="item-resumo-corpo">\n' +
+    '                <b id="txt-pendencia-triagem">Inscrições em triagem</b>\n' +
+    '                <p>Candidatos aguardando contato inicial e validação de documentos.</p>\n' +
+    '              </div>\n' +
+    '              <button type="button" class="btn btn-cont btn-ver-pendencia" id="btn-atalho-triagem">Ver inscritos</button>\n' +
+    '            </div>\n' +
+    '            <div class="item-resumo">\n' +
+    '              <div class="item-resumo-ico st-novo"><span class="st-dot"></span></div>\n' +
+    '              <div class="item-resumo-corpo">\n' +
+    '                <b id="txt-pendencia-vagas">Vagas abertas em oficinas</b>\n' +
+    '                <p>Ações agendadas com capacidade disponível para mobilização.</p>\n' +
+    '              </div>\n' +
+    '              <button type="button" class="btn btn-cont btn-ver-pendencia" id="btn-atalho-acoes">Acompanhar</button>\n' +
+    '            </div>\n' +
+    '          </div>\n' +
+    '        </div>\n' +
+    '        <div class="box box-resumo-auditoria">\n' +
+    '          <div class="box-cab-duplo">\n' +
+    '            <h3>' + svgShield + ' Atividade Recente &amp; Governança (LGPD)</h3>\n' +
+    '            <button type="button" class="link-acao-discreta" id="btn-atalho-auditoria" style="background:none;border:none;cursor:pointer;">Ver trilha completa &rarr;</button>\n' +
+    '          </div>\n' +
+    '          <div id="lista-auditoria-resumo" class="lista-itens-resumo">\n' +
+    '            <div class="item-resumo-vazio" style="color:var(--color-text-muted);font-size:0.85rem;padding:8px 0;">Sincronizando registros recentes...</div>\n' +
+    '          </div>\n' +
+    '        </div>\n' +
+    '      </div>';
+  html = html.replace(chartsGeralAntigo, chartsGeralNovo);
+
+  html = html.replace('<div id="vazio" class="vazio" style="display:none">Nenhum voluntário encontrado com esses filtros.</div>', 
+    '<div id="vazio" class="estado-vazio" style="display:none">' +
+    '  <div class="vazio-icone"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>' +
+    '  <h3>Nenhum voluntário encontrado</h3>' +
+    '  <p>Não há voluntários correspondentes aos filtros ou parâmetros territoriais selecionados.</p>' +
+    '  <button type="button" class="btn btn-cont" id="btn-limpar-vazio" onclick="document.getElementById(\'limpar\').click()">Limpar todos os filtros</button>' +
+    '</div>');
+
   // 5. Transformar Voluntários: cabeçalho com ações no topo, filtros com máscara de exclusividade e gaveta territorial
   const volAntigo = /<h2>Voluntários cadastrados<\/h2>\s*<div class="filtros"[\s\S]*?<\/table>\s*<div id="vazio"/;
   const volNovo = 
@@ -2517,7 +2788,7 @@ function redesenharPortal(html) {
     '  </div>' +
     '</div>\n' +
     '<div class="tabela-meta-barra">' +
-    '  <span id="contagem" aria-live="polite"></span>' +
+    '  <span id="contagem" aria-live="polite"></span><span id="badge-filtros-ativos" class="badge-filtros-ativos" style="display:none"></span>' +
     '</div>\n' +
     '<div class="tabela-wrap">' +
     '  <table>' +
@@ -2581,9 +2852,14 @@ function redesenharPortal(html) {
         ? '<a class="link-wa" href="https://wa.me/55' + v.tel.replace(/\\D/g,"") + '" target="_blank" rel="noopener" title="Abrir conversa no WhatsApp"><span class="wa-ico">${svgWa}</span> ' + esc(v.tel) + '</a><div class="txt-email">' + esc(v.email) + '</div>'
         : '<span class="tag-restrito">${svgLock} Protegido (LGPD)</span>';
 
+      var stClassMap = {"Recebida":"st-recebida","Em triagem":"st-triagem","Aprovada":"st-aprovada","Em atividade":"st-atividade","Não selecionada":"st-nao-selecionada"};
+      var stCls = stClassMap[v.status] || "st-novo";
       var st = podeStatus
-        ? '<select class="st" data-id="' + v.id + '" aria-label="Status de ' + esc(v.nome) + '">' + STATUS.map(function(x){ return '<option' + (x === v.status ? ' selected' : '') + '>' + x + '</option>'; }).join("") + '</select>'
-        : '<span class="tag-status-readonly">' + esc(v.status) + '</span>';
+        ? '<div class="select-st-wrap ' + stCls + '">' +
+            '<span class="st-dot"></span>' +
+            '<select class="st" data-id="' + v.id + '" aria-label="Status de ' + esc(v.nome) + '">' + STATUS.map(function(x){ return '<option' + (x === v.status ? ' selected' : '') + '>' + x + '</option>'; }).join("") + '</select>' +
+          '</div>'
+        : '<span class="st-pill ' + stCls + '"><span class="st-dot"></span>' + esc(v.status) + '</span>';
 
       var acoesVol = ePresid
         ? '<div class="tb-acoes-wrap">' +
@@ -2713,6 +2989,24 @@ function redesenharPortal(html) {
     barras($("g-area"), AREAS.map(function(a){return [a, vols.filter(function(v){return v.areas.indexOf(a)>-1}).length]}), "#085EC3", "area");
     var cores = {"Recebida":"#d97706","Em triagem":"#ea580c","Aprovada":"#085EC3","Em atividade":"#16a34a","Não selecionada":"#94a3b8"};
     barras($("g-status"), STATUS.map(function(s){return [s,n(s),cores[s]]}), "#085EC3", "status");
+    
+    // Atualiza resumo operacional da Visão Geral (Briefing Seção 10.1)
+    var nTriagem = n("Em triagem");
+    var nReceb = n("Recebida");
+    var elPend = $("badge-pendencias-count");
+    if (elPend) {
+      elPend.textContent = (nTriagem + nReceb > 0) ? (nTriagem + nReceb) + " pendência(s)" : "Tudo em dia";
+    }
+    var elTxtTriagem = $("txt-pendencia-triagem");
+    if (elTxtTriagem) {
+      elTxtTriagem.textContent = nTriagem + " voluntário(s) em triagem ativa";
+    }
+    var elTxtVagas = $("txt-pendencia-vagas");
+    if (elTxtVagas) {
+      var totVagasAbertas = 0;
+      AGEND.forEach(function(ag){ var rest = Math.max(0, ag.vagas - ocupadas(ag)); totVagasAbertas += rest; });
+      elTxtVagas.textContent = totVagasAbertas + " vaga(s) disponível(is) em ações";
+    }
   }
 
   function padronizarDesc(texto, limite) {
@@ -3108,16 +3402,66 @@ function redesenharPortal(html) {
   // 11. Estilos completos e harmoniosos (semelhantes à landing page)
   const estilosPortal = `<style id="estilos-portal-harmonia">
 :root {
-  --azul: #085EC3;
-  --azul-esc: #06479a;
-  --vermelho: #DB150A;
-  --amarelo: #F1C50E;
-  --laranja: #F08D0C;
-  --verde: #0f9d58;
-  --cinza: #4F4F4F;
-  --tinta: #1d2430;
-  --borda: #e2e8f0;
-  --suave: #f8fafc;
+  /* Superfícies (Briefing Seção 5 - Dub / Visitors) */
+  --color-page: #f7f9fc;
+  --color-surface: #ffffff;
+  --color-surface-subtle: #f1f5f9;
+  --color-surface-muted: #eaf0f6;
+
+  /* Estrutura (Briefing Seção 5 - Dub) */
+  --color-border: #d9e2ec;
+  --color-border-strong: #b9c7d6;
+  --color-text: #172b4d;
+  --color-text-secondary: #52606d;
+  --color-text-muted: #7b8794;
+
+  /* Identidade Oficial Usina da Vida */
+  --color-brand-blue: #085EC3;
+  --color-brand-blue-dark: #06479a;
+  --color-brand-blue-soft: #e8f1fb;
+  --color-brand-yellow: #f1c50e;
+  --color-brand-red: #db150a;
+  --color-brand-orange: #f08d0c;
+
+  /* Estados Semânticos (Briefing Seção 5 e 9.3) */
+  --color-success: #168a4a;
+  --color-success-soft: #e6f6ed;
+  --color-warning: #d88900;
+  --color-warning-soft: #fff4d6;
+  --color-pending: #e56b16;
+  --color-pending-soft: #fff0e5;
+  --color-danger: #c62828;
+  --color-danger-soft: #fdeaea;
+  --color-info: #1769aa;
+  --color-info-soft: #e8f2fb;
+
+  /* Escala de Espaçamento e Formas (Briefing Seção 7) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 999px;
+
+  /* Mapeamento de compatibilidade */
+  --azul: var(--color-brand-blue);
+  --azul-esc: var(--color-brand-blue-dark);
+  --vermelho: var(--color-brand-red);
+  --amarelo: var(--color-brand-yellow);
+  --laranja: var(--color-brand-orange);
+  --verde: var(--color-success);
+  --cinza: var(--color-text-secondary);
+  --tinta: var(--color-text);
+  --borda: var(--color-border);
+  --suave: var(--color-page);
   --serif: "Lora", Georgia, serif;
   --sans: "Lexend", "Segoe UI", system-ui, sans-serif;
 }
@@ -3616,8 +3960,8 @@ html {
 
 /* BARRA SUPERIOR */
 .barra {
-  background: #fff;
-  border-bottom: 3px solid var(--tinta);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
   position: sticky;
   top: 0;
   z-index: 50;
@@ -3755,34 +4099,64 @@ html {
   color: var(--azul);
 }
 
-/* BOTÕES COM IDENTIDADE USINA DA VIDA */
-.btn-azul {
-  background: var(--tinta);
-  color: #fff;
-  border: 2px solid var(--tinta);
-  box-shadow: 3px 3px 0 var(--amarelo);
-  border-radius: 4px;
-  font-weight: 600;
-  padding: 8px 18px;
+/* BOTÕES COM HIERARQUIA DUB & IDENTIDADE USINA DA VIDA */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: var(--radius-md);
+  font: 600 13.5px var(--sans);
+  padding: 8px 16px;
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  line-height: 1.4;
+}
+.btn-azul {
+  background: var(--color-brand-blue);
+  color: #ffffff !important;
+  border: 1px solid var(--color-brand-blue-dark);
+  box-shadow: 0 1px 2px rgba(8, 94, 195, 0.15);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  padding: 8px 16px;
+  font-size: 13.5px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
 }
 .btn-azul:hover:not(:disabled) {
-  transform: translate(-1px, -1px);
-  box-shadow: 4px 4px 0 var(--amarelo);
+  background: var(--color-brand-blue-dark);
+  box-shadow: 0 2px 4px rgba(8, 94, 195, 0.25);
+  transform: translateY(-1px);
 }
 .btn-cont {
-  border: 2px solid var(--tinta);
-  color: var(--tinta);
-  background: #fff;
-  border-radius: 4px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  border-radius: var(--radius-md);
   font-weight: 600;
-  padding: 8px 18px;
+  padding: 8px 16px;
+  font-size: 13.5px;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   transition: background-color 0.15s ease, border-color 0.15s ease;
 }
-.btn-cont:hover {
-  background: #f1f5f9;
+.btn-cont:hover:not(:disabled) {
+  background: var(--color-surface-subtle);
+  border-color: var(--color-border-strong);
+}
+:focus-visible {
+  outline: 2px solid var(--color-brand-blue);
+  outline-offset: 2px;
 }
 .btn[disabled] {
   opacity: 0.5;
@@ -6506,6 +6880,28 @@ tr:hover td {
           corpo.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px; color: #64748b;">Nenhuma operação sensível registrada até o momento.</td></tr>';
           return;
         }
+        // Atualiza também o resumo na Visão Geral (Briefing Seção 10.1)
+        var resumoEl = document.getElementById("lista-auditoria-resumo");
+        if (resumoEl) {
+          var ultimos = logs.slice(0, 3);
+          resumoEl.innerHTML = ultimos.map(function(item) {
+            var dt = new Date(item.criado_em || Date.now());
+            var hora = dt.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+            var data = dt.toLocaleDateString("pt-BR");
+            var badge = formatarOperacaoBadge(item.operacao);
+            return '<div class="item-resumo">' +
+              '<div class="item-resumo-corpo">' +
+                '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2px;">' +
+                  badge +
+                  '<span style="font-size:11px;color:var(--color-text-muted);">' + data + ' ' + hora + '</span>' +
+                '</div>' +
+                '<b style="font-size:12.5px;color:var(--color-text);">' + esc(item.autor || "Sistema") + ' &bull; ' + esc(item.entidade || "Geral") + '</b>' +
+                '<p style="font-size:11.5px;color:var(--color-text-secondary);margin:2px 0 0;">' + esc(item.detalhes || "") + '</p>' +
+              '</div>' +
+            '</div>';
+          }).join("");
+        }
+
         corpo.innerHTML = logs.map(function(item) {
           var dataFmt = item.criado_em_fmt || new Date(item.criado_em).toLocaleString("pt-BR");
           var badgeOp = formatarOperacaoBadge(item.acao);
@@ -6549,6 +6945,71 @@ tr:hover td {
       descEl.classList.toggle("expandido");
     }
   });
+
+  // Event listeners para atalhos do dashboard (Briefing Seção 10.1)
+  var btnTriagem = document.getElementById("btn-atalho-triagem");
+  if (btnTriagem) {
+    btnTriagem.addEventListener("click", function() {
+      var tabVol = document.getElementById("t-vol");
+      if (tabVol) tabVol.click();
+      var selStatus = document.getElementById("f-status");
+      if (selStatus) {
+        selStatus.value = "Em triagem";
+        selStatus.dispatchEvent(new Event("change"));
+      }
+    });
+  }
+
+  var btnAcoes = document.getElementById("btn-atalho-acoes");
+  if (btnAcoes) {
+    btnAcoes.addEventListener("click", function() {
+      var tabAcoes = document.getElementById("t-acoes");
+      if (tabAcoes) tabAcoes.click();
+    });
+  }
+
+  var btnAuditoria = document.getElementById("btn-atalho-auditoria");
+  if (btnAuditoria) {
+    btnAuditoria.addEventListener("click", function() {
+      var tabAcesso = document.getElementById("t-acesso");
+      if (tabAcesso) tabAcesso.click();
+    });
+  }
+
+  // Contador de filtros ativos (Briefing Seção 9.4)
+  function atualizarBadgeFiltrosAtivos() {
+    var badge = document.getElementById("badge-filtros-ativos");
+    if (!badge) return;
+    var count = 0;
+    var b = document.getElementById("f-busca"); if (b && b.value.trim()) count++;
+    var a = document.getElementById("f-area"); if (a && a.value) count++;
+    var s = document.getElementById("f-status"); if (s && s.value) count++;
+    var d = document.getElementById("f-disp"); if (d && d.value) count++;
+    var br = document.getElementById("f-bairro"); if (br && br.value) count++;
+    var fm = document.getElementById("f-form"); if (fm && fm.value) count++;
+    var at = document.getElementById("f-ativ"); if (at && at.value) count++;
+    var raio = document.getElementById("f-raio"); if (raio && raio.value) count++;
+    if (count > 0) {
+      badge.textContent = count === 1 ? "1 filtro ativo" : count + " filtros ativos";
+      badge.style.display = "inline-block";
+    } else {
+      badge.style.display = "none";
+    }
+  }
+
+  ["f-busca", "f-area", "f-status", "f-disp", "f-bairro", "f-form", "f-ativ", "f-raio"].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) {
+      el.addEventListener("input", atualizarBadgeFiltrosAtivos);
+      el.addEventListener("change", atualizarBadgeFiltrosAtivos);
+    }
+  });
+  var btnLimpar = document.getElementById("limpar");
+  if (btnLimpar) {
+    btnLimpar.addEventListener("click", function() {
+      setTimeout(atualizarBadgeFiltrosAtivos, 50);
+    });
+  }
 
   // Carregamento inicial de auditoria
   setTimeout(carregarTrilhaAuditoria, 500);
