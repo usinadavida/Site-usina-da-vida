@@ -2418,6 +2418,331 @@ tr:hover td {
   gap: 6px !important;
 }
 
+/* =====================================================================
+   TELA DE LOGIN LIMPA & MODERNA (SaaS Cívico — Dub / Visitors / Orderful)
+   Eliminação total de sombras brutas amarelas, bordas pretas de 2px
+   e fundos cremes amarelados.
+   ===================================================================== */
+#login.login-split-layout {
+  background: #f8fafc !important;
+}
+
+/* Lado institucional (esquerda em desktop) */
+.split-lado-institucional {
+  background: linear-gradient(145deg, #074794 0%, #085EC3 60%, #0a6fd4 100%) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+
+.split-colagem-mini .foto-c1 {
+  border: 2px solid rgba(255, 255, 255, 0.95) !important;
+  border-radius: 12px !important;
+  clip-path: none !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+}
+
+.split-colagem-mini .foto-c2 {
+  border: 2px solid rgba(255, 255, 255, 0.95) !important;
+  border-radius: 10px !important;
+  clip-path: none !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18) !important;
+}
+
+.p1-split, .p2-split, .p3-split {
+  opacity: 0.15 !important;
+}
+
+.split-pilar-item {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-radius: 8px !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+/* Lado do formulário (direita em desktop, tela toda em mobile) */
+.split-lado-formulario {
+  background: #f8fafc !important;
+}
+
+/* Card central de login */
+.split-cartao {
+  background: #ffffff !important;
+  border: 1px solid var(--color-border, #e2e8f0) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04) !important;
+  padding: 40px 36px 32px !important;
+  max-width: 440px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Logo Usina da Vida no Card */
+.split-card-marca {
+  margin-bottom: 22px !important;
+}
+.split-logo-emblema {
+  height: 44px !important;
+  width: auto !important;
+}
+.split-logo-texto {
+  height: 38px !important;
+  width: auto !important;
+}
+
+/* Badge "Autenticação Restrita" */
+.split-cartao .rotulo {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  background: #eff6ff !important;
+  color: var(--color-brand-blue, #085ec3) !important;
+  border: 1px solid #bfdbfe !important;
+  border-radius: var(--radius-pill, 9999px) !important;
+  padding: 4px 12px !important;
+  font: 600 0.75rem var(--sans) !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  margin-bottom: 12px !important;
+}
+
+.split-cartao .rotulo::before {
+  content: "" !important;
+  width: 6px !important;
+  height: 6px !important;
+  background: var(--color-brand-blue, #085ec3) !important;
+  border-radius: 50% !important;
+  clip-path: none !important;
+  display: inline-block !important;
+}
+
+/* Título e Subtítulo */
+.split-cartao-titulo {
+  font-family: var(--sans) !important;
+  font-size: 1.68rem !important;
+  font-weight: 700 !important;
+  color: var(--color-text, #0f172a) !important;
+  letter-spacing: -0.025em !important;
+  margin: 0 0 6px !important;
+  line-height: 1.2 !important;
+}
+
+.split-cartao-sub {
+  font-size: 0.88rem !important;
+  color: var(--color-text-secondary, #64748b) !important;
+  margin: 0 0 22px !important;
+  line-height: 1.48 !important;
+}
+
+/* Campos do Formulário */
+.split-campo {
+  margin-bottom: 16px !important;
+}
+
+.split-campo label {
+  display: block !important;
+  font-weight: 600 !important;
+  font-size: 0.84rem !important;
+  margin-bottom: 6px !important;
+  color: var(--color-text, #334155) !important;
+}
+
+.split-campo input,
+.split-campo select {
+  width: 100% !important;
+  font: inherit !important;
+  font-weight: 400 !important;
+  padding: 10px 14px !important;
+  border: 1px solid var(--color-border-strong, #cbd5e1) !important;
+  border-radius: var(--radius-md, 8px) !important;
+  background: #ffffff !important;
+  color: var(--color-text, #0f172a) !important;
+  box-sizing: border-box !important;
+  font-size: 0.92rem !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+.split-campo input:focus,
+.split-campo select:focus {
+  border-color: var(--color-brand-blue, #085ec3) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(8, 94, 195, 0.14) !important;
+}
+
+.split-senha-wrap {
+  position: relative !important;
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.split-senha-wrap input {
+  padding-right: 44px !important;
+}
+
+.split-btn-olho {
+  position: absolute !important;
+  right: 6px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 6px 8px !important;
+  color: var(--color-text-muted, #64748b) !important;
+  cursor: pointer !important;
+  border-radius: 4px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.split-btn-olho:hover {
+  color: var(--color-text, #0f172a) !important;
+  background: #f1f5f9 !important;
+}
+
+/* Linha de ajuda (Lembrar / Esqueci senha) */
+.split-linha-ajuda {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin: 8px 0 18px !important;
+  font-size: 0.84rem !important;
+}
+
+.split-lembrar {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  color: var(--color-text-secondary, #475569) !important;
+  cursor: pointer !important;
+  user-select: none !important;
+}
+
+.split-lembrar input {
+  width: 16px !important;
+  height: 16px !important;
+  accent-color: var(--color-brand-blue, #085ec3) !important;
+  border-radius: 4px !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+}
+
+.split-link-esqueci {
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  color: var(--color-brand-blue, #085ec3) !important;
+  font: 500 0.84rem var(--sans) !important;
+  text-decoration: underline !important;
+  cursor: pointer !important;
+}
+
+.split-link-esqueci:hover {
+  color: var(--color-brand-blue-dark, #064a9c) !important;
+}
+
+/* Erro inline limpo */
+#erro-login {
+  font-size: 0.82rem !important;
+  color: var(--color-error, #dc2626) !important;
+  font-weight: 500 !important;
+  margin-bottom: 12px !important;
+  min-height: 1.2em !important;
+}
+
+/* Botão Entrar no Portal */
+.split-btn-entrar {
+  width: 100% !important;
+  background: var(--color-brand-blue, #085ec3) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--color-brand-blue-dark, #064a9c) !important;
+  border-radius: var(--radius-md, 8px) !important;
+  padding: 12px 20px !important;
+  font: 600 0.95rem var(--sans) !important;
+  letter-spacing: -0.01em !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  box-shadow: 0 1px 3px rgba(8, 94, 195, 0.25) !important;
+  cursor: pointer !important;
+  transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease !important;
+}
+
+.split-btn-entrar:hover {
+  background: var(--color-brand-blue-dark, #064a9c) !important;
+  box-shadow: 0 4px 12px rgba(8, 94, 195, 0.3) !important;
+  transform: translateY(-1px) !important;
+}
+
+.split-btn-entrar:active {
+  transform: translateY(0) !important;
+  box-shadow: 0 1px 2px rgba(8, 94, 195, 0.2) !important;
+}
+
+/* Link Voltar */
+.split-cartao .voltar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  text-align: center !important;
+  margin-top: 18px !important;
+  font-size: 0.86rem !important;
+  color: var(--color-text-secondary, #64748b) !important;
+  text-decoration: none !important;
+  font-weight: 500 !important;
+  transition: color 0.15s ease !important;
+}
+
+.split-cartao .voltar:hover {
+  color: var(--color-brand-blue, #085ec3) !important;
+  text-decoration: none !important;
+}
+
+/* Copyright */
+.split-copyright {
+  margin-top: 24px !important;
+  font-size: 0.78rem !important;
+  color: var(--color-text-muted, #94a3b8) !important;
+  text-align: center !important;
+}
+
+/* Responsividade Mobile (< 960px) */
+@media (max-width: 960px) {
+  #login.login-split-layout {
+    grid-template-columns: 1fr !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    background: #f8fafc !important;
+  }
+  .split-lado-institucional {
+    display: none !important;
+  }
+  .split-lado-formulario {
+    width: 100% !important;
+    min-height: 100vh !important;
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 24px 16px 32px !important;
+    box-sizing: border-box !important;
+    background: #f8fafc !important;
+  }
+  .split-cartao {
+    width: 100% !important;
+    max-width: 440px !important;
+    padding: 30px 22px 24px !important;
+    border-radius: 14px !important;
+    border: 1px solid var(--color-border, #e2e8f0) !important;
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04) !important;
+  }
+}
+
 
 </style>
 </head>
