@@ -1995,7 +1995,7 @@ html.dispositivo-mobile #menu-mob-dropdown.aberto {
   --sans: "Lexend", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-/* ---------- 1. Cabeçalho e Barra Superior (Dub) ---------- */
+/* ---------- 1. Cabeçalho e Barra Superior (Dub) — MELHORIA MANTIDA ---------- */
 header.top {
   position: sticky !important;
   top: 0 !important;
@@ -2022,7 +2022,7 @@ header.top nav a:hover {
   color: var(--color-brand-blue) !important;
 }
 
-/* Botões do Topo: substituição dos estilos brutalistas pesados */
+/* Botões do Topo: melhoria refinada mantida */
 .topo-botoes .btn-verm {
   background: var(--color-brand-blue) !important;
   color: #ffffff !important;
@@ -2081,131 +2081,60 @@ header.top nav a:hover {
   transform: translateY(-2px) !important;
 }
 
-/* ---------- 2. Faixa de Impacto Social (Padrão Visitors) ---------- */
-.faixa-impacto {
-  background: #ffffff;
-  border-bottom: 1px solid var(--color-border);
-  padding: 24px 0;
-  position: relative;
-  z-index: 2;
-}
-
-.grade-impacto {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-}
-
-.card-impacto {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 14px 18px;
-  background: var(--color-surface-subtle);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  transition: all 0.2s ease;
-}
-
-.card-impacto:hover {
-  background: #ffffff;
-  border-color: #cbd5e1;
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
-  transform: translateY(-2px);
-}
-
-.impacto-ico {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: var(--color-brand-blue-soft);
-  color: var(--color-brand-blue);
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-}
-
-.impacto-ico svg {
-  width: 22px;
-  height: 22px;
-}
-
-.impacto-num {
-  font-size: 1.55rem;
-  font-weight: 800;
-  color: var(--color-brand-blue-dark);
-  line-height: 1.1;
-}
-
-.impacto-lbl {
-  font-size: 11.5px;
-  font-weight: 600;
-  color: var(--color-text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin-top: 2px;
-}
-
-@media (max-width: 960px) {
-  .grade-impacto {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 520px) {
-  .grade-impacto {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ---------- 3. Próximas Ações (Padrão Dub / Orderful) ---------- */
+/* ---------- 2. Próximas Ações (Retorno ao layout dos planos com acabamento limpo) ---------- */
 #proximas {
   background: #f8fafc !important;
 }
 
 .prox-lista {
   display: grid !important;
-  grid-template-columns: repeat(3, 1fr) !important;
-  gap: 22px !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 24px !important;
+  align-items: stretch !important;
 }
 
-@media (max-width: 960px) {
+@media (max-width: 820px) {
   .prox-lista {
     grid-template-columns: 1fr !important;
   }
 }
 
+/* Card: estrutura horizontal original dos planos, com superfície branca, borda de 1px e cantos 12px */
 .prox {
+  display: grid !important;
+  grid-template-columns: 104px 1fr !important;
   background: #ffffff !important;
   border: 1px solid var(--color-border) !important;
   border-radius: var(--radius-lg) !important;
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
   overflow: hidden !important;
-  display: flex !important;
-  flex-direction: column !important;
   transition: all 0.2s ease !important;
+  height: auto !important;
 }
 
 .prox:hover {
   border-color: #93c5fd !important;
-  box-shadow: 0 10px 25px rgba(8, 94, 195, 0.08) !important;
-  transform: translateY(-3px) !important;
+  box-shadow: 0 8px 24px rgba(8, 94, 195, 0.08) !important;
+  transform: translateY(-2px) !important;
 }
 
+/* Coluna de Data na esquerda: fundo sutil, sem bloco azul pesado */
 .prox .data {
   background: #f8fafc !important;
-  border-right: none !important;
-  border-bottom: 1px solid var(--color-border) !important;
-  padding: 16px 20px !important;
+  border-right: 1px solid var(--color-border) !important;
+  border-bottom: none !important;
+  color: var(--color-text) !important;
   display: flex !important;
+  flex-direction: column !important;
   align-items: center !important;
-  justify-content: flex-start !important;
-  gap: 14px !important;
-  text-align: left !important;
+  justify-content: center !important;
+  text-align: center !important;
+  padding: 20px 10px !important;
+  font-family: var(--sans) !important;
 }
 
 .prox .data b {
-  font-size: 2.1rem !important;
+  font-size: 2.3rem !important;
   font-weight: 800 !important;
   color: var(--color-brand-blue-dark) !important;
   line-height: 1 !important;
@@ -2217,21 +2146,38 @@ header.top nav a:hover {
   text-transform: uppercase !important;
   color: var(--color-brand-blue) !important;
   letter-spacing: 0.06em !important;
-  display: block !important;
+  margin-top: 4px !important;
 }
 
 .prox .data small {
-  font-size: 0.76rem !important;
+  font-size: 0.72rem !important;
   color: var(--color-text-muted) !important;
   font-weight: 500 !important;
-  display: block !important;
+  margin-top: 6px !important;
 }
 
+@media (max-width: 560px) {
+  .prox {
+    grid-template-columns: 1fr !important;
+  }
+  .prox .data {
+    flex-direction: row !important;
+    gap: 12px !important;
+    padding: 12px 18px !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--color-border) !important;
+    justify-content: flex-start !important;
+  }
+  .prox .data b {
+    font-size: 1.8rem !important;
+  }
+}
+
+/* Corpo do Card na direita */
 .prox .corpo {
   padding: 20px 22px 22px !important;
   display: flex !important;
   flex-direction: column !important;
-  flex: 1 !important;
 }
 
 /* Tag Pill sutil e moderna */
@@ -2247,7 +2193,7 @@ header.top nav a:hover {
   align-items: center !important;
   gap: 6px !important;
   width: fit-content !important;
-  margin-bottom: 10px !important;
+  margin-bottom: 8px !important;
   letter-spacing: 0.01em !important;
 }
 
@@ -2261,22 +2207,22 @@ header.top nav a:hover {
 }
 
 .prox .corpo h3 {
-  font-size: 1.18rem !important;
+  font-size: 1.25rem !important;
   font-weight: 700 !important;
   color: var(--color-brand-blue-dark) !important;
   line-height: 1.3 !important;
-  margin: 0 0 8px !important;
+  margin: 0 0 6px !important;
 }
 
 .prox .corpo > p:not(.info) {
-  font-size: 0.92rem !important;
+  font-size: 0.94rem !important;
   color: var(--color-text-secondary) !important;
   line-height: 1.55 !important;
-  margin: 0 0 12px !important;
+  margin: 0 0 10px !important;
 }
 
 .prox .corpo p.info {
-  font-size: 0.82rem !important;
+  font-size: 0.84rem !important;
   color: var(--color-text-muted) !important;
   font-weight: 500 !important;
   margin: 0 0 14px !important;
@@ -2338,7 +2284,390 @@ header.top nav a:hover {
   cursor: not-allowed !important;
 }
 
-/* ---------- 4. Missão, Visão e Valores (Padrão Visitors) ---------- */
+/* ---------- 3. Nossos Programas (Layout original preservado + imagens ampliadas) ---------- */
+#programas {
+  background: #ffffff !important;
+}
+
+/* Espaço e imagens ampliadas em Nossos Programas */
+.prog .ic {
+  height: 84px !important;
+  min-height: 84px !important;
+  display: flex !important;
+  align-items: flex-end !important;
+  margin-bottom: 16px !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+.prog .ic img {
+  max-height: 82px !important;
+  max-width: 155px !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  display: block !important;
+  transition: transform 0.2s ease !important;
+}
+
+.prog:hover .ic img {
+  transform: scale(1.06) !important;
+}
+
+.prog h3 {
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .02em !important;
+  margin-bottom: 8px !important;
+}
+
+.prog p {
+  font-size: 0.94rem !important;
+  color: var(--color-text-secondary) !important;
+  line-height: 1.6 !important;
+}
+
+/* ---------- 4. Avaliação no Google (Layout Limpo / Dub / Visitors) ---------- */
+.sec-aval {
+  background: #ffffff !important;
+  padding: 80px 0 !important;
+}
+
+/* Card Resumo do Google no topo */
+.google-resumo-card {
+  display: flex !important;
+  align-items: center !important;
+  gap: 20px !important;
+  flex-wrap: wrap !important;
+  background: #ffffff !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05) !important;
+  padding: 16px 22px !important;
+  transition: all 0.2s ease !important;
+}
+
+.google-resumo-card:hover {
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08) !important;
+}
+
+.google-nota-num {
+  font-family: var(--sans) !important;
+  font-weight: 800 !important;
+  font-size: 1.75rem !important;
+  color: var(--color-brand-blue-dark) !important;
+}
+
+.google-nota-leg {
+  color: var(--color-text-muted) !important;
+  font-size: 0.8rem !important;
+  font-weight: 500 !important;
+}
+
+.btn-google-aval {
+  background: var(--color-brand-blue) !important;
+  color: #ffffff !important;
+  border: 1px solid #064b9c !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: 0 1px 2px rgba(8, 94, 195, 0.2) !important;
+  padding: 9px 18px !important;
+  font-weight: 600 !important;
+  font-size: 13.5px !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  transition: all 0.15s ease !important;
+}
+
+.btn-google-aval:hover {
+  background: #0b6fd9 !important;
+  border-color: var(--color-brand-blue) !important;
+  box-shadow: 0 4px 12px rgba(8, 94, 195, 0.25) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Card Individual de Avaliação */
+.trilho-aval .aval-card {
+  background: #ffffff !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04) !important;
+  padding: 24px 26px !important;
+  transition: all 0.2s ease !important;
+}
+
+.trilho-aval .aval-card:hover {
+  border-color: #93c5fd !important;
+  box-shadow: 0 8px 24px rgba(8, 94, 195, 0.08) !important;
+  transform: translateY(-2px) !important;
+}
+
+.aval-avatar-img {
+  border-radius: 50% !important;
+  border: 1px solid var(--color-border) !important;
+  width: 44px !important;
+  height: 44px !important;
+  object-fit: cover !important;
+}
+
+.aval-autor-txt strong {
+  color: var(--color-brand-blue-dark) !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+}
+
+.aval-autor-txt span {
+  color: var(--color-text-muted) !important;
+  font-size: 12px !important;
+}
+
+.aval-verif {
+  background: var(--color-brand-blue-soft) !important;
+  color: var(--color-brand-blue) !important;
+  border: 1px solid #bfdbfe !important;
+  border-radius: var(--radius-pill) !important;
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  padding: 2px 8px !important;
+}
+
+.aval-texto {
+  font-size: 14.5px !important;
+  line-height: 1.65 !important;
+  color: var(--color-text-secondary) !important;
+  margin-top: 14px !important;
+}
+
+/* Setas do carrossel de avaliações */
+.carrossel-aval .seta {
+  background: #ffffff !important;
+  border: 1px solid var(--color-border) !important;
+  color: var(--color-text) !important;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.1) !important;
+  opacity: 0.9 !important;
+  transition: all 0.15s ease !important;
+}
+
+.carrossel-aval .seta:hover {
+  background: var(--color-brand-blue) !important;
+  color: #ffffff !important;
+  border-color: var(--color-brand-blue) !important;
+}
+
+/* ---------- 5. Seja um Voluntário (#inscricao) — CENTRALIZAÇÃO VERTICAL 1 A 3 ---------- */
+#inscricao {
+  background: var(--color-brand-blue) !important;
+  color: #ffffff !important;
+  padding: 80px 0 !important;
+}
+
+#inscricao .rotulo {
+  color: #fbbf24 !important;
+}
+
+#inscricao h2 {
+  color: #ffffff !important;
+}
+
+#inscricao > .wrap > div > p {
+  color: #e2e8f0 !important;
+}
+
+.perfis {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  margin: 16px 0 24px !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.perfis li {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  color: #ffffff !important;
+  border-radius: var(--radius-pill) !important;
+  padding: 5px 14px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+/* Centralização vertical exata do número 1 a 3 com o card ao lado */
+.passos {
+  list-style: none !important;
+  margin: 30px 0 0 !important;
+  padding: 0 !important;
+  counter-reset: p !important;
+}
+
+.passos li {
+  counter-increment: p !important;
+  display: grid !important;
+  grid-template-columns: 36px 1fr !important;
+  align-items: center !important;
+  gap: 16px !important;
+  margin-bottom: 16px !important;
+  color: #ffffff !important;
+}
+
+.passos li::before {
+  content: counter(p) !important;
+  font: 700 2.2rem var(--sans) !important;
+  color: #f1c50e !important;
+  line-height: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+.passos li > div {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-radius: var(--radius-md) !important;
+  padding: 14px 18px !important;
+  backdrop-filter: blur(8px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+
+.passos li b {
+  color: #ffffff !important;
+  font-size: 14.5px !important;
+  margin-bottom: 2px !important;
+}
+
+.passos li span {
+  color: #cbd5e1 !important;
+  font-size: 13px !important;
+}
+
+/* Cartão do Formulário */
+#form {
+  background: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.18) !important;
+  padding: 34px !important;
+}
+
+.etapas {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin-bottom: 24px !important;
+  padding-bottom: 16px !important;
+  border-bottom: 1px solid var(--color-border) !important;
+}
+
+.etapas .bola {
+  width: 26px !important;
+  height: 26px !important;
+  border-radius: 50% !important;
+  background: var(--color-surface-subtle) !important;
+  color: var(--color-text-secondary) !important;
+  font-weight: 700 !important;
+  font-size: 12.5px !important;
+  display: grid !important;
+  place-items: center !important;
+  border: 1px solid var(--color-border) !important;
+}
+
+.etapas .ativa .bola {
+  background: var(--color-brand-blue) !important;
+  color: #ffffff !important;
+  border-color: #064b9c !important;
+}
+
+.etapas .barra {
+  flex: 1 !important;
+  height: 2px !important;
+  background: var(--color-border) !important;
+}
+
+#form input[type="text"],
+#form input[type="email"],
+#form input[type="tel"],
+#form input[type="date"],
+#form select {
+  background: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: var(--radius-md) !important;
+  padding: 9px 12px !important;
+  font-size: 14px !important;
+  color: var(--color-text) !important;
+  transition: all 0.15s ease !important;
+  box-shadow: none !important;
+}
+
+#form input:focus,
+#form select:focus {
+  border-color: var(--color-brand-blue) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(8, 94, 195, 0.15) !important;
+}
+
+.opcoes {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+}
+
+.opcoes label {
+  background: var(--color-surface-subtle) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-pill) !important;
+  padding: 6px 14px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: var(--color-text-secondary) !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+.opcoes label:hover {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: var(--color-text) !important;
+}
+
+.opcoes label:has(input:checked) {
+  background: var(--color-brand-blue-soft) !important;
+  border-color: var(--color-brand-blue) !important;
+  color: var(--color-brand-blue) !important;
+  font-weight: 600 !important;
+  box-shadow: 0 1px 3px rgba(8, 94, 195, 0.12) !important;
+}
+
+#form .btn-verm {
+  background: var(--color-brand-blue) !important;
+  color: #ffffff !important;
+  border: 1px solid #064b9c !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: 0 1px 2px rgba(8, 94, 195, 0.2) !important;
+  font-weight: 600 !important;
+  font-size: 14.5px !important;
+  padding: 11px 24px !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+#form .btn-verm:hover {
+  background: #0b6fd9 !important;
+  border-color: var(--color-brand-blue) !important;
+  box-shadow: 0 4px 12px rgba(8, 94, 195, 0.25) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* ---------- 6. Missão, Visão e Valores ---------- */
 .mvv {
   background: #0a1b39 !important;
   padding: 72px 0 !important;
@@ -2384,268 +2713,6 @@ header.top nav a:hover {
   padding: 8px 0 !important;
 }
 
-/* ---------- 5. Nossos Programas (Padrão Dub) ---------- */
-#programas {
-  background: #ffffff !important;
-  padding: 70px 0 !important;
-}
-
-.progs {
-  border-top: none !important;
-  display: grid !important;
-  grid-template-columns: repeat(3, 1fr) !important;
-  gap: 20px !important;
-}
-
-@media (max-width: 960px) {
-  .progs {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-}
-
-@media (max-width: 580px) {
-  .progs {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-.prog {
-  background: var(--color-surface-subtle) !important;
-  border: 1px solid var(--color-border) !important;
-  border-radius: var(--radius-lg) !important;
-  padding: 24px !important;
-  transition: all 0.2s ease !important;
-}
-
-.prog:hover {
-  background: #ffffff !important;
-  border-color: var(--color-brand-blue) !important;
-  box-shadow: 0 6px 20px rgba(8, 94, 195, 0.08) !important;
-  transform: translateY(-2px) !important;
-}
-
-.prog:not(:nth-child(3n+1)) {
-  padding-left: 24px !important;
-  border-left: 1px solid var(--color-border) !important;
-}
-
-.prog .ic {
-  width: 54px !important;
-  height: 54px !important;
-  border-radius: var(--radius-md) !important;
-  background: #ffffff !important;
-  border: 1px solid var(--color-border) !important;
-  display: grid !important;
-  place-items: center !important;
-  margin-bottom: 14px !important;
-  padding: 6px !important;
-}
-
-.prog .ic img {
-  max-height: 38px !important;
-  max-width: 38px !important;
-}
-
-.prog h3 {
-  font-size: 1.1rem !important;
-  font-weight: 700 !important;
-  color: var(--color-brand-blue-dark) !important;
-  margin-bottom: 8px !important;
-}
-
-.prog p {
-  font-size: 0.92rem !important;
-  color: var(--color-text-secondary) !important;
-  line-height: 1.55 !important;
-}
-
-/* ---------- 6. Formulário de Voluntariado (Padrão Visitors / Orderful) ---------- */
-#inscricao {
-  background: var(--color-brand-blue) !important;
-  color: #ffffff !important;
-  padding: 80px 0 !important;
-}
-
-#inscricao .rotulo {
-  color: #fbbf24 !important;
-}
-
-#inscricao h2 {
-  color: #ffffff !important;
-}
-
-#inscricao > .wrap > div > p {
-  color: #e2e8f0 !important;
-}
-
-.perfis {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  gap: 8px !important;
-  margin: 16px 0 24px !important;
-  padding: 0 !important;
-  list-style: none !important;
-}
-
-.perfis li {
-  background: rgba(255, 255, 255, 0.12) !important;
-  border: 1px solid rgba(255, 255, 255, 0.22) !important;
-  color: #ffffff !important;
-  border-radius: var(--radius-pill) !important;
-  padding: 5px 14px !important;
-  font-size: 13px !important;
-  font-weight: 500 !important;
-  backdrop-filter: blur(4px) !important;
-}
-
-#form {
-  background: #ffffff !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  border-radius: var(--radius-lg) !important;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.18) !important;
-  padding: 34px !important;
-}
-
-/* Etapas */
-.etapas {
-  display: flex !important;
-  align-items: center !important;
-  gap: 10px !important;
-  margin-bottom: 24px !important;
-  padding-bottom: 16px !important;
-  border-bottom: 1px solid var(--color-border) !important;
-}
-
-.etapas .bola {
-  width: 26px !important;
-  height: 26px !important;
-  border-radius: 50% !important;
-  background: var(--color-surface-subtle) !important;
-  color: var(--color-text-secondary) !important;
-  font-weight: 700 !important;
-  font-size: 12.5px !important;
-  display: grid !important;
-  place-items: center !important;
-  border: 1px solid var(--color-border) !important;
-}
-
-.etapas .ativa .bola {
-  background: var(--color-brand-blue) !important;
-  color: #ffffff !important;
-  border-color: #064b9c !important;
-}
-
-.etapas .barra {
-  flex: 1 !important;
-  height: 2px !important;
-  background: var(--color-border) !important;
-}
-
-/* Inputs e Selects */
-#form input[type="text"],
-#form input[type="email"],
-#form input[type="tel"],
-#form input[type="date"],
-#form select {
-  background: #ffffff !important;
-  border: 1px solid #cbd5e1 !important;
-  border-radius: var(--radius-md) !important;
-  padding: 9px 12px !important;
-  font-size: 14px !important;
-  color: var(--color-text) !important;
-  transition: all 0.15s ease !important;
-  box-shadow: none !important;
-}
-
-#form input:focus,
-#form select:focus {
-  border-color: var(--color-brand-blue) !important;
-  outline: none !important;
-  box-shadow: 0 0 0 3px rgba(8, 94, 195, 0.15) !important;
-}
-
-/* Chips modernos de seleção para Área de Atuação */
-.opcoes {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  gap: 8px !important;
-}
-
-.opcoes label {
-  background: var(--color-surface-subtle) !important;
-  border: 1px solid var(--color-border) !important;
-  border-radius: var(--radius-pill) !important;
-  padding: 6px 14px !important;
-  font-size: 13px !important;
-  font-weight: 500 !important;
-  color: var(--color-text-secondary) !important;
-  cursor: pointer !important;
-  transition: all 0.15s ease !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 6px !important;
-}
-
-.opcoes label:hover {
-  background: #ffffff !important;
-  border-color: #cbd5e1 !important;
-  color: var(--color-text) !important;
-}
-
-.opcoes label:has(input:checked) {
-  background: var(--color-brand-blue-soft) !important;
-  border-color: var(--color-brand-blue) !important;
-  color: var(--color-brand-blue) !important;
-  font-weight: 600 !important;
-  box-shadow: 0 1px 3px rgba(8, 94, 195, 0.12) !important;
-}
-
-/* Botões do Formulário */
-#form .btn-verm {
-  background: var(--color-brand-blue) !important;
-  color: #ffffff !important;
-  border: 1px solid #064b9c !important;
-  border-radius: var(--radius-md) !important;
-  box-shadow: 0 1px 2px rgba(8, 94, 195, 0.2) !important;
-  font-weight: 600 !important;
-  font-size: 14.5px !important;
-  padding: 11px 24px !important;
-  cursor: pointer !important;
-  transition: all 0.15s ease !important;
-}
-
-#form .btn-verm:hover {
-  background: #0b6fd9 !important;
-  border-color: var(--color-brand-blue) !important;
-  box-shadow: 0 4px 12px rgba(8, 94, 195, 0.25) !important;
-  transform: translateY(-1px) !important;
-}
-
-/* Passos laterais da inscrição */
-.passos li {
-  margin-bottom: 16px !important;
-  color: #ffffff !important;
-}
-
-.passos li > div {
-  background: rgba(255, 255, 255, 0.08) !important;
-  border: 1px solid rgba(255, 255, 255, 0.16) !important;
-  border-radius: var(--radius-md) !important;
-  padding: 14px 18px !important;
-  backdrop-filter: blur(8px) !important;
-}
-
-.passos li b {
-  color: #ffffff !important;
-  font-size: 14.5px !important;
-}
-
-.passos li span {
-  color: #cbd5e1 !important;
-  font-size: 13px !important;
-}
-
-
 /* ---------- 7. Carrossel de Fotos de Ações Realizadas (#acoes) ---------- */
 #acoes .cartao {
   background: #ffffff !important;
@@ -2669,7 +2736,7 @@ header.top nav a:hover {
   border-color: var(--color-brand-blue) !important;
 }
 
-/* ---------- 8. Acessibilidade e Foco Visível ---------- */
+/* ---------- 8. Acessibilidade ---------- */
 :focus-visible {
   outline: 2px solid var(--color-brand-blue) !important;
   outline-offset: 2px !important;
@@ -2728,47 +2795,6 @@ header.top nav a:hover {
       <span class="peca p1"></span><span class="peca p2"></span><span class="peca p3"></span>
       <img class="c1" src="assets/img-04.jpg" alt="Voluntários e crianças reunidos em atividade da Usina da Vida, com um cartaz de boas-vindas ao fundo">
       <img class="c2" src="assets/img-05.jpg" alt="Voluntária fazendo pintura no rosto de uma criança">
-    </div>
-  </div>
-</div>
-
-<div class="faixa-impacto" aria-label="Estatísticas de impacto social da Usina da Vida">
-  <div class="wrap grade-impacto">
-    <div class="card-impacto">
-      <div class="impacto-ico">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      </div>
-      <div class="impacto-dados">
-        <div class="impacto-num">24+</div>
-        <div class="impacto-lbl">Voluntários ativos</div>
-      </div>
-    </div>
-    <div class="card-impacto">
-      <div class="impacto-ico">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-      </div>
-      <div class="impacto-dados">
-        <div class="impacto-num">6</div>
-        <div class="impacto-lbl">Oficinas já realizadas</div>
-      </div>
-    </div>
-    <div class="card-impacto">
-      <div class="impacto-ico">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-      </div>
-      <div class="impacto-dados">
-        <div class="impacto-num">3</div>
-        <div class="impacto-lbl">Ações com vagas abertas</div>
-      </div>
-    </div>
-    <div class="card-impacto">
-      <div class="impacto-ico">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      </div>
-      <div class="impacto-dados">
-        <div class="impacto-num">100%</div>
-        <div class="impacto-lbl">Arenoso &amp; Salvador · BA</div>
-      </div>
     </div>
   </div>
 </div>
