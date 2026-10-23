@@ -1,0 +1,716 @@
+/* =====================================================================
+   CAMADA VISUAL DA LANDING PAGE — Usina da Vida
+   Harmonização institucional com o Portal de Gestão (Dub / Visitors / Orderful)
+   Tokens padronizados, bordas sutis (1px), cards modernos e componentes limpos
+   ===================================================================== */
+
+:root {
+  /* Superfícies */
+  --color-page: #f8fafc;
+  --color-surface: #ffffff;
+  --color-surface-subtle: #f1f5f9;
+  --color-surface-muted: #e2e8f0;
+
+  /* Estrutura & Bordas */
+  --color-border: #e2e8f0;
+  --color-border-strong: #cbd5e1;
+  --color-text: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-muted: #64748b;
+
+  /* Identidade Oficial Usina da Vida */
+  --color-brand-blue: #085ec3;
+  --color-brand-blue-dark: #0c2a5e;
+  --color-brand-blue-soft: #eff6ff;
+  --color-brand-yellow: #f1c50e;
+  --color-brand-red: #db150a;
+  --color-brand-orange: #f08d0c;
+
+  /* Formas & Raios */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 9999px;
+
+  --sans: "Lexend", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* ---------- 1. Cabeçalho e Barra Superior (Dub) ---------- */
+header.top {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 50 !important;
+  background: rgba(255, 255, 255, 0.96) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid var(--color-border) !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+}
+
+header.top .wrap {
+  align-items: center !important;
+}
+
+header.top nav a {
+  color: var(--color-text-secondary) !important;
+  font-weight: 500 !important;
+  font-size: 14.5px !important;
+  transition: color 0.15s ease !important;
+}
+
+header.top nav a:hover {
+  color: var(--color-brand-blue) !important;
+}
+
+/* Botões do Topo: substituição dos estilos brutalistas pesados */
+.topo-botoes .btn-verm {
+  background: var(--color-brand-blue) !important;
+  color: #ffffff !important;
+  border: 1px solid #064b9c !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: 0 1px 2px rgba(8, 94, 195, 0.2) !important;
+  padding: 8px 16px !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  transition: all 0.15s ease !important;
+}
+
+.topo-botoes .btn-verm:hover {
+  background: #0b6fd9 !important;
+  border-color: var(--color-brand-blue) !important;
+  box-shadow: 0 4px 12px rgba(8, 94, 195, 0.25) !important;
+  transform: translateY(-1px) !important;
+}
+
+.topo-botoes .btn-portal {
+  background: #ffffff !important;
+  color: var(--color-text) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05) !important;
+  padding: 8px 16px !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  transition: all 0.15s ease !important;
+}
+
+.topo-botoes .btn-portal:hover {
+  background: var(--color-surface-subtle) !important;
+  border-color: var(--color-border-strong) !important;
+  color: var(--color-brand-blue) !important;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Botão Quero ser voluntário no Hero */
+.hero .acoes-btn .btn-verm {
+  background: #ffffff !important;
+  color: var(--color-brand-blue) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15) !important;
+  font-weight: 600 !important;
+  padding: 12px 24px !important;
+  font-size: 15px !important;
+  transition: all 0.15s ease !important;
+}
+
+.hero .acoes-btn .btn-verm:hover {
+  background: #f8fafc !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* ---------- 2. Faixa de Impacto Social (Padrão Visitors) ---------- */
+.faixa-impacto {
+  background: #ffffff;
+  border-bottom: 1px solid var(--color-border);
+  padding: 24px 0;
+  position: relative;
+  z-index: 2;
+}
+
+.grade-impacto {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.card-impacto {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  background: var(--color-surface-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  transition: all 0.2s ease;
+}
+
+.card-impacto:hover {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+  transform: translateY(-2px);
+}
+
+.impacto-ico {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-brand-blue-soft);
+  color: var(--color-brand-blue);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.impacto-ico svg {
+  width: 22px;
+  height: 22px;
+}
+
+.impacto-num {
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: var(--color-brand-blue-dark);
+  line-height: 1.1;
+}
+
+.impacto-lbl {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 2px;
+}
+
+@media (max-width: 960px) {
+  .grade-impacto {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .grade-impacto {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- 3. Próximas Ações (Padrão Dub / Orderful) ---------- */
+#proximas {
+  background: #f8fafc !important;
+}
+
+.prox-lista {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 22px !important;
+}
+
+@media (max-width: 960px) {
+  .prox-lista {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+.prox {
+  background: #ffffff !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  transition: all 0.2s ease !important;
+}
+
+.prox:hover {
+  border-color: #93c5fd !important;
+  box-shadow: 0 10px 25px rgba(8, 94, 195, 0.08) !important;
+  transform: translateY(-3px) !important;
+}
+
+.prox .data {
+  background: #f8fafc !important;
+  border-right: none !important;
+  border-bottom: 1px solid var(--color-border) !important;
+  padding: 16px 20px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 14px !important;
+  text-align: left !important;
+}
+
+.prox .data b {
+  font-size: 2.1rem !important;
+  font-weight: 800 !important;
+  color: var(--color-brand-blue-dark) !important;
+  line-height: 1 !important;
+}
+
+.prox .data span {
+  font-size: 0.88rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  color: var(--color-brand-blue) !important;
+  letter-spacing: 0.06em !important;
+  display: block !important;
+}
+
+.prox .data small {
+  font-size: 0.76rem !important;
+  color: var(--color-text-muted) !important;
+  font-weight: 500 !important;
+  display: block !important;
+}
+
+.prox .corpo {
+  padding: 20px 22px 22px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 !important;
+}
+
+/* Tag Pill sutil e moderna */
+.prox .tag {
+  background: var(--color-brand-blue-soft) !important;
+  color: var(--color-brand-blue) !important;
+  border: 1px solid #bfdbfe !important;
+  border-radius: var(--radius-pill) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  padding: 3px 10px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  width: fit-content !important;
+  margin-bottom: 10px !important;
+  letter-spacing: 0.01em !important;
+}
+
+.prox .tag::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  display: inline-block;
+}
+
+.prox .corpo h3 {
+  font-size: 1.18rem !important;
+  font-weight: 700 !important;
+  color: var(--color-brand-blue-dark) !important;
+  line-height: 1.3 !important;
+  margin: 0 0 8px !important;
+}
+
+.prox .corpo > p:not(.info) {
+  font-size: 0.92rem !important;
+  color: var(--color-text-secondary) !important;
+  line-height: 1.55 !important;
+  margin: 0 0 12px !important;
+}
+
+.prox .corpo p.info {
+  font-size: 0.82rem !important;
+  color: var(--color-text-muted) !important;
+  font-weight: 500 !important;
+  margin: 0 0 14px !important;
+}
+
+.prox .vagas {
+  margin-top: auto !important;
+  margin-bottom: 16px !important;
+}
+
+.prox .vagas .v-txt {
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  color: var(--color-text-secondary) !important;
+  display: block !important;
+  margin-bottom: 6px !important;
+}
+
+.prox .vagas .barra-v {
+  height: 6px !important;
+  background: #e2e8f0 !important;
+  border-radius: 9999px !important;
+  overflow: hidden !important;
+  border: none !important;
+}
+
+.prox .vagas .barra-v i {
+  background: linear-gradient(90deg, var(--color-brand-blue), #2563eb) !important;
+  border-radius: 9999px !important;
+}
+
+.prox .btn.quero {
+  background: var(--color-brand-blue) !important;
+  color: #ffffff !important;
+  border: 1px solid #064b9c !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: 0 1px 2px rgba(8, 94, 195, 0.2) !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  padding: 10px 16px !important;
+  width: 100% !important;
+  text-align: center !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+.prox .btn.quero:hover:not(:disabled) {
+  background: #0b6fd9 !important;
+  border-color: var(--color-brand-blue) !important;
+  box-shadow: 0 4px 12px rgba(8, 94, 195, 0.25) !important;
+  transform: translateY(-1px) !important;
+}
+
+.prox .btn.quero:disabled {
+  background: #94a3b8 !important;
+  border-color: #94a3b8 !important;
+  box-shadow: none !important;
+  opacity: 0.65 !important;
+  cursor: not-allowed !important;
+}
+
+/* ---------- 4. Missão, Visão e Valores (Padrão Visitors) ---------- */
+.mvv {
+  background: #0a1b39 !important;
+  padding: 72px 0 !important;
+}
+
+.mvv .grade {
+  gap: 24px !important;
+}
+
+.mvv .grade > div {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: var(--radius-lg) !important;
+  padding: 30px 26px !important;
+  backdrop-filter: blur(8px) !important;
+  transition: all 0.2s ease !important;
+}
+
+.mvv .grade > div:hover {
+  background: rgba(255, 255, 255, 0.07) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  transform: translateY(-2px) !important;
+}
+
+.mvv h2 {
+  font-size: 1.65rem !important;
+  color: #fbbf24 !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
+  margin-bottom: 12px !important;
+}
+
+.mvv p {
+  color: #cbd5e1 !important;
+  font-size: 0.98rem !important;
+  line-height: 1.65 !important;
+}
+
+.valores-lista li {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #f1f5f9 !important;
+  font-size: 0.95rem !important;
+  padding: 8px 0 !important;
+}
+
+/* ---------- 5. Nossos Programas (Padrão Dub) ---------- */
+#programas {
+  background: #ffffff !important;
+  padding: 70px 0 !important;
+}
+
+.progs {
+  border-top: none !important;
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 20px !important;
+}
+
+@media (max-width: 960px) {
+  .progs {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 580px) {
+  .progs {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+.prog {
+  background: var(--color-surface-subtle) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-lg) !important;
+  padding: 24px !important;
+  transition: all 0.2s ease !important;
+}
+
+.prog:hover {
+  background: #ffffff !important;
+  border-color: var(--color-brand-blue) !important;
+  box-shadow: 0 6px 20px rgba(8, 94, 195, 0.08) !important;
+  transform: translateY(-2px) !important;
+}
+
+.prog:not(:nth-child(3n+1)) {
+  padding-left: 24px !important;
+  border-left: 1px solid var(--color-border) !important;
+}
+
+.prog .ic {
+  width: 54px !important;
+  height: 54px !important;
+  border-radius: var(--radius-md) !important;
+  background: #ffffff !important;
+  border: 1px solid var(--color-border) !important;
+  display: grid !important;
+  place-items: center !important;
+  margin-bottom: 14px !important;
+  padding: 6px !important;
+}
+
+.prog .ic img {
+  max-height: 38px !important;
+  max-width: 38px !important;
+}
+
+.prog h3 {
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  color: var(--color-brand-blue-dark) !important;
+  margin-bottom: 8px !important;
+}
+
+.prog p {
+  font-size: 0.92rem !important;
+  color: var(--color-text-secondary) !important;
+  line-height: 1.55 !important;
+}
+
+/* ---------- 6. Formulário de Voluntariado (Padrão Visitors / Orderful) ---------- */
+#inscricao {
+  background: var(--color-brand-blue) !important;
+  color: #ffffff !important;
+  padding: 80px 0 !important;
+}
+
+#inscricao .rotulo {
+  color: #fbbf24 !important;
+}
+
+#inscricao h2 {
+  color: #ffffff !important;
+}
+
+#inscricao > .wrap > div > p {
+  color: #e2e8f0 !important;
+}
+
+.perfis {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  margin: 16px 0 24px !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.perfis li {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  color: #ffffff !important;
+  border-radius: var(--radius-pill) !important;
+  padding: 5px 14px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+#form {
+  background: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.18) !important;
+  padding: 34px !important;
+}
+
+/* Etapas */
+.etapas {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin-bottom: 24px !important;
+  padding-bottom: 16px !important;
+  border-bottom: 1px solid var(--color-border) !important;
+}
+
+.etapas .bola {
+  width: 26px !important;
+  height: 26px !important;
+  border-radius: 50% !important;
+  background: var(--color-surface-subtle) !important;
+  color: var(--color-text-secondary) !important;
+  font-weight: 700 !important;
+  font-size: 12.5px !important;
+  display: grid !important;
+  place-items: center !important;
+  border: 1px solid var(--color-border) !important;
+}
+
+.etapas .ativa .bola {
+  background: var(--color-brand-blue) !important;
+  color: #ffffff !important;
+  border-color: #064b9c !important;
+}
+
+.etapas .barra {
+  flex: 1 !important;
+  height: 2px !important;
+  background: var(--color-border) !important;
+}
+
+/* Inputs e Selects */
+#form input[type="text"],
+#form input[type="email"],
+#form input[type="tel"],
+#form input[type="date"],
+#form select {
+  background: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: var(--radius-md) !important;
+  padding: 9px 12px !important;
+  font-size: 14px !important;
+  color: var(--color-text) !important;
+  transition: all 0.15s ease !important;
+  box-shadow: none !important;
+}
+
+#form input:focus,
+#form select:focus {
+  border-color: var(--color-brand-blue) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(8, 94, 195, 0.15) !important;
+}
+
+/* Chips modernos de seleção para Área de Atuação */
+.opcoes {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+}
+
+.opcoes label {
+  background: var(--color-surface-subtle) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-pill) !important;
+  padding: 6px 14px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: var(--color-text-secondary) !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+.opcoes label:hover {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: var(--color-text) !important;
+}
+
+.opcoes label:has(input:checked) {
+  background: var(--color-brand-blue-soft) !important;
+  border-color: var(--color-brand-blue) !important;
+  color: var(--color-brand-blue) !important;
+  font-weight: 600 !important;
+  box-shadow: 0 1px 3px rgba(8, 94, 195, 0.12) !important;
+}
+
+/* Botões do Formulário */
+#form .btn-verm {
+  background: var(--color-brand-blue) !important;
+  color: #ffffff !important;
+  border: 1px solid #064b9c !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: 0 1px 2px rgba(8, 94, 195, 0.2) !important;
+  font-weight: 600 !important;
+  font-size: 14.5px !important;
+  padding: 11px 24px !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+#form .btn-verm:hover {
+  background: #0b6fd9 !important;
+  border-color: var(--color-brand-blue) !important;
+  box-shadow: 0 4px 12px rgba(8, 94, 195, 0.25) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Passos laterais da inscrição */
+.passos li {
+  margin-bottom: 16px !important;
+  color: #ffffff !important;
+}
+
+.passos li > div {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-radius: var(--radius-md) !important;
+  padding: 14px 18px !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.passos li b {
+  color: #ffffff !important;
+  font-size: 14.5px !important;
+}
+
+.passos li span {
+  color: #cbd5e1 !important;
+  font-size: 13px !important;
+}
+
+
+/* ---------- 7. Carrossel de Fotos de Ações Realizadas (#acoes) ---------- */
+#acoes .cartao {
+  background: #ffffff !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04) !important;
+  overflow: hidden !important;
+}
+
+#acoes .seta {
+  background: #ffffff !important;
+  border: 1px solid var(--color-border) !important;
+  color: var(--color-text) !important;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.1) !important;
+  transition: all 0.15s ease !important;
+}
+
+#acoes .seta:hover {
+  background: var(--color-brand-blue) !important;
+  color: #ffffff !important;
+  border-color: var(--color-brand-blue) !important;
+}
+
+/* ---------- 8. Acessibilidade e Foco Visível ---------- */
+:focus-visible {
+  outline: 2px solid var(--color-brand-blue) !important;
+  outline-offset: 2px !important;
+}

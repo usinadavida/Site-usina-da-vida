@@ -2277,8 +2277,54 @@ html.dispositivo-mobile #menu-mob-dropdown.aberto {
 </script>`;
 
   html = html.replace(/<div class="topo-botoes">[\s\S]*?<\/div>/, topoBotoesComHambHtml);
+  
+  const faixaImpactoHtml = 
+`<div class="faixa-impacto" aria-label="Estatísticas de impacto social da Usina da Vida">
+  <div class="wrap grade-impacto">
+    <div class="card-impacto">
+      <div class="impacto-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <div class="impacto-dados">
+        <div class="impacto-num">24+</div>
+        <div class="impacto-lbl">Voluntários ativos</div>
+      </div>
+    </div>
+    <div class="card-impacto">
+      <div class="impacto-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div class="impacto-dados">
+        <div class="impacto-num">6</div>
+        <div class="impacto-lbl">Oficinas já realizadas</div>
+      </div>
+    </div>
+    <div class="card-impacto">
+      <div class="impacto-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      </div>
+      <div class="impacto-dados">
+        <div class="impacto-num">3</div>
+        <div class="impacto-lbl">Ações com vagas abertas</div>
+      </div>
+    </div>
+    <div class="card-impacto">
+      <div class="impacto-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      </div>
+      <div class="impacto-dados">
+        <div class="impacto-num">100%</div>
+        <div class="impacto-lbl">Arenoso &amp; Salvador · BA</div>
+      </div>
+    </div>
+  </div>
+</div>`;
+
+  html = html.replace('<section id="acoes"', () => faixaImpactoHtml + '\n\n<section id="acoes"');
   html = html.replace('<section id="contato" class="contato">', () => secaoAvaliacoesHtml + '\n\n<section id="contato" class="contato">');
-  html = html.replace('</head>', () => scriptDetectarMobile + '\n' + estilosAjustados + '\n</head>');
+  const landingBriefingCssPath = path.join(__dirname, 'landing-layer', 'landing-briefing.css');
+  const landingBriefingCss = fs.existsSync(landingBriefingCssPath) ? fs.readFileSync(landingBriefingCssPath, 'utf8') : '';
+  html = html.replace('</head>', () => scriptDetectarMobile + '\n' + estilosAjustados + '\n<style id="estilos-landing-briefing">\n' + landingBriefingCss + '\n</style>\n</head>');
   html = html.replace('</body>', () => modalPoliticaLgpdHtml + '\n' + scriptScrollPreciso + '\n</body>');
   html = html.split('href="portal.html"').join('href="/portal"');
   return html;
