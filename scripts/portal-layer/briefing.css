@@ -226,3 +226,50 @@
 /* ---------- Acessibilidade ---------- */
 #app :focus-visible { outline: 2px solid var(--color-brand-blue); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { #app * { transition: none !important; } }
+
+/* ---------- Botões compactos de Ação (Apenas ícones com tooltip nativo) ---------- */
+.btn-tb-acao, .btn-acao-gestao {
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: var(--radius-sm, 6px) !important;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.btn-tb-acao .ico-svg, .btn-acao-gestao .ico-svg,
+.btn-tb-acao svg, .btn-acao-gestao svg {
+  width: 14px !important;
+  height: 14px !important;
+  pointer-events: none;
+}
+.btn-tb-editar, .btn-acao-editar {
+  color: var(--color-brand-blue, #085ec3) !important;
+  border: 1px solid #bfdbfe !important;
+  background: #ffffff !important;
+}
+.btn-tb-editar:hover, .btn-acao-editar:hover {
+  background: #eff6ff !important;
+  border-color: var(--color-brand-blue, #085ec3) !important;
+  box-shadow: 0 1px 2px rgba(8, 94, 195, 0.12);
+}
+.btn-tb-excluir, .btn-acao-excluir {
+  color: var(--color-error, #dc2626) !important;
+  border: 1px solid #fecaca !important;
+  background: #ffffff !important;
+}
+.btn-tb-excluir:hover, .btn-acao-excluir:hover {
+  background: #fef2f2 !important;
+  border-color: var(--color-error, #dc2626) !important;
+  box-shadow: 0 1px 2px rgba(220, 38, 38, 0.12);
+}
+.tb-acoes-wrap {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+}
+

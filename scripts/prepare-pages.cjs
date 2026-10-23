@@ -2575,7 +2575,7 @@ function redesenharPortal(html) {
     '<div class="tabela-wrap">' +
     '  <table>' +
     '    <caption class="oculto" style="position:absolute;left:-999px">Lista de voluntários</caption>' +
-    '    <thead><tr><th>Nome</th><th>Área(s)</th><th>Formação</th><th>Disponibilidade</th><th>Localização</th><th>Atividade</th><th>Contato Direto</th><th>Status</th><th style="text-align:center;min-width:130px">Ações</th></tr></thead>' +
+    '    <thead><tr><th>Nome</th><th>Área(s)</th><th>Formação</th><th>Disponibilidade</th><th>Localização</th><th>Atividade</th><th>Contato Direto</th><th>Status</th><th style="text-align:center;min-width:76px;width:76px">Ações</th></tr></thead>' +
     '    <tbody id="corpo"></tbody>' +
     '  </table>\n' +
     '  <div id="vazio"';
@@ -2645,11 +2645,11 @@ function redesenharPortal(html) {
 
       var acoesVol = ePresid
         ? '<div class="tb-acoes-wrap">' +
-            '<button type="button" class="btn-tb-acao btn-tb-editar" data-vol-id="' + v.id + '" title="Editar voluntário (requer validação da Presidência)">' +
-              '${svgEdit} <span>Editar</span>' +
+            '<button type="button" class="btn-tb-acao btn-tb-editar" data-vol-id="' + v.id + '" title="Editar" aria-label="Editar voluntário">' +
+              '${svgEdit}' +
             '</button>' +
-            '<button type="button" class="btn-tb-acao btn-tb-excluir" data-vol-id="' + v.id + '" title="Excluir voluntário (requer validação da Presidência)">' +
-              '${svgTrash} <span>Excluir</span>' +
+            '<button type="button" class="btn-tb-acao btn-tb-excluir" data-vol-id="' + v.id + '" title="Excluir" aria-label="Excluir voluntário">' +
+              '${svgTrash}' +
             '</button>' +
           '</div>'
         : '<span style="color:#94a3b8;font-size:0.75rem;">—</span>';
@@ -2886,11 +2886,11 @@ function redesenharPortal(html) {
 
       var botoesAcao = ePresid
         ? '<div class="acao-gestao-botoes">' +
-            '<button type="button" class="btn-acao-gestao btn-acao-editar" data-k="'+k+'" data-acao-id="'+(a.id||'')+'" title="Editar ação agendada (requer senha da Presidência)">' +
-              '${svgEdit} <span>Editar</span>' +
+            '<button type="button" class="btn-acao-gestao btn-acao-editar" data-k="'+k+'" data-acao-id="'+(a.id||'')+'" title="Editar" aria-label="Editar ação">' +
+              '${svgEdit}' +
             '</button>' +
-            '<button type="button" class="btn-acao-gestao btn-acao-excluir" data-k="'+k+'" data-acao-id="'+(a.id||'')+'" title="Excluir ação do sistema (requer senha da Presidência)">' +
-              '${svgTrash} <span>Excluir</span>' +
+            '<button type="button" class="btn-acao-gestao btn-acao-excluir" data-k="'+k+'" data-acao-id="'+(a.id||'')+'" title="Excluir" aria-label="Excluir ação">' +
+              '${svgTrash}' +
             '</button>' +
           '</div>'
         : '';
@@ -4997,16 +4997,21 @@ tr:hover td {
 .btn-tb-acao {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 4px 8px;
-  font-size: 0.76rem;
-  font-weight: 600;
-  border-radius: 4px;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border-radius: 6px;
   border: 1px solid var(--borda);
   background: #ffffff;
   cursor: pointer;
   transition: all 0.15s ease;
   line-height: 1;
+}
+.btn-tb-acao .ico-svg, .btn-tb-acao svg {
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
 }
 .btn-tb-editar {
   color: var(--azul);
@@ -5033,16 +5038,21 @@ tr:hover td {
 .btn-acao-gestao {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 3px 8px;
-  font-size: 0.72rem;
-  font-weight: 600;
-  border-radius: 4px;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border-radius: 6px;
   cursor: pointer;
   transition: all 0.15s ease;
   border: 1px solid rgba(0,0,0,0.12);
   background: #ffffff;
   line-height: 1;
+}
+.btn-acao-gestao .ico-svg, .btn-acao-gestao svg {
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
 }
 .btn-acao-editar {
   color: var(--azul);
