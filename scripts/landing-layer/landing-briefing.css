@@ -563,11 +563,15 @@ header.top nav a:hover {
   border-color: var(--color-brand-blue) !important;
 }
 
-/* ---------- 5. Seja um Voluntário (#inscricao) — CENTRALIZAÇÃO VERTICAL 1 A 3 ---------- */
+/* ---------- 5. Seja um Voluntário (#inscricao) — CENTRALIZAÇÃO E ALINHAMENTO INFERIOR ---------- */
 #inscricao {
   background: var(--color-brand-blue) !important;
   color: #ffffff !important;
   padding: 80px 0 !important;
+}
+
+#inscricao .wrap {
+  align-items: stretch !important;
 }
 
 #inscricao .rotulo {
@@ -602,7 +606,7 @@ header.top nav a:hover {
   backdrop-filter: blur(4px) !important;
 }
 
-/* Centralização vertical exata do número 1 a 3 com o card ao lado */
+/* Centralização vertical do número 1 a 3 com o card ao lado */
 .passos {
   list-style: none !important;
   margin: 30px 0 0 !important;
@@ -618,6 +622,10 @@ header.top nav a:hover {
   gap: 16px !important;
   margin-bottom: 16px !important;
   color: #ffffff !important;
+}
+
+.passos li:last-child {
+  margin-bottom: 0 !important;
 }
 
 .passos li::before {
@@ -653,13 +661,47 @@ header.top nav a:hover {
   font-size: 13px !important;
 }
 
-/* Cartão do Formulário */
+/* Cartão do Formulário - Alinhamento Perfeito da Base com a Última Instrução ao Lado */
 #form {
   background: #ffffff !important;
   border: 1px solid rgba(255, 255, 255, 0.3) !important;
   border-radius: var(--radius-lg) !important;
   box-shadow: 0 12px 36px rgba(0, 0, 0, 0.18) !important;
   padding: 34px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  height: auto !important;
+  box-sizing: border-box !important;
+}
+
+#form .etapa.vis {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 !important;
+}
+
+#form .etapa.vis .f-grid {
+  flex: 1 !important;
+  display: grid !important;
+  align-content: space-between !important;
+}
+
+@media (max-width: 900px) {
+  .passos li:last-child {
+    margin-bottom: 24px !important;
+  }
+  #form {
+    height: auto !important;
+    display: block !important;
+  }
+  #form .etapa.vis {
+    display: block !important;
+  }
+  #form .etapa.vis .f-grid {
+    display: grid !important;
+    align-content: stretch !important;
+  }
 }
 
 .etapas {
