@@ -249,64 +249,65 @@ html {
   }
 }
 
-/* Layout Responsivo para "Nossos Programas": 2 programas por linha no mobile */
+/* Layout Responsivo para "Nossos Programas": cards limpos no mobile */
 @media (max-width: 760px) {
   #programas .wrap {
     padding: 0 16px !important;
   }
   .progs {
     display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 0 !important;
-    border-top: 3px solid var(--tinta, #1d2430) !important;
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    border-top: none !important;
   }
   .prog {
-    padding: 16px 10px 18px 0 !important;
-    border-bottom: 1px solid #d7dbe2 !important;
-    border-left: none !important;
-    border-right: none !important;
+    background: #ffffff !important;
+    border: 1px solid var(--color-border, #e2e8f0) !important;
+    border-top: 3px solid var(--c, var(--color-brand-blue, #085ec3)) !important;
+    border-radius: 14px !important;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+    padding: 22px 18px 24px !important;
     display: flex !important;
     flex-direction: column !important;
     min-width: 0 !important;
     box-sizing: border-box !important;
   }
-  .prog:nth-child(odd) {
-    padding-left: 0 !important;
-    padding-right: 12px !important;
-    border-right: 1px solid #d7dbe2 !important;
-  }
+  .prog:nth-child(odd),
   .prog:nth-child(even) {
-    padding-left: 12px !important;
-    padding-right: 0 !important;
-    border-right: none !important;
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+    border-left: 1px solid var(--color-border, #e2e8f0) !important;
+    border-right: 1px solid var(--color-border, #e2e8f0) !important;
+    border-bottom: 1px solid var(--color-border, #e2e8f0) !important;
   }
   .prog .ic {
-    height: 46px !important;
-    margin-bottom: 8px !important;
+    height: 76px !important;
+    min-height: 76px !important;
+    margin-bottom: 14px !important;
     display: flex !important;
     align-items: flex-end !important;
   }
   .prog .ic img {
-    max-height: 44px !important;
-    max-width: 76px !important;
+    max-height: 74px !important;
+    max-width: 145px !important;
     width: auto !important;
     height: auto !important;
     object-fit: contain !important;
   }
   .prog h3 {
-    font-size: clamp(0.74rem, 3.2vw, 0.94rem) !important;
-    line-height: 1.22 !important;
-    letter-spacing: 0.01em !important;
-    margin-bottom: 5px !important;
-    overflow-wrap: break-word !important;
-    white-space: nowrap !important;
+    font-size: 1.15rem !important;
+    line-height: 1.3 !important;
+    letter-spacing: -0.01em !important;
+    margin-bottom: 6px !important;
+    white-space: normal !important;
+    min-height: auto !important;
   }
   .prog p {
-    font-size: clamp(0.74rem, 2.9vw, 0.82rem) !important;
-    line-height: 1.4 !important;
-    color: #4a4f58 !important;
+    font-size: 0.92rem !important;
+    line-height: 1.55 !important;
+    color: var(--color-text-secondary, #475569) !important;
     margin: 0 !important;
-    min-height: calc(1.4em * 3) !important; /* Reserva padrão de 3 linhas no mobile */
+    min-height: auto !important;
   }
 }
 
@@ -1264,7 +1265,9 @@ footer .rodape-creditos a:hover {
     width: 100% !important;
     margin: 0 auto !important;
     padding: 20px 14px 18px !important;
-    box-shadow: 6px 6px 0 var(--amarelo) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 14px !important;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.18) !important;
     box-sizing: border-box !important;
   }
   dialog.modal {
@@ -1382,18 +1385,20 @@ footer .rodape-creditos a:hover {
     border-radius: 999px !important;
   }
   .prox .btn.quero {
-    width: auto !important;
-    align-self: flex-start !important;
+    width: 100% !important;
+    text-align: center !important;
+    justify-content: center !important;
     display: inline-flex !important;
-    padding: 9px 20px !important;
-    font-size: 0.88rem !important;
-    font-weight: 700 !important;
-    background: var(--verm, #DB150A) !important;
-    color: #fff !important;
-    box-shadow: 4px 4px 0 var(--amarelo, #F1C50E) !important;
-    border: none !important;
-    border-radius: 3px !important;
+    padding: 10px 16px !important;
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    background: var(--color-brand-blue, #085ec3) !important;
+    color: #ffffff !important;
+    border: 1px solid #064b9c !important;
+    border-radius: 8px !important;
+    box-shadow: 0 1px 2px rgba(8, 94, 195, 0.2) !important;
     margin-top: auto !important;
+    cursor: pointer !important;
   }
 
   /* 8. Parceiros: Grid 3x3 no mobile (conforme Imagem 2 de referência) */
