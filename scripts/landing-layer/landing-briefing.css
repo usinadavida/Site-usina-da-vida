@@ -781,3 +781,257 @@ header.top nav a:hover {
   outline: 2px solid var(--color-brand-blue) !important;
   outline-offset: 2px !important;
 }
+
+/* =====================================================================
+   9. MODAL DE INSCRIÇÃO NA AÇÃO ("Você já é voluntário(a)?")
+   Design Limpo, Moderno e Operacional (Dub / Visitors / Orderful)
+   Bordas finas de 1px, cantos arredondados, sem sombras brutais amarelas
+   ===================================================================== */
+dialog.modal {
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-lg, 14px) !important;
+  box-shadow: 0 20px 48px -12px rgba(15, 23, 42, 0.22), 0 2px 6px rgba(15, 23, 42, 0.06) !important;
+  padding: 0 !important;
+  width: min(500px, calc(100% - 32px)) !important;
+  max-width: 500px !important;
+  max-height: calc(100vh - 48px) !important;
+  overflow: hidden !important;
+  color: var(--color-text) !important;
+  background: #ffffff !important;
+  outline: none !important;
+  animation: modalEntradaSuave 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+@keyframes modalEntradaSuave {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+dialog.modal::backdrop {
+  background: rgba(15, 23, 42, 0.65) !important;
+  backdrop-filter: blur(6px) !important;
+}
+
+.modal .m-in {
+  padding: 28px 28px 26px !important;
+  position: relative !important;
+  box-sizing: border-box !important;
+  font-family: var(--sans) !important;
+  background: #ffffff !important;
+}
+
+/* Botão discreto e elegante de fechar modal */
+.modal .fechar {
+  position: absolute !important;
+  top: 18px !important;
+  right: 18px !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50% !important;
+  border: 1px solid var(--color-border) !important;
+  background: var(--color-surface-subtle) !important;
+  color: var(--color-text-secondary) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 1.25rem !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+  transition: all 0.15s ease !important;
+}
+
+.modal .fechar:hover {
+  background: #e2e8f0 !important;
+  color: var(--color-text) !important;
+}
+
+/* Títulos do Modal */
+.modal h3 {
+  font-family: var(--sans) !important;
+  font-size: 1.3rem !important;
+  font-weight: 700 !important;
+  color: var(--color-brand-blue-dark) !important;
+  margin: 0 38px 8px 0 !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.35 !important;
+}
+
+/* Tag pill da Ação selecionada (estilo limpo, sem fundo amarelo brutal) */
+.modal .m-acao {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  background: var(--color-brand-blue-soft) !important;
+  color: var(--color-brand-blue) !important;
+  border: 1px solid #bfdbfe !important;
+  border-radius: var(--radius-pill) !important;
+  font-size: 0.82rem !important;
+  font-weight: 600 !important;
+  padding: 3px 12px !important;
+  margin: 4px 0 16px !important;
+  letter-spacing: 0.01em !important;
+}
+
+.modal p {
+  font-size: 0.93rem !important;
+  color: var(--color-text-secondary) !important;
+  line-height: 1.55 !important;
+  margin: 0 0 16px !important;
+}
+
+/* Grade de Opções no Passo 1 */
+.modal .m-op {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  margin-top: 20px !important;
+}
+
+/* Estilização limpa dos botões do modal */
+.modal .btn {
+  width: 100% !important;
+  text-align: center !important;
+  justify-content: center !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  padding: 11px 18px !important;
+  border-radius: var(--radius-md) !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  box-sizing: border-box !important;
+}
+
+/* Botão principal no modal */
+.modal .btn-verm {
+  background: var(--color-brand-blue) !important;
+  color: #ffffff !important;
+  border: 1px solid #064b9c !important;
+  box-shadow: 0 1px 2px rgba(8, 94, 195, 0.2) !important;
+}
+
+.modal .btn-verm:hover {
+  background: #0b6fd9 !important;
+  border-color: var(--color-brand-blue) !important;
+  box-shadow: 0 4px 12px rgba(8, 94, 195, 0.25) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Botão secundário no modal (sem sombra offset preta/azul) */
+.modal .btn-sec2 {
+  background: #ffffff !important;
+  color: var(--color-text) !important;
+  border: 1px solid var(--color-border) !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
+}
+
+.modal .btn-sec2:hover {
+  background: var(--color-surface-subtle) !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Formulário do Passo 2 (Confirmação de contato) */
+.modal label {
+  display: block !important;
+  font-weight: 600 !important;
+  font-size: 0.88rem !important;
+  color: var(--color-text) !important;
+  margin: 12px 0 5px !important;
+}
+
+.modal input {
+  width: 100% !important;
+  font: inherit !important;
+  font-size: 14px !important;
+  color: var(--color-text) !important;
+  padding: 10px 14px !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: var(--radius-md) !important;
+  background: #ffffff !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
+  box-sizing: border-box !important;
+  transition: all 0.15s ease !important;
+}
+
+.modal input:focus {
+  outline: none !important;
+  border-color: var(--color-brand-blue) !important;
+  box-shadow: 0 0 0 3px rgba(8, 94, 195, 0.15) !important;
+}
+
+.modal .erro {
+  display: block !important;
+  color: var(--color-danger) !important;
+  font-size: 0.8rem !important;
+  margin-top: 3px !important;
+  min-height: 1.1em !important;
+}
+
+/* Barra inferior de ações do Passo 2 */
+.modal .m-bot {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+  margin-top: 22px !important;
+}
+
+.modal .m-bot .btn {
+  width: auto !important;
+  min-width: 110px !important;
+}
+
+/* Passo 3: Feedback de sucesso */
+.modal .m-ok {
+  text-align: center !important;
+  padding: 16px 10px 8px !important;
+}
+
+.modal .m-ok h3 {
+  color: var(--color-success, #166534) !important;
+  margin: 0 0 8px !important;
+  font-size: 1.35rem !important;
+}
+
+.modal .m-ok p {
+  color: var(--color-text-secondary) !important;
+  font-size: 0.95rem !important;
+  margin-bottom: 22px !important;
+}
+
+.modal .m-ok b {
+  color: var(--color-brand-blue-dark) !important;
+}
+
+.modal .m-ok .btn {
+  width: auto !important;
+  min-width: 140px !important;
+  margin: 0 auto !important;
+}
+
+/* Responsividade do Modal */
+@media (max-width: 540px) {
+  dialog.modal {
+    width: calc(100% - 24px) !important;
+    border-radius: var(--radius-md) !important;
+  }
+  .modal .m-in {
+    padding: 22px 18px !important;
+  }
+  .modal .m-bot {
+    flex-direction: column-reverse !important;
+    gap: 8px !important;
+  }
+  .modal .m-bot .btn {
+    width: 100% !important;
+  }
+}
+
