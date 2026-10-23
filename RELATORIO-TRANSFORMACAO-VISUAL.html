@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Relatório Consolidado de Transformação Visual — Usina da Vida</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --azul: #085EC3;
+      --azul-escuro: #064b9c;
+      --azul-suave: #eff6ff;
+      --texto: #1e293b;
+      --texto-secundario: #475569;
+      --texto-mutado: #64748b;
+      --borda: #e2e8f0;
+      --superficie: #ffffff;
+      --fundo: #f8fafc;
+      --sucesso: #166534;
+      --sucesso-suave: #f0fdf4;
+      --alerta: #b45309;
+      --alerta-suave: #fefce8;
+      --sans: "Lexend", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--sans);
+      color: var(--texto);
+      background: var(--fundo);
+      line-height: 1.65;
+      font-size: 15px;
+      padding: 32px 16px;
+    }
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      background: var(--superficie);
+      border: 1px solid var(--borda);
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(15, 23, 42, 0.06);
+      padding: 48px;
+    }
+    header.rel-cab {
+      border-bottom: 2px solid var(--borda);
+      padding-bottom: 24px;
+      margin-bottom: 32px;
+    }
+    .badge-doc {
+      display: inline-block;
+      background: var(--azul-suave);
+      color: var(--azul);
+      border: 1px solid #bfdbfe;
+      border-radius: 999px;
+      padding: 4px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--azul-escuro);
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+    .subtitulo {
+      font-size: 1.05rem;
+      color: var(--texto-secundario);
+    }
+    .meta-barra {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px dashed var(--borda);
+      font-size: 13px;
+      color: var(--texto-mutado);
+    }
+    .meta-barra strong { color: var(--texto); }
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--azul-escuro);
+      margin: 36px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--borda);
+    }
+    h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--texto);
+      margin: 24px 0 10px;
+    }
+    p, ul, ol {
+      margin-bottom: 16px;
+      color: var(--texto-secundario);
+    }
+    ul, ol {
+      padding-left: 24px;
+    }
+    li {
+      margin-bottom: 8px;
+    }
+    .card-destaque {
+      background: var(--fundo);
+      border: 1px solid var(--borda);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 20px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      font-size: 14px;
+    }
+    th, td {
+      border: 1px solid var(--borda);
+      padding: 12px 14px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: var(--fundo);
+      font-weight: 700;
+      color: var(--texto);
+    }
+    tr:nth-child(even) td {
+      background: #fafcff;
+    }
+    .tag-antes {
+      display: inline-block;
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 12px;
+    }
+    .tag-depois {
+      display: inline-block;
+      background: #dcfce7;
+      color: #166534;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 12px;
+    }
+    .badge-ok {
+      background: var(--sucesso-suave);
+      color: var(--sucesso);
+      border: 1px solid #bbf7d0;
+      border-radius: 999px;
+      padding: 2px 10px;
+      font-weight: 600;
+      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    a.link-doc {
+      color: var(--azul);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    a.link-doc:hover {
+      text-decoration: underline;
+    }
+    .print-btn {
+      float: right;
+      background: var(--azul);
+      color: #ffffff;
+      border: 1px solid var(--azul-escuro);
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .print-btn:hover {
+      background: var(--azul-escuro);
+    }
+    @media print {
+      body { padding: 0; background: #fff; }
+      .container { border: none; box-shadow: none; padding: 0; }
+      .print-btn { display: none; }
+    }
+    @media (max-width: 768px) {
+      .container { padding: 24px 18px; }
+      h1 { font-size: 1.6rem; }
+      table { display: block; overflow-x: auto; }
+      .print-btn { float: none; display: block; text-align: center; margin-bottom: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button class="print-btn" onclick="window.print()">🖨️ Imprimir / Salvar em PDF</button>
+    <header class="rel-cab">
+      <span class="badge-doc">Relatório Executivo e Técnico</span>
+      <h1>Modernização Visual & Gestão Cívica Operacional</h1>
+      <p class="subtitulo">Associação Comunitária Usina da Vida — Projeto PWGV (UCSAL) e Produção</p>
+      <div class="meta-barra">
+        <span><strong>Status:</strong> <span class="badge-ok">✓ 100% Concluído & Publicado</span></span>
+        <span><strong>Produção:</strong> <a class="link-doc" href="https://site-usina-da-vida.vercel.app" target="_blank">site-usina-da-vida.vercel.app</a></span>
+        <span><strong>Diretrizes:</strong> Padrão Dub / Visitors / Orderful</span>
+      </div>
+    </header>
+
+    <h2>1. Sumário e Objetivos da Transformação</h2>
+    <p>O presente projeto teve como finalidade realizar uma reformulação completa da interface da <strong>Usina da Vida</strong>, superando as limitações do estilo anterior (neo-brutalista, caracterizado por bordas pretas grossas de 2px, sombras deslocadas amarelas e azuis, e elementos desproporcionais). O novo design segue a tríade operacional moderna:</p>
+    <ul>
+      <li><strong>Dub:</strong> Estrutura limpa, navegação fluida, cartões brancos com bordas finas de 1px e cantos arredondados de 12 a 14px.</li>
+      <li><strong>Visitors:</strong> Painéis de dados e métricas com visualização arejada, tipografia sem serifa de alta legibilidade (Lexend) e micro-sombras suaves.</li>
+      <li><strong>Orderful:</strong> Fluxos de interação contínuos, estados representados por selos com pontos coloridos e formulários organizados.</li>
+    </ul>
+
+    <h2>2. Portal de Gestão Operacional (portal.html)</h2>
+    <div class="card-destaque">
+      <h3>O Que Foi Realizado:</h3>
+      <ul>
+        <li><strong>Compactação dos Botões:</strong> Os antigos botões com texto ("Editar" e "Excluir") foram convertidos para <strong>ícones minimalistas de 28x28px</strong>. O operador identifica a ação via tooltip nativo ao passar o cursor (<code>title="Editar"</code> / <code>title="Excluir"</code>), economizando mais de 100px por linha.</li>
+        <li><strong>Alargamento da Tabela de Voluntários:</strong> A tabela foi calibrada (<code>min-width: 1040px</code>), permitindo que a coluna de <em>Status</em> e a coluna de <em>Ações</em> fiquem lado a lado de forma clara e legível sem quebras estranhas.</li>
+        <li><strong>Modais Operacionais Limpos:</strong> Modais de cadastro de ação, edição e autenticação da presidência receberam raio de 12px, borda de 1px, <code>backdrop-filter: blur(4px)</code> e sombras profundas suaves.</li>
+      </ul>
+    </div>
+
+    <h2>3. Landing Page Institucional (index.html)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Seção / Elemento</th>
+          <th>Estado Anterior</th>
+          <th>Estado Atual (Clean Layout)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Topo & Hero</strong></td>
+          <td><span class="tag-antes">Antes</span> Botões com sombras deslocadas amarelas duras de 4px e contornos pretos.</td>
+          <td><span class="tag-depois">Agora</span> Botões com cantos arredondados de 8px, azul institucional e micro-sombras suaves (0 1px 2px).</td>
+        </tr>
+        <tr>
+          <td><strong>Faixa de Impacto Social</strong></td>
+          <td><span class="tag-antes">Antes</span> Inserida na primeira proposta de modernização.</td>
+          <td><span class="tag-depois">Agora</span> <strong>Removida a pedido do usuário</strong> para manter leitura direta e limpa entre o Hero e as ações.</td>
+        </tr>
+        <tr>
+          <td><strong>Próximas Ações</strong></td>
+          <td><span class="tag-antes">Antes</span> Cards com borda preta de 2px, sombra azul deslocada de 6px e botão vermelho com sombra amarela.</td>
+          <td><span class="tag-depois">Agora</span> <strong>Grade clássica de 2 colunas</strong> com cards brancos, borda de 1px (#e2e8f0), data sutil em #f8fafc e botão azul institucional.</td>
+        </tr>
+        <tr>
+          <td><strong>Nossos Programas</strong></td>
+          <td><span class="tag-antes">Antes</span> Grade fechada tipo tabela com linhas rígidas e imagens encolhidas no mobile.</td>
+          <td><span class="tag-depois">Agora</span> <strong>Cards independentes modernos</strong> com topo colorido temático de 3px e <strong>imagens preservadas em destaque (~84px)</strong>.</td>
+        </tr>
+        <tr>
+          <td><strong>Seja um Voluntário (Passos)</strong></td>
+          <td><span class="tag-antes">Antes</span> Números 1 a 3 desalinhados da altura dos cards de texto translúcidos.</td>
+          <td><span class="tag-depois">Agora</span> <strong>Números 1 a 3 perfeitamente centralizados na vertical</strong> com a caixa translúcida de cada etapa.</td>
+        </tr>
+        <tr>
+          <td><strong>Seja um Voluntário (Formulário)</strong></td>
+          <td><span class="tag-antes">Antes</span> Formulário terminava cerca de 87px acima da base da 3ª instrução ao lado.</td>
+          <td><span class="tag-depois">Agora</span> <strong>Alinhamento inferior exato (0px de desvio)</strong> entre a base do formulário e a base da 3ª instrução ("Falamos com você").</td>
+        </tr>
+        <tr>
+          <td><strong>Avaliações do Google</strong></td>
+          <td><span class="tag-antes">Antes</span> Resumo e depoimentos com bordas pretas de 2px e sombras duras amarelas e azuis de 7px.</td>
+          <td><span class="tag-depois">Agora</span> Cards brancos elegantes com borda de 1px, cantos de 12px e sombras difusas leves (0 1px 3px).</td>
+        </tr>
+        <tr>
+          <td><strong>Modal "Você já é voluntário(a)?"</strong></td>
+          <td><span class="tag-antes">Antes</span> Modal com contorno grosso preto e sombra amarela pesada de 8px.</td>
+          <td><span class="tag-depois">Agora</span> <strong>Modal 100% limpo</strong> com 14px de raio, desfoque de fundo (backdrop-filter: blur(6px)), selo azul pill e botões modernos.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>4. Resolução da Versão Mobile (Smartphones e Telas <= 768px)</h2>
+    <div class="card-destaque">
+      <p><strong>Diagnóstico do problema mobile:</strong> O arquivo de build continha blocos legados em media queries móveis que reativavam o neo-brutalismo em celulares (sombra amarela 6px no formulário, botão de ação vermelho com sombra amarela 4px e ilustrações dos programas espremidas para 44px).</p>
+      <p><strong>Solução aplicada:</strong></p>
+      <ul>
+        <li>Eliminação das regras legadas conflitantes no pipeline de compilação.</li>
+        <li>Criação de camada mobile de alta especificidade com cards brancos de 1px, sombras suaves, inputs confortáveis e <strong>imagens dos programas mantidas ampliadas (~76px de altura)</strong>.</li>
+        <li>Paridade visual absoluta entre a experiência desktop e mobile.</li>
+      </ul>
+    </div>
+
+    <h2>5. Sincronização e Publicação</h2>
+    <ul>
+      <li><strong>Repositório Git:</strong> Branch <code>main</code> atualizada e sincronizada com commits semânticos rastreáveis.</li>
+      <li><strong>Pasta Acadêmica UCSAL:</strong> Sincronizada automaticamente em <code>D:\Dev. 2025\PROJETOS- UCSAL\Projeto - PWGV</code>.</li>
+      <li><strong>Hospedagem em Produção:</strong> Vercel ativa com SSL e CDN em <a class="link-doc" href="https://site-usina-da-vida.vercel.app" target="_blank">https://site-usina-da-vida.vercel.app</a>.</li>
+    </ul>
+
+    <footer style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--borda); font-size: 13px; color: var(--texto-mutado); text-align: center;">
+      Relatório gerado automaticamente pelo ambiente Antigravity — Usina da Vida © 2026
+    </footer>
+  </div>
+</body>
+</html>
